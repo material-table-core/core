@@ -210,7 +210,7 @@ export class MTableToolbar extends React.Component {
                 {localization.addRemoveColumns}
               </MenuItem>
               {this.props.columns.map((col) => {
-                if (!col.hidden || col.hiddenByColumnsButton) {
+                if (!col.hideInColumnsMenu) {
                   return (
                     <li key={col.tableData.id}>
                       <MenuItem

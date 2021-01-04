@@ -188,6 +188,7 @@ export interface Column<RowData extends object> {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hiddenByColumnsButton?: boolean;
+  hideInColumnsMenu?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any;
   lookup?: object;
