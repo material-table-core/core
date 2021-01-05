@@ -11,6 +11,21 @@ import * as CommonValues from '../utils/common-values';
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
 /* eslint-enable no-useless-escape */
 
+// export default function MTableCell(props) {
+//   return (
+//     <TableCell
+//       size={props.size}
+//       {...cellProps}
+//       style={getStyle()}
+//       align={cellAlignment}
+//       onClick={handleClickCell} // this is going to be wrong
+//     >
+//       {props.children}
+//       {renderValue}
+//     </TableCell>
+//   );
+// }
+
 export default class MTableCell extends React.Component {
   getRenderValue() {
     const dateLocale =
@@ -160,6 +175,7 @@ export default class MTableCell extends React.Component {
       scrollWidth,
       ...cellProps
     } = this.props;
+
     const cellAlignment =
       columnDef.align !== undefined
         ? columnDef.align
@@ -168,6 +184,7 @@ export default class MTableCell extends React.Component {
         : 'left';
 
     let renderValue = this.getRenderValue();
+
     if (cellEditable) {
       renderValue = (
         <div
