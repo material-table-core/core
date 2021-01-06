@@ -10,77 +10,65 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip } from '@material-ui/core';
 import * as CommonValues from '../utils/common-values';
-import equal from 'fast-deep-equal';
 
 /* eslint-enable no-unused-vars */
 
-export class MTableHeader extends React.Component {
-  constructor(props) {
-    super(props);
+export function MTableHeader(props) {
+  const [state, setState] = React.useState({
+    lastX: 0,
+    resizingColumnDef: undefined,
+    lastAdditionalWidth: null,
+  });
 
-    this.state = {
-      lastX: 0,
-      resizingColumnDef: undefined,
+  React.useEffect(() => {
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
-  }
+  });
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   return !equal(nextProps, this.props) || !equal(nextState, this.state);
-  // }
-
-  componentDidMount() {
-    document.addEventListener('mousemove', this.handleMouseMove);
-    document.addEventListener('mouseup', this.handleMouseUp);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleMouseMove);
-    document.removeEventListener('mouseup', this.handleMouseUp);
-  }
-
-  handleMouseDown = (e, columnDef) => {
-    this.setState({
+  const handleMouseDown = (e, columnDef) => {
+    setState({
       lastAdditionalWidth: columnDef.tableData.additionalWidth,
       lastX: e.clientX,
       resizingColumnDef: columnDef,
     });
   };
 
-  handleMouseMove = (e) => {
-    if (!this.state.resizingColumnDef) {
+  const handleMouseMove = (e) => {
+    if (!state.resizingColumnDef) {
       return;
     }
 
-    let additionalWidth =
-      this.state.lastAdditionalWidth + e.clientX - this.state.lastX;
+    let additionalWidth = state.lastAdditionalWidth + e.clientX - state.lastX;
 
     additionalWidth = Math.min(
-      this.state.resizingColumnDef.maxWidth || additionalWidth,
+      state.resizingColumnDef.maxWidth || additionalWidth,
       additionalWidth
     );
 
-    if (
-      this.state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
-    ) {
-      this.props.onColumnResized(
-        this.state.resizingColumnDef.tableData.id,
+    if (state.resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
+      props.onColumnResized(
+        state.resizingColumnDef.tableData.id,
         additionalWidth
       );
     }
   };
 
-  handleMouseUp = (e) => {
-    this.setState({ resizingColumnDef: undefined });
+  const handleMouseUp = (e) => {
+    setState({ resizingColumnDef: undefined });
   };
 
-  getCellStyle = (columnDef) => {
+  const getCellStyle = (columnDef) => {
     const width = CommonValues.reducePercentsInCalc(
       columnDef.tableData.width,
-      this.props.scrollWidth
+      props.scrollWidth
     );
 
     const style = {
-      ...this.props.headerStyle,
+      ...props.headerStyle,
       ...columnDef.headerStyle,
       boxSizing: 'border-box',
       width,
@@ -89,8 +77,8 @@ export class MTableHeader extends React.Component {
     };
 
     if (
-      this.props.options.tableLayout === 'fixed' &&
-      this.props.options.columnResizable &&
+      props.options.tableLayout === 'fixed' &&
+      props.options.columnResizable &&
       columnDef.resizable !== false
     ) {
       style.paddingRight = 2;
@@ -99,10 +87,10 @@ export class MTableHeader extends React.Component {
     return style;
   };
 
-  renderHeader() {
-    const size = this.props.options.padding === 'default' ? 'medium' : 'small';
+  const renderHeader = () => {
+    const size = props.options.padding === 'default' ? 'medium' : 'small';
 
-    const mapArr = this.props.columns
+    const mapArr = props.columns
       .filter(
         (columnDef) =>
           !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
@@ -111,7 +99,7 @@ export class MTableHeader extends React.Component {
       .map((columnDef, index) => {
         let content = columnDef.title;
 
-        if (this.props.draggable) {
+        if (props.draggable) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
@@ -131,31 +119,26 @@ export class MTableHeader extends React.Component {
           );
         }
 
-        if (columnDef.sorting !== false && this.props.sorting) {
+        if (columnDef.sorting !== false && props.sorting) {
           content = (
             <TableSortLabel
-              IconComponent={this.props.icons.SortArrow}
-              active={this.props.orderBy === columnDef.tableData.id}
-              direction={this.props.orderDirection || 'asc'}
+              IconComponent={props.icons.SortArrow}
+              active={props.orderBy === columnDef.tableData.id}
+              direction={props.orderDirection || 'asc'}
               onClick={() => {
                 const orderDirection =
-                  columnDef.tableData.id !== this.props.orderBy
+                  columnDef.tableData.id !== props.orderBy
                     ? 'asc'
-                    : this.props.orderDirection === 'asc'
+                    : props.orderDirection === 'asc'
                     ? 'desc'
-                    : this.props.orderDirection === 'desc' &&
-                      this.props.thirdSortClick
+                    : props.orderDirection === 'desc' && props.thirdSortClick
                     ? ''
-                    : this.props.orderDirection === 'desc' &&
-                      !this.props.thirdSortClick
+                    : props.orderDirection === 'desc' && !props.thirdSortClick
                     ? 'asc'
-                    : this.props.orderDirection === ''
+                    : props.orderDirection === ''
                     ? 'asc'
                     : 'desc';
-                this.props.onOrderChange(
-                  columnDef.tableData.id,
-                  orderDirection
-                );
+                props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
               {content}
@@ -172,25 +155,25 @@ export class MTableHeader extends React.Component {
         }
 
         if (
-          this.props.options.tableLayout === 'fixed' &&
-          this.props.options.columnResizable &&
+          props.options.tableLayout === 'fixed' &&
+          props.options.columnResizable &&
           columnDef.resizable !== false
         ) {
           content = (
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: 1 }}>{content}</div>
               <div></div>
-              <this.props.icons.Resize
+              <props.icons.Resize
                 style={{
                   cursor: 'col-resize',
                   color:
-                    this.state.resizingColumnDef &&
-                    this.state.resizingColumnDef.tableData.id ===
+                    state.resizingColumnDef &&
+                    state.resizingColumnDef.tableData.id ===
                       columnDef.tableData.id
-                      ? this.props.theme.palette.primary.main
+                      ? props.theme.palette.primary.main
                       : 'inherit',
                 }}
-                onMouseDown={(e) => this.handleMouseDown(e, columnDef)}
+                onMouseDown={(e) => handleMouseDown(e, columnDef)}
               />
             </div>
           );
@@ -206,8 +189,8 @@ export class MTableHeader extends React.Component {
           <TableCell
             key={columnDef.tableData.id}
             align={cellAlignment}
-            className={this.props.classes.header}
-            style={this.getCellStyle(columnDef)}
+            className={props.classes.header}
+            style={getCellStyle(columnDef)}
             size={size}
           >
             {content}
@@ -215,21 +198,21 @@ export class MTableHeader extends React.Component {
         );
       });
     return mapArr;
-  }
+  };
 
-  renderActionsHeader() {
+  const renderActionsHeader = () => {
     const localization = {
       ...MTableHeader.defaultProps.localization,
-      ...this.props.localization,
+      ...props.localization,
     };
-    const width = CommonValues.actionsColumnWidth(this.props);
+    const width = CommonValues.actionsColumnWidth(props);
     return (
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        className={this.props.classes.header}
+        className={props.classes.header}
         style={{
-          ...this.props.headerStyle,
+          ...props.headerStyle,
           width: width,
           textAlign: 'center',
           boxSizing: 'border-box',
@@ -240,115 +223,111 @@ export class MTableHeader extends React.Component {
         </TableSortLabel>
       </TableCell>
     );
-  }
+  };
 
-  renderSelectionHeader() {
+  const renderSelectionHeader = () => {
     const selectionWidth = CommonValues.selectionMaxWidth(
-      this.props,
-      this.props.treeDataMaxLevel
+      props,
+      props.treeDataMaxLevel
     );
 
     return (
       <TableCell
         padding="none"
         key="key-selection-column"
-        className={this.props.classes.header}
-        style={{ ...this.props.headerStyle, width: selectionWidth }}
+        className={props.classes.header}
+        style={{ ...props.headerStyle, width: selectionWidth }}
       >
-        {this.props.showSelectAllCheckbox && (
+        {props.showSelectAllCheckbox && (
           <Checkbox
             indeterminate={
-              this.props.selectedCount > 0 &&
-              this.props.selectedCount < this.props.dataCount
+              props.selectedCount > 0 && props.selectedCount < props.dataCount
             }
             checked={
-              this.props.dataCount > 0 &&
-              this.props.selectedCount === this.props.dataCount
+              props.dataCount > 0 && props.selectedCount === props.dataCount
             }
             onChange={(event, checked) =>
-              this.props.onAllSelected && this.props.onAllSelected(checked)
+              props.onAllSelected && props.onAllSelected(checked)
             }
-            {...this.props.options.headerSelectionProps}
+            {...props.options.headerSelectionProps}
           />
         )}
       </TableCell>
     );
-  }
+  };
 
-  renderDetailPanelColumnCell() {
+  const renderDetailPanelColumnCell = () => {
     return (
       <TableCell
         padding="none"
         key="key-detail-panel-column"
-        className={this.props.classes.header}
-        style={{ ...this.props.headerStyle }}
+        className={props.classes.header}
+        style={{ ...props.headerStyle }}
+      />
+    );
+  };
+
+  const headers = renderHeader();
+  if (props.hasSelection) {
+    headers.splice(0, 0, renderSelectionHeader());
+  }
+
+  if (props.showActionsColumn) {
+    if (props.actionsHeaderIndex >= 0) {
+      let endPos = 0;
+      if (props.hasSelection) {
+        endPos = 1;
+      }
+      headers.splice(
+        props.actionsHeaderIndex + endPos,
+        0,
+        renderActionsHeader()
+      );
+    } else if (props.actionsHeaderIndex === -1) {
+      headers.push(renderActionsHeader());
+    }
+  }
+
+  if (props.hasDetailPanel) {
+    if (props.detailPanelColumnAlignment === 'right') {
+      headers.push(renderDetailPanelColumnCell());
+    } else {
+      headers.splice(0, 0, renderDetailPanelColumnCell());
+    }
+  }
+
+  if (props.isTreeData > 0) {
+    headers.splice(
+      0,
+      0,
+      <TableCell
+        padding="none"
+        key={'key-tree-data-header'}
+        className={props.classes.header}
+        style={{ ...props.headerStyle }}
       />
     );
   }
 
-  render() {
-    const headers = this.renderHeader();
-    if (this.props.hasSelection) {
-      headers.splice(0, 0, this.renderSelectionHeader());
-    }
-
-    if (this.props.showActionsColumn) {
-      if (this.props.actionsHeaderIndex >= 0) {
-        let endPos = 0;
-        if (this.props.hasSelection) {
-          endPos = 1;
-        }
-        headers.splice(
-          this.props.actionsHeaderIndex + endPos,
-          0,
-          this.renderActionsHeader()
-        );
-      } else if (this.props.actionsHeaderIndex === -1) {
-        headers.push(this.renderActionsHeader());
-      }
-    }
-
-    if (this.props.hasDetailPanel) {
-      if (this.props.detailPanelColumnAlignment === 'right') {
-        headers.push(this.renderDetailPanelColumnCell());
-      } else {
-        headers.splice(0, 0, this.renderDetailPanelColumnCell());
-      }
-    }
-
-    if (this.props.isTreeData > 0) {
+  props.columns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
       headers.splice(
         0,
         0,
         <TableCell
-          padding="none"
-          key={'key-tree-data-header'}
-          className={this.props.classes.header}
-          style={{ ...this.props.headerStyle }}
+          padding="checkbox"
+          key={'key-group-header' + columnDef.tableData.id}
+          className={props.classes.header}
         />
       );
-    }
+    });
 
-    this.props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        headers.splice(
-          0,
-          0,
-          <TableCell
-            padding="checkbox"
-            key={'key-group-header' + columnDef.tableData.id}
-            className={this.props.classes.header}
-          />
-        );
-      });
-
-    return (
-      <TableHead>
-        <TableRow>{headers}</TableRow>
-      </TableHead>
-    );
-  }
+  return (
+    <TableHead>
+      <TableRow>{headers}</TableRow>
+    </TableHead>
+  );
 }
 
 MTableHeader.defaultProps = {

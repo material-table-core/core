@@ -3,26 +3,20 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import withTheme from '@material-ui/core/styles/withTheme';
-import { MTable } from '..';
 /* eslint-enable no-unused-vars */
 
-class MTableEditCell extends React.Component {
-  constructor(props) {
-    super(props);
+const MTableEditCell = (props) => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [value, setValue] = React.useState(
+    props.rowData[props.columnDef.field]
+  );
 
-    this.state = {
-      isLoading: false,
-      value: this.props.rowData[this.props.columnDef.field],
-    };
-  }
-
-  getStyle = () => {
+  const getStyle = () => {
     let cellStyle = {
       boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
       color: 'inherit',
-      width: this.props.columnDef.tableData.width,
+      width: props.columnDef.tableData.width,
       boxSizing: 'border-box',
       fontSize: 'inherit',
       fontFamily: 'inherit',
@@ -30,67 +24,60 @@ class MTableEditCell extends React.Component {
       padding: '0 16px',
     };
 
-    if (typeof this.props.columnDef.cellStyle === 'function') {
+    if (typeof props.columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...this.props.columnDef.cellStyle(this.state.value, this.props.rowData),
+        ...props.columnDef.cellStyle(value, props.rowData),
       };
     } else {
-      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
+      cellStyle = { ...cellStyle, ...props.columnDef.cellStyle };
     }
 
-    if (typeof this.props.cellEditable.cellStyle === 'function') {
+    if (typeof props.cellEditable.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...this.props.cellEditable.cellStyle(
-          this.state.value,
-          this.props.rowData,
-          this.props.columnDef
-        ),
+        ...props.cellEditable.cellStyle(value, props.rowData, props.columnDef),
       };
     } else {
-      cellStyle = { ...cellStyle, ...this.props.cellEditable.cellStyle };
+      cellStyle = { ...cellStyle, ...props.cellEditable.cellStyle };
     }
 
     return cellStyle;
   };
 
-  handleKeyDown = (e) => {
+  const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      this.onApprove();
+      onApprove();
     } else if (e.keyCode === 27) {
-      this.onCancel();
+      onCancel();
     }
   };
 
-  onApprove = () => {
-    this.setState({ isLoading: true }, () => {
-      this.props.cellEditable
+  const onApprove = () => {
+    setIsLoading(true, () => {
+      props.cellEditable
         .onCellEditApproved(
-          this.state.value, // newValue
-          this.props.rowData[this.props.columnDef.field], // oldValue
-          this.props.rowData, // rowData with old value
-          this.props.columnDef // columnDef
+          value, // newValue
+          props.rowData[props.columnDef.field], // oldValue
+          props.rowData, // rowData with old value
+          props.columnDef // columnDef
         )
         .then(() => {
-          this.setState({ isLoading: false });
-          this.props.onCellEditFinished(
-            this.props.rowData,
-            this.props.columnDef
-          );
+          setIsLoading(false);
+          props.onCellEditFinished(props.rowData, props.columnDef);
         })
         .catch((error) => {
-          this.setState({ isLoading: false });
+          setIsLoading(false);
         });
     });
   };
 
-  onCancel = () => {
-    this.props.onCellEditFinished(this.props.rowData, this.props.columnDef);
+  const onCancel = () => {
+    props.onCellEditFinished(props.rowData, props.columnDef);
   };
 
-  renderActions() {
-    if (this.state.isLoading) {
+  const renderActions = () => {
+    if (isLoading) {
       return (
         <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
           <CircularProgress size={20} />
@@ -100,49 +87,47 @@ class MTableEditCell extends React.Component {
 
     const actions = [
       {
-        icon: this.props.icons.Check,
-        tooltip: this.props.localization.saveTooltip,
-        onClick: this.onApprove,
-        disabled: this.state.isLoading,
+        icon: props.icons.Check,
+        tooltip: props.localization.saveTooltip,
+        onClick: onApprove,
+        disabled: isLoading,
       },
       {
-        icon: this.props.icons.Clear,
-        tooltip: this.props.localization.cancelTooltip,
-        onClick: this.onCancel,
-        disabled: this.state.isLoading,
+        icon: props.icons.Clear,
+        tooltip: props.localization.cancelTooltip,
+        onClick: onCancel,
+        disabled: isLoading,
       },
     ];
 
     return (
-      <this.props.components.Actions
+      <props.components.Actions
         actions={actions}
-        components={this.props.components}
+        components={props.components}
         size="small"
       />
     );
-  }
+  };
 
-  render() {
-    return (
-      <TableCell size={this.props.size} style={this.getStyle()} padding="none">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ flex: 1, marginRight: 4 }}>
-            <this.props.components.EditField
-              columnDef={this.props.columnDef}
-              value={this.state.value}
-              onChange={(value) => this.setState({ value })}
-              onKeyDown={this.handleKeyDown}
-              disabled={this.state.isLoading}
-              rowData={this.props.rowData}
-              autoFocus
-            />
-          </div>
-          {this.renderActions()}
+  return (
+    <TableCell size={props.size} style={getStyle()} padding="none">
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ flex: 1, marginRight: 4 }}>
+          <props.components.EditField
+            columnDef={props.columnDef}
+            value={value}
+            onChange={(value) => setValue(value)}
+            onKeyDown={handleKeyDown}
+            disabled={isLoading}
+            rowData={props.rowData}
+            autoFocus
+          />
         </div>
-      </TableCell>
-    );
-  }
-}
+        {renderActions()}
+      </div>
+    </TableCell>
+  );
+};
 
 MTableEditCell.defaultProps = {
   columnDef: {},
