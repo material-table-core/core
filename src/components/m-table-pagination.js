@@ -7,134 +7,128 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
-  handleFirstPageButtonClick = (event) => {
-    this.props.onChangePage(event, 0);
+function MTablePaginationInner(props) {
+  const handleFirstPageButtonClick = (event) => {
+    props.onChangePage(event, 0);
   };
 
-  handleBackButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page - 1);
+  const handleBackButtonClick = (event) => {
+    props.onChangePage(event, props.page - 1);
   };
 
-  handleNextButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page + 1);
+  const handleNextButtonClick = (event) => {
+    props.onChangePage(event, props.page + 1);
   };
 
-  handleLastPageButtonClick = (event) => {
-    this.props.onChangePage(
+  const handleLastPageButtonClick = (event) => {
+    props.onChangePage(
       event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
+      Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
   };
 
-  render() {
-    const {
-      classes,
-      count,
-      page,
-      rowsPerPage,
-      theme,
-      showFirstLastPageButtons,
-    } = this.props;
-    const localization = {
-      ...MTablePaginationInner.defaultProps.localization,
-      ...this.props.localization,
-    };
+  const {
+    classes,
+    count,
+    page,
+    rowsPerPage,
+    theme,
+    showFirstLastPageButtons,
+  } = props;
 
-    return (
-      <div className={classes.root}>
-        {showFirstLastPageButtons && (
-          <Tooltip title={localization.firstTooltip}>
-            <span>
-              <IconButton
-                onClick={this.handleFirstPageButtonClick}
-                disabled={page === 0}
-                aria-label={localization.firstAriaLabel}
-              >
-                {theme.direction === 'rtl' ? (
-                  <this.props.icons.LastPage />
-                ) : (
-                  <this.props.icons.FirstPage />
-                )}
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-        <Tooltip title={localization.previousTooltip}>
+  const localization = {
+    ...MTablePaginationInner.defaultProps.localization,
+    ...props.localization,
+  };
+
+  return (
+    <div className={classes.root}>
+      {showFirstLastPageButtons && (
+        <Tooltip title={localization.firstTooltip}>
           <span>
             <IconButton
-              onClick={this.handleBackButtonClick}
+              onClick={handleFirstPageButtonClick}
               disabled={page === 0}
-              aria-label={localization.previousAriaLabel}
+              aria-label={localization.firstAriaLabel}
             >
               {theme.direction === 'rtl' ? (
-                <this.props.icons.NextPage />
+                <props.icons.LastPage />
               ) : (
-                <this.props.icons.PreviousPage />
+                <props.icons.FirstPage />
               )}
             </IconButton>
           </span>
         </Tooltip>
-        <Typography
-          variant="caption"
-          style={{
-            flex: 1,
-            textAlign: 'center',
-            alignSelf: 'center',
-            flexBasis: 'inherit',
-          }}
-        >
-          {localization.labelDisplayedRows
-            .replace(
-              '{from}',
-              this.props.count === 0
-                ? 0
-                : this.props.page * this.props.rowsPerPage + 1
-            )
-            .replace(
-              '{to}',
-              Math.min(
-                (this.props.page + 1) * this.props.rowsPerPage,
-                this.props.count
-              )
-            )
-            .replace('{count}', this.props.count)}
-        </Typography>
-        <Tooltip title={localization.nextTooltip}>
+      )}
+      <Tooltip title={localization.previousTooltip}>
+        <span>
+          <IconButton
+            onClick={handleBackButtonClick}
+            disabled={page === 0}
+            aria-label={localization.previousAriaLabel}
+          >
+            {theme.direction === 'rtl' ? (
+              <props.icons.NextPage />
+            ) : (
+              <props.icons.PreviousPage />
+            )}
+          </IconButton>
+        </span>
+      </Tooltip>
+      <Typography
+        variant="caption"
+        style={{
+          flex: 1,
+          textAlign: 'center',
+          alignSelf: 'center',
+          flexBasis: 'inherit',
+        }}
+      >
+        {localization.labelDisplayedRows
+          .replace(
+            '{from}',
+            props.count === 0 ? 0 : props.page * props.rowsPerPage + 1
+          )
+          .replace(
+            '{to}',
+            Math.min((props.page + 1) * props.rowsPerPage, props.count)
+          )
+          .replace('{count}', props.count)}
+      </Typography>
+      <Tooltip title={localization.nextTooltip}>
+        <span>
+          <IconButton
+            onClick={handleNextButtonClick}
+            disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+            aria-label={localization.nextAriaLabel}
+          >
+            {theme.direction === 'rtl' ? (
+              <props.icons.PreviousPage />
+            ) : (
+              <props.icons.NextPage />
+            )}
+          </IconButton>
+        </span>
+      </Tooltip>
+      {showFirstLastPageButtons && (
+        <Tooltip title={localization.lastTooltip}>
           <span>
             <IconButton
-              onClick={this.handleNextButtonClick}
+              onClick={handleLastPageButtonClick}
               disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-              aria-label={localization.nextAriaLabel}
+              aria-label={localization.lastAriaLabel}
             >
               {theme.direction === 'rtl' ? (
-                <this.props.icons.PreviousPage />
+                <props.icons.FirstPage />
               ) : (
-                <this.props.icons.NextPage />
+                <props.icons.LastPage />
               )}
             </IconButton>
           </span>
         </Tooltip>
-        {showFirstLastPageButtons && (
-          <Tooltip title={localization.lastTooltip}>
-            <span>
-              <IconButton
-                onClick={this.handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label={localization.lastAriaLabel}
-              >
-                {theme.direction === 'rtl' ? (
-                  <this.props.icons.FirstPage />
-                ) : (
-                  <this.props.icons.LastPage />
-                )}
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 const actionsStyles = (theme) => ({
