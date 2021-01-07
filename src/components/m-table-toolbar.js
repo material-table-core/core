@@ -201,30 +201,42 @@ const MTableToolbar = (props) => {
               >
                 {localization.addRemoveColumns}
               </MenuItem>
-              {props.columns.map((col) => {
-                if (!col.hidden || col.hiddenByColumnsButton) {
-                  return (
-                    <li key={col.tableData.id}>
-                      <MenuItem
-                        className={classes.formControlLabel}
-                        component="label"
-                        htmlFor={`column-toggle-${col.tableData.id}`}
-                        disabled={col.removable === false}
-                      >
-                        <Checkbox
-                          checked={!col.hidden}
-                          id={`column-toggle-${col.tableData.id}`}
-                          onChange={() =>
-                            props.onColumnsChanged(col, !col.hidden)
-                          }
-                        />
-                        <span>{col.title}</span>
-                      </MenuItem>
-                    </li>
-                  );
+
+              {/**
+               * Add columns to the Columns Button Menu
+               * aka the menu that pops up when `MaterialTable.options.columnsButton` is true
+               */}
+              {this.props.columns.map((col) => {
+                const hiddenFromColumnsButtonMenu =
+                  col.hiddenByColumnsButton !== undefined
+                    ? col.hiddenByColumnsButton
+                    : this.props.columnsHiddenInColumnsButton;
+
+                if (hiddenFromColumnsButtonMenu) {
+                  return null;
                 }
-                return null;
+
+                return (
+                  <li key={col.tableData.id}>
+                    <MenuItem
+                      className={classes.formControlLabel}
+                      component="label"
+                      htmlFor={`column-toggle-${col.tableData.id}`}
+                      disabled={col.removable === false}
+                    >
+                      <Checkbox
+                        checked={!col.hidden}
+                        id={`column-toggle-${col.tableData.id}`}
+                        onChange={() =>
+                          this.props.onColumnsChanged(col, !col.hidden)
+                        }
+                      />
+                      <span>{col.title}</span>
+                    </MenuItem>
+                  </li>
+                );
               })}
+              {/** End Add columns to the Columns Button Menu */}
             </Menu>
           </span>
         )}
@@ -358,6 +370,7 @@ const MTableToolbar = (props) => {
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
+  columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)
   columnsButton: false,
   localization: {
     addRemoveColumns: 'Add or remove columns',
