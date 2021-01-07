@@ -210,7 +210,12 @@ export class MTableToolbar extends React.Component {
                 {localization.addRemoveColumns}
               </MenuItem>
               {this.props.columns.map((col) => {
-                if (!col.hidden || col.hiddenByColumnsButton) {
+                let hideInMenu = false;
+                if (col.hiddenByColumnsButton !== undefined) {
+                  hideInMenu = col.hiddenByColumnsButton;
+                }
+
+                if (!hideInMenu) {
                   return (
                     <li key={col.tableData.id}>
                       <MenuItem
@@ -222,9 +227,9 @@ export class MTableToolbar extends React.Component {
                         <Checkbox
                           checked={!col.hidden}
                           id={`column-toggle-${col.tableData.id}`}
-                          onChange={() =>
-                            this.props.onColumnsChanged(col, !col.hidden)
-                          }
+                          onChange={() => {
+                            this.props.onColumnsChanged(col, !col.hidden);
+                          }}
                         />
                         <span>{col.title}</span>
                       </MenuItem>

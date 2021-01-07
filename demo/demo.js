@@ -1,6 +1,6 @@
 import { Grid, MuiThemeProvider, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
 import Typography from "@material-ui/core/Typography";
@@ -670,6 +670,47 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const rando = (max) => Math.floor(Math.random() * max);
+
+const words = ["Paper", "Rock", "Scissors"];
+
+const rawData = [];
+for (let i = 0; i < 100; i++) {
+  rawData.push({
+    id: rando(300),
+    word: words[i % words.length],
+    hiddenColumn: "foo",
+  });
+}
+
+const columns = [
+  { title: "Id", field: "id" },
+  { title: "Word", field: "word" },
+  {
+    title: "Hidden",
+    field: "hiddenColumn",
+    hiddenByColumnsButton: false,
+    hidden: true,
+  },
+];
+
+const options = {
+  columnsButton: true,
+};
+
+const App2 = () => {
+  const [data, setData] = useState(rawData);
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      options={options}
+      title="Starter Template"
+    />
+  );
+};
+
+ReactDOM.render(<App2 />, document.getElementById("app"));
 
 module.hot.accept();
