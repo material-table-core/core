@@ -9,7 +9,7 @@ import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
 
 export default function MTableEditRow(props) {
-  const [state, setState] = useState(() => ({
+  const [state, setState] = React.useState(() => ({
     data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData(),
   }));
 
