@@ -8,19 +8,13 @@ import { byString, setByString } from '../utils';
 import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
 
-export default class MTableEditRow extends React.Component {
-  constructor(props) {
-    super(props);
+export default function MTableEditRow(props) {
+  const [state, setState] = useState(() => ({
+    data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData(),
+  }));
 
-    this.state = {
-      data: props.data
-        ? JSON.parse(JSON.stringify(props.data))
-        : this.createRowData(),
-    };
-  }
-
-  createRowData() {
-    return this.props.columns
+  function createRowData() {
+    return props.columns
       .filter((column) => 'initialEditValue' in column && column.field)
       .reduce((prev, column) => {
         prev[column.field] = column.initialEditValue;
@@ -28,9 +22,9 @@ export default class MTableEditRow extends React.Component {
       }, {});
   }
 
-  renderColumns() {
-    const size = CommonValues.elementSize(this.props);
-    const mapArr = this.props.columns
+  function renderColumns() {
+    const size = CommonValues.elementSize(props);
+    const mapArr = props.columns
       .filter(
         (columnDef) =>
           !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
@@ -38,9 +32,9 @@ export default class MTableEditRow extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value =
-          typeof this.state.data[columnDef.field] !== 'undefined'
-            ? this.state.data[columnDef.field]
-            : byString(this.state.data, columnDef.field);
+          typeof state.data[columnDef.field] !== 'undefined'
+            ? state.data[columnDef.field]
+            : byString(state.data, columnDef.field);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
             color: 'inherit',
@@ -48,7 +42,7 @@ export default class MTableEditRow extends React.Component {
           if (typeof columnDef.cellStyle === 'function') {
             cellStyle = {
               ...cellStyle,
-              ...columnDef.cellStyle(value, this.props.data),
+              ...columnDef.cellStyle(value, props.data),
             };
           } else {
             cellStyle = { ...cellStyle, ...columnDef.cellStyle };
@@ -62,7 +56,7 @@ export default class MTableEditRow extends React.Component {
 
         const style = {};
         if (index === 0) {
-          style.paddingLeft = 24 + this.props.level * 20;
+          style.paddingLeft = 24 + props.level * 20;
         }
 
         let allowEditing = false;
@@ -73,38 +67,34 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === 'always') {
           allowEditing = true;
         }
-        if (columnDef.editable === 'onAdd' && this.props.mode === 'add') {
+        if (columnDef.editable === 'onAdd' && props.mode === 'add') {
           allowEditing = true;
         }
-        if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
+        if (columnDef.editable === 'onUpdate' && props.mode === 'update') {
           allowEditing = true;
         }
         if (typeof columnDef.editable === 'function') {
-          allowEditing = columnDef.editable(columnDef, this.props.data);
+          allowEditing = columnDef.editable(columnDef, props.data);
         }
         if (!columnDef.field || !allowEditing) {
-          const readonlyValue = this.props.getFieldValue(
-            this.state.data,
-            columnDef
-          );
+          const readonlyValue = props.getFieldValue(state.data, columnDef);
           return (
-            <this.props.components.Cell
+            <props.components.Cell
               size={size}
-              icons={this.props.icons}
+              icons={props.icons}
               columnDef={columnDef}
               value={readonlyValue}
               key={columnDef.tableData.id}
-              rowData={this.props.data}
+              rowData={props.data}
               style={getCellStyle(columnDef, value)}
             />
           );
         } else {
           const { editComponent, ...cellProps } = columnDef;
-          const EditComponent =
-            editComponent || this.props.components.EditField;
+          const EditComponent = editComponent || props.components.EditField;
           let error = { isValid: true, helperText: '' };
           if (columnDef.validate) {
-            const validateResponse = columnDef.validate(this.state.data);
+            const validateResponse = columnDef.validate(state.data);
             switch (typeof validateResponse) {
               case 'object':
                 error = { ...validateResponse };
@@ -132,22 +122,22 @@ export default class MTableEditRow extends React.Component {
                 value={value}
                 error={!error.isValid}
                 helperText={error.helperText}
-                locale={this.props.localization.dateTimePickerLocalization}
-                rowData={this.state.data}
+                locale={props.localization.dateTimePickerLocalization}
+                rowData={state.data}
                 onChange={(value) => {
-                  const data = { ...this.state.data };
+                  const data = { ...state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  this.setState({ data }, () => {
-                    if (this.props.onBulkEditRowChanged) {
-                      this.props.onBulkEditRowChanged(this.props.data, data);
+                  setState({ data }, () => {
+                    if (props.onBulkEditRowChanged) {
+                      props.onBulkEditRowChanged(props.data, data);
                     }
                   });
                 }}
                 onRowDataChange={(data) => {
-                  this.setState({ data }, () => {
-                    if (this.props.onBulkEditRowChanged) {
-                      this.props.onBulkEditRowChanged(this.props.data, data);
+                  setState({ data }, () => {
+                    if (props.onBulkEditRowChanged) {
+                      props.onBulkEditRowChanged(props.data, data);
                     }
                   });
                 }}
@@ -159,29 +149,25 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
-  handleSave = () => {
-    const newData = this.state.data;
+  const handleSave = () => {
+    const newData = state.data;
     delete newData.tableData;
-    this.props.onEditingApproved(
-      this.props.mode,
-      this.state.data,
-      this.props.data
-    );
+    props.onEditingApproved(props.mode, state.data, props.data);
   };
 
-  renderActions() {
-    if (this.props.mode === 'bulk') {
+  function renderActions() {
+    if (props.mode === 'bulk') {
       return <TableCell padding="none" key="key-actions-column" />;
     }
 
-    const size = CommonValues.elementSize(this.props);
+    const size = CommonValues.elementSize(props);
     const localization = {
       ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
+      ...props.localization,
     };
-    const isValid = this.props.columns.every((column) => {
+    const isValid = props.columns.every((column) => {
       if (column.validate) {
-        const response = column.validate(this.state.data);
+        const response = column.validate(state.data);
         switch (typeof response) {
           case 'object':
             return response.isValid;
@@ -196,16 +182,16 @@ export default class MTableEditRow extends React.Component {
     });
     const actions = [
       {
-        icon: this.props.icons.Check,
+        icon: props.icons.Check,
         tooltip: localization.saveTooltip,
         disabled: !isValid,
-        onClick: this.handleSave,
+        onClick: handleSave,
       },
       {
-        icon: this.props.icons.Clear,
+        icon: props.icons.Clear,
         tooltip: localization.cancelTooltip,
         onClick: () => {
-          this.props.onEditingCanceled(this.props.mode, this.props.data);
+          props.onEditingCanceled(props.mode, props.data);
         },
       },
     ];
@@ -217,14 +203,14 @@ export default class MTableEditRow extends React.Component {
         style={{
           width: 42 * actions.length,
           padding: '0px 5px',
-          ...this.props.options.editCellStyle,
+          ...props.options.editCellStyle,
         }}
       >
         <div style={{ display: 'flex' }}>
-          <this.props.components.Actions
-            data={this.props.data}
+          <props.components.Actions
+            data={props.data}
             actions={actions}
-            components={this.props.components}
+            components={props.components}
             size={size}
           />
         </div>
@@ -232,7 +218,7 @@ export default class MTableEditRow extends React.Component {
     );
   }
 
-  getStyle() {
+  function getStyle() {
     const style = {
       // boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.2)',
       borderBottom: '1px solid red',
@@ -241,40 +227,38 @@ export default class MTableEditRow extends React.Component {
     return style;
   }
 
-  handleKeyDown = (e) => {
+  const handleKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.type !== 'textarea') {
-      this.handleSave();
+      handleSave();
     } else if (e.keyCode === 13 && e.target.type === 'textarea' && e.shiftKey) {
-      this.handleSave();
+      handleSave();
     } else if (e.keyCode === 27) {
-      this.props.onEditingCanceled(this.props.mode, this.props.data);
+      props.onEditingCanceled(props.mode, props.data);
     }
   };
 
-  render() {
-    const size = CommonValues.elementSize(this.props);
+  function render() {
+    const size = CommonValues.elementSize(props);
     const localization = {
       ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
+      ...props.localization,
     };
     let columns;
     if (
-      this.props.mode === 'add' ||
-      this.props.mode === 'update' ||
-      this.props.mode === 'bulk'
+      props.mode === 'add' ||
+      props.mode === 'update' ||
+      props.mode === 'bulk'
     ) {
-      columns = this.renderColumns();
+      columns = renderColumns();
     } else {
-      const colSpan = this.props.columns.filter(
+      const colSpan = props.columns.filter(
         (columnDef) =>
           !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
       ).length;
       columns = [
         <TableCell
           size={size}
-          padding={
-            this.props.options.actionsColumnIndex === 0 ? 'none' : undefined
-          }
+          padding={props.options.actionsColumnIndex === 0 ? 'none' : undefined}
           key="key-edit-cell"
           colSpan={colSpan}
         >
@@ -283,14 +267,14 @@ export default class MTableEditRow extends React.Component {
       ];
     }
 
-    if (this.props.options.selection) {
+    if (props.options.selection) {
       columns.splice(
         0,
         0,
         <TableCell padding="none" key="key-selection-cell" />
       );
     }
-    if (this.props.isTreeData) {
+    if (props.isTreeData) {
       columns.splice(
         0,
         0,
@@ -298,29 +282,29 @@ export default class MTableEditRow extends React.Component {
       );
     }
 
-    if (this.props.options.actionsColumnIndex === -1) {
-      columns.push(this.renderActions());
-    } else if (this.props.options.actionsColumnIndex >= 0) {
+    if (props.options.actionsColumnIndex === -1) {
+      columns.push(renderActions());
+    } else if (props.options.actionsColumnIndex >= 0) {
       let endPos = 0;
-      if (this.props.options.selection) {
+      if (props.options.selection) {
         endPos = 1;
       }
-      if (this.props.isTreeData) {
+      if (props.isTreeData) {
         endPos = 1;
-        if (this.props.options.selection) {
+        if (props.options.selection) {
           columns.splice(1, 1);
         }
       }
       columns.splice(
-        this.props.options.actionsColumnIndex + endPos,
+        props.options.actionsColumnIndex + endPos,
         0,
-        this.renderActions()
+        renderActions()
       );
     }
 
     // Lastly we add detail panel icon
-    if (this.props.detailPanel) {
-      const aligment = this.props.options.detailPanelColumnAlignment;
+    if (props.detailPanel) {
+      const aligment = props.options.detailPanelColumnAlignment;
       const index = aligment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
@@ -329,7 +313,7 @@ export default class MTableEditRow extends React.Component {
       );
     }
 
-    this.props.columns
+    props.columns
       .filter((columnDef) => columnDef.tableData.groupOrder > -1)
       .forEach((columnDef) => {
         columns.splice(
@@ -362,20 +346,18 @@ export default class MTableEditRow extends React.Component {
       onBulkEditRowChanged,
       scrollWidth,
       ...rowProps
-    } = this.props;
+    } = props;
 
     return (
       <>
-        <TableRow
-          onKeyDown={this.handleKeyDown}
-          {...rowProps}
-          style={this.getStyle()}
-        >
+        <TableRow onKeyDown={handleKeyDown} {...rowProps} style={getStyle()}>
           {columns}
         </TableRow>
       </>
     );
   }
+
+  return render();
 }
 
 MTableEditRow.defaultProps = {
