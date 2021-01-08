@@ -31,7 +31,7 @@ function MTableGroupbar(props) {
     border: '1px solid #ccc',
     borderStyle: 'dashed',
   });
-  //_____________________________________________________________________________
+
   return (
     <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
       <Droppable
