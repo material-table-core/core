@@ -115,7 +115,6 @@ function MTableEditCell(props) {
     );
   }
 
-  //__________________________________
   return (
     <TableCell size={props.size} style={getStyle()} padding="none">
       <div style={{ display: 'flex', alignItems: 'center' }}>
