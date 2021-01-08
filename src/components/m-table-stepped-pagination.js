@@ -8,35 +8,35 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
-  handleFirstPageButtonClick = (event) => {
-    this.props.onChangePage(event, 0);
+function MTablePaginationInner(props) {
+  const handleFirstPageButtonClick = (event) => {
+    props.onChangePage(event, 0);
   };
 
-  handleBackButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page - 1);
+  const handleBackButtonClick = (event) => {
+    props.onChangePage(event, props.page - 1);
   };
 
-  handleNextButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page + 1);
+  const handleNextButtonClick = (event) => {
+    props.onChangePage(event, props.page + 1);
   };
 
-  handleNumberButtonClick = (number) => (event) => {
-    this.props.onChangePage(event, number);
+  const handleNumberButtonClick = (number) => (event) => {
+    props.onChangePage(event, number);
   };
 
-  handleLastPageButtonClick = (event) => {
-    this.props.onChangePage(
+  const handleLastPageButtonClick = (event) => {
+    props.onChangePage(
       event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
+      Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
   };
 
-  renderPagesButton(start, end) {
+  function renderPagesButton(start, end) {
     const buttons = [];
 
     for (let p = start; p <= end; p++) {
-      const buttonVariant = p === this.props.page ? 'contained' : 'text';
+      const buttonVariant = p === props.page ? 'contained' : 'text';
       buttons.push(
         <Button
           size="small"
@@ -47,9 +47,9 @@ class MTablePaginationInner extends React.Component {
             minWidth: '30px',
             minHeight: '30px',
           }}
-          disabled={p === this.props.page}
+          disabled={p === props.page}
           variant={buttonVariant}
-          onClick={this.handleNumberButtonClick(p)}
+          onClick={handleNumberButtonClick(p)}
           key={p}
         >
           {p + 1}
@@ -60,7 +60,7 @@ class MTablePaginationInner extends React.Component {
     return <span>{buttons}</span>;
   }
 
-  render() {
+  function render() {
     const {
       classes,
       count,
@@ -68,11 +68,11 @@ class MTablePaginationInner extends React.Component {
       rowsPerPage,
       theme,
       showFirstLastPageButtons,
-    } = this.props;
+    } = props;
 
     const localization = {
       ...MTablePaginationInner.defaultProps.localization,
-      ...this.props.localization,
+      ...props.localization,
     };
     const maxPages = Math.ceil(count / rowsPerPage) - 1;
 
@@ -85,14 +85,14 @@ class MTablePaginationInner extends React.Component {
           <Tooltip title={localization.firstTooltip}>
             <span>
               <IconButton
-                onClick={this.handleFirstPageButtonClick}
+                onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
                 aria-label={localization.firstAriaLabel}
               >
                 {theme.direction === 'rtl' ? (
-                  <this.props.icons.LastPage />
+                  <props.icons.LastPage />
                 ) : (
-                  <this.props.icons.FirstPage />
+                  <props.icons.FirstPage />
                 )}
               </IconButton>
             </span>
@@ -101,25 +101,23 @@ class MTablePaginationInner extends React.Component {
         <Tooltip title={localization.previousTooltip}>
           <span>
             <IconButton
-              onClick={this.handleBackButtonClick}
+              onClick={handleBackButtonClick}
               disabled={page === 0}
               aria-label={localization.previousAriaLabel}
             >
-              <this.props.icons.PreviousPage />
+              <props.icons.PreviousPage />
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden smDown={true}>
-          {this.renderPagesButton(pageStart, pageEnd)}
-        </Hidden>
+        <Hidden smDown={true}>{renderPagesButton(pageStart, pageEnd)}</Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
-              onClick={this.handleNextButtonClick}
+              onClick={handleNextButtonClick}
               disabled={page >= maxPages}
               aria-label={localization.nextAriaLabel}
             >
-              <this.props.icons.NextPage />
+              <props.icons.NextPage />
             </IconButton>
           </span>
         </Tooltip>
@@ -127,14 +125,14 @@ class MTablePaginationInner extends React.Component {
           <Tooltip title={localization.lastTooltip}>
             <span>
               <IconButton
-                onClick={this.handleLastPageButtonClick}
+                onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label={localization.lastAriaLabel}
               >
                 {theme.direction === 'rtl' ? (
-                  <this.props.icons.FirstPage />
+                  <props.icons.FirstPage />
                 ) : (
-                  <this.props.icons.LastPage />
+                  <props.icons.LastPage />
                 )}
               </IconButton>
             </span>
@@ -143,6 +141,7 @@ class MTablePaginationInner extends React.Component {
       </div>
     );
   }
+  return render();
 }
 
 const actionsStyles = (theme) => ({
