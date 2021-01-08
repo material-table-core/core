@@ -7,13 +7,8 @@ import * as React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
-class MTableGroupbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  getItemStyle = (isDragging, draggableStyle) => ({
+function MTableGroupbar(props) {
+  const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     // padding: '8px 16px',
@@ -26,7 +21,7 @@ class MTableGroupbar extends React.Component {
     ...draggableStyle,
   });
 
-  getListStyle = (isDraggingOver) => ({
+  const getListStyle = (isDraggingOver) => ({
     // background: isDraggingOver ? 'lightblue' : '#0000000a',
     background: '#0000000a',
     display: 'flex',
@@ -36,88 +31,84 @@ class MTableGroupbar extends React.Component {
     border: '1px solid #ccc',
     borderStyle: 'dashed',
   });
-
-  render() {
-    return (
-      <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
-        <Droppable
-          droppableId="groups"
-          direction="horizontal"
-          placeholder="Deneme"
-        >
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={this.getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.props.groupColumns.length > 0 && (
-                <Typography variant="caption" style={{ padding: 8 }}>
-                  {this.props.localization.groupedBy}
-                </Typography>
-              )}
-              {this.props.groupColumns.map((columnDef, index) => {
-                return (
-                  <Draggable
-                    key={columnDef.tableData.id}
-                    draggableId={columnDef.tableData.id.toString()}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
+  //_____________________________________________________________________________
+  return (
+    <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
+      <Droppable
+        droppableId="groups"
+        direction="horizontal"
+        placeholder="Deneme"
+      >
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            style={getListStyle(snapshot.isDraggingOver)}
+          >
+            {props.groupColumns.length > 0 && (
+              <Typography variant="caption" style={{ padding: 8 }}>
+                {props.localization.groupedBy}
+              </Typography>
+            )}
+            {props.groupColumns.map((columnDef, index) => {
+              return (
+                <Draggable
+                  key={columnDef.tableData.id}
+                  draggableId={columnDef.tableData.id.toString()}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      <Chip
                         {...provided.dragHandleProps}
-                        style={this.getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style
-                        )}
-                      >
-                        <Chip
-                          {...provided.dragHandleProps}
-                          onClick={() => this.props.onSortChanged(columnDef)}
-                          label={
-                            <div
-                              style={{ display: 'flex', alignItems: 'center' }}
-                            >
-                              <div style={{ float: 'left' }}>
-                                {columnDef.title}
-                              </div>
-                              {columnDef.tableData.groupSort && (
-                                <this.props.icons.SortArrow
-                                  style={{
-                                    transition: '300ms ease all',
-                                    transform:
-                                      columnDef.tableData.groupSort === 'asc'
-                                        ? 'rotate(-180deg)'
-                                        : 'none',
-                                    fontSize: 18,
-                                  }}
-                                />
-                              )}
+                        onClick={() => props.onSortChanged(columnDef)}
+                        label={
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
+                            <div style={{ float: 'left' }}>
+                              {columnDef.title}
                             </div>
-                          }
-                          style={{ boxShadow: 'none', textTransform: 'none' }}
-                          onDelete={() =>
-                            this.props.onGroupRemoved(columnDef, index)
-                          }
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {this.props.groupColumns.length === 0 && (
-                <Typography variant="caption" style={{ padding: 8 }}>
-                  {this.props.localization.placeholder}
-                </Typography>
-              )}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </Toolbar>
-    );
-  }
+                            {columnDef.tableData.groupSort && (
+                              <props.icons.SortArrow
+                                style={{
+                                  transition: '300ms ease all',
+                                  transform:
+                                    columnDef.tableData.groupSort === 'asc'
+                                      ? 'rotate(-180deg)'
+                                      : 'none',
+                                  fontSize: 18,
+                                }}
+                              />
+                            )}
+                          </div>
+                        }
+                        style={{ boxShadow: 'none', textTransform: 'none' }}
+                        onDelete={() => props.onGroupRemoved(columnDef, index)}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              );
+            })}
+            {props.groupColumns.length === 0 && (
+              <Typography variant="caption" style={{ padding: 8 }}>
+                {props.localization.placeholder}
+              </Typography>
+            )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </Toolbar>
+  );
 }
 
 MTableGroupbar.defaultProps = {};
