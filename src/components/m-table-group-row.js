@@ -6,100 +6,99 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-export default class MTableGroupRow extends React.Component {
-  rotateIconStyle = (isOpen) => ({
+export default function MTableGroupRow() {
+  const rotateIconStyle = (isOpen) => ({
     transform: isOpen ? 'rotate(90deg)' : 'none',
   });
 
-  render() {
-    let colSpan = this.props.columns.filter((columnDef) => !columnDef.hidden)
-      .length;
-    this.props.options.selection && colSpan++;
-    this.props.detailPanel && colSpan++;
-    this.props.actions && this.props.actions.length > 0 && colSpan++;
-    const column = this.props.groups[this.props.level];
+  function render() {
+    let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
+    props.options.selection && colSpan++;
+    props.detailPanel && colSpan++;
+    props.actions && props.actions.length > 0 && colSpan++;
+    const column = props.groups[props.level];
 
     let detail;
-    if (this.props.groupData.isExpanded) {
-      if (this.props.groups.length > this.props.level + 1) {
+    if (props.groupData.isExpanded) {
+      if (props.groups.length > props.level + 1) {
         // Is there another group
-        detail = this.props.groupData.groups.map((groupData, index) => (
-          <this.props.components.GroupRow
-            actions={this.props.actions}
+        detail = props.groupData.groups.map((groupData, index) => (
+          <props.components.GroupRow
+            actions={props.actions}
             key={groupData.value || '' + index}
-            columns={this.props.columns}
-            components={this.props.components}
-            detailPanel={this.props.detailPanel}
-            getFieldValue={this.props.getFieldValue}
+            columns={props.columns}
+            components={props.components}
+            detailPanel={props.detailPanel}
+            getFieldValue={props.getFieldValue}
             groupData={groupData}
-            groups={this.props.groups}
-            icons={this.props.icons}
-            level={this.props.level + 1}
-            path={[...this.props.path, index]}
-            onGroupExpandChanged={this.props.onGroupExpandChanged}
-            onRowSelected={this.props.onRowSelected}
-            onRowClick={this.props.onRowClick}
-            onToggleDetailPanel={this.props.onToggleDetailPanel}
-            onTreeExpandChanged={this.props.onTreeExpandChanged}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-            options={this.props.options}
-            hasAnyEditingRow={this.props.hasAnyEditingRow}
-            isTreeData={this.props.isTreeData}
-            cellEditable={this.props.cellEditable}
-            onCellEditStarted={this.props.onCellEditStarted}
-            onCellEditFinished={this.props.onCellEditFinished}
-            scrollWidth={this.props.scrollWidth}
+            groups={props.groups}
+            icons={props.icons}
+            level={props.level + 1}
+            path={[...props.path, index]}
+            onGroupExpandChanged={props.onGroupExpandChanged}
+            onRowSelected={props.onRowSelected}
+            onRowClick={props.onRowClick}
+            onToggleDetailPanel={props.onToggleDetailPanel}
+            onTreeExpandChanged={props.onTreeExpandChanged}
+            onEditingCanceled={props.onEditingCanceled}
+            onEditingApproved={props.onEditingApproved}
+            options={props.options}
+            hasAnyEditingRow={props.hasAnyEditingRow}
+            isTreeData={props.isTreeData}
+            cellEditable={props.cellEditable}
+            onCellEditStarted={props.onCellEditStarted}
+            onCellEditFinished={props.onCellEditFinished}
+            scrollWidth={props.scrollWidth}
           />
         ));
       } else {
-        detail = this.props.groupData.data.map((rowData, index) => {
+        detail = props.groupData.data.map((rowData, index) => {
           if (rowData.tableData.editing) {
             return (
-              <this.props.components.EditRow
-                columns={this.props.columns}
-                components={this.props.components}
+              <props.components.EditRow
+                columns={props.columns}
+                components={props.components}
                 data={rowData}
-                icons={this.props.icons}
-                path={[...this.props.path, index]}
-                localization={this.props.localization}
+                icons={props.icons}
+                path={[...props.path, index]}
+                localization={props.localization}
                 key={index}
                 mode={rowData.tableData.editing}
-                options={this.props.options}
-                isTreeData={this.props.isTreeData}
-                detailPanel={this.props.detailPanel}
-                onEditingCanceled={this.props.onEditingCanceled}
-                onEditingApproved={this.props.onEditingApproved}
-                getFieldValue={this.props.getFieldValue}
-                onBulkEditRowChanged={this.props.onBulkEditRowChanged}
-                scrollWidth={this.props.scrollWidth}
+                options={props.options}
+                isTreeData={props.isTreeData}
+                detailPanel={props.detailPanel}
+                onEditingCanceled={props.onEditingCanceled}
+                onEditingApproved={props.onEditingApproved}
+                getFieldValue={props.getFieldValue}
+                onBulkEditRowChanged={props.onBulkEditRowChanged}
+                scrollWidth={props.scrollWidth}
               />
             );
           } else {
             return (
-              <this.props.components.Row
-                actions={this.props.actions}
+              <props.components.Row
+                actions={props.actions}
                 key={index}
-                columns={this.props.columns}
-                components={this.props.components}
+                columns={props.columns}
+                components={props.components}
                 data={rowData}
-                detailPanel={this.props.detailPanel}
-                getFieldValue={this.props.getFieldValue}
-                icons={this.props.icons}
-                path={[...this.props.path, index]}
-                onRowSelected={this.props.onRowSelected}
-                onRowClick={this.props.onRowClick}
-                onToggleDetailPanel={this.props.onToggleDetailPanel}
-                options={this.props.options}
-                isTreeData={this.props.isTreeData}
-                onTreeExpandChanged={this.props.onTreeExpandChanged}
-                onEditingCanceled={this.props.onEditingCanceled}
-                onEditingApproved={this.props.onEditingApproved}
-                hasAnyEditingRow={this.props.hasAnyEditingRow}
-                cellEditable={this.props.cellEditable}
-                onCellEditStarted={this.props.onCellEditStarted}
-                onCellEditFinished={this.props.onCellEditFinished}
-                scrollWidth={this.props.scrollWidth}
+                detailPanel={props.detailPanel}
+                getFieldValue={props.getFieldValue}
+                icons={props.icons}
+                path={[...props.path, index]}
+                onRowSelected={props.onRowSelected}
+                onRowClick={props.onRowClick}
+                onToggleDetailPanel={props.onToggleDetailPanel}
+                options={props.options}
+                isTreeData={props.isTreeData}
+                onTreeExpandChanged={props.onTreeExpandChanged}
+                onEditingCanceled={props.onEditingCanceled}
+                onEditingApproved={props.onEditingApproved}
+                hasAnyEditingRow={props.hasAnyEditingRow}
+                cellEditable={props.cellEditable}
+                onCellEditStarted={props.onCellEditStarted}
+                onCellEditFinished={props.onCellEditFinished}
+                scrollWidth={props.scrollWidth}
               />
             );
           }
@@ -108,56 +107,58 @@ export default class MTableGroupRow extends React.Component {
     }
 
     const freeCells = [];
-    for (let i = 0; i < this.props.level; i++) {
+    for (let i = 0; i < props.level; i++) {
       freeCells.push(<TableCell padding="checkbox" key={i} />);
     }
 
-    let value = this.props.groupData.value;
+    let value = props.groupData.value;
     if (column.lookup) {
       value = column.lookup[value];
     }
 
     let title = column.title;
-    if (typeof this.props.options.groupTitle === 'function') {
-      title = this.props.options.groupTitle(this.props.groupData);
+    if (typeof props.options.groupTitle === 'function') {
+      title = props.options.groupTitle(props.groupData);
     } else if (typeof title !== 'string') {
       title = React.cloneElement(title);
     }
 
-    const separator = this.props.options.groupRowSeparator || ': ';
+    const separator = props.options.groupRowSeparator || ': ';
 
     return (
       <>
         <TableRow>
           {freeCells}
-          <this.props.components.Cell
+          <props.components.Cell
             colSpan={colSpan}
             padding="none"
             columnDef={column}
             value={value}
-            icons={this.props.icons}
+            icons={props.icons}
           >
             <IconButton
               style={{
                 transition: 'all ease 200ms',
-                ...this.rotateIconStyle(this.props.groupData.isExpanded),
+                ...rotateIconStyle(props.groupData.isExpanded),
               }}
               onClick={(event) => {
-                this.props.onGroupExpandChanged(this.props.path);
+                props.onGroupExpandChanged(props.path);
               }}
             >
-              <this.props.icons.DetailPanel />
+              <props.icons.DetailPanel />
             </IconButton>
             <b>
               {title}
               {separator}
             </b>
-          </this.props.components.Cell>
+          </props.components.Cell>
         </TableRow>
         {detail}
       </>
     );
   }
+
+  return render();
 }
 
 MTableGroupRow.defaultProps = {
