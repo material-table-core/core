@@ -60,7 +60,7 @@ function MTableEditCell(props) {
   };
 
   const onApprove = () => {
-    setState({ isLoading: true }, () => {
+    setState({ ...state, isLoading: true }, () => {
       props.cellEditable
         .onCellEditApproved(
           state.value, // newValue
@@ -69,11 +69,11 @@ function MTableEditCell(props) {
           props.columnDef // columnDef
         )
         .then(() => {
-          setState({ isLoading: false });
+          setState({ ...state, isLoading: false });
           props.onCellEditFinished(props.rowData, props.columnDef);
         })
         .catch((error) => {
-          setState({ isLoading: false });
+          setState({ ...state, isLoading: false });
         });
     });
   };
@@ -123,7 +123,7 @@ function MTableEditCell(props) {
           <props.components.EditField
             columnDef={props.columnDef}
             value={state.value}
-            onChange={(value) => setState({ value })}
+            onChange={(prevState, value) => setState({ ...prevState, value })}
             onKeyDown={handleKeyDown}
             disabled={state.isLoading}
             rowData={props.rowData}
