@@ -49,24 +49,6 @@ export class MTableToolbar extends React.Component {
     return [columns, data];
   };
 
-  /*
-  exportCsv = () => {
-    if (this.props.exportCsv) {
-      const [cols, datas] = this.getTableData();
-      this.props.exportCsv(cols, datas);
-    }
-    this.setState({ exportButtonAnchorEl: null });
-  };
-
-  exportPdf = () => {
-    if (this.props.exportPdf) {
-      const [cols, datas] = this.getTableData();
-      this.props.exportPdf(cols, datas);
-    }
-    this.setState({ exportButtonAnchorEl: null });
-  };
-  */
-
   renderSearch() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
