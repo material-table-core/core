@@ -690,9 +690,14 @@ const App2 = () => {
     <MaterialTable
       tableRef={ref}
       data={[
-        { name: 'Bar', sirname: 'Zab', age: 44 },
-        { name: 'Baz', sirname: 'Oof', age: 34 },
-        { name: 'Foo', sirname: 'Rab', age: 24 }
+        {
+          name: 'Bar',
+          sirname: 'Zab',
+          age: 44,
+          date: new Date('December 1, 1999')
+        },
+        { name: 'Baz', sirname: 'Oof', age: 34, date: new Date('1/1/1970') },
+        { name: 'Foo', sirname: 'Rab', age: 24, date: new Date(Date.now()) }
       ]}
       columns={[
         {
@@ -701,7 +706,8 @@ const App2 = () => {
           customFilterAndSearch: (term, rowData) => term == rowData.name.length
         },
         { title: 'Sirname', field: 'sirname' },
-        { title: 'Age', field: 'age' }
+        { title: 'Age', field: 'age' },
+        { title: 'Date', field: 'date', type: 'date' }
       ]}
       options={{
         filtering: true,
@@ -715,6 +721,14 @@ const App2 = () => {
             exportFunc: (cols, datas) => ExportCsv(cols, datas, 'mycsvfile')
           }
         ]
+      }}
+      cellEditable={{
+        onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+          return new Promise((resolve, reject) => {
+            console.log('newValue: ' + newValue);
+            setTimeout(resolve, 1000);
+          });
+        }
       }}
       onFilterChange={(appliedFilter) => {
         console.log({ appliedFilter, ref });

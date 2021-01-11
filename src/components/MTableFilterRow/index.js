@@ -43,7 +43,7 @@ export default function MTableFilterRow(props) {
           key={columnDef.tableData.id}
           style={{
             ...props.filterCellStyle,
-            ...columnDef.filterCellStyle,
+            ...columnDef.filterCellStyle
           }}
         >
           {getComponentForColumn(columnDef)}
@@ -106,7 +106,10 @@ export default function MTableFilterRow(props) {
       });
 
     return (
-      <TableRow style={{ height: 10, ...props.filterRowStyle }}>
+      <TableRow
+        id="m--table--filter--row"
+        style={{ height: 10, ...props.filterRowStyle }}
+      >
         {columns}
       </TableRow>
     );
@@ -121,9 +124,9 @@ MTableFilterRow.defaultProps = {
   selection: false,
   hasActions: false,
   localization: {
-    filterTooltip: 'Filter',
+    filterTooltip: 'Filter'
   },
-  hideFilterIcons: false,
+  hideFilterIcons: false
 };
 
 MTableFilterRow.propTypes = {
@@ -138,5 +141,5 @@ MTableFilterRow.propTypes = {
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
   localization: PropTypes.object,
-  hideFilterIcons: PropTypes.bool,
+  hideFilterIcons: PropTypes.bool
 };

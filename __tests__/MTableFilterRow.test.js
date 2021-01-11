@@ -7,10 +7,10 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({ adapter: new Adapter() });
 
 describe('MTableFilterRow Tests', () => {
-  // Needed to silence react-beautiful-dnd console warnings/errors
-  global.window['__react-beautiful-dnd-disable-dev-warnings'] = true;
   let TABLE_REF = createRef();
   beforeEach(() => {
+    // Needed to silence react-beautiful-dnd console warnings/errors
+    global.window['__react-beautiful-dnd-disable-dev-warnings'] = true;
     TABLE_REF = createRef();
   });
 
@@ -39,6 +39,7 @@ describe('MTableFilterRow Tests', () => {
       { title: 'Sirname', field: 'sirname' },
       { title: 'Age', field: 'age' }
     ];
+
     const wrapper = mount(
       <MaterialTable
         tableRef={TABLE_REF}
@@ -47,8 +48,9 @@ describe('MTableFilterRow Tests', () => {
         options={{ filtering: true }}
       />
     );
+    const els = Array.from(wrapper.find('#m--table--filter--row')) || [];
+    const el = els[0];
+    console.log(el.find('#m--table--filter--row'));
     expect(TABLE_REF.current.dataManager.filtered).toBe(true);
-    const filteredData = TABLE_REF.current.dataManager.filterData();
-    console.log({ filteredData });
   });
 });
