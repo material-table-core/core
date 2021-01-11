@@ -308,8 +308,8 @@ export interface Options<RowData extends object> {
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
   exportMenu?: {
-    name: string;
-    handler: (columns: any[], renderData: any[]) => void;
+    label: string;
+    exportFunc: (columns: any[], renderData: any[]) => void;
   }[];
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
