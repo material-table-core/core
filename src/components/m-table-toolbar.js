@@ -10,11 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
-import { CsvBuilder } from 'filefy';
 import PropTypes from 'prop-types';
-import 'jspdf-autotable';
-import * as React from 'react';
-import { defaultExportPdf } from '../utils/exportPdf';
+import React from 'react';
 
 export class MTableToolbar extends React.Component {
   constructor(props) {
@@ -52,42 +49,23 @@ export class MTableToolbar extends React.Component {
     return [columns, data];
   };
 
-  defaultExportCsv = () => {
-    const [columns, data] = this.getTableData();
-
-    let fileName = this.props.title || 'data';
-    if (this.props.exportFileName) {
-      fileName =
-        typeof this.props.exportFileName === 'function'
-          ? this.props.exportFileName()
-          : this.props.exportFileName;
-    }
-
-    const builder = new CsvBuilder(fileName + '.csv');
-    builder
-      .setDelimeter(this.props.exportDelimiter)
-      .setColumns(columns.map((columnDef) => columnDef.title))
-      .addRows(data)
-      .exportFile();
-  };
-
+  /*
   exportCsv = () => {
     if (this.props.exportCsv) {
-      this.props.exportCsv(this.props.columns, this.props.data);
-    } else {
-      this.defaultExportCsv();
+      const [cols, datas] = this.getTableData();
+      this.props.exportCsv(cols, datas);
     }
     this.setState({ exportButtonAnchorEl: null });
   };
 
   exportPdf = () => {
     if (this.props.exportPdf) {
-      this.props.exportPdf(this.props.columns, this.props.data);
-    } else {
-      defaultExportPdf(this.props, this.getTableData);
+      const [cols, datas] = this.getTableData();
+      this.props.exportPdf(cols, datas);
     }
     this.setState({ exportButtonAnchorEl: null });
   };
+  */
 
   renderSearch() {
     const localization = {
@@ -221,7 +199,7 @@ export class MTableToolbar extends React.Component {
             </Menu>
           </span>
         )}
-        {this.props.exportButton && (
+        {this.props.exportMenu.length > 0 && (
           <span>
             <Tooltip title={localization.exportTitle}>
               <IconButton
@@ -241,18 +219,17 @@ export class MTableToolbar extends React.Component {
               open={Boolean(this.state.exportButtonAnchorEl)}
               onClose={() => this.setState({ exportButtonAnchorEl: null })}
             >
-              {(this.props.exportButton === true ||
-                this.props.exportButton.csv) && (
-                <MenuItem key="export-csv" onClick={this.exportCsv}>
-                  {localization.exportCSVName}
-                </MenuItem>
-              )}
-              {(this.props.exportButton === true ||
-                this.props.exportButton.pdf) && (
-                <MenuItem key="export-pdf" onClick={this.exportPdf}>
-                  {localization.exportPDFName}
-                </MenuItem>
-              )}
+              {this.props.exportMenu.map((menuitem, index) => {
+                const [cols, datas] = this.getTableData();
+                return (
+                  <MenuItem
+                    key={`${menuitem.label}${index}`}
+                    onClick={() => menuitem.exportFunc(cols, datas)}
+                  >
+                    {menuitem.label}
+                  </MenuItem>
+                );
+              })}
             </Menu>
           </span>
         )}
@@ -369,8 +346,6 @@ MTableToolbar.defaultProps = {
     showColumnsAriaLabel: 'Show Columns',
     exportTitle: 'Export',
     exportAriaLabel: 'Export',
-    exportCSVName: 'Export as CSV',
-    exportPDFName: 'Export as PDF',
     searchTooltip: 'Search',
     searchPlaceholder: 'Search',
     searchAriaLabel: 'Search',
@@ -411,14 +386,12 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,
-  exportButton: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })
-  ]),
-  exportDelimiter: PropTypes.string,
-  exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  exportCsv: PropTypes.func,
-  exportPdf: PropTypes.func,
+  exportMenu: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      handler: PropTypes.func
+    })
+  ),
   classes: PropTypes.object,
   searchAutoFocus: PropTypes.bool
 };

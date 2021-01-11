@@ -307,12 +307,10 @@ export interface Options<RowData extends object> {
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
-  exportButton?: boolean | { csv?: boolean; pdf?: boolean };
-  exportDelimiter?: string;
-  exportFileName?:
-    | string
-    | ((columns: Column<RowData>, data: string[][]) => string);
-  exportCsv?: (columns: any[], renderData: any[]) => void;
+  exportMenu?: {
+    name: string;
+    handler: (columns: any[], renderData: any[]) => void;
+  }[];
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
   filterRowStyle?: React.CSSProperties;

@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../../src';
+import { ExportPdf, ExportCsv } from '../../exporters';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -704,7 +705,16 @@ const App2 = () => {
       ]}
       options={{
         filtering: true,
-        exportButton: true
+        exportMenu: [
+          {
+            label: 'Export PDF',
+            exportFunc: (cols, datas) => ExportPdf(cols, datas, 'mypdffile')
+          },
+          {
+            label: 'Export CSV',
+            exportFunc: (cols, datas) => ExportCsv(cols, datas, 'mycsvfile')
+          }
+        ]
       }}
       onFilterChange={(appliedFilter) => {
         console.log({ appliedFilter, ref });
