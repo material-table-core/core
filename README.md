@@ -79,7 +79,8 @@
 - **We are not attempting to hijack what [`mbrn`](https://github.com/mbrn/material-table) has created**
 - **We will always remain a true fork of `mbrn/material-table`**
   - We plan on pushing all changes upstream
-- **We will always remain 100% compatible with `mbrn/material-table`**
+- **We will ~~always~~ attempt to remain 100% compatible with `mbrn/material-table`**
+  - Ok so the "always" part was a stretch. [See here](https://material-table-core.com/docs/getting-started/breakingchanges) for more.
   - We are here to resolve issues, not hijack a repo
 - Life happens, and `mbrn` has become rather busy
 - Only `mbrn` can update `material-table`
