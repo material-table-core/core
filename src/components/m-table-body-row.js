@@ -182,6 +182,7 @@ export default class MTableBodyRow extends React.Component {
           }}
         >
           <IconButton
+            aria-label="Detail panel visiblity toggle"
             size={size}
             style={{
               transition: 'all ease 200ms',
@@ -244,6 +245,7 @@ export default class MTableBodyRow extends React.Component {
 
               iconButton = (
                 <IconButton
+                  aria-label="Detail panel visiblity toggle"
                   size={size}
                   key={'key-detail-panel-' + index}
                   style={{
@@ -296,6 +298,7 @@ export default class MTableBodyRow extends React.Component {
           style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}
         >
           <IconButton
+            aria-label="Detail panel visiblity toggle"
             size={size}
             style={{
               transition: 'all ease 200ms',
