@@ -39,14 +39,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Get Tag
+        # GH Actions passes the tag as `/refs/foo/bar`, this allows us to just grab `bar`
+        run: echo "FULL_RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ $FULL_RELEASE_VERSION }}
+          release_name: ${{ $FULL_RELEASE_VERSION }}
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
