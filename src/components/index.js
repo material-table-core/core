@@ -13,6 +13,7 @@ import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
 
 export { default as MTableActions } from './MTableActions';
+export { default as MTableFilterRow } from './MTableFilterRow';
 
 export {
   MTableAction,
