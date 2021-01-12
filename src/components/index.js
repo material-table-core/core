@@ -1,5 +1,4 @@
 import MTableAction from './m-table-action';
-import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
 import MTableGroupbar from './m-table-groupbar';
@@ -13,7 +12,7 @@ import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
 
-export { default as MTableFilterRow } from './MTableFilterRow';
+export { default as MTableActions } from './MTableActions';
 
 export {
   MTableAction,
