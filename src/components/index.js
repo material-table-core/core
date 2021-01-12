@@ -16,7 +16,6 @@ export { default as MTableActions } from './MTableActions';
 
 export {
   MTableAction,
-  MTableActions,
   MTableBody,
   MTableBodyRow,
   MTableGroupbar,
