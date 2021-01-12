@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { render } from 'react-dom';
-/* eslint-enable no-unused-vars */
 
-function MTableAction() {
+export default function MTableAction(props) {
   function render() {
     let action = props.action;
 
@@ -90,5 +87,3 @@ MTableAction.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.string
 };
-
-export default MTableAction;

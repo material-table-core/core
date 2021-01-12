@@ -1,4 +1,3 @@
-import MTableAction from './m-table-action';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
 import MTableGroupbar from './m-table-groupbar';
@@ -12,11 +11,12 @@ import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
 
+// Trying to keep these in alphabetical order
+export { default as MTableAction } from './MTableAction';
 export { default as MTableActions } from './MTableActions';
 export { default as MTableFilterRow } from './MTableFilterRow';
 
 export {
-  MTableAction,
   MTableBody,
   MTableBodyRow,
   MTableGroupbar,
