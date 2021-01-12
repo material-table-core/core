@@ -4,21 +4,22 @@ import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import { render } from 'react-dom';
 /* eslint-enable no-unused-vars */
 
-class MTableAction extends React.Component {
-  render() {
-    let action = this.props.action;
+function MTableAction() {
+  function render() {
+    let action = props.action;
 
     if (typeof action === 'function') {
-      action = action(this.props.data);
+      action = action(props.data);
       if (!action) {
         return null;
       }
     }
 
     if (action.action) {
-      action = action.action(this.props.data);
+      action = action.action(props.data);
       if (!action) {
         return null;
       }
@@ -28,11 +29,11 @@ class MTableAction extends React.Component {
       return null;
     }
 
-    const disabled = action.disabled || this.props.disabled;
+    const disabled = action.disabled || props.disabled;
 
     const handleOnClick = (event) => {
       if (action.onClick) {
-        action.onClick(event, this.props.data);
+        action.onClick(event, props.data);
         event.stopPropagation();
       }
     };
@@ -48,7 +49,7 @@ class MTableAction extends React.Component {
 
     const button = (
       <IconButton
-        size={this.props.size}
+        size={props.size}
         color="inherit"
         disabled={disabled}
         onClick={handleOnClick}
@@ -71,6 +72,8 @@ class MTableAction extends React.Component {
       return button;
     }
   }
+
+  return render();
 }
 
 MTableAction.defaultProps = {
