@@ -56,7 +56,7 @@
 
 </div>
 
-💾 [Installation](#installation)
+💾 [Installation](https://material-table-core.com/docs/#install)
 
 🎉 [Usage](#usage)
 
@@ -85,16 +85,6 @@
 - Life happens, and `mbrn` has become rather busy
 - Only `mbrn` can update `material-table`
 - We have chosen to support `mbrn` and `material-table` with the hopes of keeping the project alive
-
-## Installation
-
-#### yarn
-
-`yarn add @material-table/core`
-
-#### npm
-
-`npm install @material-table/core`
 
 ## Usage
 
