@@ -1,19 +1,15 @@
-/* eslint-disable no-unused-vars */
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import withTheme from '@material-ui/core/styles/withTheme';
-import { MTable } from '..';
-/* eslint-enable no-unused-vars */
 
 function MTableEditCell(props) {
   const [state, setState] = useState(() => ({
     isLoading: false,
     value: props.rowData[props.columnDef.field],
   }));
-
+  
   const getStyle = () => {
     let cellStyle = {
       boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
@@ -23,7 +19,7 @@ function MTableEditCell(props) {
       fontSize: 'inherit',
       fontFamily: 'inherit',
       fontWeight: 'inherit',
-      padding: '0 16px',
+      padding: '0 16px'
     };
 
     if (typeof props.columnDef.cellStyle === 'function') {
@@ -136,7 +132,7 @@ function MTableEditCell(props) {
 }
 
 MTableEditCell.defaultProps = {
-  columnDef: {},
+  columnDef: {}
 };
 
 MTableEditCell.propTypes = {
@@ -148,7 +144,7 @@ MTableEditCell.propTypes = {
   localization: PropTypes.object.isRequired,
   onCellEditFinished: PropTypes.func.isRequired,
   rowData: PropTypes.object.isRequired,
-  size: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default withTheme(MTableEditCell);
