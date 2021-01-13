@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 export default function BooleanFilter({ columnDef, onFilterChanged }) {
   return (
