@@ -165,7 +165,7 @@ MTableGroupRow.defaultProps = {
   columns: [],
   groups: [],
   options: {},
-  level: 0,
+  level: 0
 };
 
 MTableGroupRow.propTypes = {
@@ -174,7 +174,7 @@ MTableGroupRow.propTypes = {
   components: PropTypes.object,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.object)
   ]),
   getFieldValue: PropTypes.func,
   groupData: PropTypes.object,
@@ -197,5 +197,5 @@ MTableGroupRow.propTypes = {
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
-  onBulkEditRowChanged: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func
 };
