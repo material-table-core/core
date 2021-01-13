@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, CircularProgress } from '@material-ui/core';
 import { withTheme } from '@material-ui/core/styles';
@@ -8,6 +8,23 @@ function MTableEditCell(props) {
     isLoading: false,
     value: props.rowData[props.columnDef.field]
   }));
+
+  useEffect(() => {
+    props.cellEditable
+      .onCellEditApproved(
+        state.value, // newValue
+        props.rowData[props.columnDef.field], // oldValue
+        props.rowData, // rowData with old value
+        props.columnDef // columnDef
+      )
+      .then(() => {
+        setState({ ...state, isLoading: false });
+        props.onCellEditFinished(props.rowData, props.columnDef);
+      })
+      .catch(() => {
+        setState({ ...state, isLoading: false });
+      });
+  }, []);
 
   const getStyle = () => {
     let cellStyle = {
@@ -55,22 +72,7 @@ function MTableEditCell(props) {
   };
 
   const onApprove = () => {
-    setState({ ...state, isLoading: true }, () => {
-      props.cellEditable
-        .onCellEditApproved(
-          state.value, // newValue
-          props.rowData[props.columnDef.field], // oldValue
-          props.rowData, // rowData with old value
-          props.columnDef // columnDef
-        )
-        .then(() => {
-          setState({ ...state, isLoading: false });
-          props.onCellEditFinished(props.rowData, props.columnDef);
-        })
-        .catch(() => {
-          setState({ ...state, isLoading: false });
-        });
-    });
+    setState({ ...state, isLoading: true });
   };
 
   const onCancel = () => {
