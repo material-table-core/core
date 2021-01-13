@@ -12,7 +12,7 @@ export default function MTableEditRow(props) {
   const [state, setState] = React.useState(() => ({
     data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData(),
   }));
-
+  
   function createRowData() {
     return props.columns
       .filter((column) => 'initialEditValue' in column && column.field)
@@ -37,7 +37,7 @@ export default function MTableEditRow(props) {
             : byString(state.data, columnDef.field);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
-            color: 'inherit',
+            color: 'inherit'
           };
           if (typeof columnDef.cellStyle === 'function') {
             cellStyle = {
@@ -221,7 +221,7 @@ export default function MTableEditRow(props) {
   function getStyle() {
     const style = {
       // boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.2)',
-      borderBottom: '1px solid red',
+      borderBottom: '1px solid red'
     };
 
     return style;
@@ -263,7 +263,7 @@ export default function MTableEditRow(props) {
           colSpan={colSpan}
         >
           <Typography variant="h6">{localization.deleteText}</Typography>
-        </TableCell>,
+        </TableCell>
       ];
     }
 
@@ -368,9 +368,9 @@ MTableEditRow.defaultProps = {
   localization: {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure you want to delete this row?',
+    deleteText: 'Are you sure you want to delete this row?'
   },
-  onBulkEditRowChanged: () => {},
+  onBulkEditRowChanged: () => {}
 };
 
 MTableEditRow.propTypes = {
@@ -380,7 +380,7 @@ MTableEditRow.propTypes = {
   data: PropTypes.object,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
@@ -392,5 +392,5 @@ MTableEditRow.propTypes = {
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  onBulkEditRowChanged: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func
 };
