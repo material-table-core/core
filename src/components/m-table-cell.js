@@ -1,15 +1,10 @@
-/* eslint-disable no-unused-vars */
-import * as React from 'react';
+import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import PropTypes from 'prop-types';
 import parseISO from 'date-fns/parseISO';
-import * as CommonValues from '../utils/common-values';
+import CommonValues from '../utils/common-values';
 
-/* eslint-enable no-unused-vars */
-
-/* eslint-disable no-useless-escape */
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
-/* eslint-enable no-useless-escape */
 
 export default function MTableCell({
   icons,
@@ -39,7 +34,7 @@ export default function MTableCell({
         style={{
           borderBottom: '1px dashed grey',
           cursor: 'pointer',
-          width: 'max-content',
+          width: 'max-content'
         }}
         onClick={(e) => {
           e.stopPropagation();
@@ -171,7 +166,7 @@ export default function MTableCell({
     if (typeof columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...columnDef.cellStyle(value, rowData),
+        ...columnDef.cellStyle(value, rowData)
       };
     } else {
       cellStyle = { ...cellStyle, ...columnDef.cellStyle };
