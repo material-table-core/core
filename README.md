@@ -54,7 +54,7 @@
       </a>    
     </section>
   </p> 
-  <!-- ^^^ end badges ^^^ -->
+  <!-- ^^^ end badges ^^ -->
 
 </div>
 
