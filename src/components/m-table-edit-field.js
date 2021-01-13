@@ -12,7 +12,7 @@ import {
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
-  DateTimePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 
@@ -39,7 +39,7 @@ function MTableEditField() {
           value={props.value === undefined ? '' : props.value}
           onChange={(event) => props.onChange(event.target.value)}
           style={{
-            fontSize: 13,
+            fontSize: 13
           }}
           SelectDisplayProps={{ 'aria-label': props.columnDef.title }}
         >
@@ -71,7 +71,7 @@ function MTableEditField() {
                 style={{
                   padding: 0,
                   width: 24,
-                  marginLeft: 9,
+                  marginLeft: 9
                 }}
                 inputProps={{
                   'aria-label': props.columnDef.title,
@@ -100,8 +100,8 @@ function MTableEditField() {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
             'aria-label': `${props.columnDef.title}: press space to edit`,
@@ -122,8 +122,8 @@ function MTableEditField() {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
             'aria-label': `${props.columnDef.title}: press space to edit`,
@@ -144,8 +144,8 @@ function MTableEditField() {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
             'aria-label': `${props.columnDef.title}: press space to edit`,
@@ -174,8 +174,8 @@ function MTableEditField() {
         InputProps={{
           style: {
             minWidth: 50,
-            fontSize: 13,
-          },
+            fontSize: 13
+          }
         }}
         inputProps={{
           'aria-label': props.columnDef.title,
@@ -202,8 +202,8 @@ function MTableEditField() {
         InputProps={{
           style: {
             fontSize: 13,
-            textAlign: 'right',
-          },
+            textAlign: 'right'
+          }
         }}
         inputProps={{
           'aria-label': props.columnDef.title,
@@ -246,7 +246,7 @@ MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   columnDef: PropTypes.object.isRequired,
-  locale: PropTypes.object,
+  locale: PropTypes.object
 };
 
 export default MTableEditField;
