@@ -101,7 +101,7 @@ Simply update your imports to receive the latest updates!
 
 #### Compatibility
 
-If you can import it from `material-table` you can import it from `@material-table/core`. This will never change.
+If you can import it from `material-table` you can import it from `@material-table/core`. ~~This will never change.~~ Ok, we admit, that was a little bold. [Please see here for more info](https://material-table-core.com/docs/getting-started/breakingchanges).
 
 ```javascript
 import MaterialTable, { MTableAction /*, etc...*/ } from '@material-table/core';
