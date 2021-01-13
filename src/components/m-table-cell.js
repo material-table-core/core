@@ -134,13 +134,13 @@ export default function MTableCell({
           maximumFractionDigits:
             currencySetting.maximumFractionDigits !== undefined
               ? currencySetting.maximumFractionDigits
-              : 2,
+              : 2
         }
       ).format(value !== undefined ? value : 0);
     } else {
       return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'USD'
       }).format(value !== undefined ? value : 0);
     }
   }
@@ -165,7 +165,7 @@ export default function MTableCell({
       boxSizing: 'border-box',
       fontSize: 'inherit',
       fontFamily: 'inherit',
-      fontWeight: 'inherit',
+      fontWeight: 'inherit'
     };
 
     if (typeof columnDef.cellStyle === 'function') {
@@ -200,12 +200,12 @@ export default function MTableCell({
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: undefined,
+  value: undefined
 };
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };
