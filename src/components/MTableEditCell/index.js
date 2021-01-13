@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import withTheme from '@material-ui/core/styles/withTheme';
+import { TableCell, CircularProgress } from '@material-ui/core';
+import { withTheme } from '@material-ui/core/styles';
 
 function MTableEditCell(props) {
   const [state, setState] = useState(() => ({
     isLoading: false,
-    value: props.rowData[props.columnDef.field],
+    value: props.rowData[props.columnDef.field]
   }));
-  
+
   const getStyle = () => {
     let cellStyle = {
       boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
@@ -25,7 +24,7 @@ function MTableEditCell(props) {
     if (typeof props.columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...props.columnDef.cellStyle(state.value, props.rowData),
+        ...props.columnDef.cellStyle(state.value, props.rowData)
       };
     } else {
       cellStyle = { ...cellStyle, ...props.columnDef.cellStyle };
@@ -38,7 +37,7 @@ function MTableEditCell(props) {
           state.value,
           props.rowData,
           props.columnDef
-        ),
+        )
       };
     } else {
       cellStyle = { ...cellStyle, ...props.cellEditable.cellStyle };
@@ -68,7 +67,7 @@ function MTableEditCell(props) {
           setState({ ...state, isLoading: false });
           props.onCellEditFinished(props.rowData, props.columnDef);
         })
-        .catch((error) => {
+        .catch(() => {
           setState({ ...state, isLoading: false });
         });
     });
@@ -92,14 +91,14 @@ function MTableEditCell(props) {
         icon: props.icons.Check,
         tooltip: props.localization.saveTooltip,
         onClick: onApprove,
-        disabled: state.isLoading,
+        disabled: state.isLoading
       },
       {
         icon: props.icons.Clear,
         tooltip: props.localization.cancelTooltip,
         onClick: onCancel,
-        disabled: state.isLoading,
-      },
+        disabled: state.isLoading
+      }
     ];
 
     return (
