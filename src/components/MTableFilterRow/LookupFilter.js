@@ -8,7 +8,7 @@ import {
   InputLabel,
   ListItemText,
   MenuItem,
-  Select,
+  Select
 } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
@@ -18,12 +18,12 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
-export default function LookupFilter({ columnDef }) {
+export default function LookupFilter({ columnDef, onFilterChanged }) {
   const [selectedFilter, setSelectedFilter] = useState(
     columnDef.tableData.filterValue || []
   );
@@ -45,13 +45,13 @@ export default function LookupFilter({ columnDef }) {
         value={selectedFilter}
         onClose={() => {
           if (columnDef.filterOnItemSelect !== true) {
-            props.onFilterChanged(columnDef.tableData.id, selectedFilter);
+            onFilterChanged(columnDef.tableData.id, selectedFilter);
           }
         }}
         onChange={(event) => {
           setSelectedFilter(event.target.value);
           if (columnDef.filterOnItemSelect === true) {
-            props.onFilterChanged(columnDef.tableData.id, event.target.value);
+            onFilterChanged(columnDef.tableData.id, event.target.value);
           }
         }}
         input={
