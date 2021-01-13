@@ -28,12 +28,14 @@
         >
       </a>
       <!-- publish status -->
+      <!--
       <a href="https://github.com/material-table-core/core/actions?query=workflow%3APublish">
         <img 
           title="Publish" 
           src="https://github.com/material-table-core/core/workflows/Publish/badge.svg"
         >
       </a>
+      -->
       <!-- npm package -->
       <a href="https://www.npmjs.com/package/@material-table/core">
         <img 
