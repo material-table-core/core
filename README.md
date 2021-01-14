@@ -28,12 +28,14 @@
         >
       </a>
       <!-- publish status -->
+      <!--
       <a href="https://github.com/material-table-core/core/actions?query=workflow%3APublish">
         <img 
           title="Publish" 
           src="https://github.com/material-table-core/core/workflows/Publish/badge.svg"
         >
       </a>
+      -->
       <!-- npm package -->
       <a href="https://www.npmjs.com/package/@material-table/core">
         <img 
@@ -43,20 +45,20 @@
       </a>
     </section>
     <section>
-      <!-- gitter -->
-      <a href="https://gitter.im/MaterialTableCore/community">
+      <!-- discord -->
+      <a href="https://discord.com/channels/796859493412765697/">
         <img 
-          title="chat_on_gitter" 
-          src="https://img.shields.io/gitter/room/material-table-core/core"
-        >
+           alt="Discord" 
+           src="https://img.shields.io/discord/796859493412765697?label=discord"
+         >
       </a>    
     </section>
   </p> 
-  <!-- ^^^ end badges ^^^ -->
+  <!-- ^^^ end badges ^^ -->
 
 </div>
 
-💾 [Installation](#installation)
+💾 [Installation](https://material-table-core.com/docs/#install)
 
 🎉 [Usage](#usage)
 
@@ -79,21 +81,12 @@
 - **We are not attempting to hijack what [`mbrn`](https://github.com/mbrn/material-table) has created**
 - **We will always remain a true fork of `mbrn/material-table`**
   - We plan on pushing all changes upstream
-- **We will always remain 100% compatible with `mbrn/material-table`**
+- **We will ~~always~~ attempt to remain 100% compatible with `mbrn/material-table`**
+  - Ok so the "always" part was a stretch. [See here](https://material-table-core.com/docs/getting-started/breakingchanges) for more.
   - We are here to resolve issues, not hijack a repo
 - Life happens, and `mbrn` has become rather busy
 - Only `mbrn` can update `material-table`
 - We have chosen to support `mbrn` and `material-table` with the hopes of keeping the project alive
-
-## Installation
-
-#### yarn
-
-`yarn add @material-table/core`
-
-#### npm
-
-`npm install @material-table/core`
 
 ## Usage
 
@@ -108,7 +101,7 @@ Simply update your imports to receive the latest updates!
 
 #### Compatibility
 
-If you can import it from `material-table` you can import it from `@material-table/core`. This will never change.
+If you can import it from `material-table` you can import it from `@material-table/core`. ~~This will never change.~~ Ok, we admit, that was a little bold. [Please see here for more info](https://material-table-core.com/docs/getting-started/breakingchanges).
 
 ```javascript
 import MaterialTable, { MTableAction /*, etc...*/ } from '@material-table/core';

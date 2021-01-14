@@ -18,7 +18,7 @@ function MTableGroupbar(props) {
     // background: isDragging ? 'lightgreen' : 'grey',
 
     // styles we need to apply on draggables
-    ...draggableStyle,
+    ...draggableStyle
   });
 
   const getListStyle = (isDraggingOver) => ({
@@ -29,7 +29,7 @@ function MTableGroupbar(props) {
     padding: 8,
     overflow: 'auto',
     border: '1px solid #ccc',
-    borderStyle: 'dashed',
+    borderStyle: 'dashed'
   });
 
   return (
@@ -116,8 +116,8 @@ MTableGroupbar.defaultProps = {};
 MTableGroupbar.propTypes = {
   localization: PropTypes.shape({
     groupedBy: PropTypes.string,
-    placeholder: PropTypes.string,
-  }),
+    placeholder: PropTypes.string
+  })
 };
 
 export default MTableGroupbar;
