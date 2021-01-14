@@ -82,7 +82,7 @@ function MTablePaginationInner(props) {
             flex: 1,
             textAlign: 'center',
             alignSelf: 'center',
-            flexBasis: 'inherit',
+            flexBasis: 'inherit'
           }}
         >
           {localization.labelDisplayedRows
@@ -139,9 +139,9 @@ const actionsStyles = (theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    display: 'flex',
+    display: 'flex'
     // lineHeight: '48px'
-  },
+  }
 });
 
 MTablePaginationInner.propTypes = {
@@ -152,19 +152,23 @@ MTablePaginationInner.propTypes = {
   classes: PropTypes.object,
   localization: PropTypes.object,
   theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool,
+  showFirstLastPageButtons: PropTypes.bool
 };
 
 MTablePaginationInner.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
+    firstAriaLabel: 'First Page',
     firstTooltip: 'First Page',
+    previousAriaLabel: 'Previous Page',
     previousTooltip: 'Previous Page',
+    nextAriaLabel: 'Next Page',
     nextTooltip: 'Next Page',
+    lastAriaLabel: 'Last Page',
     lastTooltip: 'Last Page',
     labelDisplayedRows: '{from}-{to} of {count}',
-    labelRowsPerPage: 'Rows per page:',
-  },
+    labelRowsPerPage: 'Rows per page:'
+  }
 };
 
 const MTablePagination = withStyles(actionsStyles, { withTheme: true })(
