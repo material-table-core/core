@@ -34,7 +34,7 @@ export function MTableHeader(props) {
       ...state,
       lastAdditionalWidth: columnDef.tableData.additionalWidth,
       lastX: e.clientX,
-      resizingColumnDef: columnDef,
+      resizingColumnDef: columnDef
     });
   };
 
@@ -74,7 +74,7 @@ export function MTableHeader(props) {
       boxSizing: 'border-box',
       width,
       maxWidth: columnDef.maxWidth,
-      minWidth: columnDef.minWidth,
+      minWidth: columnDef.minWidth
     };
 
     if (
@@ -306,14 +306,14 @@ MTableHeader.defaultProps = {
   selectedCount: 0,
   sorting: true,
   localization: {
-    actions: 'Actions',
+    actions: 'Actions'
   },
   orderBy: undefined,
   orderDirection: 'asc',
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: 'left',
   draggable: true,
-  thirdSortClick: true,
+  thirdSortClick: true
 };
 
 MTableHeader.propTypes = {
@@ -335,7 +335,7 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.string
 };
 
 export const styles = (theme) => ({
@@ -344,8 +344,8 @@ export const styles = (theme) => ({
     position: 'sticky',
     top: 0,
     zIndex: 10,
-    backgroundColor: theme.palette.background.paper, // Change according to theme,
-  },
+    backgroundColor: theme.palette.background.paper // Change according to theme,
+  }
 });
 
 export default withStyles(styles, { withTheme: true })(MTableHeader);
