@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -12,12 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
-import { CsvBuilder } from 'filefy';
-import PropTypes, { oneOf } from 'prop-types';
-import 'jspdf-autotable';
-import * as React from 'react';
-const jsPDF = typeof window !== 'undefined' ? require('jspdf').jsPDF : null;
-/* eslint-enable no-unused-vars */
+import PropTypes from 'prop-types';
+import React from 'react';
+
 
 export function MTableToolbar(props) {
   const [state, setState] = React.useState(() => ({
@@ -51,6 +46,7 @@ export function MTableToolbar(props) {
 
     return [columns, data];
   };
+
 
   const defaultExportCsv = () => {
     const [columns, data] = getTableData();
@@ -153,8 +149,8 @@ export function MTableToolbar(props) {
             ),
             style: props.searchFieldStyle,
             inputProps: {
-              'aria-label': localization.searchAriaLabel,
-            },
+              'aria-label': localization.searchAriaLabel
+            }
           }}
         />
       );
@@ -201,7 +197,7 @@ export function MTableToolbar(props) {
                 style={{
                   opacity: 1,
                   fontWeight: 600,
-                  fontSize: 12,
+                  fontSize: 12
                 }}
               >
                 {localization.addRemoveColumns}
@@ -228,8 +224,28 @@ export function MTableToolbar(props) {
                     </li>
                   );
                 }
-                return null;
+
+                return (
+                  <li key={col.tableData.id}>
+                    <MenuItem
+                      className={classes.formControlLabel}
+                      component="label"
+                      htmlFor={`column-toggle-${col.tableData.id}`}
+                      disabled={col.removable === false}
+                    >
+                      <Checkbox
+                        checked={!col.hidden}
+                        id={`column-toggle-${col.tableData.id}`}
+                        onChange={() =>
+                          this.props.onColumnsChanged(col, !col.hidden)
+                        }
+                      />
+                      <span>{col.title}</span>
+                    </MenuItem>
+                  </li>
+                );
               })}
+              {/** End Add columns to the Columns Button Menu */}
             </Menu>
           </span>
         )}
@@ -264,6 +280,7 @@ export function MTableToolbar(props) {
                   {localization.exportPDFName}
                 </MenuItem>
               )}
+
             </Menu>
           </span>
         )}
@@ -317,7 +334,7 @@ export function MTableToolbar(props) {
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            textOverflow: 'ellipsis'
           }}
         >
           {title}
@@ -352,6 +369,7 @@ export function MTableToolbar(props) {
             props.showTextRowsSelected &&
             props.selectedRows &&
             props.selectedRows.length > 0,
+
         })}
       >
         {title && renderToolbarTitle(title)}
@@ -370,6 +388,7 @@ export function MTableToolbar(props) {
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
+  columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)
   columnsButton: false,
   localization: {
     addRemoveColumns: 'Add or remove columns',
@@ -378,12 +397,10 @@ MTableToolbar.defaultProps = {
     showColumnsAriaLabel: 'Show Columns',
     exportTitle: 'Export',
     exportAriaLabel: 'Export',
-    exportCSVName: 'Export as CSV',
-    exportPDFName: 'Export as PDF',
     searchTooltip: 'Search',
     searchPlaceholder: 'Search',
     searchAriaLabel: 'Search',
-    clearSearchAriaLabel: 'Clear Search',
+    clearSearchAriaLabel: 'Clear Search'
   },
   search: true,
   showTitle: true,
@@ -394,7 +411,7 @@ MTableToolbar.defaultProps = {
   searchFieldAlignment: 'right',
   searchFieldVariant: 'standard',
   selectedRows: [],
-  title: 'No Title!',
+  title: 'No Title!'
 };
 
 MTableToolbar.propTypes = {
@@ -420,49 +437,47 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,
-  exportButton: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
-  ]),
-  exportDelimiter: PropTypes.string,
-  exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  exportCsv: PropTypes.func,
-  exportPdf: PropTypes.func,
+  exportMenu: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      handler: PropTypes.func
+    })
+  ),
   classes: PropTypes.object,
-  searchAutoFocus: PropTypes.bool,
+  searchAutoFocus: PropTypes.bool
 };
 
 export const styles = (theme) => ({
   root: {
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   highlight:
     theme.palette.type === 'light'
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
         }
       : {
           color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.secondary.dark
         },
   spacer: {
-    flex: '1 1 10%',
+    flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   title: {
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   formControlLabel: {
     paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
+    paddingRight: theme.spacing(1)
+  }
 });
 
 export default withStyles(styles)(MTableToolbar);
