@@ -34,12 +34,12 @@ function MTablePaginationInner(props) {
       page,
       rowsPerPage,
       theme,
-      showFirstLastPageButtons,
+      showFirstLastPageButtons
     } = props;
 
     const localization = {
       ...MTablePaginationInner.defaultProps.localization,
-      ...props.localization,
+      ...props.localization
     };
 
     return (

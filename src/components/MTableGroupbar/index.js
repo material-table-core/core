@@ -84,7 +84,7 @@ function MTableGroupbar(props) {
                                     columnDef.tableData.groupSort === 'asc'
                                       ? 'rotate(-180deg)'
                                       : 'none',
-                                  fontSize: 18,
+                                  fontSize: 18
                                 }}
                               />
                             )}

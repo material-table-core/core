@@ -1,17 +1,17 @@
-/* eslint-disable no-unused-vars */
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-/* eslint-enable no-unused-vars */
 
-export default function MTableGroupRow() {
+export default function MTableGroupRow(props) {
   const rotateIconStyle = (isOpen) => ({
-    transform: isOpen ? 'rotate(90deg)' : 'none',
+    transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
   function render() {
+    console.log({ MTableGroupRowProps: props });
+
     let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
     props.options.selection && colSpan++;
     props.detailPanel && colSpan++;
@@ -139,7 +139,7 @@ export default function MTableGroupRow() {
             <IconButton
               style={{
                 transition: 'all ease 200ms',
-                ...rotateIconStyle(props.groupData.isExpanded),
+                ...rotateIconStyle(props.groupData.isExpanded)
               }}
               onClick={(event) => {
                 props.onGroupExpandChanged(props.path);

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -9,18 +8,15 @@ import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip } from '@material-ui/core';
-import * as CommonValues from '../utils/common-values';
-import equal from 'fast-deep-equal';
-
-/* eslint-enable no-unused-vars */
+import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader(props) {
   const [state, setState] = React.useState(() => ({
     lastX: 0,
-    resizingColumnDef: undefined,
+    resizingColumnDef: undefined
   }));
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
@@ -42,14 +38,11 @@ export function MTableHeader(props) {
     if (!state.resizingColumnDef) {
       return;
     }
-
     let additionalWidth = state.lastAdditionalWidth + e.clientX - state.lastX;
-
     additionalWidth = Math.min(
       state.resizingColumnDef.maxWidth || additionalWidth,
       additionalWidth
     );
-
     if (state.resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
       props.onColumnResized(
         state.resizingColumnDef.tableData.id,
@@ -62,12 +55,36 @@ export function MTableHeader(props) {
     setState({ ...state, resizingColumnDef: undefined });
   };
 
+  const renderActionsHeader = () => {
+    const localization = {
+      ...MTableHeader.defaultProps.localization,
+      ...props.localization
+    };
+    const width = CommonValues.actionsColumnWidth(props);
+    return (
+      <TableCell
+        key="key-actions-column"
+        padding="checkbox"
+        className={props.classes.header}
+        style={{
+          ...props.headerStyle,
+          width: width,
+          textAlign: 'center',
+          boxSizing: 'border-box'
+        }}
+      >
+        <TableSortLabel hideSortIcon={true} disabled>
+          {localization.actions}
+        </TableSortLabel>
+      </TableCell>
+    );
+  };
+
   const getCellStyle = (columnDef) => {
     const width = CommonValues.reducePercentsInCalc(
       columnDef.tableData.width,
       props.scrollWidth
     );
-
     const style = {
       ...props.headerStyle,
       ...columnDef.headerStyle,
@@ -76,7 +93,6 @@ export function MTableHeader(props) {
       maxWidth: columnDef.maxWidth,
       minWidth: columnDef.minWidth
     };
-
     if (
       props.options.tableLayout === 'fixed' &&
       props.options.columnResizable &&
@@ -84,13 +100,11 @@ export function MTableHeader(props) {
     ) {
       style.paddingRight = 2;
     }
-
     return style;
   };
 
   function renderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
-
     const mapArr = props.columns
       .filter(
         (columnDef) =>
@@ -119,7 +133,6 @@ export function MTableHeader(props) {
             </Draggable>
           );
         }
-
         if (columnDef.sorting !== false && props.sorting) {
           content = (
             <TableSortLabel
@@ -146,7 +159,6 @@ export function MTableHeader(props) {
             </TableSortLabel>
           );
         }
-
         if (columnDef.tooltip) {
           content = (
             <Tooltip title={columnDef.tooltip} placement="bottom">
@@ -154,7 +166,6 @@ export function MTableHeader(props) {
             </Tooltip>
           );
         }
-
         if (
           props.options.tableLayout === 'fixed' &&
           props.options.columnResizable &&
@@ -172,14 +183,13 @@ export function MTableHeader(props) {
                     state.resizingColumnDef.tableData.id ===
                       columnDef.tableData.id
                       ? props.theme.palette.primary.main
-                      : 'inherit',
+                      : 'inherit'
                 }}
                 onMouseDown={(e) => handleMouseDown(e, columnDef)}
               />
             </div>
           );
         }
-
         const cellAlignment =
           columnDef.align !== undefined
             ? columnDef.align
@@ -206,7 +216,6 @@ export function MTableHeader(props) {
       props,
       props.treeDataMaxLevel
     );
-
     return (
       <TableCell
         padding="none"
@@ -237,7 +246,6 @@ export function MTableHeader(props) {
     if (props.hasSelection) {
       headers.splice(0, 0, renderSelectionHeader());
     }
-
     if (props.showActionsColumn) {
       if (props.actionsHeaderIndex >= 0) {
         let endPos = 0;
@@ -253,7 +261,6 @@ export function MTableHeader(props) {
         headers.push(renderActionsHeader());
       }
     }
-
     if (props.hasDetailPanel) {
       if (props.detailPanelColumnAlignment === 'right') {
         headers.push(renderDetailPanelColumnCell());
@@ -261,7 +268,6 @@ export function MTableHeader(props) {
         headers.splice(0, 0, renderDetailPanelColumnCell());
       }
     }
-
     if (props.isTreeData > 0) {
       headers.splice(
         0,
@@ -274,7 +280,6 @@ export function MTableHeader(props) {
         />
       );
     }
-
     props.columns
       .filter((columnDef) => columnDef.tableData.groupOrder > -1)
       .forEach((columnDef) => {
@@ -288,7 +293,6 @@ export function MTableHeader(props) {
           />
         );
       });
-
     return (
       <TableHead>
         <TableRow>{headers}</TableRow>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
+import ErrorBoundary from './errorBoundary';
 import MaterialTable from '../../src';
 import { ExportPdf, ExportCsv } from '../../exporters';
 
@@ -66,6 +67,7 @@ const App = () => {
           })
       }}
       options={{
+        grouping: true,
         filtering: true,
         exportMenu: [
           {
@@ -99,4 +101,11 @@ const App = () => {
 
 module.hot.accept();
 
-render(<App />, document.querySelector('#app'));
+render(
+  <div>
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  </div>,
+  document.querySelector('#app')
+);

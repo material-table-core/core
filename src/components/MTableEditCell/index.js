@@ -91,13 +91,13 @@ function MTableEditCell(props) {
     const actions = [
       {
         icon: props.icons.Check,
-        tooltip: props.localization.saveTooltip,
+        tooltip: props.localization && props.localization.saveTooltip,
         onClick: onApprove,
         disabled: state.isLoading
       },
       {
         icon: props.icons.Clear,
-        tooltip: props.localization.cancelTooltip,
+        tooltip: props.localization && props.localization.cancelTooltip,
         onClick: onCancel,
         disabled: state.isLoading
       }

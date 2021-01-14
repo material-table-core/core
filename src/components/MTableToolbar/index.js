@@ -13,12 +13,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 export function MTableToolbar(props) {
   const [state, setState] = React.useState(() => ({
     columnsButtonAnchorEl: null,
     exportButtonAnchorEl: null,
-    searchText: props.searchText,
+    searchText: props.searchText
   }));
 
   const onSearchChange = (searchText) => {
@@ -47,7 +46,6 @@ export function MTableToolbar(props) {
     return [columns, data];
   };
 
-
   const defaultExportCsv = () => {
     const [columns, data] = getTableData();
 
@@ -74,7 +72,7 @@ export function MTableToolbar(props) {
       const content = {
         startY: 50,
         head: [columns.map((columnDef) => columnDef.title)],
-        body: data,
+        body: data
       };
 
       const unit = 'pt';
@@ -110,7 +108,7 @@ export function MTableToolbar(props) {
   function renderSearch() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...props.localization,
+      ...props.localization
     };
     if (props.search) {
       return (
@@ -162,7 +160,7 @@ export function MTableToolbar(props) {
   function renderDefaultActions() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...props.localization,
+      ...props.localization
     };
     const { classes } = props;
 
@@ -176,7 +174,7 @@ export function MTableToolbar(props) {
                 onClick={(event) =>
                   setState({
                     ...state,
-                    columnsButtonAnchorEl: event.currentTarget,
+                    columnsButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.showColumnsAriaLabel}
@@ -257,7 +255,7 @@ export function MTableToolbar(props) {
                 onClick={(event) =>
                   setState({
                     ...state,
-                    exportButtonAnchorEl: event.currentTarget,
+                    exportButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.exportAriaLabel}
@@ -280,7 +278,6 @@ export function MTableToolbar(props) {
                   {localization.exportPDFName}
                 </MenuItem>
               )}
-
             </Menu>
           </span>
         )}
@@ -350,7 +347,7 @@ export function MTableToolbar(props) {
     const { classes } = props;
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...props.localization,
+      ...props.localization
     };
     const title =
       props.showTextRowsSelected &&
@@ -368,8 +365,7 @@ export function MTableToolbar(props) {
           [classes.highlight]:
             props.showTextRowsSelected &&
             props.selectedRows &&
-            props.selectedRows.length > 0,
-
+            props.selectedRows.length > 0
         })}
       >
         {title && renderToolbarTitle(title)}

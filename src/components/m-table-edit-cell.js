@@ -12,6 +12,8 @@ class MTableEditCell extends React.Component {
       isLoading: false,
       value: this.props.rowData[this.props.columnDef.field]
     };
+
+    console.log({ MTableEditCellProps: this.props });
   }
 
   getStyle = () => {
