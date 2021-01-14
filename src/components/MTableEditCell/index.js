@@ -133,7 +133,12 @@ function MTableEditCell(props) {
 }
 
 MTableEditCell.defaultProps = {
-  columnDef: {}
+  columnDef: {},
+  localization: {
+    saveTooltip: 'Save',
+    cancelTooltip: 'Cancel',
+    deleteText: 'Are you sure you want to delete this row?'
+  }
 };
 
 MTableEditCell.propTypes = {

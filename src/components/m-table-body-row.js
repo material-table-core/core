@@ -434,7 +434,6 @@ export default class MTableBodyRow extends React.Component {
       ...rowProps
     } = this.props;
 
-    console.log({ MTableBodyRowProps: this.props, localization });
     return (
       <>
         <TableRow

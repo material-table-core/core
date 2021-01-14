@@ -10,8 +10,6 @@ export default function MTableGroupRow(props) {
   });
 
   function render() {
-    console.log({ MTableGroupRowProps: props });
-
     let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
     props.options.selection && colSpan++;
     props.detailPanel && colSpan++;
