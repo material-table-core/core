@@ -23,8 +23,8 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new BundleAnalyzerPlugin()
+    new webpack.HotModuleReplacementPlugin()
+    // new BundleAnalyzerPlugin()
   ],
   devServer: {
     contentBase: '__tests__/demo',

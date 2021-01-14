@@ -1,15 +1,21 @@
+import React, { useState, useEffect } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import * as React from 'react';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 
 export default function MTableEditRow(props) {
-  const [state, setState] = React.useState(() => ({
+  const [state, setState] = useState(() => ({
     data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData()
   }));
+
+  useEffect(() => {
+    if (props.onBulkEditRowChanged) {
+      props.onBulkEditRowChanged(props.data, state.data);
+    }
+  }, [state.data]);
 
   function createRowData() {
     return props.columns
@@ -126,18 +132,10 @@ export default function MTableEditRow(props) {
                   const data = { ...state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  setState({ data }, () => {
-                    if (props.onBulkEditRowChanged) {
-                      props.onBulkEditRowChanged(props.data, data);
-                    }
-                  });
+                  setState({ data });
                 }}
                 onRowDataChange={(data) => {
-                  setState({ data }, () => {
-                    if (props.onBulkEditRowChanged) {
-                      props.onBulkEditRowChanged(props.data, data);
-                    }
-                  });
+                  setState({ data });
                 }}
               />
             </TableCell>
