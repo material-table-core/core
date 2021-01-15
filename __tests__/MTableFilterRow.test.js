@@ -50,6 +50,7 @@ describe('MTableFilterRow Tests', () => {
     );
     const els = Array.from(wrapper.find('#m--table--filter--row')) || [];
     const el = els[0];
+    // console.log(el.find('#m--table--filter--row'));
     expect(TABLE_REF.current.dataManager.filtered).toBe(true);
   });
 });
