@@ -1,14 +1,12 @@
 import './utils/polyfill';
 import React from 'react';
-import { defaultProps } from './default-props';
+import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
-
-export { MaterialTable as MTable };
 
 const styles = (theme) => ({
   paginationRoot: {
@@ -29,4 +27,22 @@ const styles = (theme) => ({
 export default withStyles(styles, { withTheme: true })((props) => (
   <MaterialTable {...props} ref={props.tableRef} />
 ));
-export * from './components';
+
+export {
+  MaterialTable as MTable,
+  MTableAction,
+  MTableActions,
+  MTableBody,
+  MTableBodyRow,
+  MTableCell,
+  MTableEditCell,
+  MTableEditField,
+  MTableEditRow,
+  MTableFilterRow,
+  MTableGroupRow,
+  MTableGroupbar,
+  MTableHeader,
+  MTablePagination,
+  MTableSteppedPagination,
+  MTableToolbar
+} from './components';
