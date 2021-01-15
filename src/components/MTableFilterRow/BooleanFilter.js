@@ -1,25 +1,21 @@
 import React from 'react';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { Checkbox } from '@material-ui/core';
 
 export default function BooleanFilter({ columnDef, onFilterChanged }) {
   return (
-    <FormControlLabel
-      label={`Filter of ${columnDef.title}`}
-      control={
-        <Checkbox
-          indeterminate={columnDef.tableData.filterValue === undefined}
-          checked={columnDef.tableData.filterValue === 'checked'}
-          onChange={() => {
-            let val;
-            if (columnDef.tableData.filterValue === undefined) {
-              val = 'checked';
-            } else if (columnDef.tableData.filterValue === 'checked') {
-              val = 'unchecked';
-            }
-            onFilterChanged(columnDef.tableData.id, val);
-          }}
-        />
-      }
+    <Checkbox
+      inputProps={{ 'aria-label': `Filter of ${columnDef.title}` }}
+      indeterminate={columnDef.tableData.filterValue === undefined}
+      checked={columnDef.tableData.filterValue === 'checked'}
+      onChange={() => {
+        let val;
+        if (columnDef.tableData.filterValue === undefined) {
+          val = 'checked';
+        } else if (columnDef.tableData.filterValue === 'checked') {
+          val = 'unchecked';
+        }
+        onFilterChanged(columnDef.tableData.id, val);
+      }}
     />
   );
 }
