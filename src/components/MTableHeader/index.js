@@ -241,6 +241,17 @@ export function MTableHeader(props) {
     );
   }
 
+  function renderDetailPanelColumnCell() {
+    return (
+      <TableCell
+        padding='none'
+        key='key-detail-panel-column'
+        className={props.classes.header}
+        style={{ ...props.headerStyle }}
+      />
+    );
+  }
+
   function render() {
     const headers = renderHeader();
     if (props.hasSelection) {
