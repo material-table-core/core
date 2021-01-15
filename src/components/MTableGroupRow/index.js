@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 
 export default function MTableGroupRow(props) {
+  // -------------------------------------------------
+  console.log({ inMTableGroupRow: { props } });
+  // -------------------------------------------------
   const rotateIconStyle = (isOpen) => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });

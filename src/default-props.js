@@ -1,70 +1,24 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
-import * as MComponents from './components';
-import PropTypes from 'prop-types';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-
-const OverlayLoading = (props) => (
-  <div
-    style={{
-      display: 'table',
-      width: '100%',
-      height: '100%',
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7)
-    }}
-  >
-    <div
-      style={{
-        display: 'table-cell',
-        width: '100%',
-        height: '100%',
-        verticalAlign: 'middle',
-        textAlign: 'center'
-      }}
-    >
-      <CircularProgress />
-    </div>
-  </div>
-);
-OverlayLoading.propTypes = {
-  theme: PropTypes.any
-};
-
-const OverlayError = (props) => (
-  <div
-    style={{
-      display: 'table',
-      width: '100%',
-      height: '100%',
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7)
-    }}
-  >
-    <div
-      style={{
-        display: 'table-cell',
-        width: '100%',
-        height: '100%',
-        verticalAlign: 'middle',
-        textAlign: 'center'
-      }}
-    >
-      <span>{props.error.message}</span>{' '}
-      <props.icon
-        onClick={props.retry}
-        style={{ cursor: 'pointer', position: 'relative', top: 5 }}
-      />
-    </div>
-  </div>
-);
-OverlayError.propTypes = {
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  retry: PropTypes.func,
-  theme: PropTypes.any,
-  icon: PropTypes.any
-};
+import {
+  MTableAction,
+  MTableActions,
+  MTableBody,
+  MTableCell,
+  MTableEditCell,
+  MTableEditField,
+  MTableEditRow,
+  MTableFilterRow,
+  MTableGroupRow,
+  MTableGroupbar,
+  MTableHeader,
+  MTableBodyRow,
+  MTableToolbar,
+  OverlayError,
+  OverlayLoading
+} from './components';
 
 const Container = (props) => <Paper elevation={2} {...props} />;
 
@@ -73,23 +27,23 @@ export const defaultProps = {
   classes: {},
   columns: [],
   components: {
-    Action: MComponents.MTableAction,
-    Actions: MComponents.MTableActions,
-    Body: MComponents.MTableBody,
-    Cell: MComponents.MTableCell,
+    Action: MTableAction,
+    Actions: MTableActions,
+    Body: MTableBody,
+    Cell: MTableCell,
     Container: Container,
-    EditCell: MComponents.MTableEditCell,
-    EditField: MComponents.MTableEditField,
-    EditRow: MComponents.MTableEditRow,
-    FilterRow: MComponents.MTableFilterRow,
-    Groupbar: MComponents.MTableGroupbar,
-    GroupRow: MComponents.MTableGroupRow,
-    Header: MComponents.MTableHeader,
+    EditCell: MTableEditCell,
+    EditField: MTableEditField,
+    EditRow: MTableEditRow,
+    FilterRow: MTableFilterRow,
+    Groupbar: MTableGroupbar,
+    GroupRow: MTableGroupRow,
+    Header: MTableHeader,
     OverlayLoading: OverlayLoading,
     OverlayError: OverlayError,
     Pagination: TablePagination,
-    Row: MComponents.MTableBodyRow,
-    Toolbar: MComponents.MTableToolbar
+    Row: MTableBodyRow,
+    Toolbar: MTableToolbar
   },
   data: [],
   icons: {

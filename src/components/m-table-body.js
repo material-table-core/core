@@ -1,10 +1,6 @@
-/* eslint-disable no-unused-vars */
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import React from 'react';
 import PropTypes from 'prop-types';
-import * as React from 'react';
-/* eslint-enable no-unused-vars */
+import { TableBody, TableCell, TableRow } from '@material-ui/core';
 
 class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {

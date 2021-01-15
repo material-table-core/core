@@ -1,3 +1,10 @@
+/** -------------
+ * Misc
+ -------------- */
+
+export { default as OverlayLoading } from './Overlay/OverlayLoading.js';
+export { default as OverlayError } from './Overlay/OverlayError.js';
+
 /** ---------------------------
  * Class based components
  * (aka original)
