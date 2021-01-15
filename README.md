@@ -56,7 +56,7 @@
   </p> 
   <!-- ^^^ end badges ^^ -->
   
-💾 [Installation](https://material-table-core.com/docs/#install) 🎉 [Usage](https://material-table-core.com/docs/#basic-usage) 
+💾 [Installation](https://material-table-core.com/docs/#installation) 🎉 [Usage](https://material-table-core.com/docs/#basic-usage) 
 ✅ [Why does this repo exist?](https://material-table-core.com/docs/about) 🚧 [Documentation](https://material-table-core.com/docs) ⚙️ [Demos](https://material-table-core.com/demos)
 
 </div>
