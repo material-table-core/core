@@ -29,7 +29,7 @@ export default withStyles(styles, { withTheme: true })((props) => (
 ));
 
 export {
-  MaterialTable as MTable,
+  // MaterialTable as MTable,
   MTableAction,
   MTableActions,
   MTableBody,
