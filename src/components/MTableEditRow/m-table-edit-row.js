@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import * as React from 'react';
+import React from 'react';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 /* eslint-enable no-unused-vars */

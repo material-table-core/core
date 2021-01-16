@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { string } from 'prop-types';

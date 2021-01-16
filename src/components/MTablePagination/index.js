@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import * as React from 'react';
+import React from 'react';
 /* eslint-enable no-unused-vars */
 
 function MTablePaginationInner(props) {

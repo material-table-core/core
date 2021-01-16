@@ -3,7 +3,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import * as React from 'react';
+import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
