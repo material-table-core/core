@@ -30,11 +30,24 @@ function MTableEditField({ forwardedRef, ...props }) {
   return component;
 }
 
-MTableEditField.propTypes = {
-  value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
+MTableEditCell.defaultProps = {
+  columnDef: {},
+  localization: {
+    saveTooltip: 'Save',
+    cancelTooltip: 'Cancel'
+  }
+};
+
+MTableEditCell.propTypes = {
+  cellEditable: PropTypes.object.isRequired,
   columnDef: PropTypes.object.isRequired,
-  locale: PropTypes.object
+  components: PropTypes.object.isRequired,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  icons: PropTypes.object.isRequired,
+  localization: PropTypes.object.isRequired,
+  onCellEditFinished: PropTypes.func.isRequired,
+  rowData: PropTypes.object.isRequired,
+  size: PropTypes.string
 };
 
 export default React.forwardRef(function MTableEditFieldRef(props, ref) {
