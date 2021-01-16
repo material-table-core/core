@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, CircularProgress, withTheme } from '@material-ui/core';
 
 function MTableEditCell(props) {
-  const [state, setState] = useState(() => ({
+  const [state, setState] = React.useState(() => ({
     isLoading: false,
     value: props.rowData[props.columnDef.field]
   }));
-
-  useEffect(() => {
-    props.cellEditable
-      .onCellEditApproved(
-        state.value, // newValue
-        props.rowData[props.columnDef.field], // oldValue
-        props.rowData, // rowData with old value
-        props.columnDef // columnDef
-      )
-      .then(() => {
-        setState({ ...state, isLoading: false });
-        props.onCellEditFinished(props.rowData, props.columnDef);
-      })
-      .catch(() => {
-        setState({ ...state, isLoading: false });
-      });
-  }, []);
 
   const getStyle = () => {
     let cellStyle = {
@@ -71,45 +54,28 @@ function MTableEditCell(props) {
   };
 
   const onApprove = () => {
-    setState({ ...state, isLoading: true });
+    setState({ ...state, isLoading: true }, () => {
+      props.cellEditable
+        .onCellEditApproved(
+          state.value, // newValue
+          props.rowData[props.columnDef.field], // oldValue
+          props.rowData, // rowData with old value
+          props.columnDef // columnDef
+        )
+        .then(() => {
+          setState({ ...state, isLoading: false });
+          props.onCellEditFinished(props.rowData, props.columnDef);
+        })
+        .catch((error) => {
+          // might be wrong
+          setState({ ...state, isLoading: false, error });
+        });
+    });
   };
 
   const onCancel = () => {
     props.onCellEditFinished(props.rowData, props.columnDef);
   };
-
-  function renderActions() {
-    if (state.isLoading) {
-      return (
-        <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
-          <CircularProgress size={20} />
-        </div>
-      );
-    }
-
-    const actions = [
-      {
-        icon: props.icons.Check,
-        tooltip: props.localization && props.localization.saveTooltip,
-        onClick: onApprove,
-        disabled: state.isLoading
-      },
-      {
-        icon: props.icons.Clear,
-        tooltip: props.localization && props.localization.cancelTooltip,
-        onClick: onCancel,
-        disabled: state.isLoading
-      }
-    ];
-
-    return (
-      <props.components.Actions
-        actions={actions}
-        components={props.components}
-        size="small"
-      />
-    );
-  }
 
   return (
     <TableCell
@@ -123,14 +89,18 @@ function MTableEditCell(props) {
           <props.components.EditField
             columnDef={props.columnDef}
             value={state.value}
-            onChange={(prevState, value) => setState({ ...prevState, value })}
+            onChange={(value) => setState({ value })}
             onKeyDown={handleKeyDown}
             disabled={state.isLoading}
             rowData={props.rowData}
             autoFocus
           />
         </div>
-        {renderActions()}
+        {state.isLoading && (
+          <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
+            <CircularProgress size={20} />
+          </div>
+        )}
       </div>
     </TableCell>
   );

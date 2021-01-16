@@ -1,33 +1,106 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LookupField from './LookupField';
-import BooleanField from './BooleanField';
-import DateField from './DateField';
-import TimeField from './TimeField';
-import TextField from './TextField';
-import DateTimeField from './DateTimeField';
-import CurrencyField from './CurrencyField';
+import TableCell from '@material-ui/core/TableCell';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import withTheme from '@material-ui/core/styles/withTheme';
 
-function MTableEditField({ forwardedRef, ...props }) {
-  let component = 'ok';
-  if (props.columnDef.editComponent) {
-    component = props.columnDef.editComponent(props);
-  } else if (props.columnDef.lookup) {
-    component = <LookupField {...props} ref={forwardedRef} />;
-  } else if (props.columnDef.type === 'boolean') {
-    component = <BooleanField {...props} ref={forwardedRef} />;
-  } else if (props.columnDef.type === 'date') {
-    component = <DateField {...props} ref={forwardedRef} />;
-  } else if (props.columnDef.type === 'time') {
-    component = <TimeField {...props} ref={forwardedRef} />;
-  } else if (props.columnDef.type === 'datetime') {
-    component = <DateTimeField {...props} ref={forwardedRef} />;
-  } else if (props.columnDef.type === 'currency') {
-    component = <CurrencyField {...props} ref={forwardedRef} />;
-  } else {
-    component = <TextField {...props} ref={forwardedRef} />;
-  }
-  return component;
+function MTableEditCell(props) {
+  const [state, setState] = React.useState(() => ({
+    isLoading: false,
+    value: props.rowData[props.columnDef.field]
+  }));
+
+  const getStyle = () => {
+    let cellStyle = {
+      boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
+      color: 'inherit',
+      width: props.columnDef.tableData.width,
+      boxSizing: 'border-box',
+      fontSize: 'inherit',
+      fontFamily: 'inherit',
+      fontWeight: 'inherit',
+      padding: '0 16px'
+    };
+
+    if (typeof props.columnDef.cellStyle === 'function') {
+      cellStyle = {
+        ...cellStyle,
+        ...props.columnDef.cellStyle(state.value, props.rowData)
+      };
+    } else {
+      cellStyle = { ...cellStyle, ...props.columnDef.cellStyle };
+    }
+
+    if (typeof props.cellEditable.cellStyle === 'function') {
+      cellStyle = {
+        ...cellStyle,
+        ...props.cellEditable.cellStyle(
+          state.value,
+          props.rowData,
+          props.columnDef
+        )
+      };
+    } else {
+      cellStyle = { ...cellStyle, ...props.cellEditable.cellStyle };
+    }
+
+    return cellStyle;
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      onApprove();
+    } else if (e.keyCode === 27) {
+      onCancel();
+    }
+  };
+
+  const onApprove = () => {
+    setState({ ...state, isLoading: true }, () => {
+      props.cellEditable
+        .onCellEditApproved(
+          state.value, // newValue
+          props.rowData[props.columnDef.field], // oldValue
+          props.rowData, // rowData with old value
+          props.columnDef // columnDef
+        )
+        .then(() => {
+          setState({ ...state, isLoading: false });
+          props.onCellEditFinished(props.rowData, props.columnDef);
+        })
+        .catch((error) => {
+          // might be wrong
+          setState({ ...state, isLoading: false, error });
+        });
+    });
+  };
+
+  const onCancel = () => {
+    props.onCellEditFinished(props.rowData, props.columnDef);
+  };
+
+  return (
+    <TableCell size={props.size} style={getStyle()} padding="none">
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ flex: 1, marginRight: 4 }}>
+          <props.components.EditField
+            columnDef={props.columnDef}
+            value={state.value}
+            onChange={(value) => setState({ value })}
+            onKeyDown={handleKeyDown}
+            disabled={state.isLoading}
+            rowData={props.rowData}
+            autoFocus
+          />
+        </div>
+        {state.isLoading && (
+          <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
+            <CircularProgress size={20} />
+          </div>
+        )}
+      </div>
+    </TableCell>
+  );
 }
 
 MTableEditCell.defaultProps = {
@@ -50,6 +123,4 @@ MTableEditCell.propTypes = {
   size: PropTypes.string
 };
 
-export default React.forwardRef(function MTableEditFieldRef(props, ref) {
-  return <MTableEditField {...props} forwardedRef={ref} />;
-});
+export default withTheme(MTableEditCell);
