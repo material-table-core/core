@@ -20,7 +20,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import ErrorBoundary from './errorBoundary';
 
-import { FrankensteinDemo } from './demo-components';
+import { FrankensteinDemo, OneDetailPanel } from './demo-components';
 
 const App = () => {};
 
@@ -30,6 +30,7 @@ render(
   <div>
     <ErrorBoundary>
       <FrankensteinDemo />
+      <OneDetailPanel />
     </ErrorBoundary>
   </div>,
   document.querySelector('#app')

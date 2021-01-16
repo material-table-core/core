@@ -100,7 +100,6 @@ export default function MTableCell({
       // To avoid forwardref boolean children.
       return value.toString();
     }
-
     return value;
   }
 
@@ -148,7 +147,6 @@ export default function MTableCell({
 
   const getStyle = () => {
     const width = reducePercentsInCalc(columnDef.tableData.width, scrollWidth);
-
     let cellStyle = {
       color: 'inherit',
       width,
@@ -159,7 +157,6 @@ export default function MTableCell({
       fontFamily: 'inherit',
       fontWeight: 'inherit'
     };
-
     if (typeof columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
@@ -168,11 +165,9 @@ export default function MTableCell({
     } else {
       cellStyle = { ...cellStyle, ...columnDef.cellStyle };
     }
-
     if (columnDef.disableClick) {
       cellStyle.cursor = 'default';
     }
-
     return { ...style, ...cellStyle };
   };
 
