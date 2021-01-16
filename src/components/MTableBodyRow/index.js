@@ -9,6 +9,87 @@ import PropTypes from 'prop-types';
 import * as CommonValues from '../../utils/common-values';
 
 export default function MTableBodyRow(props) {
+  console.log('🚀 ~ file: index.js ~ line 12 ~ MTableBodyRow ~ props', props);
+  const {
+    icons,
+    data,
+    columns,
+    components,
+    detailPanel,
+    getFieldValue,
+    isTreeData,
+    onRowClick,
+    onRowSelected,
+    onTreeExpandChanged,
+    onToggleDetailPanel,
+    onEditingCanceled,
+    onEditingApproved,
+    options,
+    hasAnyEditingRow,
+    treeDataMaxLevel,
+    localization,
+    actions,
+    errorState,
+    cellEditable,
+    onCellEditStarted,
+    onCellEditFinished,
+    scrollWidth,
+    ...rowProps
+  } = props;
+
+  const size = CommonValues.elementSize(props);
+  const renderColumnsCopy = renderColumns();
+  if (props.options.selection) {
+    renderColumnsCopy.splice(0, 0, renderSelectionColumn());
+  }
+  if (
+    props.actions &&
+    props.actions.filter((a) => a.position === 'row' || typeof a === 'function')
+      .length > 0
+  ) {
+    if (props.options.actionsColumnIndex === -1) {
+      renderColumnsCopy.push(renderActions());
+    } else if (props.options.actionsColumnIndex >= 0) {
+      let endPos = 0;
+      if (props.options.selection) {
+        endPos = 1;
+      }
+      renderColumnsCopy.splice(
+        props.options.actionsColumnIndex + endPos,
+        0,
+        renderActions()
+      );
+    }
+  }
+
+  // Then we add detail panel icon
+  if (props.detailPanel) {
+    if (props.options.detailPanelColumnAlignment === 'right') {
+      renderColumnsCopy.push(renderDetailPanelColumn());
+    } else {
+      renderColumnsCopy.splice(0, 0, renderDetailPanelColumn());
+    }
+  }
+
+  // Lastly we add tree data icon
+  if (props.isTreeData) {
+    renderColumnsCopy.splice(0, 0, renderTreeDataColumn());
+  }
+
+  props.columns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
+      renderColumnsCopy.splice(
+        0,
+        0,
+        <TableCell
+          size={size}
+          padding="none"
+          key={'key-group-cell' + columnDef.tableData.id}
+        />
+      );
+    });
+
   function renderColumns() {
     const size = CommonValues.elementSize(props);
     const mapArr = props.columns
@@ -338,174 +419,89 @@ export default function MTableBodyRow(props) {
     return style;
   }
 
-  function render() {
-    const size = CommonValues.elementSize(props);
-    const renderColumnsCopy = renderColumns();
-    if (props.options.selection) {
-      renderColumnsCopy.splice(0, 0, renderSelectionColumn());
-    }
-    if (
-      props.actions &&
-      props.actions.filter(
-        (a) => a.position === 'row' || typeof a === 'function'
-      ).length > 0
-    ) {
-      if (props.options.actionsColumnIndex === -1) {
-        renderColumnsCopy.push(renderActions());
-      } else if (props.options.actionsColumnIndex >= 0) {
-        let endPos = 0;
-        if (props.options.selection) {
-          endPos = 1;
-        }
-        renderColumnsCopy.splice(
-          props.options.actionsColumnIndex + endPos,
-          0,
-          renderActions()
-        );
-      }
-    }
-
-    // Then we add detail panel icon
-    if (props.detailPanel) {
-      if (props.options.detailPanelColumnAlignment === 'right') {
-        renderColumnsCopy.push(renderDetailPanelColumn());
-      } else {
-        renderColumnsCopy.splice(0, 0, renderDetailPanelColumn());
-      }
-    }
-
-    // Lastly we add tree data icon
-    if (props.isTreeData) {
-      renderColumnsCopy.splice(0, 0, renderTreeDataColumn());
-    }
-
-    props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        renderColumnsCopy.splice(
-          0,
-          0,
+  return (
+    <>
+      <TableRow
+        selected={hasAnyEditingRow}
+        {...rowProps}
+        hover={!!onRowClick}
+        style={getStyle(props.index, props.level)}
+        onClick={(event) => {
+          onRowClick &&
+            onRowClick(event, props.data, (panelIndex) => {
+              let panel = detailPanel;
+              if (Array.isArray(panel)) {
+                panel = panel[panelIndex || 0];
+                if (typeof panel === 'function') {
+                  panel = panel(props.data);
+                }
+                panel = panel.render;
+              }
+              onToggleDetailPanel(props.path, panel);
+            });
+        }}
+      >
+        {renderColumnsCopy}
+      </TableRow>
+      {data.tableData && data.tableData.showDetailPanel && (
+        <TableRow
+        // selected={index % 2 === 0}
+        >
           <TableCell
             size={size}
+            colSpan={renderColumnsCopy.length}
             padding="none"
-            key={'key-group-cell' + columnDef.tableData.id}
-          />
-        );
-      });
-
-    const {
-      icons,
-      data,
-      columns,
-      components,
-      detailPanel,
-      getFieldValue,
-      isTreeData,
-      onRowClick,
-      onRowSelected,
-      onTreeExpandChanged,
-      onToggleDetailPanel,
-      onEditingCanceled,
-      onEditingApproved,
-      options,
-      hasAnyEditingRow,
-      treeDataMaxLevel,
-      localization,
-      actions,
-      errorState,
-      cellEditable,
-      onCellEditStarted,
-      onCellEditFinished,
-      scrollWidth,
-      ...rowProps
-    } = props;
-
-    return (
-      <>
-        <TableRow
-          selected={hasAnyEditingRow}
-          {...rowProps}
-          hover={!!onRowClick}
-          style={getStyle(props.index, props.level)}
-          onClick={(event) => {
-            onRowClick &&
-              onRowClick(event, props.data, (panelIndex) => {
-                let panel = detailPanel;
-                if (Array.isArray(panel)) {
-                  panel = panel[panelIndex || 0];
-                  if (typeof panel === 'function') {
-                    panel = panel(props.data);
-                  }
-                  panel = panel.render;
-                }
-                onToggleDetailPanel(props.path, panel);
-              });
-          }}
-        >
-          {renderColumnsCopy}
-        </TableRow>
-        {data.tableData && data.tableData.showDetailPanel && (
-          <TableRow
-          // selected={index % 2 === 0}
           >
-            <TableCell
-              size={size}
-              colSpan={renderColumnsCopy.length}
-              padding="none"
-            >
-              {data.tableData.showDetailPanel(data)}
-            </TableCell>
-          </TableRow>
-        )}
-        {data.tableData.childRows &&
-          data.tableData.isTreeExpanded &&
-          data.tableData.childRows.map((data, index) => {
-            if (data.tableData.editing) {
-              return (
-                <components.EditRow
-                  columns={columns.filter((columnDef) => {
-                    return !columnDef.hidden;
-                  })}
-                  components={components}
-                  data={data}
-                  icons={icons}
-                  localization={localization}
-                  getFieldValue={getFieldValue}
-                  key={index}
-                  mode={data.tableData.editing}
-                  options={options}
-                  isTreeData={isTreeData}
-                  detailPanel={detailPanel}
-                  onEditingCanceled={onEditingCanceled}
-                  onEditingApproved={onEditingApproved}
-                  errorState={errorState}
-                />
-              );
-            } else {
-              return (
-                <components.Row
-                  data={data}
-                  index={index}
-                  key={index}
-                  level={props.level + 1}
-                  path={[...props.path, index]}
-                  onEditingCanceled={onEditingCanceled}
-                  onEditingApproved={onEditingApproved}
-                  hasAnyEditingRow={props.hasAnyEditingRow}
-                  treeDataMaxLevel={treeDataMaxLevel}
-                  errorState={props.errorState}
-                  cellEditable={cellEditable}
-                  onCellEditStarted={onCellEditStarted}
-                  onCellEditFinished={onCellEditFinished}
-                />
-              );
-            }
-          })}
-      </>
-    );
-  }
-
-  return render();
+            {data.tableData.showDetailPanel(data)}
+          </TableCell>
+        </TableRow>
+      )}
+      {data.tableData.childRows &&
+        data.tableData.isTreeExpanded &&
+        data.tableData.childRows.map((data, index) => {
+          if (data.tableData.editing) {
+            return (
+              <components.EditRow
+                columns={columns.filter((columnDef) => {
+                  return !columnDef.hidden;
+                })}
+                components={components}
+                data={data}
+                icons={icons}
+                localization={localization}
+                getFieldValue={getFieldValue}
+                key={index}
+                mode={data.tableData.editing}
+                options={options}
+                isTreeData={isTreeData}
+                detailPanel={detailPanel}
+                onEditingCanceled={onEditingCanceled}
+                onEditingApproved={onEditingApproved}
+                errorState={errorState}
+              />
+            );
+          } else {
+            return (
+              <components.Row
+                data={data}
+                index={index}
+                key={index}
+                level={props.level + 1}
+                path={[...props.path, index]}
+                onEditingCanceled={onEditingCanceled}
+                onEditingApproved={onEditingApproved}
+                hasAnyEditingRow={props.hasAnyEditingRow}
+                treeDataMaxLevel={treeDataMaxLevel}
+                errorState={props.errorState}
+                cellEditable={cellEditable}
+                onCellEditStarted={onCellEditStarted}
+                onCellEditFinished={onCellEditFinished}
+              />
+            );
+          }
+        })}
+    </>
+  );
 }
 
 MTableBodyRow.defaultProps = {
