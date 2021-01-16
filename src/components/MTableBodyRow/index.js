@@ -37,7 +37,7 @@ export default function MTableBodyRow(props) {
     ...rowProps
   } = props;
 
-  const size = CommonValues.elementSize(props);
+  const size = CommonValues.elementSize({ options });
   const renderColumnsCopy = renderColumns();
   if (props.options.selection) {
     renderColumnsCopy.splice(0, 0, renderSelectionColumn());
@@ -517,6 +517,18 @@ MTableBodyRow.propTypes = {
   icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
+
+  // add prop types not 100% they are correct
+  // ----------------------------------------------
+  components: PropTypes.object,
+  isTreeData: PropTypes.bool,
+  onTreeExpandChanged: PropTypes.func,
+  cellEditable: PropTypes.object,
+  onCellEditStarted: PropTypes.func,
+  onCellEditFinished: PropTypes.func,
+  scrollWidth: PropTypes.number,
+  localization: PropTypes.object,
+  // ---------------------------------------------
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
