@@ -13,7 +13,6 @@ export { default as Container } from './Container';
 
 /** Still needs to be refactored into functional */
 export { default as MTableBody } from './m-table-body';
-// export { default as MTableBodyRow } from './m-table-body-row';
 /** HAVING ISSUES WITH THE REFACTORED VERSIONS OF: */
 export { default as MTableEditField } from './m-table-edit-field';
 export { default as MTableEditCell } from './m-table-edit-cell';
