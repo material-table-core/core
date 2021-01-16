@@ -17,35 +17,34 @@ import {
 import PropTypes from 'prop-types';
 
 function MTableEditField(props) {
-  function getProps() {
-    const {
-      columnDef,
-      rowData,
-      onRowDataChange,
-      errorState,
-      onBulkEditRowChanged,
-      scrollWidth,
-      ...props
-    } = props;
-    return props;
-  }
+  const {
+    rowData,
+    error,
+    value,
+    columnDef,
+    helperText,
+    onChange,
+    locale,
+    onKeyDown,
+    onRowDataChange,
+    autoFocus
+  } = props;
 
   function renderLookupField() {
-    const { helperText, error, ...props } = getProps();
     return (
       <FormControl error={Boolean(error)}>
         <Select
           {...props}
-          value={props.value === undefined ? '' : props.value}
-          onChange={(event) => props.onChange(event.target.value)}
+          value={value === undefined ? '' : value}
+          onChange={(event) => onChange(event.target.value)}
           style={{
             fontSize: 13
           }}
-          SelectDisplayProps={{ 'aria-label': props.columnDef.title }}
+          SelectDisplayProps={{ 'aria-label': columnDef.title }}
         >
-          {Object.keys(props.columnDef.lookup).map((key) => (
+          {Object.keys(columnDef.lookup).map((key) => (
             <MenuItem key={key} value={key}>
-              {props.columnDef.lookup[key]}
+              {columnDef.lookup[key]}
             </MenuItem>
           ))}
         </Select>
@@ -55,8 +54,6 @@ function MTableEditField(props) {
   }
 
   function renderBooleanField() {
-    const { helperText, error, ...props } = getProps();
-
     return (
       <FormControl error={Boolean(error)} component="fieldset">
         <FormGroup>
@@ -65,16 +62,16 @@ function MTableEditField(props) {
             control={
               <Checkbox
                 {...props}
-                value={String(props.value)}
-                checked={Boolean(props.value)}
-                onChange={(event) => props.onChange(event.target.checked)}
+                value={String(value)}
+                checked={Boolean(value)}
+                onChange={(event) => onChange(event.target.checked)}
                 style={{
                   padding: 0,
                   width: 24,
                   marginLeft: 9
                 }}
                 inputProps={{
-                  'aria-label': props.columnDef.title
+                  'aria-label': columnDef.title
                 }}
               />
             }
@@ -87,12 +84,12 @@ function MTableEditField(props) {
 
   function renderTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={props.locale}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
         <TimePicker
-          {...getProps()}
+          {...props}
           format="HH:mm:ss"
-          value={props.value || null}
-          onChange={props.onChange}
+          value={value || null}
+          onChange={onChange}
           clearable
           InputProps={{
             style: {
@@ -100,7 +97,7 @@ function MTableEditField(props) {
             }
           }}
           inputProps={{
-            'aria-label': `${props.columnDef.title}: press space to edit`
+            'aria-label': `${columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -109,12 +106,12 @@ function MTableEditField(props) {
 
   function renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={props.locale}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
         <DateTimePicker
-          {...getProps()}
+          {...props}
           format="dd.MM.yyyy HH:mm:ss"
-          value={props.value || null}
-          onChange={props.onChange}
+          value={value || null}
+          onChange={onChange}
           clearable
           InputProps={{
             style: {
@@ -122,7 +119,7 @@ function MTableEditField(props) {
             }
           }}
           inputProps={{
-            'aria-label': `${props.columnDef.title}: press space to edit`
+            'aria-label': `${columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -131,16 +128,16 @@ function MTableEditField(props) {
 
   function renderDateField() {
     const dateFormat =
-      props.columnDef.dateSetting && props.columnDef.dateSetting.format
-        ? props.columnDef.dateSetting.format
+      columnDef.dateSetting && columnDef.dateSetting.format
+        ? columnDef.dateSetting.format
         : 'dd.MM.yyyy';
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={props.locale}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
         <DatePicker
-          {...getProps()}
+          {...props}
           format={dateFormat}
-          value={props.value || null}
-          onChange={props.onChange}
+          value={value || null}
+          onChange={onChange}
           clearable
           InputProps={{
             style: {
@@ -148,7 +145,7 @@ function MTableEditField(props) {
             }
           }}
           inputProps={{
-            'aria-label': `${props.columnDef.title}: press space to edit`
+            'aria-label': `${columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -158,15 +155,15 @@ function MTableEditField(props) {
   function renderTextField() {
     return (
       <TextField
-        {...getProps()}
+        {...props}
         fullWidth
-        style={props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
-        type={props.columnDef.type === 'numeric' ? 'number' : 'text'}
-        placeholder={props.columnDef.editPlaceholder || props.columnDef.title}
-        value={props.value === undefined ? '' : props.value}
+        style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
+        type={columnDef.type === 'numeric' ? 'number' : 'text'}
+        placeholder={columnDef.editPlaceholder || columnDef.title}
+        value={value === undefined ? '' : value}
         onChange={(event) =>
           props.onChange(
-            props.columnDef.type === 'numeric'
+            columnDef.type === 'numeric'
               ? event.target.valueAsNumber
               : event.target.value
           )
@@ -178,7 +175,7 @@ function MTableEditField(props) {
           }
         }}
         inputProps={{
-          'aria-label': props.columnDef.title
+          'aria-label': columnDef.title
         }}
       />
     );
@@ -187,17 +184,17 @@ function MTableEditField(props) {
   function renderCurrencyField() {
     return (
       <TextField
-        {...getProps()}
-        placeholder={props.columnDef.editPlaceholder || props.columnDef.title}
+        {...props}
+        placeholder={columnDef.editPlaceholder || columnDef.title}
         style={{ float: 'right' }}
         type="number"
-        value={props.value === undefined ? '' : props.value}
+        value={value === undefined ? '' : value}
         onChange={(event) => {
           let value = event.target.valueAsNumber;
           if (!value && value !== 0) {
             value = undefined;
           }
-          return props.onChange(value);
+          return onChange(value);
         }}
         InputProps={{
           style: {
@@ -206,29 +203,36 @@ function MTableEditField(props) {
           }
         }}
         inputProps={{
-          'aria-label': props.columnDef.title
+          'aria-label': columnDef.title
         }}
-        onKeyDown={props.onKeyDown}
-        autoFocus={props.autoFocus}
+        onKeyDown={onKeyDown}
+        autoFocus={autoFocus}
       />
     );
   }
 
   let component = 'ok';
 
-  if (props.columnDef.editComponent) {
-    component = props.columnDef.editComponent(props);
-  } else if (props.columnDef.lookup) {
+  if (columnDef.editComponent) {
+    component = columnDef.editComponent({
+      rowData,
+      value,
+      onChange,
+      onRowDataChange,
+      columnDef,
+      error
+    });
+  } else if (columnDef.lookup) {
     component = renderLookupField();
-  } else if (props.columnDef.type === 'boolean') {
+  } else if (columnDef.type === 'boolean') {
     component = renderBooleanField();
-  } else if (props.columnDef.type === 'date') {
+  } else if (columnDef.type === 'date') {
     component = renderDateField();
-  } else if (props.columnDef.type === 'time') {
+  } else if (columnDef.type === 'time') {
     component = renderTimeField();
-  } else if (props.columnDef.type === 'datetime') {
+  } else if (columnDef.type === 'datetime') {
     component = renderDateTimeField();
-  } else if (props.columnDef.type === 'currency') {
+  } else if (columnDef.type === 'currency') {
     component = renderCurrencyField();
   } else {
     component = renderTextField();
