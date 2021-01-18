@@ -40,7 +40,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Get Tag
-        # GH Actions passes the tag as `/refs/foo/bar`, this allows us to just grab `bar`
+        # GH Actions passes the tag as `/refs/tags/foo`, this allows us to just grab `foo`
         run: echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
