@@ -987,11 +987,27 @@ export default class DataManager {
 
       this.sortedData = sortGroups(this.sortedData, groups[0]);
 
+      // If you have nested grouped rows and wanted to select one of those row
+      // there was an issue. 
+      // -https://github.com/material-table-core/core/pull/74
+      // -https://github.com/mbrn/material-table/issues/2258
+      // -https://github.com/mbrn/material-table/issues/2249
+      // getGroupsIndex resolves this nested grouped rows selection issue.
+      const getGroupsIndex = (groups) =>
+        groups.reduce((result, group) => {
+          result[group.value] = groups.findIndex(
+            (g) => g.value === group.value
+          );
+          return result;
+        }, {});
+
       const sortGroupData = (list, level) => {
         list.forEach((element) => {
           if (element.groups.length > 0) {
             const column = groups[level];
             element.groups = sortGroups(element.groups, column);
+            // For grouped rows that are nested
+            element.groupsIndex = getGroupsIndex(element.groups);
             sortGroupData(element.groups, level + 1);
           } else {
             if (this.orderBy >= 0 && this.orderDirection) {
