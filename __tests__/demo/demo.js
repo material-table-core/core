@@ -20,7 +20,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import ErrorBoundary from './errorBoundary';
 
-import { FrankensteinDemo, OneDetailPanel } from './demo-components';
+import {
+  FrankensteinDemo,
+  OneDetailPanel,
+  ExportData
+} from './demo-components';
 
 const App = () => {};
 
@@ -29,8 +33,7 @@ module.hot.accept();
 render(
   <div>
     <ErrorBoundary>
-      <FrankensteinDemo />
-      <OneDetailPanel />
+      <ExportData />
     </ErrorBoundary>
   </div>,
   document.querySelector('#app')

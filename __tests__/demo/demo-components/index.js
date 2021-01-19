@@ -101,3 +101,43 @@ export function FrankensteinDemo() {
     />
   );
 }
+
+export function ExportData() {
+  let data = [
+    {
+      groupA: 'accepted'
+    },
+    {
+      groupA: 'pending'
+    },
+    {
+      groupA: 'denied'
+    }
+  ];
+
+  return (
+    <MaterialTable
+      columns={[
+        {
+          title: 'Group A',
+          field: 'groupA',
+          lookup: {
+            accepted: 'accepted',
+            pending: 'pending',
+            denied: 'denied'
+          }
+        }
+      ]}
+      data={data}
+      options={{
+        filtering: true,
+        exportMenu: [
+          {
+            label: 'Export CSV',
+            exportFunc: (cols, datas) => ExportCsv(cols, datas, 'myCsvFileName')
+          }
+        ]
+      }}
+    />
+  );
+}
