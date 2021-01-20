@@ -23,7 +23,9 @@ import ErrorBoundary from './errorBoundary';
 import {
   FrankensteinDemo,
   OneDetailPanel,
-  ExportData
+  ExportData,
+  Basic,
+  EditableCells
 } from './demo-components';
 
 const App = () => {};
@@ -32,9 +34,12 @@ module.hot.accept();
 
 render(
   <div>
-    <ErrorBoundary>
-      <ExportData />
-    </ErrorBoundary>
+    {/*
+      <h1>Basic</h1>
+      <Basic />
+    */}
+    <h1>Editable</h1>
+    <EditableCells />
   </div>,
   document.querySelector('#app')
 );

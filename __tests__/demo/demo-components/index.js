@@ -21,6 +21,12 @@ const global_cols = [
 /**
  * Basic demo that shows a single detail panel, in this case a youtube vid
  */
+export function Basic() {
+  return (
+    <MaterialTable title="Basic" columns={global_cols} data={global_data} />
+  );
+}
+
 export function OneDetailPanel() {
   return (
     <MaterialTable
@@ -102,6 +108,28 @@ export function FrankensteinDemo() {
   );
 }
 
+export function EditableCells() {
+  return (
+    <MaterialTable
+      title="EditableCells"
+      columns={global_cols}
+      data={global_data}
+      cellEditable={{
+        onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+          return new Promise((resolve, reject) => {
+            const datacopy = [...data];
+            const row = rowData.tableData.id;
+            const field = columnDef.field;
+            datacopy[row][field] = newValue;
+            setData(datacopy);
+            resolve();
+          });
+        }
+      }}
+    />
+  );
+}
+
 export function ExportData() {
   let data = [
     {
@@ -117,6 +145,9 @@ export function ExportData() {
 
   return (
     <MaterialTable
+      components={{
+        Footer: (a, b) => <div>Foot</div>
+      }}
       columns={[
         {
           title: 'Group A',
@@ -130,7 +161,8 @@ export function ExportData() {
       ]}
       data={data}
       options={{
-        filtering: true,
+        // grouping: true,
+        //filtering: true,
         exportMenu: [
           {
             label: 'Export CSV',

@@ -54,6 +54,10 @@ export default class MTableBodyRow extends React.Component {
               columnDef
             );
           }
+
+          const key = `cell-${this.props.data.tableData.id}-${columnDef.tableData.id}`;
+          console.log(`rendering cell ${key}`, { props: this.props });
+
           return (
             <this.props.components.Cell
               size={size}
@@ -64,12 +68,7 @@ export default class MTableBodyRow extends React.Component {
                 ...columnDef
               }}
               value={value}
-              key={
-                'cell-' +
-                this.props.data.tableData.id +
-                '-' +
-                columnDef.tableData.id
-              }
+              key={key}
               rowData={this.props.data}
               cellEditable={isEditable}
               onCellEditStarted={this.props.onCellEditStarted}
