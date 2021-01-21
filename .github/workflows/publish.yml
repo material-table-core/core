@@ -42,7 +42,7 @@ jobs:
       - name: Set env
         run: |
           echo "RELEASE_VERSION=$(echo $${{ github.event.head_commit.message }} | awk '{print $NF}')" >> $GITHUB_ENV
-          echo ${{ env.RELEASE_VERSION }}
+          echo $RELEASE_VERSION
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
