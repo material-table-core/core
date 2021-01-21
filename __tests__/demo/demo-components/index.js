@@ -163,10 +163,15 @@ export function ExportData() {
       options={{
         // grouping: true,
         //filtering: true,
+        columnsButton: true,
         exportMenu: [
           {
             label: 'Export CSV',
             exportFunc: (cols, datas) => ExportCsv(cols, datas, 'myCsvFileName')
+          },
+          {
+            label: 'Export PDF',
+            exportFunc: (cols, datas) => ExportPdf(cols, datas, 'myPdfFileName')
           }
         ]
       }}

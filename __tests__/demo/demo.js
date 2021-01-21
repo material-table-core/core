@@ -38,6 +38,8 @@ render(
       <h1>Basic</h1>
       <Basic />
     */}
+    <h1>Export Data</h1>
+    <ExportData />
     <h1>Editable</h1>
     <EditableCells />
   </div>,
