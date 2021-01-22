@@ -44,14 +44,14 @@ jobs:
           RV=$(echo $${{ github.event.head_commit.message }} | awk '{print $NF}')
           echo "RELEASE_VERSION=$($RV)" >> $GITHUB_ENV
           echo $RV
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      #   with:
-      #     tag_name: format(github.event.head_commit.message)
-      #     release_name: ${{ github.event.head_commit.message }}
-      #     body: ${{ github.event.head_commit.message }}
-      #     draft: false
-      #     prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          body: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
