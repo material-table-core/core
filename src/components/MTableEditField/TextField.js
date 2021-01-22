@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
-function TextField({ forwardedRef, ...props }) {
+function MTextField({ forwardedRef, ...props }) {
   return (
     <TextField
       {...props}
@@ -31,6 +31,6 @@ function TextField({ forwardedRef, ...props }) {
   );
 }
 
-export default React.forwardRef(function TextFieldRef(props, ref) {
-  return <TextField {...props} forwardedRef={ref} />;
+export default React.forwardRef(function MTextFieldRef(props, ref) {
+  return <MTextField {...props} forwardedRef={ref} />;
 });
