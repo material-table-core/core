@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getRenderValue, getStyle } from './utils';
 /* eslint-enable no-unused-vars */
 
-export default function MTableCell(props) {
+function MTableCell(props) {
   const handleClickCell = (e) => {
     if (props.columnDef.disableClick) {
       e.stopPropagation();
@@ -46,6 +46,7 @@ export default function MTableCell(props) {
       style={getStyle(props)}
       align={cellAlignment}
       onClick={handleClickCell}
+      ref={props.forwardedRef}
     >
       {props.children}
       {renderValue}
@@ -62,5 +63,14 @@ MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  forwardedRef: PropTypes.element,
+  size: PropTypes.number,
+  children: PropTypes.element,
+  cellEditable: PropTypes.bool,
+  onCellEditStarted: PropTypes.func
 };
+
+export default React.forwardRef(function MTableCellRef(props, ref) {
+  return <MTableCell {...props} forwardedRef={ref} />;
+});
