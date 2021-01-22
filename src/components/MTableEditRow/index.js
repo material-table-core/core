@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 
-export default function MTableEditRow(props) {
+function MTableEditRow(props) {
   const [state, setState] = useState(() => ({
     data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData()
   }));
@@ -341,15 +341,19 @@ export default function MTableEditRow(props) {
       errorState,
       onBulkEditRowChanged,
       scrollWidth,
+      forwardedRef,
       ...rowProps
     } = props;
 
     return (
-      <>
-        <TableRow onKeyDown={handleKeyDown} {...rowProps} style={getStyle()}>
-          {columns}
-        </TableRow>
-      </>
+      <TableRow
+        onKeyDown={handleKeyDown}
+        {...rowProps}
+        ref={forwardedRef}
+        style={getStyle()}
+      >
+        {columns}
+      </TableRow>
     );
   }
 
@@ -390,3 +394,7 @@ MTableEditRow.propTypes = {
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onBulkEditRowChanged: PropTypes.func
 };
+
+export default React.forwardRef(function MTableWithRefEditRow(props, ref) {
+  return <MTableEditRow {...props} forwardedRef={ref} />;
+});
