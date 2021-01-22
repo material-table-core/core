@@ -1,11 +1,11 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
 
-let renders = 0;
-
-export default function TextField(props) {
+function TextField({ forwardedRef, ...props }) {
   return (
     <TextField
       {...props}
+      ref={forwardedRef}
       fullWidth
       style={props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
       type={props.columnDef.type === 'numeric' ? 'number' : 'text'}
@@ -30,3 +30,7 @@ export default function TextField(props) {
     />
   );
 }
+
+export default React.forwardRef(function TextFieldRef(props, ref) {
+  return <TextField {...props} forwardedRef={ref} />;
+});
