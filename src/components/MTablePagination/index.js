@@ -38,7 +38,7 @@ function MTablePagination(props) {
     } = props;
 
     const localization = {
-      ...MTablePaginationInner.defaultProps.localization,
+      ...MTablePagination.defaultProps.localization,
       ...props.localization
     };
 

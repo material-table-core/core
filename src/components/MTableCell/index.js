@@ -65,7 +65,7 @@ MTableCell.propTypes = {
   rowData: PropTypes.object,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   forwardedRef: PropTypes.element,
-  size: PropTypes.number,
+  size: PropTypes.string,
   children: PropTypes.element,
   cellEditable: PropTypes.bool,
   onCellEditStarted: PropTypes.func
