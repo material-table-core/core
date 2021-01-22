@@ -1,25 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MTableActions({
+function MTableActions({
   actions,
   components,
   data,
   size,
-  disabled
+  disabled,
+  forwardedRef
 }) {
   if (!actions) {
     return null;
   }
-  return actions.map((action, index) => (
-    <components.Action
-      action={action}
-      key={'action-' + index}
-      data={data}
-      size={size}
-      disabled={disabled}
-    />
-  ));
+  return (
+    <div ref={forwardedRef}>
+      {actions.map((action, index) => (
+        <components.Action
+          action={action}
+          key={'action-' + index}
+          data={data}
+          size={size}
+          disabled={disabled}
+        />
+      ))}
+    </div>
+  );
 }
 
 MTableActions.defaultProps = {
@@ -35,5 +40,10 @@ MTableActions.propTypes = {
     PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
-  size: PropTypes.string
+  size: PropTypes.string,
+  forwardedRef: PropTypes.element
 };
+
+export default React.forwardRef(function MTableActionsRef(props, ref) {
+  return <MTableActions {...props} forwardedRef={ref} />;
+});
