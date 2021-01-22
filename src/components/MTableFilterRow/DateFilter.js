@@ -5,13 +5,14 @@ import {
   DatePicker,
   DateTimePicker,
   MuiPickersUtilsProvider,
-  TimePicker,
+  TimePicker
 } from '@material-ui/pickers';
 
-export default function DateFilter({
+function DateFilter({
   columnDef,
   onFilterChanged,
   localization,
+  forwardedRef
 }) {
   const onDateInputChange = (date) =>
     onFilterChanged(columnDef.tableData.id, date);
@@ -20,16 +21,16 @@ export default function DateFilter({
     value: columnDef.tableData.filterValue || null,
     onChange: onDateInputChange,
     placeholder: getLocalizedFilterPlaceHolder(columnDef),
-    clearable: true,
+    clearable: true
   };
 
   let dateInputElement = null;
   if (columnDef.type === 'date') {
-    dateInputElement = <DatePicker {...pickerProps} />;
+    dateInputElement = <DatePicker {...pickerProps} ref={forwardedRef} />;
   } else if (columnDef.type === 'datetime') {
-    dateInputElement = <DateTimePicker {...pickerProps} />;
+    dateInputElement = <DateTimePicker {...pickerProps} ref={forwardedRef} />;
   } else if (columnDef.type === 'time') {
-    dateInputElement = <TimePicker {...pickerProps} />;
+    dateInputElement = <TimePicker {...pickerProps} ref={forwardedRef} />;
   }
 
   return (
@@ -41,3 +42,7 @@ export default function DateFilter({
     </MuiPickersUtilsProvider>
   );
 }
+
+export default React.forwardRef(function DateFilterRef(props, ref) {
+  return <DateFilter {...props} forwardedRef={ref} />;
+});
