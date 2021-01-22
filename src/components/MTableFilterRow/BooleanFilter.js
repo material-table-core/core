@@ -1,9 +1,10 @@
 import React from 'react';
 import { Checkbox } from '@material-ui/core';
 
-export default function BooleanFilter({ columnDef, onFilterChanged }) {
+function BooleanFilter({ forwardedRef, columnDef, onFilterChanged }) {
   return (
     <Checkbox
+      ref={forwardedRef}
       inputProps={{ 'aria-label': `Filter of ${columnDef.title}` }}
       indeterminate={columnDef.tableData.filterValue === undefined}
       checked={columnDef.tableData.filterValue === 'checked'}
@@ -19,3 +20,7 @@ export default function BooleanFilter({ columnDef, onFilterChanged }) {
     />
   );
 }
+
+export default React.forwardRef(function BooleanFilterRef(props, ref) {
+  return <BooleanFilter {...props} forwardedRef={ref} />;
+});
