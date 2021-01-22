@@ -244,8 +244,8 @@ export function MTableHeader(props) {
   function renderDetailPanelColumnCell() {
     return (
       <TableCell
-        padding='none'
-        key='key-detail-panel-column'
+        padding="none"
+        key="key-detail-panel-column"
         className={props.classes.header}
         style={{ ...props.headerStyle }}
       />
@@ -305,7 +305,7 @@ export function MTableHeader(props) {
         );
       });
     return (
-      <TableHead>
+      <TableHead ref={props.forwardedRef}>
         <TableRow>{headers}</TableRow>
       </TableHead>
     );
@@ -363,4 +363,8 @@ export const styles = (theme) => ({
   }
 });
 
-export default withStyles(styles, { withTheme: true })(MTableHeader);
+const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
+  return <MTableHeader {...props} forwardedRef={ref} />;
+});
+
+export default withStyles(styles, { withTheme: true })(MTableHeaderRef);
