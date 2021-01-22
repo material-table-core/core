@@ -23,7 +23,7 @@ const MenuProps = {
   }
 };
 
-export default function LookupFilter({ columnDef, onFilterChanged }) {
+function LookupFilter({ columnDef, onFilterChanged, forwardedRef }) {
   const [selectedFilter, setSelectedFilter] = useState(
     columnDef.tableData.filterValue || []
   );
@@ -33,7 +33,7 @@ export default function LookupFilter({ columnDef, onFilterChanged }) {
   }, [columnDef.tableData.filterValue]);
 
   return (
-    <FormControl style={{ width: '100%' }}>
+    <FormControl style={{ width: '100%' }} ref={forwardedRef}>
       <InputLabel
         htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
         style={{ marginTop: -16 }}
@@ -73,3 +73,7 @@ export default function LookupFilter({ columnDef, onFilterChanged }) {
     </FormControl>
   );
 }
+
+export default React.forwardRef(function LookupFilterRef(props, ref) {
+  return <LookupFilter {...props} forwardedRef={ref} />;
+});
