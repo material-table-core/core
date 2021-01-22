@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import MaterialTable from '../../../src'; // root of this project
-import { ExportPdf, ExportCsv } from '../../../exporters'; // root of this project
+import ExportCsv from '../../../exporters/csv'; // root of this project
 
 const global_data = [
   { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
@@ -168,11 +168,11 @@ export function ExportData() {
           {
             label: 'Export CSV',
             exportFunc: (cols, datas) => ExportCsv(cols, datas, 'myCsvFileName')
-          },
-          {
-            label: 'Export PDF',
-            exportFunc: (cols, datas) => ExportPdf(cols, datas, 'myPdfFileName')
           }
+          // {
+          //   label: 'Export PDF',
+          //   exportFunc: (cols, datas) => ExportPdf(cols, datas, 'myPdfFileName')
+          // }
         ]
       }}
     />

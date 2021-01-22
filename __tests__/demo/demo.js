@@ -18,17 +18,8 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import ErrorBoundary from './errorBoundary';
 
-import {
-  FrankensteinDemo,
-  OneDetailPanel,
-  ExportData,
-  Basic,
-  EditableCells
-} from './demo-components';
-
-const App = () => {};
+import { ExportData } from './demo-components';
 
 module.hot.accept();
 
@@ -40,8 +31,10 @@ render(
     */}
     <h1>Export Data</h1>
     <ExportData />
+    {/*
     <h1>Editable</h1>
     <EditableCells />
+    */}
   </div>,
   document.querySelector('#app')
 );
