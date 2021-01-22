@@ -2,18 +2,20 @@ import React from 'react';
 import { getLocalizedFilterPlaceHolder, getLocalizationData } from './utils';
 import { InputAdornment, TextField, Tooltip } from '@material-ui/core';
 
-export default function DefaultFilter({
+function DefaultFilter({
   columnDef,
   icons,
   localization,
   hideFilterIcons,
   onFilterChanged,
+  forwardedRef
 }) {
   const _localization = getLocalizationData(localization);
   const FilterIcon = icons.Filter;
 
   return (
     <TextField
+      ref={forwardedRef}
       style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
       type={columnDef.type === 'numeric' ? 'number' : 'search'}
       value={columnDef.tableData.filterValue || ''}
@@ -32,9 +34,13 @@ export default function DefaultFilter({
                     <FilterIcon />
                   </Tooltip>
                 </InputAdornment>
-              ),
+              )
             }
       }
     />
   );
 }
+
+export default React.forwardRef(function DefaultFilterRef(props, ref) {
+  return <DefaultFilter {...props} forwardedRef={ref} />;
+});
