@@ -1,9 +1,11 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
 
-export default function CurrencyField(props) {
+function CurrencyField({ forwardedRef, ...props }) {
   return (
     <TextField
       {...props}
+      ref={forwardedRef}
       placeholder={props.columnDef.editPlaceholder || props.columnDef.title}
       style={{ float: 'right' }}
       type="number"
@@ -29,3 +31,7 @@ export default function CurrencyField(props) {
     />
   );
 }
+
+export default React.forwardRef(function CurrencyFieldRef(props, ref) {
+  return <CurrencyField {...props} forwardedRef={ref} />;
+});
