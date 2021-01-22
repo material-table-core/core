@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
@@ -10,12 +10,6 @@ export default function MTableEditRow(props) {
   const [state, setState] = useState(() => ({
     data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData()
   }));
-
-  useEffect(() => {
-    if (props.onBulkEditRowChanged) {
-      props.onBulkEditRowChanged(props.data, state.data);
-    }
-  }, [state.data]);
 
   function createRowData() {
     return props.columns
@@ -133,9 +127,15 @@ export default function MTableEditRow(props) {
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
                   setState({ data });
+                  if (props.onBulkEditRowChanged) {
+                    props.onBulkEditRowChanged(props.data, data);
+                  }
                 }}
                 onRowDataChange={(data) => {
                   setState({ data });
+                  if (props.onBulkEditRowChanged) {
+                    props.onBulkEditRowChanged(props.data, data);
+                  }
                 }}
               />
             </TableCell>
