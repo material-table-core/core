@@ -33,7 +33,10 @@ function MTableGroupbar(props) {
   });
 
   return (
-    <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
+    <Toolbar
+      style={{ padding: 0, minHeight: 'unset' }}
+      ref={props.forwardedRef}
+    >
       <Droppable
         droppableId="groups"
         direction="horizontal"
@@ -117,7 +120,10 @@ MTableGroupbar.propTypes = {
   localization: PropTypes.shape({
     groupedBy: PropTypes.string,
     placeholder: PropTypes.string
-  })
+  }),
+  forwardedRef: PropTypes.element
 };
 
-export default MTableGroupbar;
+export default React.forwardRef(function MTableGroupbarRef(props, ref) {
+  return <MTableGroupbar {...props} forwardedRef={ref} />;
+});
