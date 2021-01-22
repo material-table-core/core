@@ -144,7 +144,7 @@ const actionsStyles = (theme) => ({
   }
 });
 
-MTablePaginationInner.propTypes = {
+MTablePagination.propTypes = {
   onChangePage: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
@@ -155,7 +155,7 @@ MTablePaginationInner.propTypes = {
   showFirstLastPageButtons: PropTypes.bool
 };
 
-MTablePaginationInner.defaultProps = {
+MTablePagination.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
     firstAriaLabel: 'First Page',
