@@ -4,7 +4,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
-export default function MTableAction(props) {
+function MTableAction(props) {
   function render() {
     let action = props.action;
 
@@ -46,6 +46,7 @@ export default function MTableAction(props) {
 
     const button = (
       <IconButton
+        ref={props.forwardedRef}
         size={props.size}
         color="inherit"
         disabled={disabled}
@@ -87,3 +88,7 @@ MTableAction.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.string
 };
+
+export default React.forwardRef(function MTableActionRef(props, ref) {
+  return <MTableAction {...props} forwardedRef={ref} />;
+});
