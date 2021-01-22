@@ -1,8 +1,14 @@
 import React from 'react';
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  FormHelperText
+} from '@material-ui/core';
 
-export default function LookupField(props) {
+function LookupField({ forwardedRef, ...props }) {
   return (
-    <FormControl error={Boolean(props.error)}>
+    <FormControl ref={forwardedRef} error={Boolean(props.error)}>
       <Select
         {...props}
         value={props.value === undefined ? '' : props.value}
@@ -22,3 +28,7 @@ export default function LookupField(props) {
     </FormControl>
   );
 }
+
+export default React.forwardRef(function LookupFieldRef(props, ref) {
+  return <LookupField {...props} forwardedRef={ref} />;
+});
