@@ -2,11 +2,12 @@ import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 
-export default function DateField({
+function DateField({
   columnDef,
   value,
   onChange,
   locale,
+  forwardedRef,
   ...rest
 }) {
   const getProps = () => {
@@ -33,6 +34,7 @@ export default function DateField({
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
       <DatePicker
         {...datePickerProps}
+        ref={forwardedRef}
         format={dateFormat}
         value={value || null}
         onChange={onChange}
@@ -49,3 +51,7 @@ export default function DateField({
     </MuiPickersUtilsProvider>
   );
 }
+
+export default React.forwardRef(function DateFieldRef(props, ref) {
+  return <DateField {...props} forwardedRef={ref} />;
+});
