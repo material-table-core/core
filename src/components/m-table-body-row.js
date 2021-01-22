@@ -56,7 +56,6 @@ export default class MTableBodyRow extends React.Component {
           }
 
           const key = `cell-${this.props.data.tableData.id}-${columnDef.tableData.id}`;
-          console.log(`rendering cell ${key}`, { props: this.props });
 
           return (
             <this.props.components.Cell

@@ -99,7 +99,6 @@ export function MTableToolbar(props) {
   }
 
   function renderDefaultActions() {
-    console.log('renderDefaultActions', { props });
     const localization = {
       ...MTableToolbar.defaultProps.localization,
       ...props.localization
