@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
-function MTablePaginationInner(props) {
+function MTablePagination(props) {
   const handleFirstPageButtonClick = (event) => {
     props.onChangePage(event, 0);
   };
@@ -43,7 +43,7 @@ function MTablePaginationInner(props) {
     };
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} ref={props.forwardedRef}>
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -171,8 +171,15 @@ MTablePaginationInner.defaultProps = {
   }
 };
 
-const MTablePagination = withStyles(actionsStyles, { withTheme: true })(
-  MTablePaginationInner
+const MTableGroupRowRef = React.forwardRef(function MTablePaginationRef(
+  props,
+  ref
+) {
+  return <MTablePagination {...props} forwardedRef={ref} />;
+});
+
+const MTablePaginationOuter = withStyles(actionsStyles, { withTheme: true })(
+  MTableGroupRowRef
 );
 
-export default MTablePagination;
+export default MTablePaginationOuter;
