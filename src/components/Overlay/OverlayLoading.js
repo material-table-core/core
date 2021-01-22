@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { CircularProgress } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-export default function OverlayLoading(props) {
+function OverlayLoading(props) {
   return (
     <div
+      ref={props.forwardedRef}
       style={{
         display: 'table',
         width: '100%',
@@ -30,3 +31,7 @@ export default function OverlayLoading(props) {
 OverlayLoading.propTypes = {
   theme: PropTypes.any
 };
+
+export default React.forwardRef(function OverlayLoadingRef(props, ref) {
+  return <OverlayLoading {...props} forwardedRef={ref} />;
+});
