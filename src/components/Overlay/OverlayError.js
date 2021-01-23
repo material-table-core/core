@@ -5,7 +5,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 function OverlayError(props) {
   return (
     <div
-      ref={fprops.orwardedRef}
+      ref={props.forwardedRef}
       style={{
         display: 'table',
         width: '100%',
