@@ -30,17 +30,20 @@ export function MTableToolbar(props) {
       .filter(
         (columnDef) =>
           (!columnDef.hidden || columnDef.export === true) &&
-          columnDef.export !== false &&
-          columnDef.field
+          columnDef.field &&
+          columnDef.export !== false
       )
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
-    const data = (props.exportAllData
-      ? props.data
-      : props.renderData
-    ).map((rowData) =>
-      columns.map((columnDef) => props.getFieldValue(rowData, columnDef))
+    const data = (props.exportAllData ? props.data : props.renderData).map(
+      (rowData) =>
+        columns.map((columnDef) => {
+          if (typeof columnDef.customExport === 'function') {
+            return columnDef.customExport(rowData);
+          }
+          return props.getFieldValue(rowData, columnDef);
+        })
     );
 
     return [columns, data];
