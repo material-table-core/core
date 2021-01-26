@@ -39,6 +39,15 @@ export function MTableToolbar(props) {
     const data = (props.exportAllData ? props.data : props.renderData).map(
       (rowData) =>
         columns.map((columnDef) => {
+          /*
+          About: column.customExport
+          This bit of code checks if prop customExport in column is a function, and if it is then it
+          uses that function to transform the data, this is useful in cases where a column contains
+          complex objects or array and it needs to be handled before it's passed to the exporter 
+          to avoid [object Object] output (e.g. to flatten data). 
+          Please note that it is also possible to transform data within under exportMenu 
+          using a custom function (exportMenu.exportFunc) for each exporter.
+          */
           if (typeof columnDef.customExport === 'function') {
             return columnDef.customExport(rowData);
           }
