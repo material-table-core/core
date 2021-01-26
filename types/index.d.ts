@@ -162,6 +162,7 @@ export interface Column<RowData extends object> {
     data2: RowData,
     type: 'row' | 'group'
   ) => number;
+  //customExport prop handle flattening of data at column level before passing data to exporter. Note exportMenu.exportFunc is an alternative to handle data change at exporter level
   customExport?: (rowData: RowData) => unknown;
   defaultFilter?: any;
   defaultGroupOrder?: number;
