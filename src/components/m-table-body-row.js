@@ -158,12 +158,16 @@ export default class MTableBodyRow extends React.Component {
 
   renderDetailPanelColumn() {
     const size = CommonValues.elementSize(this.props);
-    const CustomIcon = ({ icon, iconProps }) =>
-      typeof icon === 'string' ? (
-        <Icon {...iconProps}>{icon}</Icon>
-      ) : (
-        React.createElement(icon, { ...iconProps })
-      );
+
+    const CustomIcon = ({ icon, iconProps }) => {
+      if (!icon) {
+        return;
+      }
+      if (typeof icon === 'string') {
+        return <Icon {...iconProps}>{icon}</Icon>;
+      }
+      return React.createElement(icon, { ...iconProps });
+    };
 
     if (typeof this.props.detailPanel === 'function') {
       return (
