@@ -162,7 +162,7 @@ export interface Column<RowData extends object> {
     data2: RowData,
     type: 'row' | 'group'
   ) => number;
-  customExport?: (rowData: RowData) => void;
+  customExport?: (rowData: RowData) => unknown;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: 'asc' | 'desc';
