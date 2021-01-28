@@ -8,3 +8,4 @@ yarn.lock
 *.iml
 cypress/videos
 __tests__/coverage
+/exporters
