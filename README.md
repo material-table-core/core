@@ -56,6 +56,8 @@
   </p> 
   <!-- ^^^ end badges ^^ -->
   
+  Please review our [roadmap](https://github.com/material-table-core/core/wiki/Roadmap)!
+  
 💾 [Installation](https://material-table-core.com/docs/#installation) 🎉 [Usage](https://material-table-core.com/docs/#basic-usage) 
 ✅ [Why does this repo exist?](https://material-table-core.com/docs/about) 🚧 [Documentation](https://material-table-core.com/docs) ⚙️ [Demos](https://material-table-core.com/demos)
 
