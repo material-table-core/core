@@ -113,7 +113,12 @@ function MTableEditCell(props) {
   }
 
   return (
-    <TableCell size={props.size} style={getStyle()} padding="none">
+    <TableCell
+      size={props.size}
+      style={getStyle()}
+      padding="none"
+      ref={props.forwardedRef}
+    >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ flex: 1, marginRight: 4 }}>
           <props.components.EditField
@@ -149,7 +154,10 @@ MTableEditCell.propTypes = {
   localization: PropTypes.object.isRequired,
   onCellEditFinished: PropTypes.func.isRequired,
   rowData: PropTypes.object.isRequired,
-  size: PropTypes.string
+  size: PropTypes.string,
+  forwardedRef: PropTypes.element
 };
 
-export default withTheme(MTableEditCell);
+export default React.forwardRef(function MTableEditCellRef(props, ref) {
+  return withTheme(<MTableEditCell {...props} forwardedRef={ref} />);
+});

@@ -1,8 +1,19 @@
 import React from 'react';
+import {
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormHelperText
+} from '@material-ui/core';
 
-export default function BooleanField(props) {
+function BooleanField({ forwardedRef, ...props }) {
   return (
-    <FormControl error={Boolean(props.error)} component="fieldset">
+    <FormControl
+      error={Boolean(props.error)}
+      ref={forwardedRef}
+      component="fieldset"
+    >
       <FormGroup>
         <FormControlLabel
           label=""
@@ -28,3 +39,7 @@ export default function BooleanField(props) {
     </FormControl>
   );
 }
+
+export default React.forwardRef(function BooleanFieldRef(props, ref) {
+  return <BooleanField {...props} forwardedRef={ref} />;
+});

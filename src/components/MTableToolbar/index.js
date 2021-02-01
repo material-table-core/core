@@ -220,18 +220,17 @@ export function MTableToolbar(props) {
               open={Boolean(state.exportButtonAnchorEl)}
               onClose={() => setState({ ...state, exportButtonAnchorEl: null })}
             >
-              {props.exportMenu.map((menuitem, index) => (
-                <MenuItem
-                  key={`${menuitem.label}${index}`}
-                  onClick={() => {
-                    const [cols, datas] = getTableData();
-                    menuitem.exportFunc(cols, datas);
-                  }}
-                  // style={{ display: 'block', padding: '0.5em' }}
-                >
-                  {menuitem.label}
-                </MenuItem>
-              ))}
+              {props.exportMenu.map((menuitem, index) => {
+                const [cols, datas] = getTableData();
+                return (
+                  <MenuItem
+                    key={`${menuitem.label}${index}`}
+                    onClick={() => menuitem.exportFunc(cols, datas)}
+                  >
+                    {menuitem.label}
+                  </MenuItem>
+                );
+              })}
             </Menu>
           </span>
         )}
@@ -279,7 +278,6 @@ export function MTableToolbar(props) {
   function renderToolbarTitle(title) {
     const { classes } = props;
     const toolBarTitle =
-      // eslint-disable-next-line multiline-ternary
       typeof title === 'string' ? (
         <Typography
           variant="h6"
@@ -316,6 +314,7 @@ export function MTableToolbar(props) {
         : null;
     return (
       <Toolbar
+        ref={props.forwardedRef}
         className={classNames(classes.root, {
           [classes.highlight]:
             props.showTextRowsSelected &&
@@ -431,4 +430,11 @@ export const styles = (theme) => ({
   }
 });
 
-export default withStyles(styles)(MTableToolbar);
+const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
+  props,
+  ref
+) {
+  return <MTableToolbar {...props} forwardedRef={ref} />;
+});
+
+export default withStyles(styles)(MTableToolbarRef);

@@ -8,29 +8,26 @@ import TextField from './TextField';
 import DateTimeField from './DateTimeField';
 import CurrencyField from './CurrencyField';
 
-function MTableEditField(props) {
-  function render() {
-    let component = 'ok';
-    if (props.columnDef.editComponent) {
-      component = props.columnDef.editComponent(props);
-    } else if (props.columnDef.lookup) {
-      component = <LookupField {...props} />;
-    } else if (props.columnDef.type === 'boolean') {
-      component = <BooleanField {...props} />;
-    } else if (props.columnDef.type === 'date') {
-      component = <DateField {...props} />;
-    } else if (props.columnDef.type === 'time') {
-      component = <TimeField {...props} />;
-    } else if (props.columnDef.type === 'datetime') {
-      component = <DateTimeField {...props} />;
-    } else if (props.columnDef.type === 'currency') {
-      component = <CurrencyField {...props} />;
-    } else {
-      component = <TextField {...props} />;
-    }
-    return component;
+function MTableEditField({ forwardedRef, ...props }) {
+  let component = 'ok';
+  if (props.columnDef.editComponent) {
+    component = props.columnDef.editComponent(props);
+  } else if (props.columnDef.lookup) {
+    component = <LookupField {...props} ref={forwardedRef} />;
+  } else if (props.columnDef.type === 'boolean') {
+    component = <BooleanField {...props} ref={forwardedRef} />;
+  } else if (props.columnDef.type === 'date') {
+    component = <DateField {...props} ref={forwardedRef} />;
+  } else if (props.columnDef.type === 'time') {
+    component = <TimeField {...props} ref={forwardedRef} />;
+  } else if (props.columnDef.type === 'datetime') {
+    component = <DateTimeField {...props} ref={forwardedRef} />;
+  } else if (props.columnDef.type === 'currency') {
+    component = <CurrencyField {...props} ref={forwardedRef} />;
+  } else {
+    component = <TextField {...props} ref={forwardedRef} />;
   }
-  return render();
+  return component;
 }
 
 MTableEditField.propTypes = {
@@ -40,4 +37,6 @@ MTableEditField.propTypes = {
   locale: PropTypes.object
 };
 
-export default MTableEditField;
+export default React.forwardRef(function MTableEditFieldRef(props, ref) {
+  return <MTableEditField {...props} forwardedRef={ref} />;
+});

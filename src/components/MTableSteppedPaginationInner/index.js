@@ -80,7 +80,7 @@ function MTablePaginationInner(props) {
     const pageEnd = Math.min(maxPages, page + 1);
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} ref={props.forwardedRef}>
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -178,9 +178,14 @@ MTablePaginationInner.defaultProps = {
     labelRowsPerPage: 'Rows per page:'
   }
 };
+const MTableSteppedPaginationRef = React.forwardRef(
+  function MTableSteppedPaginationRef(props, ref) {
+    return <MTablePaginationInner {...props} forwardedRef={ref} />;
+  }
+);
 
 const MTableSteppedPagination = withStyles(actionsStyles, { withTheme: true })(
-  MTablePaginationInner
+  MTableSteppedPaginationRef
 );
 
 export default MTableSteppedPagination;

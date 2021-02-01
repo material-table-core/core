@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
-function MTablePaginationInner(props) {
+function MTablePagination(props) {
   const handleFirstPageButtonClick = (event) => {
     props.onChangePage(event, 0);
   };
@@ -38,12 +38,12 @@ function MTablePaginationInner(props) {
     } = props;
 
     const localization = {
-      ...MTablePaginationInner.defaultProps.localization,
+      ...MTablePagination.defaultProps.localization,
       ...props.localization
     };
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} ref={props.forwardedRef}>
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -144,7 +144,7 @@ const actionsStyles = (theme) => ({
   }
 });
 
-MTablePaginationInner.propTypes = {
+MTablePagination.propTypes = {
   onChangePage: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
@@ -155,7 +155,7 @@ MTablePaginationInner.propTypes = {
   showFirstLastPageButtons: PropTypes.bool
 };
 
-MTablePaginationInner.defaultProps = {
+MTablePagination.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
     firstAriaLabel: 'First Page',
@@ -171,8 +171,15 @@ MTablePaginationInner.defaultProps = {
   }
 };
 
-const MTablePagination = withStyles(actionsStyles, { withTheme: true })(
-  MTablePaginationInner
+const MTableGroupRowRef = React.forwardRef(function MTablePaginationRef(
+  props,
+  ref
+) {
+  return <MTablePagination {...props} forwardedRef={ref} />;
+});
+
+const MTablePaginationOuter = withStyles(actionsStyles, { withTheme: true })(
+  MTableGroupRowRef
 );
 
-export default MTablePagination;
+export default MTablePaginationOuter;

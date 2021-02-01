@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-export default function OverlayError(props) {
+function OverlayError(props) {
   return (
     <div
+      ref={props.forwardedRef}
       style={{
         display: 'table',
         width: '100%',
@@ -37,3 +38,7 @@ OverlayError.propTypes = {
   theme: PropTypes.any,
   icon: PropTypes.any
 };
+
+export default React.forwardRef(function OverlayErrorRef(props, ref) {
+  return <OverlayError {...props} forwardedRef={ref} />;
+});

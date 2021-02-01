@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function MTableGroupRow(props) {
+function MTableGroupRow(props) {
   const rotateIconStyle = (isOpen) => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });
@@ -125,7 +125,7 @@ export default function MTableGroupRow(props) {
 
     return (
       <>
-        <TableRow>
+        <TableRow ref={props.forwardedRef}>
           {freeCells}
           <props.components.Cell
             colSpan={colSpan}
@@ -195,5 +195,10 @@ MTableGroupRow.propTypes = {
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
-  onBulkEditRowChanged: PropTypes.func
+  onBulkEditRowChanged: PropTypes.func,
+  forwardedRef: PropTypes.element
 };
+
+export default React.forwardRef(function MTableGroupRowRef(props, ref) {
+  return <MTableGroupRow {...props} forwardedRef={ref} />;
+});

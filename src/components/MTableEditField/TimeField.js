@@ -1,11 +1,13 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 
-export default function TimeField(props) {
+function TimeField({ forwardedRef, ...props }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={props.locale}>
       <TimePicker
-        {...getProps()}
+        {...props}
+        ref={forwardedRef}
         format="HH:mm:ss"
         value={props.value || null}
         onChange={props.onChange}
@@ -22,3 +24,7 @@ export default function TimeField(props) {
     </MuiPickersUtilsProvider>
   );
 }
+
+export default React.forwardRef(function TimeFieldRef(props, ref) {
+  return <TimeField {...props} forwardedRef={ref} />;
+});
