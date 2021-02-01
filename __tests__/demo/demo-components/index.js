@@ -7,6 +7,23 @@ const global_data = [
   { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 }
 ];
 
+const global_data_CustomExport = [
+  {
+    name: 'Mehmet',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 63,
+    teams: ['Team A', 'Team B']
+  },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    teams: ['Team C', 'Team D', 'Team E']
+  }
+];
+
 const global_cols = [
   { title: 'Name', field: 'name' },
   { title: 'Surname', field: 'surname' },
@@ -15,6 +32,25 @@ const global_cols = [
     title: 'Birth Place',
     field: 'birthCity',
     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+  },
+  {
+    title: 'Teams',
+    field: 'teams',
+    render: (rowData) => {
+      let teams = [];
+      rowData.teams.forEach((t) => {
+        teams.push(<li>{t}</li>);
+      });
+      return teams;
+    },
+    customExport: (rowData) => {
+      let x = '';
+      rowData.teams.forEach((t) => {
+        console.log(t);
+        x = x + t + ', ';
+      });
+      return x;
+    }
   }
 ];
 
@@ -24,6 +60,32 @@ const global_cols = [
 export function Basic() {
   return (
     <MaterialTable title="Basic" columns={global_cols} data={global_data} />
+  );
+}
+
+export function CustomExport() {
+  return (
+    <MaterialTable
+      title="Basic"
+      columns={global_cols}
+      data={global_data_CustomExport}
+      options={{
+        // grouping: true,
+        //filtering: true,
+        columnsButton: true,
+        exportMenu: [
+          {
+            label: 'Export CSV',
+            exportFunc: (cols, datas) => ExportCsv(cols, datas, 'myCsvFileName')
+          }
+
+          // {
+          //   label: 'Export PDF',
+          //   exportFunc: (cols, datas) => ExportPdf(cols, datas, 'myPdfFileName')
+          // }
+        ]
+      }}
+    />
   );
 }
 

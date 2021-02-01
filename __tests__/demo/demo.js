@@ -19,7 +19,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import { ExportData } from './demo-components';
+import { Basic, ExportData, CustomExport } from './demo-components';
 
 module.hot.accept();
 
@@ -31,6 +31,9 @@ render(
     */}
     <h1>Export Data</h1>
     <ExportData />
+    <h1>Custom Export </h1>
+    <CustomExport />
+
     {/*
     <h1>Editable</h1>
     <EditableCells />

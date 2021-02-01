@@ -421,6 +421,7 @@ class App extends Component {
       {
         title: 'Adı',
         field: 'name',
+        customExport: () => 'T',
         filterPlaceholder: 'Adı filter',
         tooltip: 'This is tooltip text',
         editPlaceholder: 'This is placeholder',
@@ -516,6 +517,7 @@ class App extends Component {
                     filtering: true,
                     tableLayout: 'fixed',
                     columnResizable: true,
+                    exportButton: true,
                     headerSelectionProps: {
                       color: 'primary'
                     },
