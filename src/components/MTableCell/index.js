@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
+import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import PropTypes from 'prop-types';
 import { getRenderValue, getStyle } from './utils';

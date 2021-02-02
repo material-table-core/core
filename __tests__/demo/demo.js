@@ -25,14 +25,18 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>Basic</h1>
+    <Basic />
+
     {/*
-      <h1>Basic</h1>
-      <Basic />
-    */}
     <h1>Export Data</h1>
     <ExportData />
+    */}
+
+    {/*
     <h1>Custom Export </h1>
     <CustomExport />
+    */}
 
     {/*
     <h1>Editable</h1>

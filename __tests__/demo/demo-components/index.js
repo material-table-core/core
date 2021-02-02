@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import MaterialTable from '../../../dist'; // root of this project
-import { ExportCsv, ExportPdf } from '../../../dist/exporters'; // root of this project
+// import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
 
 const global_data = [
   { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
@@ -32,6 +32,18 @@ const global_cols = [
     title: 'Birth Place',
     field: 'birthCity',
     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+  }
+];
+
+/*
+const global_cols = [
+  { title: 'Name', field: 'name' },
+  { title: 'Surname', field: 'surname' },
+  { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+  {
+    title: 'Birth Place',
+    field: 'birthCity',
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
   },
   {
     title: 'Teams',
@@ -53,6 +65,7 @@ const global_cols = [
     }
   }
 ];
+*/
 
 /**
  * Basic demo that shows a single detail panel, in this case a youtube vid
@@ -63,6 +76,7 @@ export function Basic() {
   );
 }
 
+/*
 export function CustomExport() {
   return (
     <MaterialTable
@@ -71,7 +85,7 @@ export function CustomExport() {
       data={global_data_CustomExport}
       options={{
         // grouping: true,
-        //filtering: true,
+        // filtering: true,
         columnsButton: true,
         exportMenu: [
           {
@@ -88,7 +102,9 @@ export function CustomExport() {
     />
   );
 }
+*/
 
+/*
 export function OneDetailPanel() {
   return (
     <MaterialTable
@@ -110,7 +126,9 @@ export function OneDetailPanel() {
     />
   );
 }
+*/
 
+/*
 // A little bit of everything
 export function FrankensteinDemo() {
   const ref = useRef();
@@ -154,22 +172,24 @@ export function FrankensteinDemo() {
       options={{
         grouping: true
       }}
-      /*cellEditable={{
-        onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-          return new Promise((resolve, reject) => {
-            const datacopy = [...data];
-            const row = rowData.tableData.id;
-            const field = columnDef.field;
-            datacopy[row][field] = newValue;
-            setData(datacopy);
-            resolve();
-          });
-        }
-      }}*/
+      // cellEditable={{
+      //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+      //     return new Promise((resolve, reject) => {
+      //       const datacopy = [...data];
+      //       const row = rowData.tableData.id;
+      //       const field = columnDef.field;
+      //       datacopy[row][field] = newValue;
+      //       setData(datacopy);
+      //       resolve();
+      //     });
+      //   }
+      // }}
     />
   );
 }
+*/
 
+/*
 export function EditableCells() {
   return (
     <MaterialTable
@@ -191,7 +211,9 @@ export function EditableCells() {
     />
   );
 }
+*/
 
+/*
 export function ExportData() {
   let data = [
     {
@@ -240,3 +262,4 @@ export function ExportData() {
     />
   );
 }
+*/
