@@ -10,8 +10,10 @@ import { TableCell, TableRow } from '@material-ui/core';
 /**
  * MTableFilterRow is the row that is shown when `MaterialTable.options.filtering` is true.
  * This component allows you to provide a custom filtering algo or allow/disallow filtering for a column.
+ *
+ * THIS MUST BE EXPORTED (on top of the 'default' export)
  */
-function MTableFilterRow(props) {
+export function MTableFilterRow(props) {
   function getComponentForColumn(columnDef) {
     if (columnDef.filtering === false) {
       return null;

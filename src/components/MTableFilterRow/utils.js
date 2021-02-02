@@ -1,8 +1,8 @@
-import MTableFilterRow from './index';
+import { MTableFilterRow } from './';
 
 export const getLocalizationData = (localization) => ({
   ...MTableFilterRow.defaultProps.localization,
-  ...localization,
+  ...localization
 });
 
 export const getLocalizedFilterPlaceHolder = (columnDef, localization) => {
