@@ -22,7 +22,7 @@ type SvgIconComponent = typeof SvgIcon;
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
   cellEditable?: {
-    cellStyle?: React.CSSProperties;
+    cellStyle?: CellStyle<RowData>;
     onCellEditApproved: (
       newValue: any,
       oldValue: any,
@@ -156,9 +156,7 @@ export interface EditCellColumnDef {
 
 export interface Column<RowData extends object> {
   align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
-  cellStyle?:
-    | React.CSSProperties
-    | ((data: RowData[], rowData: RowData) => React.CSSProperties);
+  cellStyle?: CellStyle<RowData>;
   currencySetting?: {
     locale?: string;
     currencyCode?: string;
@@ -427,6 +425,14 @@ export interface Localization {
     clearSearchAriaLabel?: string;
   };
 }
+
+export type CellStyle<RowData extends object> =
+  | React.CSSProperties
+  | ((
+      data: string,
+      rowData: RowData,
+      column?: Column<RowData>
+    ) => React.CSSProperties);
 
 export default class MaterialTable<
   RowData extends object
