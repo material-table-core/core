@@ -429,7 +429,7 @@ export interface Localization {
 export type CellStyle<RowData extends object> =
   | React.CSSProperties
   | ((
-      data: string,
+      data: any,
       rowData: RowData,
       column?: Column<RowData>
     ) => React.CSSProperties);
