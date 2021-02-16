@@ -19,7 +19,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import { Basic, ExportData, CustomExport } from './demo-components';
+import {
+  Basic,
+  ExportData,
+  CustomExport,
+  EditableCells,
+  FrankensteinDemo
+} from './demo-components';
 
 module.hot.accept();
 
@@ -38,10 +44,11 @@ render(
     <CustomExport />
     */}
 
-    {/*
     <h1>Editable</h1>
     <EditableCells />
-    */}
+
+    <h1>Frankenstein</h1>
+    <FrankensteinDemo />
   </div>,
   document.querySelector('#app')
 );

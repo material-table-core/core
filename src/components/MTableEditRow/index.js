@@ -202,14 +202,12 @@ function MTableEditRow(props) {
           ...props.options.editCellStyle
         }}
       >
-        <div style={{ display: 'flex' }}>
-          <props.components.Actions
-            data={props.data}
-            actions={actions}
-            components={props.components}
-            size={size}
-          />
-        </div>
+        <props.components.Actions
+          data={props.data}
+          actions={actions}
+          components={props.components}
+          size={size}
+        />
       </TableCell>
     );
   }
