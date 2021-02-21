@@ -47,6 +47,7 @@ function MTableCell(props) {
       align={cellAlignment}
       onClick={handleClickCell}
       ref={props.forwardedRef}
+      colSpan={props.colSpan}
     >
       {props.children}
       {renderValue}
@@ -66,6 +67,7 @@ MTableCell.propTypes = {
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   forwardedRef: PropTypes.element,
   size: PropTypes.string,
+  colSpan: PropTypes.number,
   children: PropTypes.element,
   cellEditable: PropTypes.bool,
   onCellEditStarted: PropTypes.func
