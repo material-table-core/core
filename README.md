@@ -46,7 +46,7 @@
     </section>
     <section>
       <!-- discord -->
-      <a href="https://discord.com/channels/796859493412765697/">
+      <a href="https://discord.gg/uMr8pKDu8n">
         <img 
            alt="Discord" 
            src="https://img.shields.io/discord/796859493412765697?label=discord"
