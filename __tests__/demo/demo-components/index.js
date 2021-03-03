@@ -128,7 +128,6 @@ export function OneDetailPanel() {
 }
 */
 
-/*
 // A little bit of everything
 export function FrankensteinDemo() {
   const ref = useRef();
@@ -187,10 +186,9 @@ export function FrankensteinDemo() {
     />
   );
 }
-*/
 
-/*
 export function EditableCells() {
+  const [data, setData] = useState(global_data);
   return (
     <MaterialTable
       title="EditableCells"
@@ -199,7 +197,7 @@ export function EditableCells() {
       cellEditable={{
         onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
           return new Promise((resolve, reject) => {
-            const datacopy = [...data];
+            const datacopy = [...global_data];
             const row = rowData.tableData.id;
             const field = columnDef.field;
             datacopy[row][field] = newValue;
@@ -211,7 +209,6 @@ export function EditableCells() {
     />
   );
 }
-*/
 
 /*
 export function ExportData() {

@@ -13,7 +13,7 @@ function MTableActions({
     return null;
   }
   return (
-    <div ref={forwardedRef}>
+    <div style={{ display: 'flex' }} ref={forwardedRef}>
       {actions.map((action, index) => (
         <components.Action
           action={action}

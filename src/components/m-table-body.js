@@ -180,6 +180,37 @@ class MTableBody extends React.Component {
     ));
   }
 
+  renderAddRow() {
+    return (
+      this.props.showAddRow && (
+        <this.props.components.EditRow
+          columns={this.props.columns.filter((columnDef) => {
+            return !columnDef.hidden;
+          })}
+          data={this.props.initialFormData}
+          components={this.props.components}
+          errorState={this.props.errorState}
+          icons={this.props.icons}
+          key="key-add-row"
+          mode="add"
+          localization={{
+            ...MTableBody.defaultProps.localization.editRow,
+            ...this.props.localization.editRow,
+            dateTimePickerLocalization: this.props.localization
+              .dateTimePickerLocalization
+          }}
+          options={this.props.options}
+          isTreeData={this.props.isTreeData}
+          detailPanel={this.props.detailPanel}
+          onEditingCanceled={this.props.onEditingCanceled}
+          onEditingApproved={this.props.onEditingApproved}
+          getFieldValue={this.props.getFieldValue}
+          scrollWidth={this.props.scrollWidth}
+        />
+      )
+    );
+  }
+
   render() {
     const renderData = this.props.renderData;
     const groups = this.props.columns
@@ -226,64 +257,13 @@ class MTableBody extends React.Component {
             scrollWidth={this.props.scrollWidth}
           />
         )}
-        {this.props.showAddRow &&
-          this.props.options.addRowPosition === 'first' && (
-            <this.props.components.EditRow
-              columns={this.props.columns.filter((columnDef) => {
-                return !columnDef.hidden;
-              })}
-              data={this.props.initialFormData}
-              components={this.props.components}
-              errorState={this.props.errorState}
-              icons={this.props.icons}
-              key="key-add-row"
-              mode="add"
-              localization={{
-                ...MTableBody.defaultProps.localization.editRow,
-                ...this.props.localization.editRow,
-                dateTimePickerLocalization: this.props.localization
-                  .dateTimePickerLocalization
-              }}
-              options={this.props.options}
-              isTreeData={this.props.isTreeData}
-              detailPanel={this.props.detailPanel}
-              onEditingCanceled={this.props.onEditingCanceled}
-              onEditingApproved={this.props.onEditingApproved}
-              getFieldValue={this.props.getFieldValue}
-              scrollWidth={this.props.scrollWidth}
-            />
-          )}
+        {this.props.options.addRowPosition === 'first' && this.renderAddRow()}
 
         {groups.length > 0
           ? this.renderGroupedRows(groups, renderData)
           : this.renderUngroupedRows(renderData)}
 
-        {this.props.showAddRow && this.props.options.addRowPosition === 'last' && (
-          <this.props.components.EditRow
-            columns={this.props.columns.filter((columnDef) => {
-              return !columnDef.hidden;
-            })}
-            data={this.props.initialFormData}
-            components={this.props.components}
-            errorState={this.props.errorState}
-            icons={this.props.icons}
-            key="key-add-row"
-            mode="add"
-            localization={{
-              ...MTableBody.defaultProps.localization.editRow,
-              ...this.props.localization.editRow,
-              dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization
-            }}
-            options={this.props.options}
-            isTreeData={this.props.isTreeData}
-            detailPanel={this.props.detailPanel}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-            getFieldValue={this.props.getFieldValue}
-            scrollWidth={this.props.scrollWidth}
-          />
-        )}
+        {this.props.options.addRowPosition === 'last' && this.renderAddRow()}
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
