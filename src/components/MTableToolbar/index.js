@@ -118,7 +118,7 @@ export function MTableToolbar(props) {
     const { classes } = props;
 
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         {props.columnsButton && (
           <span>
             <Tooltip title={localization.showColumnsTitle}>
