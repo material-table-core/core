@@ -4,7 +4,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DoubleScrollbar from 'react-double-scrollbar';
-import React from 'react';
+import * as React from 'react';
 import { MTablePagination, MTableSteppedPagination } from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
@@ -910,6 +910,7 @@ export default class MaterialTable extends React.Component {
         onCellEditStarted={this.onCellEditStarted}
         onCellEditFinished={this.onCellEditFinished}
         bulkEditOpen={this.dataManager.bulkEditOpen}
+        bulkEditChangedRows={this.dataManager.bulkEditChangedRows}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
         scrollWidth={this.state.width}
       />

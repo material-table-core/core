@@ -95,6 +95,7 @@ class MTableBody extends React.Component {
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
+            bulkEditChangedRows={this.props.bulkEditChangedRows}
             getFieldValue={this.props.getFieldValue}
             onBulkEditRowChanged={this.props.onBulkEditRowChanged}
             scrollWidth={this.props.scrollWidth}
@@ -319,6 +320,7 @@ MTableBody.propTypes = {
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
   bulkEditOpen: PropTypes.bool,
+  bulkEditChangedRows: PropTypes.array,
   onBulkEditRowChanged: PropTypes.func
 };
 
