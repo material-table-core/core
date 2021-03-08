@@ -7,18 +7,25 @@ import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 
 function MTableEditRow(props) {
-  const [state, setState] = useState(() => ({
-    data: props.data ? JSON.parse(JSON.stringify(props.data)) : createRowData()
-  }));
+  const [state, setState] = useState(() => {
+    function createRowData() {
+      return props.columns
+        .filter((column) => 'initialEditValue' in column && column.field)
+        .reduce((prev, column) => {
+          prev[column.field] = column.initialEditValue;
+          return prev;
+        }, {});
+    }
 
-  function createRowData() {
-    return props.columns
-      .filter((column) => 'initialEditValue' in column && column.field)
-      .reduce((prev, column) => {
-        prev[column.field] = column.initialEditValue;
-        return prev;
-      }, {});
-  }
+    let data = props.data
+      ? JSON.parse(JSON.stringify(props.data))
+      : createRowData();
+
+    if (props.mode === 'bulk' && props.bulkEditChangedRows[data.tableData.id]) {
+      data = props.bulkEditChangedRows[data.tableData.id].newData;
+    }
+    return { data };
+  });
 
   function renderColumns() {
     const size = CommonValues.elementSize(props);
