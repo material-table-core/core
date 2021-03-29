@@ -34,6 +34,7 @@ export { default as MTableGroupRow } from './MTableGroupRow';
 export { default as MTableHeader } from './MTableHeader';
 export { default as MTableSteppedPagination } from './MTableSteppedPaginationInner';
 export { default as MTablePagination } from './MTablePagination';
+export { default as MTableSummaryRow } from "./MTableSummaryRow";
 export { default as MTableToolbar } from './MTableToolbar';
 /** THESE REFACTORS ARE HAVING ISSUES */
 // export { default as MTableEditCell } from './MTableEditCell';
