@@ -355,6 +355,7 @@ export interface Options<RowData extends object> {
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   showTextRowsSelected?: boolean;
+  showDetailPanelIcon?: boolean;
   search?: boolean;
   searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
