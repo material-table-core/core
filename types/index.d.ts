@@ -80,6 +80,19 @@ export interface MaterialTableProps<RowData extends object> {
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query?: Query<RowData>) => void;
+  renderSummaryRow?: ({
+    columns,
+    column,
+    index,
+    data,
+    currentData,
+  }: {
+    columns: Column<RowData>[];
+    column: Column<RowData>;
+    index: number;
+    data: RowData[];
+    currentData: RowData[];
+  }) => { value: unknown; style: CSSProperties } | unknown;
   style?: React.CSSProperties;
   tableRef?: any;
   page?: number;

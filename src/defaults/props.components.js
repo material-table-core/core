@@ -18,6 +18,7 @@ import {
   MTableGroupbar,
   MTableHeader,
   MTableBodyRow,
+  MTableSummaryRow,
   MTableToolbar,
   OverlayError,
   OverlayLoading
@@ -40,5 +41,6 @@ export default {
   OverlayError: OverlayError,
   Pagination: TablePagination,
   Row: MTableBodyRow,
+  SummaryRow: MTableSummaryRow,
   Toolbar: MTableToolbar
 };
