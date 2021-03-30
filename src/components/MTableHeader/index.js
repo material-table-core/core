@@ -142,7 +142,7 @@ export function MTableHeader(props) {
               onClick={() => {
                 const orderDirection =
                   columnDef.tableData.id !== props.orderBy
-                    ? 'asc'
+                    ? props.orderDirection || 'asc' // use the current sort order when switching columns if defined
                     : props.orderDirection === 'asc'
                     ? 'desc'
                     : props.orderDirection === 'desc' && props.thirdSortClick
