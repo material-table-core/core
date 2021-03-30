@@ -1,9 +1,15 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { TableRow, TableCell } from "@material-ui/core";
-import PropTypes from "prop-types";
+import { TableRow, TableCell } from '@material-ui/core';
+import { getStyle } from '../MTableCell/utils';
+import PropTypes from 'prop-types';
 
-export function MTableSummaryRow({ data, columns, currentData, renderSummaryRow }) {
+export function MTableSummaryRow({
+  data,
+  columns,
+  currentData,
+  renderSummaryRow
+}) {
   if (!renderSummaryRow) {
     return null;
   }
@@ -15,10 +21,18 @@ export function MTableSummaryRow({ data, columns, currentData, renderSummaryRow 
           column,
           data,
           currentData,
-          columns,
+          columns
         });
-        let value = "";
-        let style = {};
+        const cellAlignment =
+          column.align !== undefined
+            ? column.align
+            : ['numeric', 'currency'].indexOf(column.type) !== -1
+            ? 'right'
+            : 'left';
+
+        let value = '';
+        let style = getStyle({ columnDef: column, scrollWidth: 0 });
+
         if (summaryColumn && summaryColumn.value) {
           value = summaryColumn.value;
           style = summaryColumn.style;
@@ -26,7 +40,7 @@ export function MTableSummaryRow({ data, columns, currentData, renderSummaryRow 
           value = summaryColumn;
         }
         return (
-          <TableCell key={index} style={style}>
+          <TableCell key={index} style={style} align={cellAlignment}>
             {value}
           </TableCell>
         );
@@ -39,10 +53,9 @@ MTableSummaryRow.propTypes = {
   data: PropTypes.array,
   currentData: PropTypes.array,
   columns: PropTypes.array,
-  renderSummaryRow: PropTypes.func,
+  renderSummaryRow: PropTypes.func
 };
 
-export const styles = (theme) => ({
-});
+export const styles = (theme) => ({});
 
 export default withStyles(styles)(MTableSummaryRow);
