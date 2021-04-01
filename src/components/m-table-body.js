@@ -329,7 +329,7 @@ MTableBody.propTypes = {
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
   bulkEditOpen: PropTypes.bool,
-  bulkEditChangedRows: PropTypes.array,
+  bulkEditChangedRows: PropTypes.object,
   onBulkEditRowChanged: PropTypes.func
 };
 
