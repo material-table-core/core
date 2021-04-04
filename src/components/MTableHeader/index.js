@@ -272,7 +272,7 @@ export function MTableHeader(props) {
         headers.push(renderActionsHeader());
       }
     }
-    if (props.hasDetailPanel) {
+    if (props.hasDetailPanel && props.options.showDetailPanelIcon) {
       if (props.detailPanelColumnAlignment === 'right') {
         headers.push(renderDetailPanelColumnCell());
       } else {
