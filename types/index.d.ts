@@ -80,12 +80,13 @@ export interface MaterialTableProps<RowData extends object> {
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query?: Query<RowData>) => void;
+  onBulkEditOpen?: (isOpen: boolean) => void;
   renderSummaryRow?: ({
     columns,
     column,
     index,
     data,
-    currentData,
+    currentData
   }: {
     columns: Column<RowData>[];
     column: Column<RowData>;

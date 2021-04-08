@@ -345,6 +345,7 @@ function MTableEditRow(props) {
       actions,
       errorState,
       onBulkEditRowChanged,
+      bulkEditChangedRows,
       scrollWidth,
       forwardedRef,
       ...rowProps

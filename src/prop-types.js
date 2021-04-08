@@ -383,6 +383,7 @@ export const propTypes = {
   onRowClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,
   onQueryChange: PropTypes.func,
+  onBulkEditOpen: PropTypes.func,
   tableRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,
