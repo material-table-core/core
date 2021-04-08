@@ -160,7 +160,7 @@ function MTableEditRow(props) {
 
   function renderActions() {
     if (props.mode === 'bulk') {
-      return <TableCell padding="none" key="key-actions-column" />;
+      return;
     }
 
     const size = CommonValues.elementSize(props);

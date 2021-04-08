@@ -171,7 +171,7 @@ export default class MTableEditRow extends React.Component {
 
   renderActions() {
     if (this.props.mode === 'bulk') {
-      return <TableCell padding="none" key="key-actions-column" />;
+      return;
     }
 
     const size = CommonValues.elementSize(this.props);
