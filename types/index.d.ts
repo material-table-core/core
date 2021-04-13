@@ -20,7 +20,11 @@ declare module '@material-table/core/exporters' {
 type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
-  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
+  actions?: (
+    | Action<RowData>
+    | ((rowData: RowData) => Action<RowData>)
+    | { action: (rowData: RowData) => Action<RowData>; position: string }
+  )[];
   cellEditable?: {
     cellStyle?: CellStyle<RowData>;
     onCellEditApproved: (
@@ -85,7 +89,7 @@ export interface MaterialTableProps<RowData extends object> {
     column,
     index,
     data,
-    currentData,
+    currentData
   }: {
     columns: Column<RowData>[];
     column: Column<RowData>;
