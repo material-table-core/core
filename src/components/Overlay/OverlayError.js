@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { fade } from '@material-ui/core';
 
 function OverlayError(props) {
   return (

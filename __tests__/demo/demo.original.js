@@ -1,5 +1,5 @@
 import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core';
 
 let direction = 'ltr';
 // direction = 'rtl';
