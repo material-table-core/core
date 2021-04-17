@@ -225,7 +225,10 @@ export function MTableToolbar(props) {
                 return (
                   <MenuItem
                     key={`${menuitem.label}${index}`}
-                    onClick={() => menuitem.exportFunc(cols, datas)}
+                     onClick={() => {
+                      menuitem.exportFunc(cols, datas);
+                      setState({ exportButtonAnchorEl: null });
+                    }}
                   >
                     {menuitem.label}
                   </MenuItem>
