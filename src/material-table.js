@@ -324,7 +324,10 @@ export default class MaterialTable extends React.Component {
     props.page !== undefined && props.totalCount !== undefined;
 
   onAllSelected = (checked) => {
-    this.dataManager.changeAllSelected(checked);
+    this.dataManager.changeAllSelected(
+      checked,
+      this.props.options.selectionProps
+    );
     this.setState(this.dataManager.getRenderState(), () =>
       this.onSelectionChange()
     );
