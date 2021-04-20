@@ -1,6 +1,5 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { TableRow, TableCell } from '@material-ui/core';
+import { TableRow, TableCell, withStyles } from '@material-ui/core';
 import { getStyle } from '../MTableCell/utils';
 import PropTypes from 'prop-types';
 

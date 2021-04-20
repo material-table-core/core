@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { CircularProgress, fade } from '@material-ui/core';
 
 function OverlayLoading(props) {
   return (
