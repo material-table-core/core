@@ -230,8 +230,16 @@ export default class DataManager {
     this.bulkEditOpen = bulkEditOpen;
   }
 
-  changeAllSelected(checked) {
+  changeAllSelected(checked, selectionProps) {
     let selectedCount = 0;
+    const isChecked = (row) => {
+      const selectionResult = selectionProps
+        ? selectionProps(row)
+        : { disabled: false };
+      return row.tableData.disabled || selectionResult.disabled
+        ? false
+        : checked;
+    };
     if (this.isDataType('group')) {
       const setCheck = (data) => {
         data.forEach((element) => {
@@ -239,7 +247,7 @@ export default class DataManager {
             setCheck(element.groups);
           } else {
             element.data.forEach((d) => {
-              d.tableData.checked = d.tableData.disabled ? false : checked;
+              d.tableData.checked = isChecked(d);
               selectedCount++;
             });
           }
@@ -248,9 +256,8 @@ export default class DataManager {
 
       setCheck(this.groupedData);
     } else {
-      this.searchedData.map((row) => {
-        row.tableData.checked = row.tableData.disabled ? false : checked;
-        return row;
+      this.searchedData.forEach((row) => {
+        row.tableData.checked = isChecked(row);
       });
       selectedCount = this.searchedData.length;
     }
@@ -988,7 +995,7 @@ export default class DataManager {
       this.sortedData = sortGroups(this.sortedData, groups[0]);
 
       // If you have nested grouped rows and wanted to select one of those row
-      // there was an issue. 
+      // there was an issue.
       // -https://github.com/material-table-core/core/pull/74
       // -https://github.com/mbrn/material-table/issues/2258
       // -https://github.com/mbrn/material-table/issues/2249
