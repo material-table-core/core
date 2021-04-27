@@ -21,10 +21,13 @@ import { render } from 'react-dom';
 
 import {
   Basic,
+  OneDetailPanel,
   ExportData,
   CustomExport,
+  EditableRow,
   EditableCells,
-  FrankensteinDemo
+  FrankensteinDemo,
+  HidingColumns
 } from './demo-components';
 
 module.hot.accept();
@@ -43,6 +46,15 @@ render(
     <h1>Custom Export </h1>
     <CustomExport />
     */}
+
+    <h1>Hiding Columns</h1>
+    <HidingColumns />
+
+    <h1>Editable Rows</h1>
+    <EditableRow />
+
+    <h1>One Detail Panel</h1>
+    <OneDetailPanel />
 
     <h1>Editable</h1>
     <EditableCells />

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import MaterialTable from '../../../dist'; // root of this project
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
 // import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
 
 const global_data = [
@@ -34,6 +34,67 @@ const global_cols = [
     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
   }
 ];
+
+export function EditableRow(props) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  return (
+    <div>
+      <p>I am the parent</p>
+      <button onClick={(e) => setIsEditing(!isEditing)}>
+        {isEditing ? 'Disable' : 'Enable'} Editing
+      </button>
+      <MaterialTable
+        components={{
+          Row: (props) => {
+            if (isEditing) {
+              return <MTableEditRow {...props} mode={'update'} />;
+            } else {
+              return <MTableBodyRow {...props} />;
+            }
+          }
+        }}
+        editable={{
+          onRowUpdate: (newData, oldData) => {
+            console.log({ newData, oldData });
+            return new Promise((reject, resolve) => resolve());
+          }
+        }}
+        data={[
+          { name: 'jack', id: 1 },
+          { name: 'nancy', id: 2 }
+        ]}
+        columns={[
+          { field: 'name', title: 'Name' },
+          { field: 'id', title: 'Identifier' }
+        ]}
+      />
+    </div>
+  );
+}
+
+export function HidingColumns(props) {
+  return (
+    <MaterialTable
+      options={{
+        columnsButton: true
+      }}
+      data={[
+        { name: 'jack', id: 1 },
+        { name: 'nancy', id: 2 }
+      ]}
+      columns={[
+        {
+          field: 'name',
+          title: 'Name',
+          hidden: true,
+          hiddenByColumnsButton: true
+        },
+        { field: 'id', title: 'Identifier' }
+      ]}
+    />
+  );
+}
 
 /*
 const global_cols = [
@@ -104,7 +165,6 @@ export function CustomExport() {
 }
 */
 
-/*
 export function OneDetailPanel() {
   return (
     <MaterialTable
@@ -123,10 +183,11 @@ export function OneDetailPanel() {
           />
         );
       }}
+      options={{ showDetailPanelIcon: false }}
+      onRowClick={(event, rowData, togglePanel) => togglePanel()}
     />
   );
 }
-*/
 
 // A little bit of everything
 export function FrankensteinDemo() {
