@@ -153,7 +153,7 @@ export function MTableToolbar(props) {
                 {localization.addRemoveColumns}
               </MenuItem>
               {props.columns.map((col) => {
-                if (!col.hidden || col.hiddenByColumnsButton) {
+                if (!col.hiddenByColumnsButton) {
                   return (
                     <li key={col.tableData.id}>
                       <MenuItem
@@ -174,26 +174,6 @@ export function MTableToolbar(props) {
                     </li>
                   );
                 }
-
-                return (
-                  <li key={col.tableData.id}>
-                    <MenuItem
-                      className={classes.formControlLabel}
-                      component="label"
-                      htmlFor={`column-toggle-${col.tableData.id}`}
-                      disabled={col.removable === false}
-                    >
-                      <Checkbox
-                        checked={!col.hidden}
-                        id={`column-toggle-${col.tableData.id}`}
-                        onChange={() =>
-                          props.onColumnsChanged(col, !col.hidden)
-                        }
-                      />
-                      <span>{col.title}</span>
-                    </MenuItem>
-                  </li>
-                );
               })}
             </Menu>
           </span>
