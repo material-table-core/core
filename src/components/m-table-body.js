@@ -270,6 +270,7 @@ class MTableBody extends React.Component {
           columns={columns}
           data={this.props.data}
           renderSummaryRow={this.props.renderSummaryRow}
+          rowProps={this.props}
         />
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>

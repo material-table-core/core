@@ -79,9 +79,8 @@ export default class MTableBodyRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {
+  renderActions(actions) {
     const size = CommonValues.elementSize(this.props);
-    const actions = CommonValues.rowActions(this.props);
     const width = actions.length * CommonValues.baseIconSize(this.props);
     return (
       <TableCell
@@ -360,14 +359,10 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.options.selection) {
       renderColumns.splice(0, 0, this.renderSelectionColumn());
     }
-    if (
-      this.props.actions &&
-      this.props.actions.filter(
-        (a) => a.position === 'row' || typeof a === 'function'
-      ).length > 0
-    ) {
+    const rowActions = CommonValues.rowActions(this.props);
+    if (rowActions.length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
-        renderColumns.push(this.renderActions());
+        renderColumns.push(this.renderActions(rowActions));
       } else if (this.props.options.actionsColumnIndex >= 0) {
         let endPos = 0;
         if (this.props.options.selection) {
@@ -376,7 +371,7 @@ export default class MTableBodyRow extends React.Component {
         renderColumns.splice(
           this.props.options.actionsColumnIndex + endPos,
           0,
-          this.renderActions()
+          this.renderActions(rowActions)
         );
       }
     }

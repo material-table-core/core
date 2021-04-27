@@ -291,6 +291,7 @@ export default class MaterialTable extends React.Component {
           hidden: this.dataManager.bulkEditOpen,
           onClick: () => {
             this.dataManager.changeBulkEditOpen(true);
+            this.props.onBulkEditOpen && this.props.onBulkEditOpen(true);
             this.setState(this.dataManager.getRenderState());
           }
         });
@@ -308,6 +309,7 @@ export default class MaterialTable extends React.Component {
           hidden: !this.dataManager.bulkEditOpen,
           onClick: () => {
             this.dataManager.changeBulkEditOpen(false);
+            this.props.onBulkEditOpen && this.props.onBulkEditOpen(false);
             this.dataManager.clearBulkEditChangedRows();
             this.setState(this.dataManager.getRenderState());
           }
@@ -541,6 +543,7 @@ export default class MaterialTable extends React.Component {
           .onBulkUpdate(this.dataManager.bulkEditChangedRows)
           .then((result) => {
             this.dataManager.changeBulkEditOpen(false);
+            this.props.onBulkEditOpen && this.props.onBulkEditOpen(false);
             this.dataManager.clearBulkEditChangedRows();
             this.setState(
               {

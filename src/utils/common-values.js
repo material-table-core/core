@@ -3,7 +3,11 @@ export const elementSize = (props) =>
 export const baseIconSize = (props) =>
   elementSize(props) === 'medium' ? 48 : 32;
 export const rowActions = (props) =>
-  props.actions.filter((a) => a.position === 'row' || typeof a === 'function');
+  props.actions
+    ? props.actions.filter(
+        (a) => a.position === 'row' || typeof a === 'function'
+      )
+    : [];
 export const actionsColumnWidth = (props) =>
   rowActions(props).length * baseIconSize(props);
 export const selectionMaxWidth = (props, maxTreeLevel) =>
