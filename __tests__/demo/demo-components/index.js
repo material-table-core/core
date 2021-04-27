@@ -87,7 +87,6 @@ export function HidingColumns(props) {
         {
           field: 'name',
           title: 'Name',
-          hidden: true,
           hiddenByColumnsButton: true
         },
         { field: 'id', title: 'Identifier' }

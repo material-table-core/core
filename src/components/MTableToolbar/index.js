@@ -152,29 +152,42 @@ export function MTableToolbar(props) {
               >
                 {localization.addRemoveColumns}
               </MenuItem>
+
+              {/**
+               * Add columns to the Columns Button Menu
+               * aka the menu that pops up when `MaterialTable.options.columnsButton` is true
+               */}
               {props.columns.map((col) => {
-                if (!col.hiddenByColumnsButton) {
-                  return (
-                    <li key={col.tableData.id}>
-                      <MenuItem
-                        className={classes.formControlLabel}
-                        component="label"
-                        htmlFor={`column-toggle-${col.tableData.id}`}
-                        disabled={col.removable === false}
-                      >
-                        <Checkbox
-                          checked={!col.hidden}
-                          id={`column-toggle-${col.tableData.id}`}
-                          onChange={() =>
-                            props.onColumnsChanged(col, !col.hidden)
-                          }
-                        />
-                        <span>{col.title}</span>
-                      </MenuItem>
-                    </li>
-                  );
+                const hiddenFromColumnsButtonMenu =
+                  col.hiddenByColumnsButton !== undefined
+                    ? col.hiddenByColumnsButton
+                    : props.columnsHiddenInColumnsButton;
+
+                if (hiddenFromColumnsButtonMenu) {
+                  return null;
                 }
+
+                return (
+                  <li key={col.tableData.id}>
+                    <MenuItem
+                      className={classes.formControlLabel}
+                      component="label"
+                      htmlFor={`column-toggle-${col.tableData.id}`}
+                      disabled={col.removable === false}
+                    >
+                      <Checkbox
+                        checked={!col.hidden}
+                        id={`column-toggle-${col.tableData.id}`}
+                        onChange={() =>
+                          this.props.onColumnsChanged(col, !col.hidden)
+                        }
+                      />
+                      <span>{col.title}</span>
+                    </MenuItem>
+                  </li>
+                );
               })}
+              {/** End Add columns to the Columns Button Menu */}
             </Menu>
           </span>
         )}
@@ -204,7 +217,7 @@ export function MTableToolbar(props) {
                 return (
                   <MenuItem
                     key={`${menuitem.label}${index}`}
-                     onClick={() => {
+                    onClick={() => {
                       menuitem.exportFunc(cols, datas);
                       setState({ exportButtonAnchorEl: null });
                     }}
@@ -260,6 +273,7 @@ export function MTableToolbar(props) {
   function renderToolbarTitle(title) {
     const { classes } = props;
     const toolBarTitle =
+      // eslint-disable-next-line multiline-ternary
       typeof title === 'string' ? (
         <Typography
           variant="h6"
