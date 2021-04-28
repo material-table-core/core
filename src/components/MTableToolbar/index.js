@@ -179,7 +179,7 @@ export function MTableToolbar(props) {
                         checked={!col.hidden}
                         id={`column-toggle-${col.tableData.id}`}
                         onChange={() =>
-                          this.props.onColumnsChanged(col, !col.hidden)
+                          props.onColumnsChanged(col, !col.hidden)
                         }
                       />
                       <span>{col.title}</span>
