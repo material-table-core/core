@@ -66,7 +66,7 @@ export function EditableRow(props) {
         ]}
         columns={[
           { field: 'name', title: 'Name' },
-          { field: 'id', title: 'Identifier' }
+          { field: 'id', title: 'Identifier', type: 'numeric' }
         ]}
       />
     </div>
@@ -89,7 +89,7 @@ export function HidingColumns(props) {
           title: 'Name',
           hiddenByColumnsButton: true
         },
-        { field: 'id', title: 'Identifier' }
+        { field: 'id', title: 'Identifier', type: 'numeric' }
       ]}
     />
   );
