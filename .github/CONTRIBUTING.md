@@ -1,4 +1,4 @@
-# [Publishing](https://github.com/material-table-core/core/.github/PUBLISHING.md)
+# [Publishing](https://github.com/material-table-core/core/blob/master/.github/PUBLISHING.md)
 
 Please click the link above to see more about how to publish to NPM.
 
