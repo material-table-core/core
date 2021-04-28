@@ -1,12 +1,11 @@
-# Info On Setup
+### Important Info On Setup
 
-### IMPORTANT 
 We have 2 GitHub actions that run whenever your commit message starts with `Release v` (as in `Release v9.34.83`). *It is important to note that the commit message must start with `Release v` to trigger these GitHub Actions!*
 
 - GH Actions use stored NPM API key/secret within [Secrets](https://github.com/material-table-core/core/settings/secrets/actions)
 - The 2 GH actions do the following:
-  1. Publishes to NPM
-  2. Creates a GitHub release 
+  1. [Publishes to NPM](https://github.com/material-table-core/core/blob/master/.github/workflows/publish.yml#L21)
+  2. [Creates a GitHub release](https://github.com/material-table-core/core/blob/master/.github/workflows/publish.yml#L36)
 
 ### The easiest way to publish to NPM is to do the following:
 
