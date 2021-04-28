@@ -1,5 +1,7 @@
 # [Publishing](https://github.com/material-table-core/core/.github/PUBLISHING.md)
 
+Please click the link above to see more about how to publish to NPM.
+
 # Contributing
 
 1. Fork the repo
