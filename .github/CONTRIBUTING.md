@@ -1,3 +1,5 @@
+# [Publishing](https://github.com/material-table-core/core/.github/PUBLISHING.md)
+
 # Contributing
 
 1. Fork the repo
@@ -7,4 +9,4 @@
 
 **After your pull request is merged**, you can safely delete your branch.
 
-### [<- Back](https://github.com/mbrn/material-table/)
+### [<- Back](https://github.com/material-table-core/core/)
