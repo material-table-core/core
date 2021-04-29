@@ -23,6 +23,7 @@ import {
   Basic,
   OneDetailPanel,
   BulkEdit,
+  BulkEditWithDetailPanel,
   ExportData,
   CustomExport,
   EditableRow,
@@ -51,6 +52,9 @@ render(
 
     <h1>Bulk Edit</h1>
     <BulkEdit />
+
+    <h1>Bulk Edit With Detail Panel</h1>
+    <BulkEditWithDetailPanel />
 
     <h1>Hiding Columns</h1>
     <HidingColumns />
