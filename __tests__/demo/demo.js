@@ -27,7 +27,8 @@ import {
   EditableRow,
   EditableCells,
   FrankensteinDemo,
-  HidingColumns
+  HidingColumns,
+  Resizable
 } from './demo-components';
 
 module.hot.accept();
@@ -61,6 +62,9 @@ render(
 
     <h1>Frankenstein</h1>
     <FrankensteinDemo />
+
+    <h1>Resizable Columns</h1>
+    <Resizable />
   </div>,
   document.querySelector('#app')
 );
