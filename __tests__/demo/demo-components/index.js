@@ -35,6 +35,47 @@ const global_cols = [
   }
 ];
 
+export function BulkEdit() {
+  const [data, setData] = useState([
+    { name: 'joe', id: 1, age: 0, x: 'y' },
+    { name: 'nancy', id: 2, age: 1, x: 'b' }
+  ]);
+
+  const [columns] = useState([
+    { title: 'Name', field: 'name' },
+    { title: 'X', field: 'x' },
+    { title: 'Age', field: 'age' },
+    {
+      title: 'Identifier',
+      field: 'id'
+    }
+  ]);
+
+  return (
+    <div className="App">
+      <MaterialTable
+        title="Editable Preview"
+        columns={columns}
+        data={data}
+        editable={{
+          onBulkUpdate: (changes) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            })
+        }}
+      />
+    </div>
+  );
+}
+
 export function EditableRow(props) {
   const [isEditing, setIsEditing] = useState(false);
 

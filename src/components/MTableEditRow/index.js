@@ -160,7 +160,7 @@ function MTableEditRow(props) {
 
   function renderActions() {
     if (props.mode === 'bulk') {
-      return;
+      return <TableCell padding="none" key="key-actions-column" />;
     }
 
     const size = CommonValues.elementSize(props);
@@ -179,9 +179,8 @@ function MTableEditRow(props) {
           case 'boolean':
             return response;
         }
-      } else {
-        return true;
       }
+      return true;
     });
     const actions = [
       {

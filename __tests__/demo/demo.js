@@ -22,6 +22,7 @@ import { render } from 'react-dom';
 import {
   Basic,
   OneDetailPanel,
+  BulkEdit,
   ExportData,
   CustomExport,
   EditableRow,
@@ -47,6 +48,9 @@ render(
     <h1>Custom Export </h1>
     <CustomExport />
     */}
+
+    <h1>Bulk Edit</h1>
+    <BulkEdit />
 
     <h1>Hiding Columns</h1>
     <HidingColumns />
