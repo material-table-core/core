@@ -161,9 +161,6 @@ class MTableEditField extends React.Component {
       <TextField
         {...this.getProps()}
         fullWidth
-        style={
-          this.props.columnDef.type === 'numeric' ? { float: 'right' } : {}
-        }
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
@@ -183,7 +180,8 @@ class MTableEditField extends React.Component {
           }
         }}
         inputProps={{
-          'aria-label': this.props.columnDef.title
+          'aria-label': this.props.columnDef.title,
+          style: this.props.columnDef.type === 'numeric' ? { textAlign: 'right' } : {}
         }}
       />
     );
@@ -196,7 +194,6 @@ class MTableEditField extends React.Component {
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
-        style={{ float: 'right' }}
         type="number"
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={(event) => {
@@ -213,7 +210,8 @@ class MTableEditField extends React.Component {
           }
         }}
         inputProps={{
-          'aria-label': this.props.columnDef.title
+          'aria-label': this.props.columnDef.title,
+          style: { textAlign: 'right' }
         }}
         onKeyDown={this.props.onKeyDown}
         autoFocus={this.props.autoFocus}

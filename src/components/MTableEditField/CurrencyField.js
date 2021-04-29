@@ -7,7 +7,6 @@ function CurrencyField({ forwardedRef, ...props }) {
       {...props}
       ref={forwardedRef}
       placeholder={props.columnDef.editPlaceholder || props.columnDef.title}
-      style={{ float: 'right' }}
       type="number"
       value={props.value === undefined ? '' : props.value}
       onChange={(event) => {
@@ -24,7 +23,8 @@ function CurrencyField({ forwardedRef, ...props }) {
         }
       }}
       inputProps={{
-        'aria-label': props.columnDef.title
+        'aria-label': props.columnDef.title,
+        style: { textAlign: 'right' }
       }}
       onKeyDown={props.onKeyDown}
       autoFocus={props.autoFocus}

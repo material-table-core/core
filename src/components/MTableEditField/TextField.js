@@ -7,7 +7,6 @@ function MTextField({ forwardedRef, ...props }) {
       {...props}
       ref={forwardedRef}
       fullWidth
-      style={props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
       type={props.columnDef.type === 'numeric' ? 'number' : 'text'}
       placeholder={props.columnDef.editPlaceholder || props.columnDef.title}
       value={props.value === undefined ? '' : props.value}
@@ -25,7 +24,8 @@ function MTextField({ forwardedRef, ...props }) {
         }
       }}
       inputProps={{
-        'aria-label': props.columnDef.title
+        'aria-label': props.columnDef.title,
+        style: props.columnDef.type === 'numeric' ? { textAlign: 'right' } : {}
       }}
     />
   );
