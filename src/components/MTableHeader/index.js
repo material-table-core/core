@@ -16,13 +16,37 @@ export function MTableHeader(props) {
   }));
 
   useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!state.resizingColumnDef) {
+        return;
+      }
+      // TODO: a way to detect rtl (maybe from props?) and use -(e.clientX - state.lastX) instead
+      let additionalWidth = state.lastAdditionalWidth + e.clientX - state.lastX;
+      additionalWidth = Math.min(
+        state.resizingColumnDef.maxWidth || additionalWidth,
+        additionalWidth
+      );
+      if (
+        state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
+      ) {
+        props.onColumnResized(
+          state.resizingColumnDef.tableData.id,
+          additionalWidth
+        );
+      }
+    };
+
+    const handleMouseUp = (e) => {
+      setState({ ...state, resizingColumnDef: undefined });
+    };
+
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
+  }, [props, state]);
 
   const handleMouseDown = (e, columnDef) => {
     setState({
@@ -31,27 +55,6 @@ export function MTableHeader(props) {
       lastX: e.clientX,
       resizingColumnDef: columnDef
     });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!state.resizingColumnDef) {
-      return;
-    }
-    let additionalWidth = state.lastAdditionalWidth + e.clientX - state.lastX;
-    additionalWidth = Math.min(
-      state.resizingColumnDef.maxWidth || additionalWidth,
-      additionalWidth
-    );
-    if (state.resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
-      props.onColumnResized(
-        state.resizingColumnDef.tableData.id,
-        additionalWidth
-      );
-    }
-  };
-
-  const handleMouseUp = (e) => {
-    setState({ ...state, resizingColumnDef: undefined });
   };
 
   const renderActionsHeader = () => {

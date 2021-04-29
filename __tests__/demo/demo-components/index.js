@@ -320,3 +320,17 @@ export function ExportData() {
   );
 }
 */
+
+export function Resizable() {
+  return (
+    <MaterialTable
+      title="Basic"
+      columns={global_cols}
+      data={global_data}
+      options={{
+        columnResizable: true,
+        tableLayout: 'fixed'
+      }}
+    />
+  );
+}
