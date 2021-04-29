@@ -9,53 +9,53 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip, withStyles } from '@material-ui/core';
 import * as CommonValues from '../../utils/common-values';
 
-export function MTableHeader(props) {
-  const [state, setState] = React.useState(() => ({
+export function MTableHeader({ onColumnResized, ...props }) {
+  const [
+    { resizingColumnDef, lastX, lastAdditionalWidth }, // Extract the props to use instead of the whole state object
+    setState
+  ] = React.useState({
     lastX: 0,
     resizingColumnDef: undefined
-  }));
+  });
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!state.resizingColumnDef) {
+  const handleMouseDown = (e, columnDef) => {
+    setState((prevState) => ({
+      ...prevState,
+      lastAdditionalWidth: columnDef.tableData.additionalWidth,
+      lastX: e.clientX,
+      resizingColumnDef: columnDef
+    }));
+  };
+  const handleMouseMove = React.useCallback(
+    // Use usecallback to prevent triggering theuse effect too much
+    (e) => {
+      if (!resizingColumnDef) {
         return;
       }
-      // TODO: a way to detect rtl (maybe from props?) and use -(e.clientX - state.lastX) instead
-      let additionalWidth = state.lastAdditionalWidth + e.clientX - state.lastX;
+      let additionalWidth = lastAdditionalWidth + e.clientX - lastX;
       additionalWidth = Math.min(
-        state.resizingColumnDef.maxWidth || additionalWidth,
+        resizingColumnDef.maxWidth || additionalWidth,
         additionalWidth
       );
-      if (
-        state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
-      ) {
-        props.onColumnResized(
-          state.resizingColumnDef.tableData.id,
-          additionalWidth
-        );
+      if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
+        onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
       }
-    };
+    },
+    [onColumnResized, resizingColumnDef, lastX, lastAdditionalWidth]
+  );
 
-    const handleMouseUp = (e) => {
-      setState({ ...state, resizingColumnDef: undefined });
-    };
+  const handleMouseUp = React.useCallback((e) => {
+    setState((prevState) => ({ ...prevState, resizingColumnDef: undefined })); // Using the useState to always have to correct state object
+  }, []);
 
+  useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [props, state]);
-
-  const handleMouseDown = (e, columnDef) => {
-    setState({
-      ...state,
-      lastAdditionalWidth: columnDef.tableData.additionalWidth,
-      lastX: e.clientX,
-      resizingColumnDef: columnDef
-    });
-  };
+  }, [handleMouseMove, handleMouseUp]); // ONly reset the listeners if needed
 
   const renderActionsHeader = () => {
     const localization = {
@@ -181,9 +181,8 @@ export function MTableHeader(props) {
                 style={{
                   cursor: 'col-resize',
                   color:
-                    state.resizingColumnDef &&
-                    state.resizingColumnDef.tableData.id ===
-                      columnDef.tableData.id
+                    resizingColumnDef &&
+                    resizingColumnDef.tableData.id === columnDef.tableData.id
                       ? props.theme.palette.primary.main
                       : 'inherit'
                 }}
