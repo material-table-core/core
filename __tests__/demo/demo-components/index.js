@@ -35,6 +35,103 @@ const global_cols = [
   }
 ];
 
+export function BulkEdit() {
+  const [data, setData] = useState([
+    { name: 'joe', id: 1, age: 0, x: 'y' },
+    { name: 'nancy', id: 2, age: 1, x: 'b' }
+  ]);
+
+  const [columns] = useState([
+    { title: 'Name', field: 'name' },
+    { title: 'X', field: 'x' },
+    { title: 'Age', field: 'age' },
+    {
+      title: 'Identifier',
+      field: 'id'
+    }
+  ]);
+
+  return (
+    <div className="App">
+      <MaterialTable
+        title="Editable Preview"
+        columns={columns}
+        data={data}
+        editable={{
+          onBulkUpdate: (changes) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            })
+        }}
+      />
+    </div>
+  );
+}
+
+export function BulkEditWithDetailPanel() {
+  const [data, setData] = useState([
+    { name: 'joe', id: 1, age: 0, x: 'y' },
+    { name: 'nancy', id: 2, age: 1, x: 'b' }
+  ]);
+
+  const [columns] = useState([
+    { title: 'Name', field: 'name' },
+    { title: 'X', field: 'x' },
+    { title: 'Age', field: 'age' },
+    {
+      title: 'Identifier',
+      field: 'id'
+    }
+  ]);
+
+  return (
+    <div className="App">
+      <MaterialTable
+        title="Editable Preview"
+        columns={columns}
+        data={data}
+        options={{
+          showDetailPanelIcon: false
+        }}
+        detailPanel={(rowData) => {
+          return (
+            <iframe
+              width="100%"
+              height="315"
+              src="https://www.youtube.com/embed/C0DPdy98e4c"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          );
+        }}
+        editable={{
+          onBulkUpdate: (changes) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            })
+        }}
+      />
+    </div>
+  );
+}
+
 export function EditableRow(props) {
   const [isEditing, setIsEditing] = useState(false);
 
