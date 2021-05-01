@@ -32,6 +32,7 @@ import {
   HidingColumns,
   Resizable
 } from './demo-components';
+import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
 module.hot.accept();
 
@@ -73,6 +74,32 @@ render(
 
     <h1>Resizable Columns</h1>
     <Resizable />
+
+    <h1>Remote Data Related</h1>
+    <ol>
+      <li>
+        <h3>
+          mbrn{' '}
+          <a href="https://github.com/mbrn/material-table/issues/1353">#1353</a>
+        </h3>
+        <I1353 />
+      </li>
+      <li>
+        <h3>
+          mbrn{' '}
+          <a href="https://github.com/mbrn/material-table/issues/1941">#1941</a>
+        </h3>
+        <I1941 />
+      </li>
+      <li>
+        <h3>
+          <a href="https://github.com/material-table-core/core/issues/122">
+            #122
+          </a>
+        </h3>
+        <I122 />
+      </li>
+    </ol>
   </div>,
   document.querySelector('#app')
 );
