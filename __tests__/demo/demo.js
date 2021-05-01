@@ -22,6 +22,7 @@ import { render } from 'react-dom';
 import {
   Basic,
   OneDetailPanel,
+  TestingNewActionHandlersProp,
   ExportData,
   CustomExport,
   EditableRow,
@@ -50,6 +51,9 @@ render(
 
     <h1>Hiding Columns</h1>
     <HidingColumns />
+
+    <h1>TestingNewActionHandlersProp</h1>
+    <TestingNewActionHandlersProp />
 
     <h1>Editable Rows</h1>
     <EditableRow />

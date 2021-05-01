@@ -36,19 +36,13 @@ function MTableAction(props) {
       }
     };
 
-    const handleOnMouseEnter = (event) => {
-      if (action.onMouseEnter) {
-        action.onMouseEnter(event, props.data);
-        event.stopPropagation();
-      }
-    };
-
-    const handleOnMouseLeave = (event) => {
-      if (action.onMouseLeave) {
-        action.onMouseLeave(event, props.data);
-        event.stopPropagation();
-      }
-    };
+    // You may provide events via the "action.handers" prop. It is an object.
+    // The event name is the key, and the value is the handler func.
+    const handlers = action.handlers || {};
+    const eventHandlers = Object.entries(handlers).reduce((o, [k, v]) => {
+      o[k] = (e) => v(e, props.data);
+      return o;
+    }, {});
 
     const icon =
       typeof action.icon === 'string' ? (
@@ -66,8 +60,7 @@ function MTableAction(props) {
         color="inherit"
         disabled={disabled}
         onClick={handleOnClick}
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
+        {...eventHandlers}
       >
         {icon}
       </IconButton>
