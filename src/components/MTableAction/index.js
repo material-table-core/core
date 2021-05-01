@@ -36,6 +36,20 @@ function MTableAction(props) {
       }
     };
 
+    const handleOnMouseEnter = (event) => {
+      if (action.onMouseEnter) {
+        action.onMouseEnter(event, props.data);
+        event.stopPropagation();
+      }
+    };
+
+    const handleOnMouseLeave = (event) => {
+      if (action.OnMouseLeave) {
+        action.OnMouseLeave(event, props.data);
+        event.stopPropagation();
+      }
+    };
+
     const icon =
       typeof action.icon === 'string' ? (
         <Icon {...action.iconProps}>{action.icon}</Icon>
@@ -52,6 +66,8 @@ function MTableAction(props) {
         color="inherit"
         disabled={disabled}
         onClick={handleOnClick}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
       >
         {icon}
       </IconButton>
