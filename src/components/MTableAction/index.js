@@ -44,8 +44,8 @@ function MTableAction(props) {
     };
 
     const handleOnMouseLeave = (event) => {
-      if (action.OnMouseLeave) {
-        action.OnMouseLeave(event, props.data);
+      if (action.onMouseLeave) {
+        action.onMouseLeave(event, props.data);
         event.stopPropagation();
       }
     };
