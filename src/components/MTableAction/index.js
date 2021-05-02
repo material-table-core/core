@@ -36,6 +36,14 @@ function MTableAction(props) {
       }
     };
 
+    // You may provide events via the "action.handers" prop. It is an object.
+    // The event name is the key, and the value is the handler func.
+    const handlers = action.handlers || {};
+    const eventHandlers = Object.entries(handlers).reduce((o, [k, v]) => {
+      o[k] = (e) => v(e, props.data);
+      return o;
+    }, {});
+
     const icon =
       typeof action.icon === 'string' ? (
         <Icon {...action.iconProps}>{action.icon}</Icon>
@@ -52,6 +60,7 @@ function MTableAction(props) {
         color="inherit"
         disabled={disabled}
         onClick={handleOnClick}
+        {...eventHandlers}
       >
         {icon}
       </IconButton>

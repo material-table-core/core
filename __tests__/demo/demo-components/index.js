@@ -192,6 +192,41 @@ export function HidingColumns(props) {
   );
 }
 
+export function TestingNewActionHandlersProp(props) {
+  return (
+    <MaterialTable
+      actions={[
+        {
+          icon: 'save',
+          tooltip: 'Save User',
+          //onClick: (event, rowData) => alert('You saved ' + rowData.name),
+          handlers: {
+            onMouseEnter: (event, props) => {
+              console.log({ from: 'handlers.onMouseEnter', event, props });
+            },
+            onMouseLeave: (event, props) => {
+              console.log({ from: 'handlers.onMouseLeave', event, props });
+            },
+            onClick: (event, props) => console.log('onclick', { event, props })
+          }
+        }
+      ]}
+      data={[
+        { name: 'jack', id: 1 },
+        { name: 'nancy', id: 2 }
+      ]}
+      columns={[
+        {
+          field: 'name',
+          title: 'Name',
+          hiddenByColumnsButton: true
+        },
+        { field: 'id', title: 'Identifier', type: 'numeric' }
+      ]}
+    />
+  );
+}
+
 /*
 const global_cols = [
   { title: 'Name', field: 'name' },
