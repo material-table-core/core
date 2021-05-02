@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { string } from 'prop-types';
+import { OnHandlers } from './helpers';
 
 declare module '@material-table/core/exporters' {
   export function ExportCsv(
@@ -146,6 +146,7 @@ export interface Action<RowData extends object> {
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
   onClick: (event: any, data: RowData | RowData[]) => void;
+  handlers?: OnHandlers<RowData>;
   iconProps?: IconProps;
   hidden?: boolean;
 }
