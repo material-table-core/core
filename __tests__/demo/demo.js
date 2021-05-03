@@ -22,6 +22,7 @@ import { render } from 'react-dom';
 import {
   Basic,
   OneDetailPanel,
+  DefaultOrderIssue,
   TestingNewActionHandlersProp,
   BulkEdit,
   BulkEditWithDetailPanel,
@@ -53,6 +54,9 @@ render(
 
     <h1>Bulk Edit</h1>
     <BulkEdit />
+
+    <h1>Default Order Issue</h1>
+    <DefaultOrderIssue />
 
     <h1>Bulk Edit With Detail Panel</h1>
     <BulkEditWithDetailPanel />
