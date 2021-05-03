@@ -134,21 +134,23 @@ function MTableGroupRow(props) {
             value={value}
             icons={props.icons}
           >
-            <IconButton
-              style={{
-                transition: 'all ease 200ms',
-                ...rotateIconStyle(props.groupData.isExpanded)
-              }}
-              onClick={(event) => {
-                props.onGroupExpandChanged(props.path);
-              }}
-            >
-              <props.icons.DetailPanel />
-            </IconButton>
-            <b>
-              {title}
-              {separator}
-            </b>
+            <>
+              <IconButton
+                style={{
+                  transition: 'all ease 200ms',
+                  ...rotateIconStyle(props.groupData.isExpanded)
+                }}
+                onClick={(event) => {
+                  props.onGroupExpandChanged(props.path);
+                }}
+              >
+                <props.icons.DetailPanel />
+              </IconButton>
+              <b>
+                {title}
+                {separator}
+              </b>
+            </>
           </props.components.Cell>
         </TableRow>
         {detail}
