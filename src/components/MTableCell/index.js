@@ -73,6 +73,15 @@ MTableCell.propTypes = {
   onCellEditStarted: PropTypes.func
 };
 
+/* eslint-disable react/prop-types */
 export default React.forwardRef(function MTableCellRef(props, ref) {
-  return <MTableCell {...props} forwardedRef={ref} />;
+  // When using defaultGroupOrder props.children may be an array.
+  // If it is, we wrap it in React.Fragment.
+  const _props = { ...props };
+  if (_props.children && Array.isArray(_props.children)) {
+    _props.children = <React.Fragment>{props.children}</React.Fragment>;
+  }
+
+  return <MTableCell {..._props} forwardedRef={ref} />;
 });
+/* eslint-enable react/prop-types */
