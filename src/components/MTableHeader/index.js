@@ -140,11 +140,18 @@ export function MTableHeader({ onColumnResized, ...props }) {
             <TableSortLabel
               IconComponent={props.icons.SortArrow}
               active={props.orderBy === columnDef.tableData.id}
-              direction={props.orderDirection || 'asc'}
+              direction={
+                columnDef.tableData.id === props.orderBy ||
+                props.keepSortOrderOnColumnSwitch
+                  ? props.orderDirection || 'asc'
+                  : 'asc'
+              }
               onClick={() => {
                 const orderDirection =
                   columnDef.tableData.id !== props.orderBy
-                    ? props.orderDirection || 'asc' // use the current sort order when switching columns if defined
+                    ? props.keepSortOrderOnColumnSwitch
+                      ? props.orderDirection || 'asc'
+                      : 'asc'
                     : props.orderDirection === 'asc'
                     ? 'desc'
                     : props.orderDirection === 'desc' && props.thirdSortClick
@@ -321,6 +328,7 @@ MTableHeader.defaultProps = {
   headerStyle: {},
   selectedCount: 0,
   sorting: true,
+  keepSortOrderOnColumnSwitch: true,
   localization: {
     actions: 'Actions'
   },
@@ -342,6 +350,7 @@ MTableHeader.propTypes = {
   localization: PropTypes.object,
   selectedCount: PropTypes.number,
   sorting: PropTypes.bool,
+  keepSortOrderOnColumnSwitch: PropTypes.bool,
   onAllSelected: PropTypes.func,
   onOrderChange: PropTypes.func,
   orderBy: PropTypes.number,
