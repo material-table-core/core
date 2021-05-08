@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, fade } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 
 function OverlayLoading(props) {
   return (
@@ -10,7 +10,8 @@ function OverlayLoading(props) {
         display: 'table',
         width: '100%',
         height: '100%',
-        backgroundColor: fade(props.theme.palette.background.paper, 0.7)
+        backgroundColor: props.theme.palette.background.paper,
+        opacity: 0.7
       }}
     >
       <div
