@@ -870,8 +870,8 @@ export default class MaterialTable extends React.Component {
           onOrderChange={this.onChangeOrder}
           actionsHeaderIndex={props.options.actionsColumnIndex}
           sorting={props.options.sorting}
-          keepSortOrderOnColumnSwitch={
-            props.options.keepSortOrderOnColumnSwitch
+          keepSortDirectionOnColumnSwitch={
+            props.options.keepSortDirectionOnColumnSwitch
           }
           grouping={props.options.grouping}
           isTreeData={this.props.parentChildData !== undefined}
