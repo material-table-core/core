@@ -287,42 +287,33 @@ export const MTableToolbar: (props: any) => React.ReactElement<any>;
 export const MTable: (props: any) => React.ReactElement<any>;
 
 export interface Icons {
-  Add?: React.ForwardRefExoticComponent<any> &
+  Add?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  Check?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  Clear?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  Delete?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  DetailPanel?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Check?: React.ForwardRefExoticComponent<any> &
+  Edit?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  Export?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  Filter?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  FirstPage?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Clear?: React.ForwardRefExoticComponent<any> &
+  SortArrow?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Delete?: React.ForwardRefExoticComponent<any> &
+  LastPage?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  DetailPanel?: React.ForwardRefExoticComponent<any> &
+  NextPage?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Edit?: React.ForwardRefExoticComponent<any> &
+  PreviousPage?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Export?: React.ForwardRefExoticComponent<any> &
+  ResetSearch?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  Filter?: React.ForwardRefExoticComponent<any> &
+  Search?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
+  ThirdStateCheck?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  FirstPage?: React.ForwardRefExoticComponent<any> &
+  ViewColumn?: React.ForwardRefExoticComponent<any> & 
     React.RefAttributes<SVGSVGElement>;
-  SortArrow?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  LastPage?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  NextPage?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  PreviousPage?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  ResetSearch?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  Search?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  ThirdStateCheck?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  ViewColumn?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
-  Retry?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
+  Retry?: React.ForwardRefExoticComponent<any> & React.RefAttributes<SVGSVGElement>;
 }
 
 export interface Options<RowData extends object> {
