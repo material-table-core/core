@@ -375,6 +375,7 @@ export interface Options<RowData extends object> {
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
+  keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;
   toolbar?: boolean;

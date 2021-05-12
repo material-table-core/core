@@ -363,6 +363,7 @@ export const propTypes = {
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
+    keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool
   }),

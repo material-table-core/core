@@ -40,6 +40,7 @@ export default {
   selection: false,
   selectionProps: {},
   sorting: true,
+  keepSortDirectionOnColumnSwitch: true,
   toolbar: true,
   defaultExpanded: false,
   detailPanelColumnAlignment: 'left',

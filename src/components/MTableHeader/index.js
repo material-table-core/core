@@ -105,6 +105,33 @@ export function MTableHeader({ onColumnResized, ...props }) {
     return style;
   };
 
+  const computeNewOrderDirection = (
+    orderBy,
+    orderDirection,
+    columnDef,
+    thirdSortClick,
+    keepSortDirectionOnColumnSwitch
+  ) => {
+    if (columnDef.tableData.id !== orderBy) {
+      if (keepSortDirectionOnColumnSwitch) {
+        // use the current sort order when switching columns if defined
+        return orderDirection || 'asc';
+      } else {
+        return 'asc';
+      }
+    } else if (orderDirection === 'asc') {
+      return 'desc';
+    } else if (orderDirection === 'desc') {
+      if (thirdSortClick) {
+        // third sort click brings to no order direction after desc
+        return '';
+      } else {
+        return 'asc';
+      }
+    }
+    return 'asc';
+  };
+
   function renderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
     const mapArr = props.columns
@@ -140,20 +167,24 @@ export function MTableHeader({ onColumnResized, ...props }) {
             <TableSortLabel
               IconComponent={props.icons.SortArrow}
               active={props.orderBy === columnDef.tableData.id}
-              direction={props.orderDirection || 'asc'}
+              direction={
+                // If current sorted column or prop asked to
+                // maintain sort order when switching sorted column,
+                // follow computed order direction if defined
+                // else default direction is asc
+                columnDef.tableData.id === props.orderBy ||
+                props.keepSortDirectionOnColumnSwitch
+                  ? props.orderDirection || 'asc'
+                  : 'asc'
+              }
               onClick={() => {
-                const orderDirection =
-                  columnDef.tableData.id !== props.orderBy
-                    ? props.orderDirection || 'asc' // use the current sort order when switching columns if defined
-                    : props.orderDirection === 'asc'
-                    ? 'desc'
-                    : props.orderDirection === 'desc' && props.thirdSortClick
-                    ? ''
-                    : props.orderDirection === 'desc' && !props.thirdSortClick
-                    ? 'asc'
-                    : props.orderDirection === ''
-                    ? 'asc'
-                    : 'desc';
+                const orderDirection = computeNewOrderDirection(
+                  props.orderBy,
+                  props.orderDirection,
+                  columnDef,
+                  props.thirdSortClick,
+                  props.keepSortDirectionOnColumnSwitch
+                );
                 props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
@@ -321,6 +352,7 @@ MTableHeader.defaultProps = {
   headerStyle: {},
   selectedCount: 0,
   sorting: true,
+  keepSortDirectionOnColumnSwitch: true,
   localization: {
     actions: 'Actions'
   },
@@ -342,6 +374,7 @@ MTableHeader.propTypes = {
   localization: PropTypes.object,
   selectedCount: PropTypes.number,
   sorting: PropTypes.bool,
+  keepSortDirectionOnColumnSwitch: PropTypes.bool,
   onAllSelected: PropTypes.func,
   onOrderChange: PropTypes.func,
   orderBy: PropTypes.number,
