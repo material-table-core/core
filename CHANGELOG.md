@@ -1,5 +1,7 @@
 #### 2.3.39 (2021-05-14)
 
+- Resolve import typo https://github.com/material-table-core/core/commit/01999ef80d31dc575cab0aa91e1a395c9bc5a48a
+
 #### 2.3.38 (2021-05-13)
 
 #### 2.3.38 (2021-05-13)
