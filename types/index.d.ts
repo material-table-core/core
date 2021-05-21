@@ -390,6 +390,7 @@ export interface Options<RowData extends object> {
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
+  detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
 }
 
