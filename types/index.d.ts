@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { OnHandlers } from './helper.d.ts';
+import { OnHandlers } from './helper';
 
 declare module '@material-table/core/exporters' {
   export function ExportCsv(
