@@ -1,6 +1,12 @@
 {
   "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+      }
+    ],
     "one-var": "off",
     "semi": ["error", "always", {
       "omitLastInOneLineBlock": true
