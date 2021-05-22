@@ -268,6 +268,19 @@ export function Basic() {
   );
 }
 
+export function BasicRef() {
+  const tableref = React.useRef();
+  console.log(tableref);
+  return (
+    <MaterialTable
+      tableRef={tableref}
+      title="Basic"
+      columns={global_cols}
+      data={global_data}
+    />
+  );
+}
+
 /*
 export function CustomExport() {
   return (
