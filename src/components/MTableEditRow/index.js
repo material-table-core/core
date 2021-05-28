@@ -231,7 +231,11 @@ function MTableEditRow(props) {
   }
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13 && e.target.type !== 'textarea') {
+    if (
+      e.keyCode === 13 &&
+      e.target.type !== 'textarea' &&
+      e.target.type !== 'button'
+    ) {
       handleSave();
     } else if (e.keyCode === 13 && e.target.type === 'textarea' && e.shiftKey) {
       handleSave();
