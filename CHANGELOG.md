@@ -1,10 +1,27 @@
 ## 3.0.0 (2021-05-29)
 
-##### Bug Fixes
+##### Breaking Changes
 
-- **MTableRow:** dont override enter on button elements ([5387af47](https://github.com/material-table-core/core/commit/5387af47f90e52854247de2c7b1851da5c378d8f))
+- **Prop Mutation:** The mutation of data and columns to add the tableData object was removed. This will remove the object reference for the callbacks as well, so that if you rely on object comparision to find your data, this will no longer work
+  ([Breaking Changes](https://material-table-core.com/docs/breaking-changes)) ([Thread](https://github.com/mbrn/material-table/pull/1174)):
 
-## 3.0.0 (2021-05-29)
+```
+onRowClick={(event, clickedRow)=> {
+    // Will now always return undefined because reference changed
+    const existingRow = data.find(d => d === clickedRow)
+}
+```
+
+Instead this works:
+
+```
+onRowClick={(event, clickedRow)=> {
+    // Finding the object with an internal id/unique property
+    const existingRow = data.find(d => d.id === clickedRow.id)
+    // Accessing the index
+    const existingRow = data[clickedRow.tableData.id]
+}
+```
 
 ##### Bug Fixes
 
