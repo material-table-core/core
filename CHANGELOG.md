@@ -4,6 +4,12 @@
 
 - **MTableRow:** dont override enter on button elements ([5387af47](https://github.com/material-table-core/core/commit/5387af47f90e52854247de2c7b1851da5c378d8f))
 
+## 3.0.0 (2021-05-29)
+
+##### Bug Fixes
+
+- **MTableRow:** dont override enter on button elements ([5387af47](https://github.com/material-table-core/core/commit/5387af47f90e52854247de2c7b1851da5c378d8f))
+
 #### 2.3.40 (2021-05-22)
 
 #### 2.3.39 (2021-05-14)
