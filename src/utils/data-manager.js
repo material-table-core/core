@@ -63,18 +63,6 @@ export default class DataManager {
   }
 
   setColumns(columns) {
-    const undefinedWidthColumns = columns.filter((c) => {
-      if (c.hidden) {
-        // Hidden column
-        return false;
-      }
-      if (c.columnDef && c.columnDef.tableData && c.columnDef.tableData.width) {
-        // tableData.width already calculated
-        return false;
-      }
-      // Calculate width if no value provided
-      return c.width === undefined;
-    });
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
@@ -104,6 +92,18 @@ export default class DataManager {
       };
 
       return { ...columnDef, tableData };
+    });
+    const undefinedWidthColumns = this.columns.filter((c) => {
+      if (c.hidden) {
+        // Hidden column
+        return false;
+      }
+      if (c.columnDef && c.columnDef.tableData && c.columnDef.tableData.width) {
+        // tableData.width already calculated
+        return false;
+      }
+      // Calculate width if no value provided
+      return c.width === undefined;
     });
 
     usedWidth = '(' + usedWidth.join(' + ') + ')';
