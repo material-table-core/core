@@ -1,3 +1,9 @@
+#### 3.0.1 (2021-06-01)
+
+##### Bug Fixes
+
+- Set width of columns without mutations ([4e08c89a](https://github.com/material-table-core/core/commit/4e08c89ac4ee7452a62db9aa2dd8cc4519a7fba5))
+
 ## 3.0.0 (2021-05-29)
 
 ##### Breaking Changes
