@@ -3,20 +3,6 @@ import { IconProps } from '@material-ui/core/Icon';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { OnHandlers } from './helper';
 
-declare module '@material-table/core/exporters' {
-  export function ExportCsv(
-    columns: Array<any>,
-    data: Array<any>,
-    filename: string,
-    delimeter?: string
-  ): void;
-  export function ExportPdf(
-    columns: Array<any>,
-    data: Array<any>,
-    filename: string
-  ): void;
-}
-
 type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
@@ -99,7 +85,7 @@ export interface MaterialTableProps<RowData extends object> {
     currentData: RowData[];
   }) => { value: unknown; style: React.CSSProperties } | unknown;
   style?: React.CSSProperties;
-  tableRef?: any;
+  tableRef?: React.RefObject<any> | React.MutableRefObject<undefined>;
   page?: number;
   totalCount?: number;
 }

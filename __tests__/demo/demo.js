@@ -25,6 +25,7 @@ import {
   DefaultOrderIssue,
   TestingNewActionHandlersProp,
   BulkEdit,
+  BasicRef,
   BulkEditWithDetailPanel,
   ExportData,
   CustomExport,
@@ -42,6 +43,9 @@ render(
   <div>
     <h1>Basic</h1>
     <Basic />
+
+    <h1>Basic Ref</h1>
+    <BasicRef />
 
     {/*
     <h1>Export Data</h1>
