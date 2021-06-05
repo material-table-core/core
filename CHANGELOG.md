@@ -1,3 +1,14 @@
+#### 0.0.2 (2021-06-05)
+
+##### Continuous Integration
+
+- Set next version to 1 ([4d9ef814](https://github.com/material-table-core/core/commit/4d9ef8148ec44cba69c4bbaefacbce09286a1d88))
+- add next release ([11c29727](https://github.com/material-table-core/core/commit/11c297276af9bdbb129919e8de6ac731acd54252))
+
+##### Other Changes
+
+- //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
+
 #### 3.0.2 (2021-06-03)
 
 #### 3.0.1 (2021-06-01)
