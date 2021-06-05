@@ -3,7 +3,7 @@ import React from 'react';
 import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;

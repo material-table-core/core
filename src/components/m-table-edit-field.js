@@ -9,11 +9,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
+  LocalizationProvider,
   TimePicker,
   DatePicker,
   DateTimePicker
-} from '@material-ui/pickers';
+} from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
@@ -92,9 +92,13 @@ class MTableEditField extends React.Component {
         ? this.props.columnDef.dateSetting.format
         : 'dd.MM.yyyy';
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={DateFnsUtils}
+        locale={this.props.locale}
+      >
         <DatePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format={dateFormat}
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -108,15 +112,19 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
   renderTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={DateFnsUtils}
+        locale={this.props.locale}
+      >
         <TimePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format="HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -130,15 +138,19 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
   renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={DateFnsUtils}
+        locale={this.props.locale}
+      >
         <DateTimePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format="dd.MM.yyyy HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -152,7 +164,7 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
@@ -160,6 +172,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         fullWidth
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
@@ -181,7 +194,10 @@ class MTableEditField extends React.Component {
         }}
         inputProps={{
           'aria-label': this.props.columnDef.title,
-          style: this.props.columnDef.type === 'numeric' ? { textAlign: 'right' } : {}
+          style:
+            this.props.columnDef.type === 'numeric'
+              ? { textAlign: 'right' }
+              : {}
         }}
       />
     );
@@ -191,6 +207,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
