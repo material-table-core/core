@@ -16,6 +16,7 @@
  * built-in dev server (run `npm start`)
  */
 
+import { ThemeProvider, createTheme } from '@material-ui/core';
 import React from 'react';
 import { render } from 'react-dom';
 
@@ -40,7 +41,7 @@ import { I1353, I1941, I122 } from './demo-components/RemoteData';
 module.hot.accept();
 
 render(
-  <div>
+  <ThemeProvider theme={createTheme()}>
     <h1>Basic</h1>
     <Basic />
 
@@ -112,6 +113,6 @@ render(
         <I122 />
       </li>
     </ol>
-  </div>,
+  </ThemeProvider>,
   document.querySelector('#app')
 );

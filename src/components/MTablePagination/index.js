@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
@@ -9,19 +9,19 @@ import React from 'react';
 
 function MTablePagination(props) {
   const handleFirstPageButtonClick = (event) => {
-    props.onChangePage(event, 0);
+    props.onPageChange(event, 0);
   };
 
   const handleBackButtonClick = (event) => {
-    props.onChangePage(event, props.page - 1);
+    props.onPageChange(event, props.page - 1);
   };
 
   const handleNextButtonClick = (event) => {
-    props.onChangePage(event, props.page + 1);
+    props.onPageChange(event, props.page + 1);
   };
 
   const handleLastPageButtonClick = (event) => {
-    props.onChangePage(
+    props.onPageChange(
       event,
       Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
