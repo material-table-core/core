@@ -4,9 +4,9 @@ import { getLocalizedFilterPlaceHolder } from './utils';
 import {
   DatePicker,
   DateTimePicker,
-  MuiPickersUtilsProvider,
+  LocalizationProvider,
   TimePicker
-} from '@material-ui/pickers';
+} from '@material-ui/lab';
 
 function DateFilter({
   columnDef,
@@ -34,12 +34,12 @@ function DateFilter({
   }
 
   return (
-    <MuiPickersUtilsProvider
-      utils={DateFnsUtils}
+    <LocalizationProvider
+      dateAdapter={DateFnsUtils}
       locale={localization.dateTimePickerLocalization}
     >
       {dateInputElement}
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 }
 

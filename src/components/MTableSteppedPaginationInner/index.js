@@ -1,5 +1,5 @@
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -8,23 +8,23 @@ import React from 'react';
 
 function MTablePaginationInner(props) {
   const handleFirstPageButtonClick = (event) => {
-    this.props.onPageChange(event, 0);
+    props.onPageChange(event, 0);
   };
 
   const handleBackButtonClick = (event) => {
-    this.props.onPageChange(event, this.props.page - 1);
+    props.onPageChange(event, props.page - 1);
   };
 
   const handleNextButtonClick = (event) => {
-    this.props.onPageChange(event, this.props.page + 1);
+    props.onPageChange(event, props.page + 1);
   };
 
   const handleNumberButtonClick = (number) => (event) => {
-    this.props.onPageChange(event, number);
+    props.onPageChange(event, number);
   };
 
   const handleLastPageButtonClick = (event) => {
-    this.props.onPageChange(
+    props.onPageChange(
       Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
   };

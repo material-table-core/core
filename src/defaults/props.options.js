@@ -18,7 +18,7 @@ export default {
   headerSelectionProps: {},
   hideFilterIcons: false,
   loadingType: 'overlay',
-  padding: 'default',
+  padding: 'normal',
   searchAutoFocus: false,
   paging: true,
   pageSize: 5,

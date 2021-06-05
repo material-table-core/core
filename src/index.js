@@ -8,12 +8,12 @@ import { withStyles } from '@material-ui/styles';
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
-const styles = (theme) => ({
+const styles = {
   paginationRoot: {
     width: '100%'
   },
   paginationToolbar: {
-    padding: 0,
+    padding: '0 !important',
     width: '100%'
   },
   paginationCaption: {
@@ -22,7 +22,7 @@ const styles = (theme) => ({
   paginationSelectRoot: {
     margin: 0
   }
-});
+};
 
 export default withStyles(styles, { withTheme: true })((props) => (
   <MaterialTable {...props} ref={props.tableRef} />
