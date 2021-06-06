@@ -53,4 +53,4 @@ jobs:
           release_name: ${{ env.RELEASE_VERSION }}
           body: ${{ github.event.head_commit.message }}
           draft: false
-          prerelease: false
+          prerelease: true
