@@ -1,3 +1,21 @@
+#### 0.0.3 (2021-06-08)
+
+##### Continuous Integration
+
+- add next tag to version ([10b0fbf7](https://github.com/material-table-core/core/commit/10b0fbf7abed4c811a51da9a303124da1a4c24a9))
+- Set next version to 1 ([4d9ef814](https://github.com/material-table-core/core/commit/4d9ef8148ec44cba69c4bbaefacbce09286a1d88))
+- add next release ([11c29727](https://github.com/material-table-core/core/commit/11c297276af9bdbb129919e8de6ac731acd54252))
+
+##### Bug Fixes
+
+- set correct background color for toolbar ([ff21b47e](https://github.com/material-table-core/core/commit/ff21b47e496fad1803093c4b3b3a962e98fef591))
+- set next to prerelease ([8999c4fa](https://github.com/material-table-core/core/commit/8999c4fa89a442f54e811948e5dc0c2c926814ca))
+
+##### Other Changes
+
+- //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
+- //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
+
 <<<<<<< HEAD
 
 #### 0.0.2 (2021-06-05)
