@@ -1,10 +1,16 @@
 # Should run on each push, this should include pull requests
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
 
 jobs:
   build:
+    if:
     runs-on: ubuntu-latest
     strategy:
       matrix:
