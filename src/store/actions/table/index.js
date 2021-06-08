@@ -7,3 +7,9 @@
 //   INCREMENT: "INCREMENT",
 //   DECREMENT: "DECREMENT",
 // }
+
+const tableActions = {
+  SET_DATA: 'SET_DATA'
+};
+
+export default tableActions;

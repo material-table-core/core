@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { tableState, TableContext } from '../../context';
 import { tableReducer } from '../../reducers';
 
-const TableProvider = (props) => {
+export default function TableProvider(props) {
   // eslint-disable-next-line react/prop-types
   const { children } = props;
 
@@ -13,6 +13,4 @@ const TableProvider = (props) => {
       {children}
     </TableContext.Provider>
   );
-};
-
-export default TableProvider;
+}
