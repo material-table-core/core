@@ -5,6 +5,8 @@ import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
 import { withStyles } from '@material-ui/core';
 
+import { MTableProvider } from './store/providers';
+
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
@@ -25,7 +27,9 @@ const styles = (theme) => ({
 });
 
 export default withStyles(styles, { withTheme: true })((props) => (
-  <MaterialTable {...props} ref={props.tableRef} />
+  <MTableProvider>
+    <MaterialTable {...props} ref={props.tableRef} />
+  </MTableProvider>
 ));
 
 export {
