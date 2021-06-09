@@ -19,10 +19,11 @@ export function MTableHeader({ onColumnResized, ...props }) {
   });
 
   const handleMouseDown = (e, columnDef) => {
+    let target = e.clientX;
     setState((prevState) => ({
       ...prevState,
       lastAdditionalWidth: columnDef.tableData.additionalWidth,
-      lastX: e.clientX,
+      lastX: target,
       resizingColumnDef: columnDef
     }));
   };
