@@ -1,6 +1,6 @@
 import { tableActions } from '../../actions';
 
-const tableReducer = (state, action) => {
+export default function tableReducer(state, action) {
   switch (action.type) {
     case tableActions.SET_DATA: {
       return {
@@ -11,6 +11,4 @@ const tableReducer = (state, action) => {
     default:
       return state;
   }
-};
-
-export default tableReducer;
+}
