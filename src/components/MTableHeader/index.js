@@ -84,10 +84,12 @@ export function MTableHeader({ onColumnResized, ...props }) {
   };
 
   const getCellStyle = (columnDef) => {
-    const width = CommonValues.reducePercentsInCalc(
-      columnDef.tableData.width,
-      props.scrollWidth
-    );
+    const width = props.options.columnResizable
+      ? CommonValues.reducePercentsInCalc(
+          columnDef.tableData.width,
+          props.scrollWidth
+        )
+      : columnDef.tableData.width;
     const style = {
       ...props.headerStyle,
       ...columnDef.headerStyle,
