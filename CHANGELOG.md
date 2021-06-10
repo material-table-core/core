@@ -1,3 +1,13 @@
+### 3.1.0 (2021-06-10)
+
+##### Bug Fixes
+
+- PRevent column width to be set in stone it not resizing ([6c430c53](https://github.com/material-table-core/core/commit/6c430c53729d72fb0c4e214bb4f036570fecf4a2))
+
+##### Other Changes
+
+- Align title with columns ([db85a061](https://github.com/material-table-core/core/commit/db85a061487a5cfd4af61570a02f5a34eef7cd65))
+
 #### 3.0.5 (2021-06-08)
 
 ##### Other Changes
