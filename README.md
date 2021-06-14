@@ -1,8 +1,6 @@
 <div align="center">
-
   <!-- Title -->
   <h1>@material-table/core</h1>
-
   <!-- Subtitle : a fork of mbrn/material-table -->
   <h4>
     a fork of 
@@ -16,7 +14,6 @@
       </a>
     </code>
   </h4>
-
   <!-- * Badges * -->
   <p>
     <section>
@@ -60,56 +57,4 @@
   
 💾 [Installation](https://material-table-core.com/docs/#installation) 🎉 [Usage](https://material-table-core.com/docs/#basic-usage) 
 ✅ [Why does this repo exist?](https://material-table-core.com/docs/about) 🚧 [Documentation](https://material-table-core.com/docs) ⚙️ [Demos](https://material-table-core.com/demos)
-
 </div>
-
-# Quickstart
-
-## Install material-table-core
-
-### Yarn
-
-`yarn add @material-table/core`
-
-### NPM
-
-`npm install @material-table/core`
-&nbsp;
-\
-&nbsp;
-
-## Change the import
-
-```
-- import MaterialTable from 'material-table';
-+ import MaterialTable from '@material-table/core';
-```
-
-## And thats it. Enjoy.
-
-&nbsp;
-\
-&nbsp;
-
-# Material-ui V5
-
-With `material-ui` becoming stable with a beta on July 1st and being promoted as the version to use, we starting to support both version v4 and v5.
-
-If you migrated to version 5 of `material-ui`, simply install our prerelease version to access the new version that supports v5.
-
-### Yarn
-
-`yarn add @material-table/core@next`
-
-### NPM
-
-`npm install @material-table/core@next`
-&nbsp;
-
-### Breaking changes for v5
-
-- `padding` now accepts 'normal' or 'dense'
-- `onChangeRowsPerPage` => `onRowsPerPageChange`
-- `onChangePage` => `onPageChange`
-
-The version is still a work in progress and not fully tested.
