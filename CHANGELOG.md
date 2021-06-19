@@ -1,3 +1,9 @@
+#### 3.0.7 (2021-06-19)
+
+##### Bug Fixes
+
+- Fallback for change of columns ([d4302655](https://github.com/material-table-core/core/commit/d4302655e5af87cb07e15f2b581772628d238b80))
+
 ### 3.0.6 (2021-06-10)
 
 ##### Bug Fixes
