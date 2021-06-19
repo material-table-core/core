@@ -560,7 +560,10 @@ export default class DataManager {
   }
 
   sortList(list) {
-    const columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    let columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    if (!columnDef) {
+      columnDef = this.columns[0];
+    }
     let result = list;
 
     if (columnDef.customSort) {
