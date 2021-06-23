@@ -33,9 +33,7 @@ function MTableGroupbar(props) {
   });
 
   useEffect(() => {
-    debugger;
     if (props.persistentGroupingsId) {
-      debugger;
       const persistentGroupings = {};
 
       props.groupColumns.forEach((column) => {
