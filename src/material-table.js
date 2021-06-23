@@ -1039,6 +1039,7 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}
           <ScrollBar double={props.options.doubleHorizontalScroll}>

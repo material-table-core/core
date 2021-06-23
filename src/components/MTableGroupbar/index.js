@@ -3,7 +3,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
@@ -31,6 +31,27 @@ function MTableGroupbar(props) {
     border: '1px solid #ccc',
     borderStyle: 'dashed'
   });
+
+  useEffect(() => {
+    debugger;
+    if (props.persistentGroupingsId) {
+      debugger;
+      const persistentGroupings = {};
+
+      props.groupColumns.forEach((column) => {
+        persistentGroupings[column.field] = {
+          groupOrder: column.tableData.groupOrder,
+          groupSort: column.tableData.groupSort,
+          columnOrder: column.tableData.columnOrder
+        };
+      });
+
+      localStorage.setItem(
+        props.persistentGroupingsId,
+        JSON.stringify(persistentGroupings)
+      );
+    }
+  }, [props.groupColumns]);
 
   return (
     <Toolbar
