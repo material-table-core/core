@@ -82,6 +82,8 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
+    const columnsCopy = JSON.parse(JSON.stringify(props.columns));
+
     if (props.options.persistentGroupingsId) {
       let savedGroupings = localStorage.getItem(
         props.options.persistentGroupingsId
@@ -90,9 +92,7 @@ export default class MaterialTable extends React.Component {
         const parsedGroupings = JSON.parse(savedGroupings);
         if (parsedGroupings) {
           Object.entries(parsedGroupings).forEach(([columnName, groupings]) => {
-            const column = props.columns.find(
-              (col) => col.field === columnName
-            );
+            const column = columnsCopy.find((col) => col.field === columnName);
             if (column) {
               Object.entries(groupings).forEach(([key, value]) => {
                 if (!column['tableData']) {
@@ -106,7 +106,7 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    this.dataManager.setColumns(props.columns);
+    this.dataManager.setColumns(columnsCopy);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
