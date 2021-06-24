@@ -88,18 +88,22 @@ export default class MaterialTable extends React.Component {
       let savedGroupings = localStorage.getItem(
         props.options.persistentGroupingsId
       );
+
       if (savedGroupings) {
         const parsedGroupings = JSON.parse(savedGroupings);
+
         if (parsedGroupings) {
-          Object.entries(parsedGroupings).forEach(([columnName, groupings]) => {
-            const column = columnsCopy.find((col) => col.field === columnName);
+          parsedGroupings.forEach((savedGrouping) => {
+            const column = columnsCopy.find(
+              (col) => col.field === savedGrouping.field
+            );
             if (column) {
-              Object.entries(groupings).forEach(([key, value]) => {
-                if (!column['tableData']) {
-                  column['tableData'] = {};
-                }
-                column['tableData'][key] = value;
-              });
+              if (!column.tableData) {
+                column.tableData = {};
+              }
+              column.tableData.groupOrder = savedGrouping.groupOrder;
+              column.tableData.groupSort = savedGrouping.groupSort;
+              column.tableData.columnOrder = savedGrouping.columnOrder;
             }
           });
         }

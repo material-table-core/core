@@ -34,14 +34,15 @@ function MTableGroupbar(props) {
 
   useEffect(() => {
     if (props.persistentGroupingsId) {
-      const persistentGroupings = {};
+      const persistentGroupings = [];
 
       props.groupColumns.forEach((column) => {
-        persistentGroupings[column.field] = {
+        persistentGroupings.push({
+          field: column.field,
           groupOrder: column.tableData.groupOrder,
           groupSort: column.tableData.groupSort,
           columnOrder: column.tableData.columnOrder
-        };
+        });
       });
 
       localStorage.setItem(
