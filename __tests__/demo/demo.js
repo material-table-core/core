@@ -27,15 +27,12 @@ import {
   BulkEdit,
   BasicRef,
   BulkEditWithDetailPanel,
-  ExportData,
-  CustomExport,
   EditableRow,
   EditableCells,
   FrankensteinDemo,
   HidingColumns,
   Resizable,
-  PersistentGroupings,
-  PersistentGroupings2
+  PersistentGroupings
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
