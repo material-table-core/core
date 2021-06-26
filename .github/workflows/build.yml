@@ -18,8 +18,8 @@ on:
 jobs:
   build:
     if: |
-      startsWith(${{ github.event.head_commit.message }}, 'skip:build') == false ||
-      startsWith(${{ github.event.head_commit.message }}, 'Release ') == false
+      startsWith(${{ github.event.head_commit.message }}, 'skip:build') != true &&
+      startsWith(${{ github.event.head_commit.message }}, 'Release ') != true
     runs-on: ubuntu-latest
     strategy:
       matrix:
