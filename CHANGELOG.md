@@ -1,3 +1,9 @@
+#### 3.0.10 (2021-06-26)
+
+##### Other Changes
+
+- build update readme ([1fb439b6](https://github.com/material-table-core/core/commit/1fb439b698e887bfaa39099e4ab8299fa470d163))
+
 #### 3.0.9 (2021-06-26)
 
 ##### Other Changes
