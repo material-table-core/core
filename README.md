@@ -58,3 +58,13 @@
 💾 [Installation](https://material-table-core.com/docs/#installation) 🎉 [Usage](https://material-table-core.com/docs/#basic-usage) 
 ✅ [Why does this repo exist?](https://material-table-core.com/docs/about) 🚧 [Documentation](https://material-table-core.com/docs) ⚙️ [Demos](https://material-table-core.com/demos)
 </div>
+
+# Contributing
+
+Thanks for taking interest in contributing! :rocket: In being a community based repository, we wouldn't be here without you!
+
+**Urgent items include**:
+
+- Get rid of [`data-manager.js`](https://github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https://github.com/material-table-core/core/tree/context)
+- Documentation over at [`material-table-core/website`](https://github.com/material-table-core/website)
+- Implementing tests via Jest
