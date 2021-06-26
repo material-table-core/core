@@ -2,6 +2,8 @@
 #
 # If the commit message starts with "skip:build" we will skip this action
 #
+# If the commit message starts with "Release " we skip build
+#
 
 name: Build
 
@@ -14,7 +16,9 @@ on:
 
 jobs:
   build:
-    if: startsWith(github.event.head_commit.message, 'skip:build') == false
+    if: |
+      startsWith(github.event.head_commit.message, 'skip:build') == false ||
+      startsWith(github.event.head_commit.message, 'Release ') == false
     runs-on: ubuntu-latest
     strategy:
       matrix:
