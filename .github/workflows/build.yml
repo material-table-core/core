@@ -1,4 +1,8 @@
 # Should run on each push, this should include pull requests
+#
+# If the commit message starts with "skip:build" we will skip this action
+#
+
 name: Build
 
 on:
@@ -10,7 +14,7 @@ on:
 
 jobs:
   build:
-    if:
+    if: startsWith(github.event.head_commit.message, "skip:build") == false
     runs-on: ubuntu-latest
     strategy:
       matrix:
