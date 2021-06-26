@@ -65,6 +65,6 @@ Thanks for taking interest in contributing! :rocket: In being a community based 
 
 **Urgent items include**:
 
-- Get rid of [`data-manager.js`](https://github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https://github.com/material-table-core/core/tree/context)
+- Get rid of [`data-manager.js`](https://github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https://github.com/material-table-core/core/tree/context/src/store) via the `context` branch
 - Documentation over at [`material-table-core/website`](https://github.com/material-table-core/website)
 - Implementing tests via Jest
