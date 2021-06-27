@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
+import { validateInput } from '../../utils/validate';
 
 function MTableEditRow(props) {
   const [state, setState] = useState(() => {
@@ -97,21 +98,7 @@ function MTableEditRow(props) {
         } else {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent = editComponent || props.components.EditField;
-          let error = { isValid: true, helperText: '' };
-          if (columnDef.validate) {
-            const validateResponse = columnDef.validate(state.data);
-            switch (typeof validateResponse) {
-              case 'object':
-                error = { ...validateResponse };
-                break;
-              case 'boolean':
-                error = { isValid: validateResponse, helperText: '' };
-                break;
-              case 'string':
-                error = { isValid: false, helperText: validateResponse };
-                break;
-            }
-          }
+          const error = validateInput(columnDef, state.data);
           return (
             <TableCell
               size={size}
@@ -172,18 +159,8 @@ function MTableEditRow(props) {
       ...props.localization
     };
     const isValid = props.columns.every((column) => {
-      if (column.validate) {
-        const response = column.validate(state.data);
-        switch (typeof response) {
-          case 'object':
-            return response.isValid;
-          case 'string':
-            return response.length === 0;
-          case 'boolean':
-            return response;
-        }
-      }
-      return true;
+      const error = validateInput(column, state.data);
+      return error.isValid;
     });
     const actions = [
       {

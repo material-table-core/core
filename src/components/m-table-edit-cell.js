@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withTheme } from '@material-ui/core';
-
+import { validateInput } from '../utils/validate';
 class MTableEditCell extends React.Component {
   constructor(props) {
     super(props);
@@ -60,6 +60,11 @@ class MTableEditCell extends React.Component {
   };
 
   onApprove = () => {
+    const isValid = validateInput(this.props.columnDef, this.state.value)
+      .isValid;
+    if (!isValid) {
+      return;
+    }
     this.setState({ isLoading: true }, () => {
       this.props.cellEditable
         .onCellEditApproved(
@@ -85,7 +90,7 @@ class MTableEditCell extends React.Component {
     this.props.onCellEditFinished(this.props.rowData, this.props.columnDef);
   };
 
-  renderActions() {
+  renderActions(isValid) {
     if (this.state.isLoading) {
       return (
         <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
@@ -99,7 +104,7 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: this.state.isLoading
+        disabled: this.state.isLoading || !isValid
       },
       {
         icon: this.props.icons.Clear,
@@ -119,12 +124,16 @@ class MTableEditCell extends React.Component {
   }
 
   render() {
+    const error = validateInput(this.props.columnDef, this.state.value);
+    console.log(error);
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
+              error={!error.isValid}
+              helperText={error.helperText}
               value={this.state.value}
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
@@ -133,7 +142,7 @@ class MTableEditCell extends React.Component {
               autoFocus
             />
           </div>
-          {this.renderActions()}
+          {this.renderActions(error.isValid)}
         </div>
       </TableCell>
     );
