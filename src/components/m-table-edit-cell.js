@@ -9,6 +9,10 @@ class MTableEditCell extends React.Component {
     super(props);
 
     this.state = {
+      errorState: {
+        isValid: true,
+        helperText: ''
+      },
       isLoading: false,
       value: this.props.rowData[this.props.columnDef.field]
     };
@@ -104,7 +108,7 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: this.state.isLoading || !isValid
+        disabled: !this.state.isLoading || !isValid
       },
       {
         icon: this.props.icons.Clear,
@@ -123,6 +127,13 @@ class MTableEditCell extends React.Component {
     );
   }
 
+  handleChange(value) {
+    const errorState = this.props.columnDef.validate({
+      [this.props.columnDef.field]: value
+    });
+    this.setState({ errorState, value });
+  }
+
   render() {
     const error = validateInput(this.props.columnDef, this.state.value);
     console.log(error);
@@ -135,7 +146,9 @@ class MTableEditCell extends React.Component {
               error={!error.isValid}
               helperText={error.helperText}
               value={this.state.value}
-              onChange={(value) => this.setState({ value })}
+              error={!this.state.errorState.isValid}
+              helperText={this.state.errorState.helperText}
+              onChange={(value) => this.handleChange(value)}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}
               rowData={this.props.rowData}
