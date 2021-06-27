@@ -62,7 +62,7 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {
+  setColumns(columns, prevColumns = []) {
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
@@ -78,7 +78,7 @@ export default class DataManager {
       ) {
         usedWidth.push(width);
       }
-
+      const prevColumn = prevColumns.find(({ id }) => id === index);
       const tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
@@ -87,11 +87,12 @@ export default class DataManager {
         width,
         initialWidth: width,
         additionalWidth: 0,
+        ...(prevColumn ? prevColumn.tableData : {}),
         ...columnDef.tableData,
         id: index
       };
-
-      return { ...columnDef, tableData };
+      columnDef.tableData = tableData;
+      return columnDef;
     });
     const undefinedWidthColumns = this.columns.filter((c) => {
       if (c.hidden) {
