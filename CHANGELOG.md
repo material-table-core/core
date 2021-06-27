@@ -1,3 +1,9 @@
+#### 3.0.12 (2021-06-27)
+
+##### Chores
+
+- mrge edit cell validate fixes ([09e6487d](https://github.com/material-table-core/core/commit/09e6487d20d9e940ffd6bea6f1dc53842d2269a8))
+
 #### 3.0.11 (2021-06-27)
 
 ##### Bug Fixes
