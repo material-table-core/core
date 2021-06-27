@@ -94,7 +94,7 @@ class MTableEditCell extends React.Component {
     this.props.onCellEditFinished(this.props.rowData, this.props.columnDef);
   };
 
-  renderActions(isValid) {
+  renderActions() {
     if (this.state.isLoading) {
       return (
         <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
@@ -108,7 +108,7 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: !this.state.isLoading || !isValid
+        disabled: !this.state.isLoading || !this.state.errorState.isValid
       },
       {
         icon: this.props.icons.Clear,
@@ -128,23 +128,17 @@ class MTableEditCell extends React.Component {
   }
 
   handleChange(value) {
-    const errorState = this.props.columnDef.validate({
-      [this.props.columnDef.field]: value
-    });
+    const errorState = validateInput(this.props.columnDef, value);
     this.setState({ errorState, value });
   }
 
   render() {
-    const error = validateInput(this.props.columnDef, this.state.value);
-    console.log(error);
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
-              error={!error.isValid}
-              helperText={error.helperText}
               value={this.state.value}
               error={!this.state.errorState.isValid}
               helperText={this.state.errorState.helperText}
@@ -155,7 +149,7 @@ class MTableEditCell extends React.Component {
               autoFocus
             />
           </div>
-          {this.renderActions(error.isValid)}
+          {this.renderActions()}
         </div>
       </TableCell>
     );
