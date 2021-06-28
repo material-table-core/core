@@ -69,7 +69,7 @@ export default class MaterialTable extends React.Component {
     );
   }
 
-  setDataManagerFields(props, isInit) {
+  setDataManagerFields(props, isInit, prevColumns) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
     if (props && props.options.sorting !== false) {
@@ -110,7 +110,7 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    this.dataManager.setColumns(columnsCopy);
+    this.dataManager.setColumns(columnsCopy, prevColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
@@ -173,7 +173,7 @@ export default class MaterialTable extends React.Component {
 
     if (propsChanged) {
       const props = this.getProps(this.props);
-      this.setDataManagerFields(props);
+      this.setDataManagerFields(props, false, this.props.columns);
       this.setState(this.dataManager.getRenderState());
     }
 
@@ -192,7 +192,7 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  getProps(props) {
+  getProps(props, prevColumns) {
     const calculatedProps = { ...(props || this.props) };
     calculatedProps.components = {
       ...MaterialTable.defaultProps.components,
@@ -1097,7 +1097,7 @@ export default class MaterialTable extends React.Component {
                             top: 0,
                             right: 0,
                             boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
-                            overflowX: 'hidden',
+                            overflowX: 'clip',
                             zIndex: 11
                           }}
                         >

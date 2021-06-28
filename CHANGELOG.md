@@ -1,3 +1,42 @@
+#### 3.0.12 (2021-06-27)
+
+##### Chores
+
+- mrge edit cell validate fixes ([09e6487d](https://github.com/material-table-core/core/commit/09e6487d20d9e940ffd6bea6f1dc53842d2269a8))
+
+#### 3.0.11 (2021-06-27)
+
+##### Bug Fixes
+
+- Hook edit cell up to validate ([88bb78f0](https://github.com/material-table-core/core/commit/88bb78f01da564d57f6432414644088aa56292da))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([7dbd7a4b](https://github.com/material-table-core/core/commit/7dbd7a4b75b38ea180bdce8e8d973eae888c0e94))
+- keep tabledata from previous columns ([e0fa5ee0](https://github.com/material-table-core/core/commit/e0fa5ee0dd480610022a14b02ff65a8c55b38ddd))
+- build testing ([d8174194](https://github.com/material-table-core/core/commit/d817419456f40a54d1e8e72a62f724feddc2816e))
+- build testing ([0a8cf7b0](https://github.com/material-table-core/core/commit/0a8cf7b0558acaa57b07a4137d8fb4781b6ea580))
+- build update build.yml ([7b9d3cf3](https://github.com/material-table-core/core/commit/7b9d3cf3eeaf85ec6d52519609d8d88dc78b2681))
+- build testing ([797344ab](https://github.com/material-table-core/core/commit/797344abc647d73837d9f95213f6a32330718cb1))
+- build update build yml; test if skip build still works ([422d09bf](https://github.com/material-table-core/core/commit/422d09bf98ce9a04ffd6e5a008d96f8c93245b7d))
+- build update build yml ([12367e66](https://github.com/material-table-core/core/commit/12367e660f068ccdad72a8368b62a7115459506a))
+- build update build.yml ([af77c277](https://github.com/material-table-core/core/commit/af77c277e0e6718be417a0ec0fd86829902455d1))
+
+#### 3.0.10 (2021-06-26)
+
+##### Other Changes
+
+- build update readme ([1fb439b6](https://github.com/material-table-core/core/commit/1fb439b698e887bfaa39099e4ab8299fa470d163))
+
+#### 3.0.9 (2021-06-26)
+
+##### Other Changes
+
+- build update readme ([dfc74a89](https://github.com/material-table-core/core/commit/dfc74a8994701b91459df3ac6e42ba72c8a633b2))
+- build ([8b5925fc](https://github.com/material-table-core/core/commit/8b5925fc60b90e1edf7afba147e4e11c55a40a37))
+
+#### 3.0.8 (2021-06-26)
+
 #### 3.0.7 (2021-06-19)
 
 ##### Bug Fixes

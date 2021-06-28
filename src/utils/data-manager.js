@@ -62,7 +62,7 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {
+  setColumns(columns, prevColumns = []) {
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
@@ -78,7 +78,7 @@ export default class DataManager {
       ) {
         usedWidth.push(width);
       }
-
+      const prevColumn = prevColumns.find(({ id }) => id === index);
       const tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
@@ -87,11 +87,12 @@ export default class DataManager {
         width,
         initialWidth: width,
         additionalWidth: 0,
+        ...(prevColumn ? prevColumn.tableData : {}),
         ...columnDef.tableData,
         id: index
       };
-
-      return { ...columnDef, tableData };
+      columnDef.tableData = tableData;
+      return columnDef;
     });
     const undefinedWidthColumns = this.columns.filter((c) => {
       if (c.hidden) {
@@ -108,7 +109,8 @@ export default class DataManager {
 
     usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -641,7 +643,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 
