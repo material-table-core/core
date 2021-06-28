@@ -41,6 +41,7 @@ function MTableCell(props) {
 
   return (
     <TableCell
+      {...props}
       size={props.size}
       value={props.value}
       style={getStyle(props)}
