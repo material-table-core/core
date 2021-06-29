@@ -388,6 +388,7 @@ export const propTypes = {
   onChangeColumnHidden: PropTypes.func,
   onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
+  onDoubleRowClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,
   onQueryChange: PropTypes.func,
   onBulkEditOpen: PropTypes.func,
