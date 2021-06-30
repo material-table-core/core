@@ -30,14 +30,15 @@ export function MTableHeader({ onColumnResized, ...props }) {
   const handleMouseMove = React.useCallback(
     // Use usecallback to prevent triggering theuse effect too much
     (e) => {
-      if (!resizingColumnDef) {
-        return;
-      }
+      if (!resizingColumnDef) return;
       let additionalWidth = lastAdditionalWidth + e.clientX - lastX;
       additionalWidth = Math.min(
         resizingColumnDef.maxWidth || additionalWidth,
         additionalWidth
       );
+      let th = e.target.closest('th');
+      let currentWidth = +window.getComputedStyle(th).width.slice(0, -2);
+      if (currentWidth <= resizingColumnDef.minWidth) return;
       if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
         onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
       }
