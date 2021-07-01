@@ -158,16 +158,16 @@ export default function MTableBodyRow(props) {
     const selectionWidth = CommonValues.selectionMaxWidth(
       props,
       props.treeDataMaxLevel
-    );
+    ) || 0;
 
     const styles =
       size === 'medium'
         ? {
-            marginLeft: props.level * 9
+            marginLeft: props.level * 9 || 0
           }
         : {
             padding: '4px',
-            marginLeft: 5 + props.level * 9
+            marginLeft: 5 + props.level * 9 || 0
           };
 
     return (
