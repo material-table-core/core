@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { TableRow, TableCell } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { getStyle } from '../MTableCell/utils';
 import * as CommonValues from '../../utils/common-values';
 import PropTypes from 'prop-types';
@@ -113,6 +112,4 @@ MTableSummaryRow.propTypes = {
   renderSummaryRow: PropTypes.func
 };
 
-export const styles = (theme) => ({});
-
-export default withStyles(styles)(MTableSummaryRow);
+export default MTableSummaryRow;

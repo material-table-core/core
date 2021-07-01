@@ -3,12 +3,13 @@ import React from 'react';
 import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+import { useTheme } from '@material-ui/core';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
-const styles = {
+const useStyles = makeStyles({
   paginationRoot: {
     width: '100%'
   },
@@ -22,11 +23,20 @@ const styles = {
   paginationSelectRoot: {
     margin: 0
   }
-};
+});
 
-export default withStyles(styles, { withTheme: true })((props) => (
-  <MaterialTable {...props} ref={props.tableRef} />
-));
+export default function Table(props) {
+  const classes = useStyles();
+  const theme = useTheme();
+  return (
+    <MaterialTable
+      classes={classes}
+      theme={theme}
+      {...props}
+      ref={props.tableRef}
+    />
+  );
+}
 
 export {
   MTableAction,

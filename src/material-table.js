@@ -11,7 +11,7 @@ import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 
 /* eslint-enable no-unused-vars */
 
@@ -1185,7 +1185,7 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-const style = () => ({
+const useStyles = makeStyles(() => ({
   horizontalScrollContainer: {
     '& ::-webkit-scrollbar': {
       '-webkit-appearance': 'none'
@@ -1199,9 +1199,10 @@ const style = () => ({
       backgroundColor: 'rgba(0, 0, 0, .3)'
     }
   }
-});
+}));
 
-const ScrollBar = withStyles(style)(({ double, children, classes }) => {
+const ScrollBar = ({ double, children }) => {
+  const classes = useStyles();
   if (double) {
     return <DoubleScrollbar>{children}</DoubleScrollbar>;
   } else {
@@ -1214,4 +1215,4 @@ const ScrollBar = withStyles(style)(({ double, children, classes }) => {
       </div>
     );
   }
-});
+};

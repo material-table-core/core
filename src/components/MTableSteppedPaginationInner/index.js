@@ -1,12 +1,15 @@
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useTheme } from '@material-ui/core';
 
 function MTablePaginationInner(props) {
+  const classes = useStyles();
+  const theme = useTheme();
   const handleFirstPageButtonClick = (event) => {
     props.onPageChange(event, 0);
   };
@@ -58,14 +61,7 @@ function MTablePaginationInner(props) {
   }
 
   function render() {
-    const {
-      classes,
-      count,
-      page,
-      rowsPerPage,
-      theme,
-      showFirstLastPageButtons
-    } = props;
+    const { count, page, rowsPerPage, showFirstLastPageButtons } = props;
 
     const localization = {
       ...MTablePaginationInner.defaultProps.localization,
@@ -143,13 +139,13 @@ function MTablePaginationInner(props) {
   return render();
 }
 
-const actionsStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(2.5)
   }
-});
+}));
 
 MTablePaginationInner.propTypes = {
   onPageChange: PropTypes.func,
@@ -183,8 +179,6 @@ const MTableSteppedPaginationRef = React.forwardRef(
   }
 );
 
-const MTableSteppedPagination = withStyles(actionsStyles, { withTheme: true })(
-  MTableSteppedPaginationRef
-);
+const MTableSteppedPagination = MTableSteppedPaginationRef;
 
 export default MTableSteppedPagination;

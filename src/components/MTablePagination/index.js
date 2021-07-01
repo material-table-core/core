@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useTheme } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 function MTablePagination(props) {
+  const classes = useStyles();
+  const theme = useTheme();
   const handleFirstPageButtonClick = (event) => {
     props.onPageChange(event, 0);
   };
@@ -28,14 +31,7 @@ function MTablePagination(props) {
   };
 
   function render() {
-    const {
-      classes,
-      count,
-      page,
-      rowsPerPage,
-      theme,
-      showFirstLastPageButtons
-    } = props;
+    const { count, page, rowsPerPage, showFirstLastPageButtons } = props;
 
     const localization = {
       ...MTablePagination.defaultProps.localization,
@@ -135,14 +131,14 @@ function MTablePagination(props) {
   return render();
 }
 
-const actionsStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
     display: 'flex'
     // lineHeight: '48px'
   }
-});
+}));
 
 MTablePagination.propTypes = {
   onChangePage: PropTypes.func,
@@ -178,8 +174,6 @@ const MTableGroupRowRef = React.forwardRef(function MTablePaginationRef(
   return <MTablePagination {...props} forwardedRef={ref} />;
 });
 
-const MTablePaginationOuter = withStyles(actionsStyles, { withTheme: true })(
-  MTableGroupRowRef
-);
+const MTablePaginationOuter = MTableGroupRowRef;
 
 export default MTablePaginationOuter;

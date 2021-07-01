@@ -8,12 +8,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { lighten } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 export function MTableToolbar(props) {
+  const classes = useStyles();
   const [state, setState] = React.useState(() => ({
     columnsButtonAnchorEl: null,
     exportButtonAnchorEl: null,
@@ -70,7 +71,7 @@ export function MTableToolbar(props) {
           className={
             props.searchFieldAlignment === 'left' && props.showTitle === false
               ? null
-              : props.classes.searchField
+              : classes.searchField
           }
           value={state.searchText}
           onChange={(event) => onSearchChange(event.target.value)}
@@ -115,7 +116,6 @@ export function MTableToolbar(props) {
       ...MTableToolbar.defaultProps.localization,
       ...props.localization
     };
-    const { classes } = props;
 
     return (
       <div style={{ display: 'flex' }}>
@@ -258,8 +258,6 @@ export function MTableToolbar(props) {
   }
 
   function renderActions() {
-    const { classes } = props;
-
     return (
       <div className={classes.actions}>
         <div>
@@ -272,7 +270,6 @@ export function MTableToolbar(props) {
   }
 
   function renderToolbarTitle(title) {
-    const { classes } = props;
     const toolBarTitle =
       // eslint-disable-next-line multiline-ternary
       typeof title === 'string' ? (
@@ -294,7 +291,6 @@ export function MTableToolbar(props) {
   }
 
   function render() {
-    const { classes } = props;
     const localization = {
       ...MTableToolbar.defaultProps.localization,
       ...props.localization
@@ -390,11 +386,10 @@ MTableToolbar.propTypes = {
       handler: PropTypes.func
     })
   ),
-  classes: PropTypes.object,
   searchAutoFocus: PropTypes.bool
 };
 
-export const styles = (theme) => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(2)
@@ -426,7 +421,7 @@ export const styles = (theme) => ({
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1)
   }
-});
+}));
 
 const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   props,
@@ -435,4 +430,4 @@ const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   return <MTableToolbar {...props} forwardedRef={ref} />;
 });
 
-export default withStyles(styles)(MTableToolbarRef);
+export default MTableToolbarRef;
