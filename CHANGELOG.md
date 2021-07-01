@@ -1,3 +1,9 @@
+#### 0.0.5 (2021-07-01)
+
+##### Other Changes
+
+- adapt to mui beta ([7ff84645](https://github.com/material-table-core/core/commit/7ff84645cbf66cb7228760ab6e860ac2fea25455))
+
 #### 0.0.4 (2021-06-10)
 
 ##### Continuous Integration
