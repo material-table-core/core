@@ -6,6 +6,16 @@ import { getRenderValue, getStyle } from './utils';
 /* eslint-enable no-unused-vars */
 
 function MTableCell(props) {
+  const {
+    forwardedRef,
+    scrollWidth,
+    rowData,
+    onCellEditStarted,
+    cellEditable,
+    columnDef,
+    errorState,
+    ...spreadProps
+  } = props;
   const handleClickCell = (e) => {
     if (props.columnDef.disableClick) {
       e.stopPropagation();
@@ -13,15 +23,15 @@ function MTableCell(props) {
   };
 
   const cellAlignment =
-    props.columnDef.align !== undefined
-      ? props.columnDef.align
-      : ['numeric', 'currency'].indexOf(props.columnDef.type) !== -1
+    columnDef.align !== undefined
+      ? columnDef.align
+      : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
       ? 'right'
       : 'left';
 
   let renderValue = getRenderValue(props);
 
-  if (props.cellEditable) {
+  if (cellEditable) {
     renderValue = (
       <div
         style={{
@@ -31,7 +41,7 @@ function MTableCell(props) {
         }}
         onClick={(e) => {
           e.stopPropagation();
-          props.onCellEditStarted(props.rowData, props.columnDef);
+          onCellEditStarted(rowData, columnDef);
         }}
       >
         {renderValue}
@@ -41,13 +51,13 @@ function MTableCell(props) {
 
   return (
     <TableCell
-      {...props}
+      {...spreadProps}
       size={props.size}
       value={props.value}
       style={getStyle(props)}
       align={cellAlignment}
       onClick={handleClickCell}
-      ref={props.forwardedRef}
+      ref={forwardedRef}
       colSpan={props.colSpan}
     >
       {props.children}
