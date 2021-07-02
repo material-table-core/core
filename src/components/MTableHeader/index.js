@@ -159,6 +159,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  style={
+                    snapshot.isDragging ? provided.draggableProps.style : {}
+                  }
                 >
                   {columnDef.title}
                 </div>
