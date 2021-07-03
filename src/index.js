@@ -1,7 +1,7 @@
 import './utils/polyfill';
 import React from 'react';
 import { defaultProps } from './defaults';
-import { propTypes } from './props/prop-types';
+import { propTypes } from './components/MaterialTable/prop-types';
 import MaterialTable from './components/MaterialTable';
 import { withStyles } from '@material-ui/core';
 
