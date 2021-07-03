@@ -7,7 +7,7 @@ export default function useTable() {
   const { state, dispatch } = useContext(TableContext);
 
   const setTableData = (data) => {
-    dispatch({ type: tableActions.SET_DATA, data });
+    dispatch({ type: tableActions.SET_DATA, value: data });
   };
 
   return {

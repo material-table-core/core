@@ -5,7 +5,7 @@ export default function tableReducer(state, action) {
     case tableActions.SET_DATA: {
       return {
         ...state,
-        data: action.data
+        data: action.value
       };
     }
     default:
