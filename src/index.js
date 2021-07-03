@@ -1,8 +1,8 @@
 import './utils/polyfill';
 import React from 'react';
 import { defaultProps } from './defaults';
-import { propTypes } from './prop-types';
-import MaterialTable from './material-table';
+import { propTypes } from './props/prop-types';
+import MaterialTable from './components/MaterialTable';
 import { withStyles } from '@material-ui/core';
 
 import { MTableProvider } from './store/providers';

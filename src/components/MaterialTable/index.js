@@ -5,13 +5,13 @@ import TableRow from '@material-ui/core/TableRow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DoubleScrollbar from 'react-double-scrollbar';
 import * as React from 'react';
-import { MTablePagination, MTableSteppedPagination } from './components';
+import { MTablePagination, MTableSteppedPagination } from '..';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DataManager from './utils/data-manager';
+import DataManager from '../../utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import { withStyles } from '@material-ui/core';
-import * as CommonValues from './utils/common-values';
+import * as CommonValues from '../../utils/common-values';
 
 /* eslint-enable no-unused-vars */
 
