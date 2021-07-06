@@ -147,10 +147,7 @@ function MTableEditRow(props) {
 
   function renderActions() {
     if (props.mode === 'bulk') {
-      if (props.detailPanel && !props.options.showDetailPanelIcon) {
-        return;
-      }
-      return <TableCell padding="none" key="key-actions-column" />;
+      return;
     }
 
     const size = CommonValues.elementSize(props);
