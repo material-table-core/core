@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/styles';
 import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader({ onColumnResized, ...props }) {
+  const theme = useTheme();
   const classes = useStyles();
   const [
     { resizingColumnDef, lastX, lastAdditionalWidth }, // Extract the props to use instead of the whole state object
@@ -219,7 +220,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   color:
                     resizingColumnDef &&
                     resizingColumnDef.tableData.id === columnDef.tableData.id
-                      ? props.theme.palette.primary.main
+                      ? theme.palette.primary.main
                       : 'inherit'
                 }}
                 onMouseDown={(e) => handleMouseDown(e, columnDef)}
@@ -403,8 +404,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
-  const theme = useTheme();
-  return <MTableHeader theme={theme} {...props} forwardedRef={ref} />;
+  return <MTableHeader {...props} forwardedRef={ref} />;
 });
 
 export default MTableHeaderRef;
