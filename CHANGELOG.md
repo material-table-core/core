@@ -1,3 +1,10 @@
+#### 3.0.14 (2021-07-07)
+
+##### Bug Fixes
+
+- Move duble click to syntheic events ([fcf963da](https://github.com/material-table-core/core/commit/fcf963da436f5520f518530e3632ad76b47155b2))
+- Proptype fix for tabelcell ([101d2900](https://github.com/material-table-core/core/commit/101d2900b5ed280920d751248f51225d1380f1da))
+
 #### 3.0.13 (2021-07-02)
 
 ##### Chores
