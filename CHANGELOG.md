@@ -1,3 +1,9 @@
+#### 0.0.6 (2021-07-07)
+
+##### Chores
+
+- adjust useTheme ([2235d9d0](https://github.com/material-table-core/core/commit/2235d9d00ecff14827f1876c60ccd6b6daf57d6f))
+
 #### 0.0.5 (2021-07-01)
 
 ##### Other Changes
