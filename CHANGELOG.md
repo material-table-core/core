@@ -1,3 +1,22 @@
+#### 3.0.13 (2021-07-02)
+
+##### Chores
+
+- removla of wrong spreaded values of tablecell ([b4b04c6d](https://github.com/material-table-core/core/commit/b4b04c6dd53e14ff431b9cb3b840cb2013991e81))
+
+##### New Features
+
+- Add on row double click ([6158df3e](https://github.com/material-table-core/core/commit/6158df3e9d743ad01d9782826333660696cf05cf))
+
+##### Bug Fixes
+
+- only apply drag style if dragging ([04b538f0](https://github.com/material-table-core/core/commit/04b538f0de5aed16017ad8c8fc5b1bf5bb654163))
+- Update m-table-body-row on 'NaN' margin-left error. ([2d4a85c5](https://github.com/material-table-core/core/commit/2d4a85c5e605a18484965c2364630b74b906855c))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([eef03a06](https://github.com/material-table-core/core/commit/eef03a063b0fd446433943bfcb774bc6cce2dae4))
+
 #### 3.0.12 (2021-06-27)
 
 ##### Chores

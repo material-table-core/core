@@ -938,6 +938,7 @@ export default class MaterialTable extends React.Component {
           ...this.props.localization.body
         }}
         onRowClick={this.props.onRowClick}
+        onDoubleRowClick={this.props.onDoubleRowClick}
         showAddRow={this.state.showAddRow}
         hasAnyEditingRow={
           !!(this.state.lastEditingRow || this.state.showAddRow)
@@ -1139,6 +1140,11 @@ export default class MaterialTable extends React.Component {
                             style={{
                               width: this.state.width,
                               background: 'white'
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Tab') {
+                                e.preventDefault();
+                              }
                             }}
                           >
                             {table}
