@@ -50,7 +50,7 @@ export default function MTableBodyRow(props) {
       }
       onToggleDetailPanel(path, panel);
     });
-  const [doubleClickRef] = useDoubleClick(
+  const onRowClickListener = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
     onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
     onClick
@@ -155,10 +155,8 @@ export default function MTableBodyRow(props) {
     }
 
     const size = CommonValues.elementSize(props);
-    const selectionWidth = CommonValues.selectionMaxWidth(
-      props,
-      props.treeDataMaxLevel
-    ) || 0;
+    const selectionWidth =
+      CommonValues.selectionMaxWidth(props, props.treeDataMaxLevel) || 0;
 
     const styles =
       size === 'medium'
@@ -182,9 +180,10 @@ export default function MTableBodyRow(props) {
           checked={props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={props.data.tableData.id.toString()}
-          onChange={(event) =>
-            props.onRowSelected(event, props.path, props.data)
-          }
+          onChange={(event) => {
+            console.log('call');
+            props.onRowSelected(event, props.path, props.data);
+          }}
           style={styles}
           {...checkboxProps}
         />
@@ -445,7 +444,7 @@ export default function MTableBodyRow(props) {
       <TableRow
         selected={hasAnyEditingRow}
         {...rowProps}
-        ref={doubleClickRef}
+        onClick={onRowClickListener}
         hover={!!onRowClick || !!onDoubleRowClick}
         style={getStyle(props.index, props.level)}
       >
