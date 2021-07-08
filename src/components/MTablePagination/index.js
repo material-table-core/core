@@ -9,19 +9,19 @@ import React from 'react';
 
 function MTablePagination(props) {
   const handleFirstPageButtonClick = (event) => {
-    props.onChangePage(event, 0);
+    props.onPageChange(event, 0);
   };
 
   const handleBackButtonClick = (event) => {
-    props.onChangePage(event, props.page - 1);
+    props.onPageChange(event, props.page - 1);
   };
 
   const handleNextButtonClick = (event) => {
-    props.onChangePage(event, props.page + 1);
+    props.onPageChange(event, props.page + 1);
   };
 
   const handleLastPageButtonClick = (event) => {
-    props.onChangePage(
+    props.onPageChange(
       event,
       Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
@@ -145,7 +145,7 @@ const actionsStyles = (theme) => ({
 });
 
 MTablePagination.propTypes = {
-  onChangePage: PropTypes.func,
+  onPageChange: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
   rowsPerPage: PropTypes.number,
