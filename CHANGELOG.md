@@ -1,3 +1,17 @@
+#### 3.0.16 (2021-07-08)
+
+##### Chores
+
+- add url ([1f3c56a3](https://github.com/material-table-core/core/commit/1f3c56a3fca0e31dc9c1f87c8355ec6f517b40c6))
+
+##### Documentation Changes
+
+- create branch of current version ([85df956a](https://github.com/material-table-core/core/commit/85df956a485829e56cef7f9aaa6d0881b6717ba9))
+
+##### Refactors
+
+- support for mui 4.12 ([ef81cb73](https://github.com/material-table-core/core/commit/ef81cb736e6224a4a9190ceb176d7398ce7171cd))
+
 #### 3.0.15 (2021-07-08)
 
 ##### Chores
