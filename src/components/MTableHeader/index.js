@@ -37,8 +37,14 @@ export function MTableHeader({ onColumnResized, ...props }) {
         additionalWidth
       );
       let th = e.target.closest('th');
-      let currentWidth = +window.getComputedStyle(th).width.slice(0, -2);
-      if (currentWidth <= resizingColumnDef.minWidth) return;
+      let currentWidth = th && +window.getComputedStyle(th).width.slice(0, -2);
+      let realWidth =
+        currentWidth -
+        resizingColumnDef.tableData.additionalWidth -
+        lastX +
+        e.clientX;
+      if (realWidth <= resizingColumnDef.minWidth && realWidth < currentWidth)
+        return;
       if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
         onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
       }
