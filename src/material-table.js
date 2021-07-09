@@ -857,6 +857,7 @@ export default class MaterialTable extends React.Component {
           hasDetailPanel={!!props.detailPanel}
           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
           showActionsColumn={
+            !this.dataManager.bulkEditOpen &&
             props.actions &&
             props.actions.filter(
               (a) => a.position === 'row' || typeof a === 'function'
