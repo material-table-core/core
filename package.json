@@ -34,7 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && pretty-quick --staged"
+      "pre-commit": "npm run test && npm run lint && pretty-quick --staged"
     }
   },
   "repository": {
@@ -73,6 +73,7 @@
     "buble": "^0.20.0",
     "chalk": "^4.1.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "esbuild": "^0.8.31",
     "esbuild-webpack-plugin": "^1.1.0",
     "eslint": "^7.16.0",
