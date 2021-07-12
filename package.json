@@ -27,6 +27,7 @@
     "lint:fix": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "./node_modules/.bin/prettier -c ./.prettierrc --write **/*.js",
     "test": "jest",
+    "test:build": "jest __tests__/post.build.test.js",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major -m 'Release v%s' && npm run git:push:tags",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor -m 'Release v%s' && npm run git:push:tags",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch -m 'Release v%s' && npm run git:push:tags",
@@ -34,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run lint && pretty-quick --staged"
+      "pre-commit": "npm run lint && pretty-quick --staged"
     }
   },
   "repository": {
