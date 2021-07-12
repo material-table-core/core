@@ -44,8 +44,20 @@ module.exports = {
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      lines: 0, // 90,
-      statements: 0 // 90
+      /**
+       * THE VALUES BELOW NEED TO BE CHANGED BACK
+       * TO SOMETHING REASONABLE ONCE
+       * TESTS ARE ACTUALLY ADDED
+       */
+      lines: 0, // 90, // <-- this value
+      statements: 0 // 90 // <-- and this value
+      /**
+       * ^^ The values are above ^^
+       * I am making an absurd amount of
+       * comments so this
+       * hopefully gets noticed
+       * one day lol.
+       */
     }
   },
 
