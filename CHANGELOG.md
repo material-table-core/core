@@ -1,3 +1,17 @@
+#### 0.0.7 (2021-07-12)
+
+##### Chores
+
+- add styles and lab to package json ([f4fb0706](https://github.com/material-table-core/core/commit/f4fb0706084e9d4ce6d92912b9f9a58c428a0279))
+
+##### Documentation Changes
+
+- create brach on rlease ([c3e46fc9](https://github.com/material-table-core/core/commit/c3e46fc9ea0c9c85521cb54b32894cf39703312a))
+
+##### Bug Fixes
+
+- datepicker filter fix ([7bb91696](https://github.com/material-table-core/core/commit/7bb916963906a0ce5cf08161d922eb20a0ae6018))
+
 #### 0.0.6 (2021-07-07)
 
 ##### Chores
