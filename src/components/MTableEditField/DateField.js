@@ -1,5 +1,6 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
+import { TextField } from '@material-ui/core';
 import { LocalizationProvider, DatePicker } from '@material-ui/lab';
 
 function DateField({
@@ -44,6 +45,7 @@ function DateField({
             fontSize: 13
           }
         }}
+        renderInput={(params) => <TextField {...params} />}
         inputProps={{
           'aria-label': `${columnDef.title}: press space to edit`
         }}

@@ -19,7 +19,7 @@ function DefaultFilter({
       style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
       type={columnDef.type === 'numeric' ? 'number' : 'search'}
       value={columnDef.tableData.filterValue || ''}
-      placeholder={getLocalizedFilterPlaceHolder(columnDef)}
+      placeholder={getLocalizedFilterPlaceHolder(columnDef, localization)}
       onChange={(event) => {
         onFilterChanged(columnDef.tableData.id, event.target.value);
       }}
