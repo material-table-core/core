@@ -10,8 +10,7 @@
   "types": "types/index.d.ts",
   "files": [
     "dist",
-    "types",
-    "exporters"
+    "types"
   ],
   "babel": {
     "extends": "./babel.config.js"
