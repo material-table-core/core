@@ -34,21 +34,41 @@ function MTableGroupbar(props) {
 
   useEffect(() => {
     if (props.persistentGroupingsId) {
-      const persistentGroupings = [];
+      const persistentGroupings = props.groupColumns.map((column) => ({
+        field: column.field,
+        groupOrder: column.tableData.groupOrder,
+        groupSort: column.tableData.groupSort,
+        columnOrder: column.tableData.columnOrder
+      }));
 
-      props.groupColumns.forEach((column) => {
-        persistentGroupings.push({
-          field: column.field,
-          groupOrder: column.tableData.groupOrder,
-          groupSort: column.tableData.groupSort,
-          columnOrder: column.tableData.columnOrder
-        });
-      });
-
-      localStorage.setItem(
-        props.persistentGroupingsId,
-        JSON.stringify(persistentGroupings)
+      let materialTableGroupings = localStorage.getItem(
+        'material-table-groupings'
       );
+      if (materialTableGroupings) {
+        materialTableGroupings = JSON.parse(materialTableGroupings);
+      } else {
+        materialTableGroupings = {};
+      }
+
+      if (persistentGroupings.length === 0) {
+        delete materialTableGroupings[props.persistentGroupingsId];
+
+        if (Object.keys(materialTableGroupings).length === 0) {
+          localStorage.removeItem('material-table-groupings');
+        } else {
+          localStorage.setItem(
+            'material-table-groupings',
+            JSON.stringify(materialTableGroupings)
+          );
+        }
+      } else {
+        materialTableGroupings[props.persistentGroupingsId] =
+          persistentGroupings;
+        localStorage.setItem(
+          'material-table-groupings',
+          JSON.stringify(materialTableGroupings)
+        );
+      }
     }
   }, [props.groupColumns]);
 

@@ -85,27 +85,29 @@ export default class MaterialTable extends React.Component {
     const columnsCopy = JSON.parse(JSON.stringify(props.columns));
 
     if (props.options.persistentGroupingsId) {
-      let savedGroupings = localStorage.getItem(
-        props.options.persistentGroupingsId
+      let materialTableGroupings = localStorage.getItem(
+        'material-table-groupings'
       );
 
-      if (savedGroupings) {
-        const parsedGroupings = JSON.parse(savedGroupings);
+      if (materialTableGroupings) {
+        materialTableGroupings = JSON.parse(materialTableGroupings);
 
-        if (parsedGroupings) {
-          parsedGroupings.forEach((savedGrouping) => {
-            const column = columnsCopy.find(
-              (col) => col.field === savedGrouping.field
-            );
-            if (column) {
-              if (!column.tableData) {
-                column.tableData = {};
+        if (materialTableGroupings[props.options.persistentGroupingsId]) {
+          materialTableGroupings[props.options.persistentGroupingsId].forEach(
+            (savedGrouping) => {
+              const column = columnsCopy.find(
+                (col) => col.field === savedGrouping.field
+              );
+              if (column) {
+                if (!column.tableData) {
+                  column.tableData = {};
+                }
+                column.tableData.groupOrder = savedGrouping.groupOrder;
+                column.tableData.groupSort = savedGrouping.groupSort;
+                column.tableData.columnOrder = savedGrouping.columnOrder;
               }
-              column.tableData.groupOrder = savedGrouping.groupOrder;
-              column.tableData.groupSort = savedGrouping.groupSort;
-              column.tableData.columnOrder = savedGrouping.columnOrder;
             }
-          });
+          );
         }
       }
     }
