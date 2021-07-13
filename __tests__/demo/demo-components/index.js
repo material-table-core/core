@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
 // import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
 
+export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
+
 const global_data = [
   { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
   { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 }
