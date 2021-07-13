@@ -1,14 +1,10 @@
 import './utils/polyfill';
+
 import React from 'react';
-import { defaultProps } from './defaults';
-import { propTypes } from './components/MaterialTable/prop-types';
-import MaterialTable from './components/MaterialTable';
+import { MaterialTable } from './components';
 import { withStyles } from '@material-ui/core';
 
 import { MTableProvider } from './store/providers';
-
-MaterialTable.defaultProps = defaultProps;
-MaterialTable.propTypes = propTypes;
 
 const styles = (theme) => ({
   paginationRoot: {

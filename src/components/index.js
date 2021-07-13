@@ -1,3 +1,9 @@
+/**
+ * Main MaterialTable
+ */
+
+export { default as MaterialTable } from './MaterialTable/original';
+
 /** -------------
  * Misc
  -------------- */

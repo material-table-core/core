@@ -4,7 +4,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DoubleScrollbar from 'react-double-scrollbar';
-import React, { useRef } from 'react';
+import * as React from 'react';
 import { MTablePagination, MTableSteppedPagination } from '..';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from '../../utils/data-manager';
@@ -12,15 +12,7 @@ import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import { withStyles } from '@material-ui/core';
 import * as CommonValues from '../../utils/common-values';
-import { propTypes } from './prop-types';
-
 /* eslint-enable no-unused-vars */
-
-export function MaterialTableContext(props) {
-  const tableref = useRef();
-}
-
-MaterialTableContext.propTypes = propTypes;
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -29,9 +21,7 @@ export default class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-
     this.setDataManagerFields(calculatedProps, true);
-
     const renderState = this.dataManager.getRenderState();
 
     this.state = {
