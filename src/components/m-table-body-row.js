@@ -5,6 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
+import Collapse from '@material-ui/core/Collapse';
 import PropTypes from 'prop-types';
 import * as CommonValues from '../utils/common-values';
 import { useDoubleClick } from '../utils/hooks/useDoubleClick';
@@ -450,7 +451,6 @@ export default function MTableBodyRow(props) {
       >
         {renderColumns}
       </TableRow>
-      {props.data.tableData && props.data.tableData.showDetailPanel && (
         <TableRow
         // selected={props.index % 2 === 0}
         >
@@ -466,10 +466,23 @@ export default function MTableBodyRow(props) {
             }
             padding="none"
           >
-            {props.data.tableData.showDetailPanel(props.data)}
+              {(typeof props.detailPanel === 'function') &&
+                <Collapse in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel)} timeout="auto" unmountOnExit>
+                  {props.detailPanel(props.data)}
+                </Collapse>
+              }
+              {(typeof props.detailPanel === 'object') &&
+                props.detailPanel.map((panel, index) => {
+                  return (
+                    <Collapse key={index} in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel) && (props.data.tableData.showDetailPanel || '').toString() ===
+                    panel.render.toString()} timeout="auto" unmountOnExit>
+                      {panel.render(props.data)}
+                    </Collapse>
+                  )
+                })
+              }
           </TableCell>
         </TableRow>
-      )}
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {
