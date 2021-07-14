@@ -481,7 +481,6 @@ export default function MTableBodyRow(props) {
                   )
                 })
               }
-              {/* {props.data.tableData && props.data.tableData.showDetailPanel ? props.data.tableData.showDetailPanel(props.data):null} */}
           </TableCell>
         </TableRow>
       {props.data.tableData.childRows &&
