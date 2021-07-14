@@ -1,3 +1,10 @@
+#### 3.0.17 (2021-07-14)
+
+##### Other Changes
+
+- build add demo ([0f2a7e3a](https://github.com/material-table-core/core/commit/0f2a7e3ac9c30200c79aad7e2fd33c8357d886d9))
+- build remove exporters from files ([6ec1a476](https://github.com/material-table-core/core/commit/6ec1a4767a6e9a000f2e4a140d383f082ab0c3e9))
+
 #### 3.0.16 (2021-07-08)
 
 ##### Chores
