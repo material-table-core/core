@@ -273,26 +273,7 @@ const global_cols = [
  * Basic demo that shows a single detail panel, in this case a youtube vid
  */
 export function Basic() {
-  const [t, setT] = React.useState([]);
-  const data = [
-    { name: 'Foo', surname: 'Bar', id: 0 },
-    { name: 'John', surname: 'Smith', id: 1 }
-  ];
-  return (
-    <MaterialTable
-      title="Basic"
-      columns={global_cols.map((col) => ({
-        ...col,
-        render: (rowData) => <button>{rowData.tableData.id}</button>
-      }))}
-      data={data}
-      onSelectionChange={(rowData) => {
-        console.debug(rowData);
-        setT(rowData);
-      }}
-      options={{ selection: true }}
-    />
-  );
+  return <MaterialTable title="Basic" columns={global_cols} data={data} />;
 }
 
 export function BasicRef() {
