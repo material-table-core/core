@@ -1,3 +1,16 @@
+/**
+ *
+ * THIS FILE IS NOT IN USE RIGHT NOW DUE TO REFACTORING ISSUES!
+ *
+ *
+ *
+ *
+ * PLEASE SEE THE FOLLOWING FILE, AS IT IS THE PROD VERSION OF `MTableEditCell`:
+ *
+ *   https://github.com/material-table-core/core/blob/master/src/components/m-table-edit-cell.js
+ *
+ */
+
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, CircularProgress, withTheme } from '@material-ui/core';

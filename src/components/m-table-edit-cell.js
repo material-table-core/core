@@ -110,7 +110,7 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: !this.state.isLoading || !this.state.errorState.isValid
+        disabled: this.state.isLoading || !this.state.errorState.isValid
       },
       {
         icon: this.props.icons.Clear,

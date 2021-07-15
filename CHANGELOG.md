@@ -1,3 +1,45 @@
+#### 3.0.17 (2021-07-14)
+
+##### Other Changes
+
+- build add demo ([0f2a7e3a](https://github.com/material-table-core/core/commit/0f2a7e3ac9c30200c79aad7e2fd33c8357d886d9))
+- build remove exporters from files ([6ec1a476](https://github.com/material-table-core/core/commit/6ec1a4767a6e9a000f2e4a140d383f082ab0c3e9))
+
+#### 3.0.16 (2021-07-08)
+
+##### Chores
+
+- add url ([1f3c56a3](https://github.com/material-table-core/core/commit/1f3c56a3fca0e31dc9c1f87c8355ec6f517b40c6))
+
+##### Documentation Changes
+
+- create branch of current version ([85df956a](https://github.com/material-table-core/core/commit/85df956a485829e56cef7f9aaa6d0881b6717ba9))
+
+##### Refactors
+
+- support for mui 4.12 ([ef81cb73](https://github.com/material-table-core/core/commit/ef81cb736e6224a4a9190ceb176d7398ce7171cd))
+
+#### 3.0.15 (2021-07-08)
+
+##### Chores
+
+- add url ([1f3c56a3](https://github.com/material-table-core/core/commit/1f3c56a3fca0e31dc9c1f87c8355ec6f517b40c6))
+
+##### Documentation Changes
+
+- create branch of current version ([85df956a](https://github.com/material-table-core/core/commit/85df956a485829e56cef7f9aaa6d0881b6717ba9))
+
+##### Refactors
+
+- support for mui 4.12 ([ef81cb73](https://github.com/material-table-core/core/commit/ef81cb736e6224a4a9190ceb176d7398ce7171cd))
+
+#### 3.0.14 (2021-07-07)
+
+##### Bug Fixes
+
+- Move duble click to syntheic events ([fcf963da](https://github.com/material-table-core/core/commit/fcf963da436f5520f518530e3632ad76b47155b2))
+- Proptype fix for tabelcell ([101d2900](https://github.com/material-table-core/core/commit/101d2900b5ed280920d751248f51225d1380f1da))
+
 #### 3.0.13 (2021-07-02)
 
 ##### Chores

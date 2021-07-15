@@ -22,6 +22,7 @@ import { render } from 'react-dom';
 import {
   Basic,
   OneDetailPanel,
+  MultipleDetailPanels,
   DefaultOrderIssue,
   TestingNewActionHandlersProp,
   BulkEdit,
@@ -32,6 +33,7 @@ import {
   FrankensteinDemo,
   HidingColumns,
   Resizable,
+  EditableRowDateColumnIssue,
   PersistentGroupings
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
@@ -40,6 +42,9 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>EditableRowDateColumnIssue</h1>
+    <EditableRowDateColumnIssue />
+
     <h1>Basic</h1>
     <Basic />
 
@@ -76,6 +81,9 @@ render(
 
     <h1>One Detail Panel</h1>
     <OneDetailPanel />
+
+    <h1>Multiple Detail Panels</h1>
+    <MultipleDetailPanels />
 
     <h1>Editable</h1>
     <EditableCells />

@@ -5,6 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
+import Collapse from '@material-ui/core/Collapse';
 import PropTypes from 'prop-types';
 import * as CommonValues from '../utils/common-values';
 import { useDoubleClick } from '../utils/hooks/useDoubleClick';
@@ -50,7 +51,7 @@ export default function MTableBodyRow(props) {
       }
       onToggleDetailPanel(path, panel);
     });
-  const [doubleClickRef] = useDoubleClick(
+  const onRowClickListener = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
     onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
     onClick
@@ -155,10 +156,8 @@ export default function MTableBodyRow(props) {
     }
 
     const size = CommonValues.elementSize(props);
-    const selectionWidth = CommonValues.selectionMaxWidth(
-      props,
-      props.treeDataMaxLevel
-    ) || 0;
+    const selectionWidth =
+      CommonValues.selectionMaxWidth(props, props.treeDataMaxLevel) || 0;
 
     const styles =
       size === 'medium'
@@ -182,9 +181,10 @@ export default function MTableBodyRow(props) {
           checked={props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={props.data.tableData.id.toString()}
-          onChange={(event) =>
-            props.onRowSelected(event, props.path, props.data)
-          }
+          onChange={(event) => {
+            console.log('call');
+            props.onRowSelected(event, props.path, props.data);
+          }}
           style={styles}
           {...checkboxProps}
         />
@@ -445,32 +445,60 @@ export default function MTableBodyRow(props) {
       <TableRow
         selected={hasAnyEditingRow}
         {...rowProps}
-        ref={doubleClickRef}
+        onClick={onRowClickListener}
         hover={!!onRowClick || !!onDoubleRowClick}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}
       </TableRow>
-      {props.data.tableData && props.data.tableData.showDetailPanel && (
-        <TableRow
-        // selected={props.index % 2 === 0}
+      <TableRow
+      // selected={props.index % 2 === 0}
+      >
+        {props.options.detailPanelOffset.left > 0 && (
+          <TableCell colSpan={props.options.detailPanelOffset.left} />
+        )}
+        <TableCell
+          size={size}
+          colSpan={
+            renderColumns.length -
+            props.options.detailPanelOffset.left -
+            props.options.detailPanelOffset.right
+          }
+          padding="none"
         >
-          {props.options.detailPanelOffset.left > 0 && (
-            <TableCell colSpan={props.options.detailPanelOffset.left} />
+          {typeof props.detailPanel === 'function' && (
+            <Collapse
+              in={Boolean(
+                props.data.tableData && props.data.tableData.showDetailPanel
+              )}
+              timeout="auto"
+              unmountOnExit
+            >
+              {props.detailPanel(props.data)}
+            </Collapse>
           )}
-          <TableCell
-            size={size}
-            colSpan={
-              renderColumns.length -
-              props.options.detailPanelOffset.left -
-              props.options.detailPanelOffset.right
-            }
-            padding="none"
-          >
-            {props.data.tableData.showDetailPanel(props.data)}
-          </TableCell>
-        </TableRow>
-      )}
+          {typeof props.detailPanel === 'object' &&
+            props.detailPanel.map((panel, index) => {
+              return (
+                <Collapse
+                  key={index}
+                  in={
+                    Boolean(
+                      props.data.tableData &&
+                        props.data.tableData.showDetailPanel
+                    ) &&
+                    (props.data.tableData.showDetailPanel || '').toString() ===
+                      panel.render.toString()
+                  }
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  {panel.render(props.data)}
+                </Collapse>
+              );
+            })}
+        </TableCell>
+      </TableRow>
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {

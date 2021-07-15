@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
 // import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
 
+export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
+
 const global_data = [
   { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
   { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 }
@@ -317,17 +319,86 @@ export function OneDetailPanel() {
       data={global_data}
       detailPanel={(rowData) => {
         return (
-          <iframe
-            width="100%"
-            height="315"
-            src="https://www.youtube.com/embed/C0DPdy98e4c"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#43A047'
+            }}
+          >
+            {rowData.name}
+          </div>
         );
       }}
       options={{ showDetailPanelIcon: false }}
+      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+    />
+  );
+}
+
+export function MultipleDetailPanels() {
+  return (
+    <MaterialTable
+      title="Multiple Detail Panels Preview"
+      columns={global_cols}
+      data={global_data}
+      detailPanel={[
+        {
+          tooltip: 'Show Name',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 100,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#43A047'
+                }}
+              >
+                {rowData.name}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'account_circle',
+          tooltip: 'Show Surname',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 101,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#E53935'
+                }}
+              >
+                {rowData.surname}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'favorite_border',
+          openIcon: 'favorite',
+          tooltip: 'Show Both',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 102,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#FDD835'
+                }}
+              >
+                {rowData.name} {rowData.surname}
+              </div>
+            );
+          }
+        }
+      ]}
       onRowClick={(event, rowData, togglePanel) => togglePanel()}
     />
   );

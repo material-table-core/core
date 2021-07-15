@@ -3,14 +3,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.13",
+  "url": "https://github.com/material-table-core/core",
+  "version": "3.0.17",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
-    "types",
-    "exporters"
+    "types"
   ],
   "babel": {
     "extends": "./babel.config.js"
@@ -26,6 +26,7 @@
     "lint:fix": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "./node_modules/.bin/prettier -c ./.prettierrc --write **/*.js",
     "test": "jest",
+    "test:build": "jest __tests__/post.build.test.js",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major -m 'Release v%s' && npm run git:push:tags",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor -m 'Release v%s' && npm run git:push:tags",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch -m 'Release v%s' && npm run git:push:tags",
@@ -72,6 +73,7 @@
     "buble": "^0.20.0",
     "chalk": "^4.1.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "esbuild": "^0.8.31",
     "esbuild-webpack-plugin": "^1.1.0",
     "eslint": "^7.16.0",
