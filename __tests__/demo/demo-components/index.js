@@ -312,10 +312,11 @@ export function CustomExport() {
 export function OneDetailPanel() {
   return (
     <MaterialTable
-      title="One Detail Panel Preview"
+      title="One Detail Panel Preview1"
       columns={global_cols}
       data={global_data}
       detailPanel={(rowData) => {
+        console.log("Show only after expand!")
         return (
           <div
             style={{
@@ -345,6 +346,7 @@ export function MultipleDetailPanels() {
             {
               tooltip: 'Show Name',
               render: rowData => {
+                console.log("Show only after expand 1!")
                 return (
                   <div
                     style={{
@@ -363,6 +365,7 @@ export function MultipleDetailPanels() {
               icon: 'account_circle',
               tooltip: 'Show Surname',
               render: rowData => {
+                console.log("Show only after expand 2!")
                 return (
                   <div
                     style={{
@@ -382,6 +385,7 @@ export function MultipleDetailPanels() {
               openIcon: 'favorite',
               tooltip: 'Show Both',
               render: rowData => {
+                console.log("Show only after expand 3!")
                 return (
                   <div
                     style={{
