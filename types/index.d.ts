@@ -25,8 +25,11 @@ export interface MaterialTableProps<RowData extends object> {
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
-    | ((rowData: RowData) => React.ReactNode)
-    | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
+    | (({ rowData }: { rowData: RowData }) => React.ReactNode)
+    | (
+        | DetailPanel<RowData>
+        | (({ rowData }: { rowData: RowData }) => DetailPanel<RowData>)
+      )[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
@@ -127,7 +130,7 @@ export interface DetailPanel<RowData extends object> {
   icon?: string | React.ComponentType<any>;
   openIcon?: string | React.ComponentType<any>;
   tooltip?: string;
-  render: (rowData: RowData) => string | React.ReactNode;
+  render: ({ rowData }: { rowData: RowData }) => string | React.ReactNode;
 }
 
 export interface Action<RowData extends object> {

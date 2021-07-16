@@ -32,6 +32,11 @@ function MTableDetailPanel(props) {
     }
   });
 
+  const Render =
+    (renderFunction
+      ? renderFunction
+      : renderRef.current && renderRef.current) || null;
+
   return (
     <TableCell
       size={props.size}
@@ -43,9 +48,7 @@ function MTableDetailPanel(props) {
       padding="none"
     >
       <Collapse in={isOpen} timeout="auto" unmountOnExit mountOnEnter>
-        {renderFunction
-          ? renderFunction(props.data)
-          : renderRef.current && renderRef.current(props.data)}
+        <Render rowData={props.data} />
       </Collapse>
     </TableCell>
   );
