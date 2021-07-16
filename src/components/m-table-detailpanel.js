@@ -10,27 +10,28 @@ function MTableDetailPanel(props) {
     );
     setTimeout(() => {
       setOpen(shouldOpen);
-      setTimeout(() => {
-        if (!shouldOpen) {
-          renderRef.current = null;
-        }
-      }, 100);
     }, 5);
-    if (shouldOpen) {
-      if (typeof props.detailPanel === 'function') {
-        renderRef.current = props.detailPanel;
-      } else {
-        renderRef.current = props.detailPanel
-          ? props.detailPanel.find(
-              (panel) =>
-                panel.render.toString() ===
-                (props.data.tableData.showDetailPanel || '').toString()
-            )
-          : undefined;
-        renderRef.current = renderRef.current ? renderRef.current.render : null;
-      }
-    }
   }, [props.data.tableData.showDetailPanel]);
+
+  let renderFunction;
+  if (typeof props.detailPanel === 'function') {
+    renderFunction = props.detailPanel;
+  } else {
+    renderFunction = props.detailPanel
+      ? props.detailPanel.find(
+          (panel) =>
+            panel.render.toString() ===
+            (props.data.tableData.showDetailPanel || '').toString()
+        )
+      : undefined;
+    renderFunction = renderFunction ? renderFunction.render : null;
+  }
+  React.useEffect(() => {
+    if (renderFunction) {
+      renderRef.current = renderFunction;
+    }
+  });
+
   return (
     <TableCell
       size={props.size}
@@ -41,8 +42,10 @@ function MTableDetailPanel(props) {
       }
       padding="none"
     >
-      <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        {renderRef.current && renderRef.current(props.data)}
+      <Collapse in={isOpen} timeout="auto" unmountOnExit mountOnEnter>
+        {renderFunction
+          ? renderFunction(props.data)
+          : renderRef.current && renderRef.current(props.data)}
       </Collapse>
     </TableCell>
   );
