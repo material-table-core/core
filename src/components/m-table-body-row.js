@@ -5,7 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
-import Collapse from '@material-ui/core/Collapse';
+import { MTableDetailPanel } from './m-table-detailpanel';
 import PropTypes from 'prop-types';
 import * as CommonValues from '../utils/common-values';
 import { useDoubleClick } from '../utils/hooks/useDoubleClick';
@@ -358,9 +358,7 @@ export default function MTableBodyRow(props) {
   };
 
   const getStyle = (index, level) => {
-    let style = {
-      transition: 'all ease 300ms'
-    };
+    let style = {};
 
     if (typeof props.options.rowStyle === 'function') {
       style = {
@@ -439,7 +437,6 @@ export default function MTableBodyRow(props) {
         />
       );
     });
-
   return (
     <>
       <TableRow
@@ -451,38 +448,20 @@ export default function MTableBodyRow(props) {
       >
         {renderColumns}
       </TableRow>
-        <TableRow
-        // selected={props.index % 2 === 0}
-        >
-          {props.options.detailPanelOffset.left > 0 && (
-            <TableCell colSpan={props.options.detailPanelOffset.left} />
-          )}
-          <TableCell
-            size={size}
-            colSpan={
-              renderColumns.length -
-              props.options.detailPanelOffset.left -
-              props.options.detailPanelOffset.right
-            }
-            padding="none"
-          >
-              {(typeof props.detailPanel === 'function') &&
-                <Collapse in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel)} timeout="auto" unmountOnExit>
-                  {props.detailPanel(props.data)}
-                </Collapse>
-              }
-              {(typeof props.detailPanel === 'object') &&
-                props.detailPanel.map((panel, index) => {
-                  return (
-                    <Collapse key={index} in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel) && (props.data.tableData.showDetailPanel || '').toString() ===
-                    panel.render.toString()} timeout="auto" unmountOnExit>
-                      {panel.render(props.data)}
-                    </Collapse>
-                  )
-                })
-              }
-          </TableCell>
-        </TableRow>
+      <TableRow
+      // selected={props.index % 2 === 0}
+      >
+        {props.options.detailPanelOffset.left > 0 && (
+          <TableCell colSpan={props.options.detailPanelOffset.left} />
+        )}
+        <MTableDetailPanel
+          options={props.options}
+          renderColumns={renderColumns}
+          detailPanel={props.detailPanel}
+          data={props.data}
+          size={size}
+        />
+      </TableRow>
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {
