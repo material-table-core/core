@@ -13,7 +13,7 @@ export default function EditableTable() {
     }
   ]);
 
-  const [data, setData] = useState([{ date: new Date() }]);
+  const [data, setData] = useState([{ date: new Date(), id: 0 }]);
 
   return (
     <MaterialTable
