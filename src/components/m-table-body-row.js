@@ -10,6 +10,26 @@ import PropTypes from 'prop-types';
 import * as CommonValues from '../utils/common-values';
 import { useDoubleClick } from '../utils/hooks/useDoubleClick';
 
+function DetailPanelContent(props) {
+  const [content, setContent] = React.useState(null);
+  if (!content) {
+    setContent(props.func(props.data))
+  }
+
+  return (
+    <div
+      style={{
+        fontSize: 100,
+        textAlign: "center",
+        color: "white",
+        backgroundColor: "#43A047"
+      }}
+    >
+      {content}
+    </div>
+  );
+}
+  
 export default function MTableBodyRow(props) {
   const {
     icons,
@@ -466,21 +486,20 @@ export default function MTableBodyRow(props) {
             }
             padding="none"
           >
-              {(typeof props.detailPanel === 'function') &&
-                <Collapse in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel)} timeout="auto" unmountOnExit>
-                  {props.detailPanel(props.data)}
-                </Collapse>
-              }
-              {(typeof props.detailPanel === 'object') &&
-                props.detailPanel.map((panel, index) => {
-                  return (
-                    <Collapse key={index} in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel) && (props.data.tableData.showDetailPanel || '').toString() ===
-                    panel.render.toString()} timeout="auto" unmountOnExit>
-                      {panel.render(props.data)}
-                    </Collapse>
-                  )
-                })
-              }
+            {(typeof props.detailPanel === 'function') &&
+              <Collapse in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel)} timeout="auto" mountOnEnter unmountOnExit>
+                <DetailPanelContent func={props.detailPanel} data={props.data} />
+              </Collapse>
+            }
+            {(typeof props.detailPanel === 'object') &&
+              props.detailPanel.map((panel, index) => {
+                return (
+                  <Collapse key={index} in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel) && (props.data.tableData.showDetailPanel || '').toString() === panel.render.toString()} timeout="auto" mountOnEnter unmountOnExit>
+                    <DetailPanelContent func={panel.render} data={props.data} />
+                  </Collapse>
+                )
+              })
+            }
           </TableCell>
         </TableRow>
       {props.data.tableData.childRows &&
