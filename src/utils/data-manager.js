@@ -2,6 +2,7 @@ import formatDate from 'date-fns/format';
 import { byString } from './';
 
 export default class DataManager {
+  checkForId = false;
   applyFilters = false;
   applySearch = false;
   applySort = false;
@@ -47,9 +48,27 @@ export default class DataManager {
 
   setData(data) {
     this.selectedCount = 0;
-
+    let prevDataObject = {};
+    if (this.data.length !== 0 && this.data[0].id !== undefined) {
+      prevDataObject = this.data.reduce((obj, row) => {
+        obj[row.tableData.id] = row.tableData;
+        return obj;
+      }, {});
+    }
+    if (process.env.NODE_ENV === 'development' && !this.checkForId) {
+      this.checkForId = true;
+      if (data.some((d) => d.id === undefined)) {
+        console.warn(
+          'The table requires all rows to have an unique id property. A row was provided without id in the rows prop. To prevent the loss of state between renders, please provide an unique id for each row.'
+        );
+      }
+    }
     this.data = data.map((row, index) => {
-      const tableData = { ...row.tableData, id: index };
+      const prevTableData =
+        prevDataObject[row.id] ||
+        prevDataObject[row.tableData && row.tableData.id] ||
+        {};
+      const tableData = { id: index, ...prevTableData, ...row.tableData };
       if (tableData.checked) {
         this.selectedCount++;
       }

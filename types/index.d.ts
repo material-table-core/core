@@ -191,6 +191,7 @@ export interface Column<RowData extends object> {
   customExport?: (rowData: RowData) => unknown;
   defaultFilter?: any;
   defaultGroupOrder?: number;
+  id?: unknown;
   defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
   disableClick?: boolean;
