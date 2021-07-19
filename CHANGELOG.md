@@ -1,3 +1,14 @@
+### 3.1.0 (2021-07-19)
+
+##### New Features
+
+- detail npanel animation ([94a3a66e](https://github.com/material-table-core/core/commit/94a3a66ee8372dadd0b495e0a94bcf7e64de3014))
+- add row id and provide telling warning for common errors ([39d5d35b](https://github.com/material-table-core/core/commit/39d5d35b77c22823a2da690d3de4ea9c6ac16031))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([3f31e92e](https://github.com/material-table-core/core/commit/3f31e92ed35b7812aa8f7e5cc8c0a8810e4b1066))
+
 #### 3.0.18 (2021-07-19)
 
 #### 3.0.17 (2021-07-14)
