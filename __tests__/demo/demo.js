@@ -43,9 +43,6 @@ module.hot.accept();
 
 render(
   <div>
-    <h1>EditableRowDateColumnIssue</h1>
-    <EditableRowDateColumnIssue />
-
     <h1>Basic</h1>
     <Basic />
 
