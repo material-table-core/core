@@ -273,7 +273,9 @@ const global_cols = [
  * Basic demo that shows a single detail panel, in this case a youtube vid
  */
 export function Basic() {
-  return <MaterialTable title="Basic" columns={global_cols} data={data} />;
+  return (
+    <MaterialTable title="Basic" columns={global_cols} data={global_data} />
+  );
 }
 
 export function BasicRef() {
