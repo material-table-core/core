@@ -111,7 +111,7 @@ export function BulkEditWithDetailPanel() {
         options={{
           showDetailPanelIcon: false
         }}
-        detailPanel={(rowData) => {
+        detailPanel={({ rowData }) => {
           return (
             <iframe
               width="100%"
@@ -323,7 +323,7 @@ export function OneDetailPanel() {
       title="One Detail Panel Preview"
       columns={global_cols}
       data={global_data}
-      detailPanel={(rowData) => {
+      detailPanel={({ rowData }) => {
         return (
           <div
             style={{
@@ -352,7 +352,7 @@ export function MultipleDetailPanels() {
       detailPanel={[
         {
           tooltip: 'Show Name',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
@@ -370,7 +370,7 @@ export function MultipleDetailPanels() {
         {
           icon: 'account_circle',
           tooltip: 'Show Surname',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
@@ -389,7 +389,7 @@ export function MultipleDetailPanels() {
           icon: 'favorite_border',
           openIcon: 'favorite',
           tooltip: 'Show Both',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
