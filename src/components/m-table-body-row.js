@@ -1,10 +1,10 @@
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
+import TableRow from '@material-ui/core/TableRow';
 import { MTableDetailPanel } from './m-table-detailpanel';
 import PropTypes from 'prop-types';
 import * as CommonValues from '../utils/common-values';
@@ -409,6 +409,7 @@ export default function MTableBodyRow(props) {
       );
     }
   }
+
   // Then we add detail panel icon
   if (props.detailPanel) {
     if (props.options.detailPanelColumnAlignment === 'right') {
@@ -447,22 +448,13 @@ export default function MTableBodyRow(props) {
       >
         {renderColumns}
       </TableRow>
-      {props.data.tableData.showDetailPanel ? (
-        <TableRow
-        // selected={props.index % 2 === 0}
-        >
-          {props.options.detailPanelOffset.left > 0 && (
-            <TableCell colSpan={props.options.detailPanelOffset.left} />
-          )}
-          <MTableDetailPanel
-            options={props.options}
-            renderColumns={renderColumns}
-            detailPanel={props.detailPanel}
-            data={props.data}
-            size={size}
-          />
-        </TableRow>
-      ) : null}
+      <MTableDetailPanel
+        options={props.options}
+        data={props.data}
+        detailPanel={props.detailPanel}
+        renderColumns={renderColumns}
+        size={size}
+      />
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {

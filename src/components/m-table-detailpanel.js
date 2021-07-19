@@ -1,8 +1,9 @@
 import React from 'react';
-import { TableCell, Collapse } from '@material-ui/core';
+import { TableCell, Collapse, TableRow } from '@material-ui/core';
 
 function MTableDetailPanel(props) {
   const [isOpen, setOpen] = React.useState(false);
+  const [, rerender] = React.useReducer((s) => s + 1, 0);
   const renderRef = React.useRef();
   React.useEffect(() => {
     const shouldOpen = Boolean(
@@ -27,30 +28,43 @@ function MTableDetailPanel(props) {
     renderFunction = renderFunction ? renderFunction.render : null;
   }
   React.useEffect(() => {
-    if (renderFunction) {
+    if (renderFunction && isOpen) {
       renderRef.current = renderFunction;
     }
   });
 
-  const Render =
-    (renderFunction
-      ? renderFunction
-      : renderRef.current && renderRef.current) || null;
-
+  if (!renderRef.current && !props.data.tableData.showDetailPanel) {
+    return null;
+  }
+  const Render = renderFunction || renderRef.current;
   return (
-    <TableCell
-      size={props.size}
-      colSpan={
-        props.renderColumns.length -
-        props.options.detailPanelOffset.left -
-        props.options.detailPanelOffset.right
-      }
-      padding="none"
-    >
-      <Collapse in={isOpen} timeout="auto" unmountOnExit mountOnEnter>
-        <Render rowData={props.data} />
-      </Collapse>
-    </TableCell>
+    <TableRow>
+      {props.options.detailPanelOffset.left > 0 && (
+        <TableCell colSpan={props.options.detailPanelOffset.left} />
+      )}
+      <TableCell
+        size={props.size}
+        colSpan={
+          props.renderColumns.length -
+          props.options.detailPanelOffset.left -
+          props.options.detailPanelOffset.right
+        }
+        padding="none"
+      >
+        <Collapse
+          in={isOpen}
+          timeout="auto"
+          unmountOnExit
+          mountOnEnter
+          onExited={() => {
+            renderRef.current = undefined;
+            rerender();
+          }}
+        >
+          <Render rowData={props.data} />
+        </Collapse>
+      </TableCell>
+    </TableRow>
   );
 }
 
