@@ -2,6 +2,7 @@ import formatDate from 'date-fns/format';
 import { byString } from './';
 
 export default class DataManager {
+  checkForId = false;
   applyFilters = false;
   applySearch = false;
   applySort = false;
@@ -47,9 +48,27 @@ export default class DataManager {
 
   setData(data) {
     this.selectedCount = 0;
-
+    let prevDataObject = {};
+    if (this.data.length !== 0 && this.data[0].id !== undefined) {
+      prevDataObject = this.data.reduce((obj, row) => {
+        obj[row.tableData.id] = row.tableData;
+        return obj;
+      }, {});
+    }
+    if (process.env.NODE_ENV === 'development' && !this.checkForId) {
+      this.checkForId = true;
+      if (data.some((d) => d.id === undefined)) {
+        console.warn(
+          'The table requires all rows to have an unique id property. A row was provided without id in the rows prop. To prevent the loss of state between renders, please provide an unique id for each row.'
+        );
+      }
+    }
     this.data = data.map((row, index) => {
-      const tableData = { ...row.tableData, id: index };
+      const prevTableData =
+        prevDataObject[row.id] ||
+        prevDataObject[row.tableData && row.tableData.id] ||
+        {};
+      const tableData = { id: index, ...prevTableData, ...row.tableData };
       if (tableData.checked) {
         this.selectedCount++;
       }
@@ -62,7 +81,7 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {
+  setColumns(columns, prevColumns = []) {
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
@@ -78,7 +97,7 @@ export default class DataManager {
       ) {
         usedWidth.push(width);
       }
-
+      const prevColumn = prevColumns.find(({ id }) => id === index);
       const tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
@@ -87,11 +106,12 @@ export default class DataManager {
         width,
         initialWidth: width,
         additionalWidth: 0,
+        ...(prevColumn ? prevColumn.tableData : {}),
         ...columnDef.tableData,
         id: index
       };
-
-      return { ...columnDef, tableData };
+      columnDef.tableData = tableData;
+      return columnDef;
     });
     const undefinedWidthColumns = this.columns.filter((c) => {
       if (c.hidden) {
@@ -560,7 +580,10 @@ export default class DataManager {
   }
 
   sortList(list) {
-    const columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    let columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    if (!columnDef) {
+      columnDef = this.columns[0];
+    }
     let result = list;
 
     if (columnDef.customSort) {

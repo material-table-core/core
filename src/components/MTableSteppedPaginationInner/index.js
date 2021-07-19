@@ -28,6 +28,7 @@ function MTablePaginationInner(props) {
 
   const handleLastPageButtonClick = (event) => {
     props.onPageChange(
+      event,
       Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
   };

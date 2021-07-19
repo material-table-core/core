@@ -1,4 +1,11 @@
+#
 # Should run on each push, this should include pull requests
+#
+# If the commit message starts with "skip:build" we will skip this action
+#
+# If the commit message starts with "Release " we skip build
+#
+
 name: Build
 
 on:
@@ -10,7 +17,9 @@ on:
 
 jobs:
   build:
-    if:
+    if: |
+      (startsWith(github.event.head_commit.message, 'skip:build') != true) &&
+      (startsWith(github.event.head_commit.message, 'Release ') != true)
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,3 +32,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run build
+      - run: npm run test:build

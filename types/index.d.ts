@@ -25,8 +25,11 @@ export interface MaterialTableProps<RowData extends object> {
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
-    | ((rowData: RowData) => React.ReactNode)
-    | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
+    | (({ rowData }: { rowData: RowData }) => React.ReactNode)
+    | (
+        | DetailPanel<RowData>
+        | (({ rowData }: { rowData: RowData }) => DetailPanel<RowData>)
+      )[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
@@ -57,6 +60,11 @@ export interface MaterialTableProps<RowData extends object> {
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (
+    event?: React.MouseEvent,
+    rowData?: RowData,
+    toggleDetailPanel?: (panelIndex?: number) => void
+  ) => void;
+  onDoubleRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
     toggleDetailPanel?: (panelIndex?: number) => void
@@ -122,7 +130,7 @@ export interface DetailPanel<RowData extends object> {
   icon?: string | React.ComponentType<any>;
   openIcon?: string | React.ComponentType<any>;
   tooltip?: string;
-  render: (rowData: RowData) => string | React.ReactNode;
+  render: ({ rowData }: { rowData: RowData }) => string | React.ReactNode;
 }
 
 export interface Action<RowData extends object> {
@@ -183,6 +191,7 @@ export interface Column<RowData extends object> {
   customExport?: (rowData: RowData) => unknown;
   defaultFilter?: any;
   defaultGroupOrder?: number;
+  id?: unknown;
   defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
   disableClick?: boolean;

@@ -2,12 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import { validateInput } from '../utils/validate';
 class MTableEditCell extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      errorState: {
+        isValid: true,
+        helperText: ''
+      },
       isLoading: false,
       value: this.props.rowData[this.props.columnDef.field]
     };
@@ -59,6 +63,11 @@ class MTableEditCell extends React.Component {
   };
 
   onApprove = () => {
+    const isValid = validateInput(this.props.columnDef, this.state.value)
+      .isValid;
+    if (!isValid) {
+      return;
+    }
     this.setState({ isLoading: true }, () => {
       this.props.cellEditable
         .onCellEditApproved(
@@ -98,7 +107,7 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: this.state.isLoading
+        disabled: this.state.isLoading || !this.state.errorState.isValid
       },
       {
         icon: this.props.icons.Clear,
@@ -117,6 +126,11 @@ class MTableEditCell extends React.Component {
     );
   }
 
+  handleChange(value) {
+    const errorState = validateInput(this.props.columnDef, value);
+    this.setState({ errorState, value });
+  }
+
   render() {
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
@@ -125,7 +139,9 @@ class MTableEditCell extends React.Component {
             <this.props.components.EditField
               columnDef={this.props.columnDef}
               value={this.state.value}
-              onChange={(value) => this.setState({ value })}
+              error={!this.state.errorState.isValid}
+              helperText={this.state.errorState.helperText}
+              onChange={(value) => this.handleChange(value)}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}
               rowData={this.props.rowData}

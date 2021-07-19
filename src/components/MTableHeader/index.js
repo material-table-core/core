@@ -33,14 +33,21 @@ export function MTableHeader({ onColumnResized, ...props }) {
   const handleMouseMove = React.useCallback(
     // Use usecallback to prevent triggering theuse effect too much
     (e) => {
-      if (!resizingColumnDef) {
-        return;
-      }
+      if (!resizingColumnDef) return;
       let additionalWidth = lastAdditionalWidth + e.clientX - lastX;
       additionalWidth = Math.min(
         resizingColumnDef.maxWidth || additionalWidth,
         additionalWidth
       );
+      let th = e.target.closest('th');
+      let currentWidth = th && +window.getComputedStyle(th).width.slice(0, -2);
+      let realWidth =
+        currentWidth -
+        resizingColumnDef.tableData.additionalWidth -
+        lastX +
+        e.clientX;
+      if (realWidth <= resizingColumnDef.minWidth && realWidth < currentWidth)
+        return;
       if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
         onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
       }
@@ -161,6 +168,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  style={
+                    snapshot.isDragging ? provided.draggableProps.style : {}
+                  }
                 >
                   {columnDef.title}
                 </div>

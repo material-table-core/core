@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 MTablePagination.propTypes = {
-  onChangePage: PropTypes.func,
+  onPageChange: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
   rowsPerPage: PropTypes.number,

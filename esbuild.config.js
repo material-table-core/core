@@ -1,3 +1,17 @@
+/**
+
+
+
+ * THIS FILE IS NOT IN USE RIGHT NOW
+ * We had issues using esbuild - I just need to revisit
+ * (I think the root of the issue wasn't even esbuild so we
+ * may just need to publish a test pkg using it)
+ 
+ 
+ * - oze4 -
+ 
+ */
+
 const { build } = require('esbuild');
 const { red, green, yellow, italic } = require('chalk');
 const rimraf = require('rimraf');

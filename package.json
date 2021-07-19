@@ -9,8 +9,7 @@
   "types": "types/index.d.ts",
   "files": [
     "dist",
-    "types",
-    "exporters"
+    "types"
   ],
   "babel": {
     "extends": "./babel.config.js"
@@ -26,11 +25,11 @@
     "lint:fix": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "./node_modules/.bin/prettier -c ./.prettierrc --write **/*.js",
     "test": "jest",
+    "test:build": "jest __tests__/post.build.test.js",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major --preid=next -m 'Release v%s' && npm run git:push:tags",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor --preid=next -m 'Release v%s' && npm run git:push:tags",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch --preid=next -m 'Release v%s' && npm run git:push:tags",
-    "git:push:tags": "npm run versionBranch && git push origin && git push origin --tags",
-    "versionBranch": "git switch -c $npm_package_version && git checkout -"
+    "git:push:tags": "git push origin && git push origin --tags"
   },
   "husky": {
     "hooks": {
@@ -62,8 +61,8 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@material-ui/core": "^5.0.0-beta.0",
-    "@material-ui/lab": "^5.0.0-alpha.39",
+    "@material-ui/core": "^5.0.0-beta.1",
+    "@material-ui/lab": "^5.0.0-alpha.40",
     "@material-ui/styles": "^5.0.0-beta.0",
     "@types/jest": "^26.0.20",
     "@webpack-cli/serve": "^1.2.1",
@@ -75,6 +74,7 @@
     "buble": "^0.20.0",
     "chalk": "^4.1.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "esbuild": "^0.8.31",
     "esbuild-webpack-plugin": "^1.1.0",
     "eslint": "^7.16.0",

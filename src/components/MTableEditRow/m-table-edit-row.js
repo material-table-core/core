@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
+import { validateInput } from '../../utils/validate';
 /* eslint-enable no-unused-vars */
 
 export default class MTableEditRow extends React.Component {
@@ -128,21 +129,7 @@ export default class MTableEditRow extends React.Component {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent =
             editComponent || this.props.components.EditField;
-          let error = { isValid: true, helperText: '' };
-          if (columnDef.validate) {
-            const validateResponse = columnDef.validate(this.state.data);
-            switch (typeof validateResponse) {
-              case 'object':
-                error = { ...validateResponse };
-                break;
-              case 'boolean':
-                error = { isValid: validateResponse, helperText: '' };
-                break;
-              case 'string':
-                error = { isValid: false, helperText: validateResponse };
-                break;
-            }
-          }
+          const error = validateInput(columnDef, this.state.data);
           return (
             <TableCell
               size={size}
@@ -206,19 +193,8 @@ export default class MTableEditRow extends React.Component {
       ...this.props.localization
     };
     const isValid = this.props.columns.every((column) => {
-      if (column.validate) {
-        const response = column.validate(this.state.data);
-        switch (typeof response) {
-          case 'object':
-            return response.isValid;
-          case 'string':
-            return response.length === 0;
-          case 'boolean':
-            return response;
-        }
-      } else {
-        return true;
-      }
+      const error = validateInput(column, this.state.data);
+      return error.isValid;
     });
     const actions = [
       {

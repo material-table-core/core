@@ -2,9 +2,17 @@ import React, { useState, useRef } from 'react';
 import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
 // import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
 
+export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
+
 const global_data = [
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-  { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 }
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  }
 ];
 
 const global_data_CustomExport = [
@@ -13,14 +21,16 @@ const global_data_CustomExport = [
     surname: 'Baran',
     birthYear: 1987,
     birthCity: 63,
-    teams: ['Team A', 'Team B']
+    teams: ['Team A', 'Team B'],
+    id: 0
   },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    teams: ['Team C', 'Team D', 'Team E']
+    teams: ['Team C', 'Team D', 'Team E'],
+    id: 1
   }
 ];
 
@@ -37,8 +47,8 @@ const global_cols = [
 
 export function BulkEdit() {
   const [data, setData] = useState([
-    { name: 'joe', id: 1, age: 0, x: 'y' },
-    { name: 'nancy', id: 2, age: 1, x: 'b' }
+    { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
+    { name: 'nancy', id: 2, age: 1, x: 'b', id: 1 }
   ]);
 
   const [columns] = useState([
@@ -78,8 +88,8 @@ export function BulkEdit() {
 
 export function BulkEditWithDetailPanel() {
   const [data, setData] = useState([
-    { name: 'joe', id: 1, age: 0, x: 'y' },
-    { name: 'nancy', id: 2, age: 1, x: 'b' }
+    { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
+    { name: 'nancy', id: 2, age: 1, x: 'b', id: 1 }
   ]);
 
   const [columns] = useState([
@@ -101,7 +111,7 @@ export function BulkEditWithDetailPanel() {
         options={{
           showDetailPanelIcon: false
         }}
-        detailPanel={(rowData) => {
+        detailPanel={({ rowData }) => {
           return (
             <iframe
               width="100%"
@@ -263,9 +273,7 @@ const global_cols = [
  * Basic demo that shows a single detail panel, in this case a youtube vid
  */
 export function Basic() {
-  return (
-    <MaterialTable title="Basic" columns={global_cols} data={global_data} />
-  );
+  return <MaterialTable title="Basic" columns={global_cols} data={data} />;
 }
 
 export function BasicRef() {
@@ -315,19 +323,88 @@ export function OneDetailPanel() {
       title="One Detail Panel Preview"
       columns={global_cols}
       data={global_data}
-      detailPanel={(rowData) => {
+      detailPanel={({ rowData }) => {
         return (
-          <iframe
-            width="100%"
-            height="315"
-            src="https://www.youtube.com/embed/C0DPdy98e4c"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#43A047'
+            }}
+          >
+            {rowData.name}
+          </div>
         );
       }}
       options={{ showDetailPanelIcon: false }}
+      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+    />
+  );
+}
+
+export function MultipleDetailPanels() {
+  return (
+    <MaterialTable
+      title="Multiple Detail Panels Preview"
+      columns={global_cols}
+      data={global_data}
+      detailPanel={[
+        {
+          tooltip: 'Show Name',
+          render: ({ rowData }) => {
+            return (
+              <div
+                style={{
+                  fontSize: 100,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#43A047'
+                }}
+              >
+                {rowData.name}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'account_circle',
+          tooltip: 'Show Surname',
+          render: ({ rowData }) => {
+            return (
+              <div
+                style={{
+                  fontSize: 101,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#E53935'
+                }}
+              >
+                {rowData.surname}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'favorite_border',
+          openIcon: 'favorite',
+          tooltip: 'Show Both',
+          render: ({ rowData }) => {
+            return (
+              <div
+                style={{
+                  fontSize: 102,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#FDD835'
+                }}
+              >
+                {rowData.name} {rowData.surname}
+              </div>
+            );
+          }
+        }
+      ]}
       onRowClick={(event, rowData, togglePanel) => togglePanel()}
     />
   );
@@ -495,12 +572,19 @@ export function DefaultOrderIssue(props) {
         }
       ]}
       data={[
-        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+        {
+          name: 'Mehmet',
+          surname: 'Baran',
+          birthYear: 1987,
+          birthCity: 63,
+          id: 0
+        },
         {
           name: 'Zerya Betül',
           surname: 'Baran',
           birthYear: 2017,
-          birthCity: 34
+          birthCity: 34,
+          id: 1
         }
       ]}
       options={{

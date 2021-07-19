@@ -166,7 +166,7 @@ export function I1941() {
               .then((response) => response.json())
               .then((result) => {
                 resolve({
-                  data: result.data,
+                  data: result.data.map((d, i) => ({ ...d, id: i })),
                   page: result.page - 1,
                   totalCount: result.total
                 });
@@ -211,7 +211,7 @@ export function I122() {
             .then((response) => response.json())
             .then((result) => {
               resolve({
-                data: result.data,
+                data: result.data.map((d, i) => ({ ...d, id: i })),
                 page: result.page - 1,
                 totalCount: result.total
               });
