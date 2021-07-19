@@ -64,8 +64,10 @@ class MTableEditCell extends React.Component {
   };
 
   onApprove = () => {
-    const isValid = validateInput(this.props.columnDef, this.state.value)
-      .isValid;
+    const isValid = validateInput(
+      this.props.columnDef,
+      this.state.value
+    ).isValid;
     if (!isValid) {
       return;
     }

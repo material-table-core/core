@@ -324,7 +324,7 @@ export function OneDetailPanel() {
               fontSize: 100,
               textAlign: 'center',
               color: 'white',
-              backgroundColor: '#43A047',
+              backgroundColor: '#43A047'
             }}
           >
             {rowData.name}
@@ -338,71 +338,71 @@ export function OneDetailPanel() {
 }
 
 export function MultipleDetailPanels() {
-    return (
-      <MaterialTable
-        title="Multiple Detail Panels Preview"
-        columns={global_cols}
-        data={global_data}
-        detailPanel={[
-            {
-              tooltip: 'Show Name',
-              render: rowData => {
-                return (
-                  <div
-                    style={{
-                      fontSize: 100,
-                      textAlign: 'center',
-                      color: 'white',
-                      backgroundColor: '#43A047',
-                    }}
-                  >
-                    {rowData.name}
-                  </div>
-                )
-              },
-            },
-            {
-              icon: 'account_circle',
-              tooltip: 'Show Surname',
-              render: rowData => {
-                return (
-                  <div
-                    style={{
-                      fontSize: 101,
-                      textAlign: 'center',
-                      color: 'white',
-                      backgroundColor: '#E53935',
-                    }}
-                  >
-                    {rowData.surname}
-                  </div>
-                )
-              },
-            },
-            {
-              icon: 'favorite_border',
-              openIcon: 'favorite',
-              tooltip: 'Show Both',
-              render: rowData => {
-                return (
-                  <div
-                    style={{
-                      fontSize: 102,
-                      textAlign: 'center',
-                      color: 'white',
-                      backgroundColor: '#FDD835',
-                    }}
-                  >
-                    {rowData.name} {rowData.surname}
-                  </div>
-                )
-              },
-            },
-          ]}
-        onRowClick={(event, rowData, togglePanel) => togglePanel()}
-      />
-    );
-  }
+  return (
+    <MaterialTable
+      title="Multiple Detail Panels Preview"
+      columns={global_cols}
+      data={global_data}
+      detailPanel={[
+        {
+          tooltip: 'Show Name',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 100,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#43A047'
+                }}
+              >
+                {rowData.name}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'account_circle',
+          tooltip: 'Show Surname',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 101,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#E53935'
+                }}
+              >
+                {rowData.surname}
+              </div>
+            );
+          }
+        },
+        {
+          icon: 'favorite_border',
+          openIcon: 'favorite',
+          tooltip: 'Show Both',
+          render: (rowData) => {
+            return (
+              <div
+                style={{
+                  fontSize: 102,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#FDD835'
+                }}
+              >
+                {rowData.name} {rowData.surname}
+              </div>
+            );
+          }
+        }
+      ]}
+      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+    />
+  );
+}
 
 // A little bit of everything
 export function FrankensteinDemo() {
@@ -576,6 +576,20 @@ export function DefaultOrderIssue(props) {
       ]}
       options={{
         grouping: true
+      }}
+    />
+  );
+}
+
+export function PersistentGroupings(props) {
+  return (
+    <MaterialTable
+      title="Basic"
+      columns={global_cols}
+      data={global_data}
+      options={{
+        grouping: true,
+        persistentGroupingsId: props.persistentGroupingsId
       }}
     />
   );

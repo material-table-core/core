@@ -451,38 +451,54 @@ export default function MTableBodyRow(props) {
       >
         {renderColumns}
       </TableRow>
-        <TableRow
-        // selected={props.index % 2 === 0}
+      <TableRow
+      // selected={props.index % 2 === 0}
+      >
+        {props.options.detailPanelOffset.left > 0 && (
+          <TableCell colSpan={props.options.detailPanelOffset.left} />
+        )}
+        <TableCell
+          size={size}
+          colSpan={
+            renderColumns.length -
+            props.options.detailPanelOffset.left -
+            props.options.detailPanelOffset.right
+          }
+          padding="none"
         >
-          {props.options.detailPanelOffset.left > 0 && (
-            <TableCell colSpan={props.options.detailPanelOffset.left} />
+          {typeof props.detailPanel === 'function' && (
+            <Collapse
+              in={Boolean(
+                props.data.tableData && props.data.tableData.showDetailPanel
+              )}
+              timeout="auto"
+              unmountOnExit
+            >
+              {props.detailPanel(props.data)}
+            </Collapse>
           )}
-          <TableCell
-            size={size}
-            colSpan={
-              renderColumns.length -
-              props.options.detailPanelOffset.left -
-              props.options.detailPanelOffset.right
-            }
-            padding="none"
-          >
-              {(typeof props.detailPanel === 'function') &&
-                <Collapse in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel)} timeout="auto" unmountOnExit>
-                  {props.detailPanel(props.data)}
+          {typeof props.detailPanel === 'object' &&
+            props.detailPanel.map((panel, index) => {
+              return (
+                <Collapse
+                  key={index}
+                  in={
+                    Boolean(
+                      props.data.tableData &&
+                        props.data.tableData.showDetailPanel
+                    ) &&
+                    (props.data.tableData.showDetailPanel || '').toString() ===
+                      panel.render.toString()
+                  }
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  {panel.render(props.data)}
                 </Collapse>
-              }
-              {(typeof props.detailPanel === 'object') &&
-                props.detailPanel.map((panel, index) => {
-                  return (
-                    <Collapse key={index} in={Boolean(props.data.tableData && props.data.tableData.showDetailPanel) && (props.data.tableData.showDetailPanel || '').toString() ===
-                    panel.render.toString()} timeout="auto" unmountOnExit>
-                      {panel.render(props.data)}
-                    </Collapse>
-                  )
-                })
-              }
-          </TableCell>
-        </TableRow>
+              );
+            })}
+        </TableCell>
+      </TableRow>
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {

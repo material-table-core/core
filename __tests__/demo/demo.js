@@ -28,14 +28,13 @@ import {
   BulkEdit,
   BasicRef,
   BulkEditWithDetailPanel,
-  ExportData,
-  CustomExport,
   EditableRow,
   EditableCells,
   FrankensteinDemo,
   HidingColumns,
   Resizable,
-  EditableRowDateColumnIssue
+  EditableRowDateColumnIssue,
+  PersistentGroupings
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -94,6 +93,15 @@ render(
 
     <h1>Resizable Columns</h1>
     <Resizable />
+
+    <h1>Persistent Groupings</h1>
+    <PersistentGroupings persistentGroupingsId="persistence-id" />
+
+    <h1>Persistent Groupings Same ID</h1>
+    <PersistentGroupings persistentGroupingsId="persistence-id" />
+
+    <h1>Persistent Groupings unshared</h1>
+    <PersistentGroupings persistentGroupingsId="some-other-id" />
 
     <h1>Remote Data Related</h1>
     <ol>

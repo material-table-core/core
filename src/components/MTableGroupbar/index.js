@@ -3,7 +3,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
@@ -31,6 +31,46 @@ function MTableGroupbar(props) {
     border: '1px solid #ccc',
     borderStyle: 'dashed'
   });
+
+  useEffect(() => {
+    if (props.persistentGroupingsId) {
+      const persistentGroupings = props.groupColumns.map((column) => ({
+        field: column.field,
+        groupOrder: column.tableData.groupOrder,
+        groupSort: column.tableData.groupSort,
+        columnOrder: column.tableData.columnOrder
+      }));
+
+      let materialTableGroupings = localStorage.getItem(
+        'material-table-groupings'
+      );
+      if (materialTableGroupings) {
+        materialTableGroupings = JSON.parse(materialTableGroupings);
+      } else {
+        materialTableGroupings = {};
+      }
+
+      if (persistentGroupings.length === 0) {
+        delete materialTableGroupings[props.persistentGroupingsId];
+
+        if (Object.keys(materialTableGroupings).length === 0) {
+          localStorage.removeItem('material-table-groupings');
+        } else {
+          localStorage.setItem(
+            'material-table-groupings',
+            JSON.stringify(materialTableGroupings)
+          );
+        }
+      } else {
+        materialTableGroupings[props.persistentGroupingsId] =
+          persistentGroupings;
+        localStorage.setItem(
+          'material-table-groupings',
+          JSON.stringify(materialTableGroupings)
+        );
+      }
+    }
+  }, [props.groupColumns]);
 
   return (
     <Toolbar

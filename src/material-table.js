@@ -82,7 +82,37 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    this.dataManager.setColumns(props.columns, prevColumns);
+    const columnsCopy = JSON.parse(JSON.stringify(props.columns));
+
+    if (props.options.persistentGroupingsId) {
+      let materialTableGroupings = localStorage.getItem(
+        'material-table-groupings'
+      );
+
+      if (materialTableGroupings) {
+        materialTableGroupings = JSON.parse(materialTableGroupings);
+
+        if (materialTableGroupings[props.options.persistentGroupingsId]) {
+          materialTableGroupings[props.options.persistentGroupingsId].forEach(
+            (savedGrouping) => {
+              const column = columnsCopy.find(
+                (col) => col.field === savedGrouping.field
+              );
+              if (column) {
+                if (!column.tableData) {
+                  column.tableData = {};
+                }
+                column.tableData.groupOrder = savedGrouping.groupOrder;
+                column.tableData.groupSort = savedGrouping.groupSort;
+                column.tableData.columnOrder = savedGrouping.columnOrder;
+              }
+            }
+          );
+        }
+      }
+    }
+
+    this.dataManager.setColumns(columnsCopy, prevColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
@@ -1041,6 +1071,7 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}
           <ScrollBar double={props.options.doubleHorizontalScroll}>
