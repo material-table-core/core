@@ -409,7 +409,6 @@ export default function MTableBodyRow(props) {
       );
     }
   }
-
   // Then we add detail panel icon
   if (props.detailPanel) {
     if (props.options.detailPanelColumnAlignment === 'right') {
@@ -448,20 +447,22 @@ export default function MTableBodyRow(props) {
       >
         {renderColumns}
       </TableRow>
-      <TableRow
-      // selected={props.index % 2 === 0}
-      >
-        {props.options.detailPanelOffset.left > 0 && (
-          <TableCell colSpan={props.options.detailPanelOffset.left} />
-        )}
-        <MTableDetailPanel
-          options={props.options}
-          renderColumns={renderColumns}
-          detailPanel={props.detailPanel}
-          data={props.data}
-          size={size}
-        />
-      </TableRow>
+      {props.data.tableData.showDetailPanel ? (
+        <TableRow
+        // selected={props.index % 2 === 0}
+        >
+          {props.options.detailPanelOffset.left > 0 && (
+            <TableCell colSpan={props.options.detailPanelOffset.left} />
+          )}
+          <MTableDetailPanel
+            options={props.options}
+            renderColumns={renderColumns}
+            detailPanel={props.detailPanel}
+            data={props.data}
+            size={size}
+          />
+        </TableRow>
+      ) : null}
       {props.data.tableData.childRows &&
         props.data.tableData.isTreeExpanded &&
         props.data.tableData.childRows.map((data, index) => {
