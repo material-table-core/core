@@ -182,7 +182,6 @@ export default function MTableBodyRow(props) {
           onClick={(e) => e.stopPropagation()}
           value={props.data.tableData.id.toString()}
           onChange={(event) => {
-            console.log('call');
             props.onRowSelected(event, props.path, props.data);
           }}
           style={styles}
