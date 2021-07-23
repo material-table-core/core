@@ -17,7 +17,7 @@ import * as CommonValues from './utils/common-values';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
-
+  checkedForFunctions = false;
   constructor(props) {
     super(props);
 
@@ -177,6 +177,37 @@ export default class MaterialTable extends React.Component {
       const props = this.getProps(this.props);
       this.setDataManagerFields(props, false, this.props.columns);
       this.setState(this.dataManager.getRenderState());
+      if (
+        process.env.NODE_ENV === 'development' &&
+        !this.checkedForFunctions &&
+        prevProps.columns.length !== 0
+      ) {
+        const bothContainFunctions =
+          fixedPropsColumns.some((column) =>
+            Object.values(column).some((val) => typeof val === 'function')
+          ) &&
+          fixedPrevColumns.some((column) =>
+            Object.values(column).some((val) => typeof val === 'function')
+          );
+        if (bothContainFunctions) {
+          this.checkedForFunctions = true;
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
+          const columnsEqual = equal(
+            currentColumnsWithoutFunctions,
+            prevColumnsWithoutFunctions
+          );
+          if (columnsEqual) {
+            console.warn(
+              'The columns provided to material table are static, but contain functions which update on every render, resetting the table state. Provide a stable function or column reference or an row id to prevent state loss.'
+            );
+          }
+        }
+      }
     }
 
     const count = this.isRemoteData()
@@ -1253,3 +1284,14 @@ const ScrollBar = withStyles(style)(({ double, children, classes }) => {
     );
   }
 });
+
+function functionlessColumns(columns) {
+  return columns.map((col) =>
+    Object.entries(col).reduce((obj, [key, val]) => {
+      if (typeof val !== 'function') {
+        obj[key] = val;
+      }
+      return obj;
+    }, {})
+  );
+}

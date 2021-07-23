@@ -5,8 +5,54 @@ import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // r
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
 const global_data = [
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-  { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 }
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  }
 ];
 
 const global_data_CustomExport = [
@@ -15,32 +61,42 @@ const global_data_CustomExport = [
     surname: 'Baran',
     birthYear: 1987,
     birthCity: 63,
-    teams: ['Team A', 'Team B']
+    teams: ['Team A', 'Team B'],
+    id: 0
   },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    teams: ['Team C', 'Team D', 'Team E']
+    teams: ['Team C', 'Team D', 'Team E'],
+    id: 1
   }
 ];
 
 const global_cols = [
-  { title: 'Name', field: 'name' },
-  { title: 'Surname', field: 'surname' },
-  { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+  { title: 'Name', field: 'name', minWidth: 140, maxWidth: 400 },
+  { title: 'Surname', field: 'surname', minWidth: 140, maxWidth: 400 },
+  {
+    title: 'Birth Year',
+    field: 'birthYear',
+    type: 'numeric',
+    minWidth: 140,
+    maxWidth: 400
+  },
   {
     title: 'Birth Place',
     field: 'birthCity',
-    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+    minWidth: 140,
+    maxWidth: 400
   }
 ];
 
 export function BulkEdit() {
   const [data, setData] = useState([
-    { name: 'joe', id: 1, age: 0, x: 'y' },
-    { name: 'nancy', id: 2, age: 1, x: 'b' }
+    { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
+    { name: 'nancy', id: 2, age: 1, x: 'b', id: 1 }
   ]);
 
   const [columns] = useState([
@@ -80,8 +136,8 @@ export function BulkEdit() {
 
 export function BulkEditWithDetailPanel() {
   const [data, setData] = useState([
-    { name: 'joe', id: 1, age: 0, x: 'y' },
-    { name: 'nancy', id: 2, age: 1, x: 'b' }
+    { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
+    { name: 'nancy', id: 2, age: 1, x: 'b', id: 1 }
   ]);
 
   const [columns] = useState([
@@ -103,7 +159,7 @@ export function BulkEditWithDetailPanel() {
         options={{
           showDetailPanelIcon: false
         }}
-        detailPanel={(rowData) => {
+        detailPanel={({ rowData }) => {
           return (
             <iframe
               width="100%"
@@ -317,7 +373,7 @@ export function OneDetailPanel() {
       title="One Detail Panel Preview"
       columns={global_cols}
       data={global_data}
-      detailPanel={(rowData) => {
+      detailPanel={({ rowData }) => {
         return (
           <div
             style={{
@@ -346,7 +402,7 @@ export function MultipleDetailPanels() {
       detailPanel={[
         {
           tooltip: 'Show Name',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
@@ -364,7 +420,7 @@ export function MultipleDetailPanels() {
         {
           icon: 'account_circle',
           tooltip: 'Show Surname',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
@@ -383,7 +439,7 @@ export function MultipleDetailPanels() {
           icon: 'favorite_border',
           openIcon: 'favorite',
           tooltip: 'Show Both',
-          render: (rowData) => {
+          render: ({ rowData }) => {
             return (
               <div
                 style={{
@@ -545,7 +601,8 @@ export function Resizable() {
       data={global_data}
       options={{
         columnResizable: true,
-        tableLayout: 'fixed'
+        tableLayout: 'fixed',
+        paging: true
       }}
     />
   );
@@ -566,12 +623,19 @@ export function DefaultOrderIssue(props) {
         }
       ]}
       data={[
-        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+        {
+          name: 'Mehmet',
+          surname: 'Baran',
+          birthYear: 1987,
+          birthCity: 63,
+          id: 0
+        },
         {
           name: 'Zerya Betül',
           surname: 'Baran',
           birthYear: 2017,
-          birthCity: 34
+          birthCity: 34,
+          id: 1
         }
       ]}
       options={{
