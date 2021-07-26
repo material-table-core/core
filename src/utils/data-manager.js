@@ -75,7 +75,7 @@ export default class DataManager {
       const prevTableData = prevDataObject[row.id] || {};
       const tableData = {
         id: index,
-        uuid: uuidv4(),
+        uuid: row.uuid || uuidv4(),
         ...prevTableData,
         ...row.tableData
       };
