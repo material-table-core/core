@@ -64,10 +64,7 @@ export default class DataManager {
       }
     }
     this.data = data.map((row, index) => {
-      const prevTableData =
-        prevDataObject[row.id] ||
-        prevDataObject[row.tableData && row.tableData.id] ||
-        {};
+      const prevTableData = prevDataObject[row.id] || {};
       const tableData = { id: index, ...prevTableData, ...row.tableData };
       if (tableData.checked) {
         this.selectedCount++;
