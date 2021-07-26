@@ -1,10 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 // root of this project
-// import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
-
-// Uncomment to test using esbuild
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../dist';
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -135,6 +132,49 @@ export function BulkEdit() {
         }}
       />
     </div>
+  );
+}
+
+export function DataSwitcher() {
+  const global_cols = [
+    { title: 'number', field: 'number', minWidth: 140, maxWidth: 400 }
+  ];
+
+  const global_data1 = [
+    {
+      number: '1',
+      id: 1
+    },
+    {
+      number: '2',
+      id: 2
+    }
+  ];
+
+  const global_data2 = [
+    {
+      number: '3',
+      id: 7
+    },
+    {
+      number: '4',
+      id: 2
+    }
+  ];
+
+  const [pdata, setPData] = React.useState([]);
+  const [switcher, setSwitcher] = React.useState(true);
+
+  React.useEffect(() => {
+    if (switcher) setPData(global_data1);
+    else setPData(global_data2);
+  }, [switcher]);
+
+  return (
+    <>
+      <button onClick={() => setSwitcher(!switcher)}>Cambiar</button>
+      <MaterialTable title="Basic" columns={global_cols} data={pdata} />
+    </>
   );
 }
 
