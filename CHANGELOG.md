@@ -1,3 +1,9 @@
+#### 3.1.1 (2021-07-26)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([72fbd53d](https://github.com/material-table-core/core/commit/72fbd53d6d9cdc9249d199279384c234b0f9ca7a))
+
 ### 3.1.0 (2021-07-19)
 
 ##### New Features
