@@ -12,6 +12,46 @@ const global_data = [
     birthYear: 2017,
     birthCity: 34,
     id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
   }
 ];
 
@@ -35,13 +75,21 @@ const global_data_CustomExport = [
 ];
 
 const global_cols = [
-  { title: 'Name', field: 'name' },
-  { title: 'Surname', field: 'surname' },
-  { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+  { title: 'Name', field: 'name', minWidth: 140, maxWidth: 400 },
+  { title: 'Surname', field: 'surname', minWidth: 140, maxWidth: 400 },
+  {
+    title: 'Birth Year',
+    field: 'birthYear',
+    type: 'numeric',
+    minWidth: 140,
+    maxWidth: 400
+  },
   {
     title: 'Birth Place',
     field: 'birthCity',
-    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+    minWidth: 140,
+    maxWidth: 400
   }
 ];
 
@@ -553,7 +601,8 @@ export function Resizable() {
       data={global_data}
       options={{
         columnResizable: true,
-        tableLayout: 'fixed'
+        tableLayout: 'fixed',
+        paging: true
       }}
     />
   );
