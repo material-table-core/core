@@ -72,6 +72,7 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
+      console.log(data.tableData.uuid);
       if (data.tableData.editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
@@ -88,7 +89,8 @@ class MTableBody extends React.Component {
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization
             }}
-            key={'row-' + data.tableData.id}
+            // key={'row-' + data.tableData.id}
+            key={data.tableData.uuid}
             mode={this.props.bulkEditOpen ? 'bulk' : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -109,7 +111,8 @@ class MTableBody extends React.Component {
             data={data}
             index={index}
             errorState={this.props.errorState}
-            key={'row-' + data.tableData.id}
+            // key={'row-' + data.tableData.id}
+            key={data.tableData.uuid}
             level={0}
             options={this.props.options}
             localization={{

@@ -1,6 +1,14 @@
 import formatDate from 'date-fns/format';
 import { byString } from './';
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 export default class DataManager {
   checkForId = false;
   applyFilters = false;
@@ -65,7 +73,12 @@ export default class DataManager {
     }
     this.data = data.map((row, index) => {
       const prevTableData = prevDataObject[row.id] || {};
-      const tableData = { id: index, ...prevTableData, ...row.tableData };
+      const tableData = {
+        id: index,
+        uuid: uuidv4(),
+        ...prevTableData,
+        ...row.tableData
+      };
       if (tableData.checked) {
         this.selectedCount++;
       }
