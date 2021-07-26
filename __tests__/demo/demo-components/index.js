@@ -1,6 +1,10 @@
 import React, { useState, useRef } from 'react';
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
-// import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
+
+// root of this project
+// import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
+
+// Uncomment to test using esbuild
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../dist';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 

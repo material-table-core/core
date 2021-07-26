@@ -21,7 +21,7 @@ const fs = require('fs');
 const { log } = console;
 const { stdout, stderr, exit } = process;
 
-const BUILD_DIR = 'dist'; // relative to root of project (no trailing slash)
+const BUILD_DIR = 'dist_esbuild'; // relative to root of project (no trailing slash)
 
 stdout.write(yellow(`-Cleaning build artifacts from : '${BUILD_DIR}' `));
 
@@ -36,7 +36,7 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
   const options = {
     entryPoints: getFilesRecursive('./src', '.js'),
     minify: true,
-    // format: 'esm',
+    bundle: false,
     outdir: `${BUILD_DIR}`,
     loader: {
       '.js': 'jsx'
