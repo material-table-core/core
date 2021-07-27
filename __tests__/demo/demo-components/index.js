@@ -216,18 +216,22 @@ export function BulkEditWithDetailPanel() {
           );
         }}
         editable={{
-          onBulkUpdate: (changes) =>
+          onBulkUpdate: (changes, two) => {
+            console.log(changes, two);
             new Promise((resolve, reject) => {
               setTimeout(() => {
-                resolve();
+                resolve(changes);
               }, 1000);
-            }),
-          onRowDelete: (oldData) =>
-            new Promise((resolve, reject) => {
+            });
+          },
+          onRowDelete: (oldData, two) => {
+            console.log(oldData, two);
+            return new Promise((resolve, reject) => {
               setTimeout(() => {
-                resolve();
+                resolve(oldData);
               }, 1000);
-            })
+            });
+          }
         }}
       />
     </div>

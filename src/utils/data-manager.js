@@ -74,7 +74,7 @@ export default class DataManager {
     this.data = data.map((row, index) => {
       const prevTableData = prevDataObject[row.id] || {};
       const tableData = {
-        id: index,
+        id: row.id || index,
         uuid: row.uuid || uuidv4(),
         ...prevTableData,
         ...row.tableData
