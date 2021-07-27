@@ -1,5 +1,7 @@
 ### 3.2.0 (2021-07-27)
 
+Fix issues with pagination/when we receive new data with the same ID. Our solution was to add an internal UUID prop for each row upon receiving new external data. Issue #272 has all you need to know
+
 ##### Other Changes
 
 - build fix esbuild issues ([d37ff606](https://github.com/material-table-core/core/commit/d37ff606dcdd3a79ab66e0306b1fa235dde61154))
