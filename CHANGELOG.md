@@ -1,3 +1,9 @@
+### 3.2.0 (2021-07-27)
+
+##### Other Changes
+
+- build fix esbuild issues ([d37ff606](https://github.com/material-table-core/core/commit/d37ff606dcdd3a79ab66e0306b1fa235dde61154))
+
 #### 3.1.2 (2021-07-26)
 
 #### 3.1.1 (2021-07-26)
