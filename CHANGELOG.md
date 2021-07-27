@@ -1,3 +1,9 @@
+#### 3.2.2 (2021-07-27)
+
+##### Chores
+
+- switch back to babel, still issues with esbuild ([b88892be](https://github.com/material-table-core/core/commit/b88892be20d7feb42013bcb3c474fe020e66d50d))
+
 #### 3.2.1 (2021-07-27)
 
 ##### Chores
