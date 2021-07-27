@@ -44,15 +44,19 @@ module.hot.accept();
 
 render(
   <div>
+    {/*<h1>Editable Rows</h1>
+    <EditableRow />*/}
+
     <h1>Switcher</h1>
     <DataSwitcher />
 
+    {/*  
     <h1>Basic</h1>
     <Basic />
 
     <h1>Basic Ref</h1>
     <BasicRef />
-
+*/}
     {/*
     <h1>Export Data</h1>
     <ExportData />
@@ -63,6 +67,7 @@ render(
     <CustomExport />
     */}
 
+    {/*  
     <h1>Bulk Edit</h1>
     <BulkEdit />
 
@@ -77,9 +82,6 @@ render(
 
     <h1>TestingNewActionHandlersProp</h1>
     <TestingNewActionHandlersProp />
-
-    <h1>Editable Rows</h1>
-    <EditableRow />
 
     <h1>One Detail Panel</h1>
     <OneDetailPanel />
@@ -121,6 +123,7 @@ render(
         <I122 />
       </li>
     </ol>
+*/}
   </div>,
   document.querySelector('#app')
 );

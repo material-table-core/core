@@ -173,7 +173,20 @@ export function DataSwitcher() {
   return (
     <>
       <button onClick={() => setSwitcher(!switcher)}>Cambiar</button>
-      <MaterialTable title="Basic" columns={global_cols} data={pdata} />
+      <MaterialTable
+        title="Basic"
+        columns={global_cols}
+        data={pdata}
+        editable={{
+          onRowUpdate: (newData, oldData) => {
+            console.log({ newData, oldData });
+            const c = [...pdata];
+            c[oldData.tableData.index] = newData;
+            setPData(c);
+            return new Promise((reject, resolve) => resolve());
+          }
+        }}
+      />
     </>
   );
 }
@@ -239,6 +252,10 @@ export function BulkEditWithDetailPanel() {
 }
 
 export function EditableRow(props) {
+  const [data, setData] = useState([
+    { name: 'jack', id: 1 },
+    { name: 'nancy', id: 2 }
+  ]);
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -248,25 +265,16 @@ export function EditableRow(props) {
         {isEditing ? 'Disable' : 'Enable'} Editing
       </button>
       <MaterialTable
-        components={{
-          Row: (props) => {
-            if (isEditing) {
-              return <MTableEditRow {...props} mode={'update'} />;
-            } else {
-              return <MTableBodyRow {...props} />;
-            }
-          }
-        }}
         editable={{
           onRowUpdate: (newData, oldData) => {
             console.log({ newData, oldData });
+            const c = [...data];
+            c[oldData.tableData.index] = newData;
+            setData(c);
             return new Promise((reject, resolve) => resolve());
           }
         }}
-        data={[
-          { name: 'jack', id: 1 },
-          { name: 'nancy', id: 2 }
-        ]}
+        data={data}
         columns={[
           { field: 'name', title: 'Name' },
           { field: 'id', title: 'Identifier', type: 'numeric' }

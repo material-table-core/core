@@ -72,7 +72,7 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      console.log(data.tableData.uuid);
+      console.log(`row ${data.tableData.index} ${data.tableData.uuid}`);
       if (data.tableData.editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
