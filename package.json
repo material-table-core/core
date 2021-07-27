@@ -18,7 +18,7 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack serve --config ./__tests__/demo/webpack.config.js --mode development --progress",
     "build:esbuild": "node esbuild.config.js",
-    "build": "npm run build:esbuild",
+    "build": "npm run build:root",
     "build:root": "./node_modules/.bin/babel src -d dist",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore",
