@@ -21,7 +21,7 @@ const fs = require('fs');
 const { log } = console;
 const { stdout, stderr, exit } = process;
 
-const BUILD_DIR = 'dist_esbuild'; // relative to root of project (no trailing slash)
+const BUILD_DIR = 'dist'; // relative to root of project (no trailing slash)
 
 stdout.write(yellow(`-Cleaning build artifacts from : '${BUILD_DIR}' `));
 
