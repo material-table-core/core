@@ -1,3 +1,13 @@
+#### 3.2.1 (2021-07-27)
+
+##### Chores
+
+- use esbuild for transpiing instead of babel ([e8383429](https://github.com/material-table-core/core/commit/e8383429e0642f9a8081939cd2b09e8fb03d3c9b))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c2566924](https://github.com/material-table-core/core/commit/c25669242a9d0f160f9782a4787796520c205a45))
+
 ### 3.2.0 (2021-07-27)
 
 Fix issues with pagination/when we receive new data with the same ID. Our solution was to add an internal UUID prop for each row upon receiving new external data. Issue #272 has all you need to know
