@@ -1,5 +1,4 @@
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -8,7 +7,6 @@ import React from 'react';
 import { useTheme } from '@material-ui/core';
 
 function MTablePaginationInner(props) {
-  const classes = useStyles();
   const theme = useTheme();
   const handleFirstPageButtonClick = (event) => {
     props.onPageChange(event, 0);
@@ -74,7 +72,10 @@ function MTablePaginationInner(props) {
     const pageEnd = Math.min(maxPages, page + 1);
 
     return (
-      <div className={classes.root} ref={props.forwardedRef}>
+      <Box
+        sx={{ flexShrink: 0, color: 'text.secondary', marginLeft: 2.5 }}
+        ref={props.forwardedRef}
+      >
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -134,19 +135,11 @@ function MTablePaginationInner(props) {
             </span>
           </Tooltip>
         )}
-      </div>
+      </Box>
     );
   }
   return render();
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
-  }
-}));
 
 MTablePaginationInner.propTypes = {
   onPageChange: PropTypes.func,

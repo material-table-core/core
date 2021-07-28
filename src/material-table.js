@@ -11,7 +11,7 @@ import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import { makeStyles } from '@material-ui/styles';
+import { Box } from '@material-ui/core';
 
 /* eslint-enable no-unused-vars */
 
@@ -785,7 +785,6 @@ export default class MaterialTable extends React.Component {
       const totalCount = isOutsidePageNumbers
         ? props.totalCount
         : this.state.data.length;
-
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
@@ -797,9 +796,13 @@ export default class MaterialTable extends React.Component {
                   caption: props.classes.paginationCaption,
                   selectRoot: props.classes.paginationSelectRoot
                 }}
-                style={{
-                  float: props.theme.direction === 'rtl' ? '' : 'right',
-                  overflowX: 'auto'
+                sx={{
+                  float: (theme) => (theme.direction === 'rtl' ? '' : 'right'),
+                  overflowX: 'auto',
+                  width: '100%',
+                  '& .MuiTypography-root': {
+                    display: 'none'
+                  }
                 }}
                 colSpan={3}
                 count={
@@ -1223,34 +1226,19 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-const useStyles = makeStyles(() => ({
-  horizontalScrollContainer: {
-    '& ::-webkit-scrollbar': {
-      '-webkit-appearance': 'none'
-    },
-    '& ::-webkit-scrollbar:horizontal': {
-      height: 8
-    },
-    '& ::-webkit-scrollbar-thumb': {
-      borderRadius: 4,
-      border: '2px solid white',
-      backgroundColor: 'rgba(0, 0, 0, .3)'
-    }
-  }
-}));
-
 const ScrollBar = ({ double, children }) => {
-  const classes = useStyles();
   if (double) {
     return <DoubleScrollbar>{children}</DoubleScrollbar>;
   } else {
     return (
-      <div
-        className={classes.horizontalScrollContainer}
-        style={{ overflowX: 'auto', position: 'relative' }}
+      <Box
+        sx={{
+          overflowX: 'auto',
+          position: 'relative'
+        }}
       >
         {children}
-      </div>
+      </Box>
     );
   }
 };

@@ -7,14 +7,12 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import { lighten } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import classNames from 'classnames';
+import { lighten, Box, useTheme } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 export function MTableToolbar(props) {
-  const classes = useStyles();
+  const theme = useTheme();
   const [state, setState] = React.useState(() => ({
     columnsButtonAnchorEl: null,
     exportButtonAnchorEl: null,
@@ -68,10 +66,10 @@ export function MTableToolbar(props) {
       return (
         <TextField
           autoFocus={props.searchAutoFocus}
-          className={
+          sx={
             props.searchFieldAlignment === 'left' && props.showTitle === false
-              ? null
-              : classes.searchField
+              ? undefined
+              : styles.searchField
           }
           value={state.searchText}
           onChange={(event) => onSearchChange(event.target.value)}
@@ -171,7 +169,7 @@ export function MTableToolbar(props) {
                 return (
                   <li key={col.tableData.id}>
                     <MenuItem
-                      className={classes.formControlLabel}
+                      sx={styles.formControlLabel}
                       component="label"
                       htmlFor={`column-toggle-${col.tableData.id}`}
                       disabled={col.removable === false}
@@ -259,13 +257,13 @@ export function MTableToolbar(props) {
 
   function renderActions() {
     return (
-      <div className={classes.actions}>
+      <Box sx={styles.actions}>
         <div>
           {props.selectedRows && props.selectedRows.length > 0
             ? renderSelectedActions()
             : renderDefaultActions()}
         </div>
-      </div>
+      </Box>
     );
   }
 
@@ -287,7 +285,7 @@ export function MTableToolbar(props) {
         title
       );
 
-    return <div className={classes.title}>{toolBarTitle}</div>;
+    return <Box sx={styles.title}>{toolBarTitle}</Box>;
   }
 
   function render() {
@@ -308,17 +306,19 @@ export function MTableToolbar(props) {
     return (
       <Toolbar
         ref={props.forwardedRef}
-        className={classNames(classes.root, {
-          [classes.highlight]:
-            props.showTextRowsSelected &&
-            props.selectedRows &&
-            props.selectedRows.length > 0
-        })}
+        sx={{
+          ...styles.root,
+          ...(props.showTextRowsSelected &&
+          props.selectedRows &&
+          props.selectedRows.length > 0
+            ? styles.highlight(theme)
+            : {})
+        }}
       >
         {title && renderToolbarTitle(title)}
         {props.searchFieldAlignment === 'left' && renderSearch()}
         {props.toolbarButtonAlignment === 'left' && renderActions()}
-        <div className={classes.spacer} />
+        <Box sx={styles.spacer} />
         {props.searchFieldAlignment === 'right' && renderSearch()}
         {props.toolbarButtonAlignment === 'right' && renderActions()}
       </Toolbar>
@@ -389,12 +389,12 @@ MTableToolbar.propTypes = {
   searchAutoFocus: PropTypes.bool
 };
 
-export const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    paddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(2)
+    paddingRight: 1,
+    paddingLeft: 2
   },
-  highlight:
+  highlight: (theme) =>
     theme.palette.mode === 'light'
       ? {
           color: theme.palette.secondary.main,
@@ -408,20 +408,19 @@ export const useStyles = makeStyles((theme) => ({
     flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary
+    color: 'text.secondary'
   },
   title: {
     overflow: 'hidden'
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2)
+    paddingLeft: 2
   },
   formControlLabel: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    px: 1
   }
-}));
+};
 
 const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   props,

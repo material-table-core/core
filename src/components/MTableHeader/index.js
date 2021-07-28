@@ -7,12 +7,10 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip, useTheme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
 import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader({ onColumnResized, ...props }) {
   const theme = useTheme();
-  const classes = useStyles();
   const [
     { resizingColumnDef, lastX, lastAdditionalWidth }, // Extract the props to use instead of the whole state object
     setState
@@ -79,7 +77,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        className={classes.header}
+        sx={styles.header}
         style={{
           ...props.headerStyle,
           width: width,
@@ -249,7 +247,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
           <TableCell
             key={columnDef.tableData.id}
             align={cellAlignment}
-            className={classes.header}
+            sx={styles.header}
             style={getCellStyle(columnDef)}
             size={size}
           >
@@ -269,7 +267,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       <TableCell
         padding="none"
         key="key-selection-column"
-        className={classes.header}
+        sx={styles.header}
         style={{ ...props.headerStyle, width: selectionWidth }}
       >
         {props.showSelectAllCheckbox && (
@@ -295,7 +293,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       <TableCell
         padding="none"
         key="key-detail-panel-column"
-        className={classes.header}
+        sx={styles.header}
         style={{ ...props.headerStyle }}
       />
     );
@@ -335,7 +333,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
         <TableCell
           padding="none"
           key={'key-tree-data-header'}
-          className={classes.header}
+          sx={styles.header}
           style={{ ...props.headerStyle }}
         />
       );
@@ -349,7 +347,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
           <TableCell
             padding="checkbox"
             key={'key-group-header' + columnDef.tableData.id}
-            className={classes.header}
+            sx={styles.header}
           />
         );
       });
@@ -404,15 +402,15 @@ MTableHeader.propTypes = {
   tooltip: PropTypes.string
 };
 
-export const useStyles = makeStyles((theme) => ({
+export const styles = {
   header: {
     // display: 'inline-block',
     // position: 'sticky',
     top: 0,
     zIndex: 10,
-    backgroundColor: theme.palette.background.paper // Change according to theme,
+    backgroundColor: 'background.paper ' // Change according to theme,
   }
-}));
+};
 
 const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
   return <MTableHeader {...props} forwardedRef={ref} />;

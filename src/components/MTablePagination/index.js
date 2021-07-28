@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme } from '@material-ui/core';
+import { useTheme, Box } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 function MTablePagination(props) {
-  const classes = useStyles();
   const theme = useTheme();
   const handleFirstPageButtonClick = (event) => {
     props.onPageChange(event, 0);
@@ -39,7 +37,14 @@ function MTablePagination(props) {
     };
 
     return (
-      <div className={classes.root} ref={props.forwardedRef}>
+      <Box
+        sx={{
+          flexShrink: 0,
+          color: 'text.secondary',
+          display: 'flex'
+        }}
+        ref={props.forwardedRef}
+      >
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -124,21 +129,12 @@ function MTablePagination(props) {
             </span>
           </Tooltip>
         )}
-      </div>
+      </Box>
     );
   }
 
   return render();
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    display: 'flex'
-    // lineHeight: '48px'
-  }
-}));
 
 MTablePagination.propTypes = {
   onPageChange: PropTypes.func,
