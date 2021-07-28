@@ -43,7 +43,8 @@ export function MTableHeader({ onColumnResized, ...props }) {
       let currentWidth = th && +window.getComputedStyle(th).width.slice(0, -2);
       let realWidth =
         currentWidth -
-        resizingColumnDef.tableData.additionalWidth -
+        resizingColumnDef.tableData.additionalWidth +
+        lastAdditionalWidth -
         lastX +
         e.clientX;
       if (realWidth <= resizingColumnDef.minWidth && realWidth < currentWidth)
@@ -406,7 +407,7 @@ MTableHeader.propTypes = {
 export const useStyles = makeStyles((theme) => ({
   header: {
     // display: 'inline-block',
-    position: 'sticky',
+    // position: 'sticky',
     top: 0,
     zIndex: 10,
     backgroundColor: theme.palette.background.paper // Change according to theme,

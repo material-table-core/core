@@ -36,7 +36,7 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
   const options = {
     entryPoints: getFilesRecursive('./src', '.js'),
     minify: true,
-    // format: 'esm',
+    bundle: false,
     outdir: `${BUILD_DIR}`,
     loader: {
       '.js': 'jsx'

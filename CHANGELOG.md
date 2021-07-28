@@ -97,6 +97,42 @@
 
 - # //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 3.2.4 (2021-07-27)
+
+#### 3.2.3 (2021-07-27)
+
+#### 3.2.2 (2021-07-27)
+
+##### Chores
+
+- switch back to babel, still issues with esbuild ([b88892be](https://github.com/material-table-core/core/commit/b88892be20d7feb42013bcb3c474fe020e66d50d))
+
+#### 3.2.1 (2021-07-27)
+
+##### Chores
+
+- use esbuild for transpiing instead of babel ([e8383429](https://github.com/material-table-core/core/commit/e8383429e0642f9a8081939cd2b09e8fb03d3c9b))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c2566924](https://github.com/material-table-core/core/commit/c25669242a9d0f160f9782a4787796520c205a45))
+
+### 3.2.0 (2021-07-27)
+
+Fix issues with pagination/when we receive new data with the same ID. Our solution was to add an internal UUID prop for each row upon receiving new external data. Issue #272 has all you need to know
+
+##### Other Changes
+
+- build fix esbuild issues ([d37ff606](https://github.com/material-table-core/core/commit/d37ff606dcdd3a79ab66e0306b1fa235dde61154))
+
+#### 3.1.2 (2021-07-26)
+
+#### 3.1.1 (2021-07-26)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([72fbd53d](https://github.com/material-table-core/core/commit/72fbd53d6d9cdc9249d199279384c234b0f9ca7a))
+
 ### 3.1.0 (2021-07-19)
 
 ##### New Features

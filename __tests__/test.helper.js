@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom/extend-expect';
+
 export const columns = [
   { field: 'firstName', title: 'First Name' },
   { field: 'lastName', title: 'Last Name' },
@@ -5,19 +7,19 @@ export const columns = [
 ];
 
 export function makeData() {
-  const runtime = Math.floor(Math.random() * 100);
+  const runtime = 99;
   const datas = [];
   for (let i = 0; i < runtime; i++) {
     datas.push({
-      firstName: makeFirstName(),
-      lastName: makeLastName(),
-      age: makeAge()
+      firstName: makeFirstName(i),
+      lastName: makeLastName(i),
+      age: makeAge(i)
     });
   }
   return datas;
 }
 
-export function makeFirstName() {
+export function makeFirstName(runtime) {
   const names = [
     'Oliver',
     'Elijah',
@@ -32,10 +34,10 @@ export function makeFirstName() {
     'Ethan',
     'Daniel'
   ];
-  return names[Math.floor(Math.random() * names.length)];
+  return names[runtime % names.length];
 }
 
-export function makeLastName() {
+export function makeLastName(runtime) {
   const lastnames = [
     'Smith',
     'Johnson',
@@ -55,9 +57,9 @@ export function makeLastName() {
     'Moore',
     'Martin'
   ];
-  return lastnames[Math.floor(Math.random() * lastnames.length)];
+  return lastnames[runtime % lastnames.length];
 }
 
-export function makeAge() {
-  return Math.floor(Math.random() * 99);
+export function makeAge(runtime) {
+  return runtime;
 }

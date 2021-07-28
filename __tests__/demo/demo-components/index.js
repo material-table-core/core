@@ -1,10 +1,51 @@
 import React, { useState, useRef } from 'react';
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
-// import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
+
+// root of this project
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
 const global_data = [
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  {
+    name: 'Zerya Betül',
+    surname: 'Baran',
+    birthYear: 2017,
+    birthCity: 34,
+    id: 1
+  },
   { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
   {
     name: 'Zerya Betül',
@@ -35,13 +76,21 @@ const global_data_CustomExport = [
 ];
 
 const global_cols = [
-  { title: 'Name', field: 'name' },
-  { title: 'Surname', field: 'surname' },
-  { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+  { title: 'Name', field: 'name', minWidth: 140, maxWidth: 400 },
+  { title: 'Surname', field: 'surname', minWidth: 140, maxWidth: 400 },
+  {
+    title: 'Birth Year',
+    field: 'birthYear',
+    type: 'numeric',
+    minWidth: 140,
+    maxWidth: 400
+  },
   {
     title: 'Birth Place',
     field: 'birthCity',
-    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+    minWidth: 140,
+    maxWidth: 400
   }
 ];
 
@@ -83,6 +132,49 @@ export function BulkEdit() {
         }}
       />
     </div>
+  );
+}
+
+export function DataSwitcher() {
+  const global_cols = [
+    { title: 'number', field: 'number', minWidth: 140, maxWidth: 400 }
+  ];
+
+  const global_data1 = [
+    {
+      number: '1',
+      id: 1
+    },
+    {
+      number: '2',
+      id: 2
+    }
+  ];
+
+  const global_data2 = [
+    {
+      number: '3',
+      id: 7
+    },
+    {
+      number: '4',
+      id: 2
+    }
+  ];
+
+  const [pdata, setPData] = React.useState([]);
+  const [switcher, setSwitcher] = React.useState(true);
+
+  React.useEffect(() => {
+    if (switcher) setPData(global_data1);
+    else setPData(global_data2);
+  }, [switcher]);
+
+  return (
+    <>
+      <button onClick={() => setSwitcher(!switcher)}>Cambiar</button>
+      <MaterialTable title="Basic" columns={global_cols} data={pdata} />
+    </>
   );
 }
 
@@ -553,7 +645,8 @@ export function Resizable() {
       data={global_data}
       options={{
         columnResizable: true,
-        tableLayout: 'fixed'
+        tableLayout: 'fixed',
+        paging: true
       }}
     />
   );
