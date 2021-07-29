@@ -5,6 +5,7 @@ function MTableDetailPanel(props) {
   const [isOpen, setOpen] = React.useState(false);
   const [, rerender] = React.useReducer((s) => s + 1, 0);
   const renderRef = React.useRef();
+
   React.useEffect(() => {
     const shouldOpen = Boolean(
       props.data.tableData && props.data.tableData.showDetailPanel
@@ -15,18 +16,25 @@ function MTableDetailPanel(props) {
   }, [props.data.tableData.showDetailPanel]);
 
   let renderFunction;
-  if (typeof props.detailPanel === 'function') {
-    renderFunction = props.detailPanel;
+
+  // See issue #282 for more on why we have to check for the existence of props.detailPanel
+  if (!props.detailPanel) {
+    return <React.Fragment />;
   } else {
-    renderFunction = props.detailPanel
-      ? props.detailPanel.find(
-          (panel) =>
-            panel.render.toString() ===
-            (props.data.tableData.showDetailPanel || '').toString()
-        )
-      : undefined;
-    renderFunction = renderFunction ? renderFunction.render : null;
+    if (typeof props.detailPanel === 'function') {
+      renderFunction = props.detailPanel;
+    } else {
+      renderFunction = props.detailPanel
+        ? props.detailPanel.find(
+            (panel) =>
+              panel.render.toString() ===
+              (props.data.tableData.showDetailPanel || '').toString()
+          )
+        : undefined;
+      renderFunction = renderFunction ? renderFunction.render : null;
+    }
   }
+
   React.useEffect(() => {
     if (renderFunction && isOpen) {
       renderRef.current = renderFunction;

@@ -94,6 +94,49 @@ const global_cols = [
   }
 ];
 
+const rando = (max) => Math.floor(Math.random() * max);
+
+const words = ['Paper', 'Rock', 'Scissors'];
+
+const rawData = [];
+for (let i = 0; i < 100; i++) {
+  rawData.push({ id: rando(300), word: words[i % words.length] });
+}
+
+const columns = [
+  { title: 'Id', field: 'id' },
+  { title: 'Word', field: 'word' }
+];
+
+export const DetailPanelIssuesProgrammaticallyHidingWhenOpen = () => {
+  const [data, setData] = useState(rawData);
+  const [isPanelVisible, setIsPanelVisible] = useState(true);
+
+  const components = {
+    Row: (props) => <MTableBodyRow {...props} />
+  };
+
+  return (
+    <>
+      <button onClick={() => setIsPanelVisible((prevState) => !prevState)}>
+        Toggle details panel visibility
+      </button>
+      <MaterialTable
+        data={data}
+        columns={columns}
+        components={components}
+        title="Starter Template"
+        detailPanel={
+          // rowData => {
+          //   return isPanelVisible ? <div>Details Panel</div> : null
+          // }
+          isPanelVisible ? [{ render: () => <div>Details panel</div> }] : null
+        }
+      />
+    </>
+  );
+};
+
 export function BulkEdit() {
   const [data, setData] = useState([
     { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
