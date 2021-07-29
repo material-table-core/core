@@ -17,7 +17,7 @@ function MTableDetailPanel(props) {
 
   let renderFunction;
 
-  // See issue #282 for more on why we have to check for the existence of
+  // See issue #282 for more on why we have to check for the existence of props.detailPanel
   if (!props.detailPanel) {
     return <React.Fragment />;
   } else {
