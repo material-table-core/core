@@ -38,6 +38,7 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
     minify: true,
     bundle: false,
     outdir: `${BUILD_DIR}`,
+    format: 'cjs',
     loader: {
       '.js': 'jsx'
     }
