@@ -1,3 +1,9 @@
+#### 3.2.5 (2021-07-29)
+
+##### Bug Fixes
+
+- issue when programmatically hiding a shown detail panel [#282](https://github.com/material-table-core/core/pull/282) ([4696507d](https://github.com/material-table-core/core/commit/4696507d7bf71d9dcaa0b0bfc733c5b973b39bf2))
+
 #### 3.2.4 (2021-07-27)
 
 #### 3.2.3 (2021-07-27)
