@@ -7,7 +7,6 @@
   "version": "3.2.5",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
-  "type": "module",
   "types": "types/index.d.ts",
   "files": [
     "dist",
