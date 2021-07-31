@@ -348,6 +348,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             padding="checkbox"
             key={'key-group-header' + columnDef.tableData.id}
             sx={styles.header}
+            style={{ ...props.headerStyle }}
           />
         );
       });

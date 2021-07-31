@@ -29,15 +29,13 @@ import {
   BulkEdit,
   BasicRef,
   BulkEditWithDetailPanel,
-  ExportData,
-  CustomExport,
   EditableRow,
   EditableCells,
   FrankensteinDemo,
   HidingColumns,
   Resizable,
-  EditableRowDateColumnIssue,
-  DataSwitcher
+  DataSwitcher,
+  DetailPanelIssuesProgrammaticallyHidingWhenOpen
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -45,6 +43,11 @@ module.hot.accept();
 
 render(
   <ThemeProvider theme={createTheme()}>
+    <h1>Switcher</h1>
+    <DataSwitcher />
+
+    <h1>DetailPanelIssuesProgrammaticallyHidingWhenOpen</h1>
+    <DetailPanelIssuesProgrammaticallyHidingWhenOpen />
     <h1>Basic</h1>
     <Basic />
 

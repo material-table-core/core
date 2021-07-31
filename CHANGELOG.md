@@ -128,6 +128,19 @@
 
 - # //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+## 4.0.0 (2021-07-31)
+
+##### Chores
+
+- update tests to start testing pre and post build ([e9d57280](https://github.com/material-table-core/core/commit/e9d5728003677704d177e714e457703dfe99a6fb))
+- change transpiler ([2d11d942](https://github.com/material-table-core/core/commit/2d11d9422743cdf479180d161507244bf603d3a8))
+
+#### 3.2.5 (2021-07-29)
+
+##### Bug Fixes
+
+- issue when programmatically hiding a shown detail panel [#282](https://github.com/material-table-core/core/pull/282) ([4696507d](https://github.com/material-table-core/core/commit/4696507d7bf71d9dcaa0b0bfc733c5b973b39bf2))
+
 #### 3.2.4 (2021-07-27)
 
 #### 3.2.3 (2021-07-27)
