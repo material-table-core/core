@@ -1,17 +1,3 @@
-/**
-
-
-
- * THIS FILE IS NOT IN USE RIGHT NOW
- * We had issues using esbuild - I just need to revisit
- * (I think the root of the issue wasn't even esbuild so we
- * may just need to publish a test pkg using it)
- 
- 
- * - oze4 -
- 
- */
-
 const { build } = require('esbuild');
 const { red, green, yellow, italic } = require('chalk');
 const rimraf = require('rimraf');
@@ -21,7 +7,14 @@ const fs = require('fs');
 const { log } = console;
 const { stdout, stderr, exit } = process;
 
-const BUILD_DIR = 'dist'; // relative to root of project (no trailing slash)
+/**
+ * OUTPUT PATH IS SET HERE!!
+ *
+ * relative to root of project
+ *
+ * !! NO TRAILING SLASH !!
+ */
+const BUILD_DIR = 'dist';
 
 stdout.write(yellow(`-Cleaning build artifacts from : '${BUILD_DIR}' `));
 
@@ -35,10 +28,12 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
 
   const options = {
     entryPoints: getFilesRecursive('./src', '.js'),
+    minifySyntax: true,
     minify: true,
     bundle: false,
     outdir: `${BUILD_DIR}`,
-    format: 'cjs',
+    target: 'es6',
+    // format: 'cjs',
     loader: {
       '.js': 'jsx'
     }
