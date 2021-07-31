@@ -1,3 +1,10 @@
+## 4.0.0 (2021-07-31)
+
+##### Chores
+
+- update tests to start testing pre and post build ([e9d57280](https://github.com/material-table-core/core/commit/e9d5728003677704d177e714e457703dfe99a6fb))
+- change transpiler ([2d11d942](https://github.com/material-table-core/core/commit/2d11d9422743cdf479180d161507244bf603d3a8))
+
 #### 3.2.5 (2021-07-29)
 
 ##### Bug Fixes
