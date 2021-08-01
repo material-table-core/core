@@ -503,7 +503,6 @@ export function EventTargetErrorOnRowClick(props) {
     props.onSelectionChange(rows);
   };
   const onRowClicked = (evt, rowData) => {
-    evt.persist();
     console.log(evt.target);
   };
 
@@ -550,6 +549,12 @@ export function EventTargetErrorOnRowClick(props) {
         data={datas}
         onSelectionChange={onRowSelectionChanged}
         onRowClick={onRowClicked}
+        components={{
+          MTableBodyRow: (props, p2) => {
+            console.log({ props, p2 });
+            return <MTableBodyRow {...props} persistEvents={true} />;
+          }
+        }}
         options={{
           selection: true
         }}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function useDoubleClick(singleCallback, dbCallback, persistEvents = false) {
+function useDoubleClick(singleCallback, dbCallback, persistEvents) {
   const countRef = React.useRef(0);
   /** Refs for the timer **/
   const timerRef = React.useRef(null);

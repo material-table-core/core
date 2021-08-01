@@ -40,6 +40,7 @@ export default function MTableBodyRow(props) {
     onDoubleRowClick,
     ...rowProps
   } = props;
+
   const onClick = (event, callback) =>
     callback(event, data, (panelIndex) => {
       let panel = detailPanel;
@@ -52,11 +53,13 @@ export default function MTableBodyRow(props) {
       }
       onToggleDetailPanel(path, panel);
     });
+
   const onRowClickListener = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
     onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
     persistEvents
   );
+
   const getRenderColumns = () => {
     const size = CommonValues.elementSize(props);
     const mapArr = props.columns
@@ -509,9 +512,9 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: [],
-  // onRowClick, onRowDoubleClick events will be persisted
-  persistEvents: true
+  path: []
+  /** if this is not set, it's like it ignores this prop when overriding? */
+  // persistEvents: true
 };
 
 MTableBodyRow.propTypes = {
