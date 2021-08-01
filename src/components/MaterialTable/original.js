@@ -16,7 +16,7 @@ import * as CommonValues from '../../utils/common-values';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
-
+  checkedForFunctions = false;
   constructor(props) {
     super(props);
 
@@ -68,7 +68,7 @@ export default class MaterialTable extends React.Component {
     );
   }
 
-  setDataManagerFields(props, isInit) {
+  setDataManagerFields(props, isInit, prevColumns) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
     if (props && props.options.sorting !== false) {
@@ -81,7 +81,7 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    this.dataManager.setColumns(props.columns);
+    this.dataManager.setColumns(props.columns, prevColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
@@ -144,8 +144,39 @@ export default class MaterialTable extends React.Component {
 
     if (propsChanged) {
       const props = this.getProps(this.props);
-      this.setDataManagerFields(props);
+      this.setDataManagerFields(props, false, this.props.columns);
       this.setState(this.dataManager.getRenderState());
+      if (
+        process.env.NODE_ENV === 'development' &&
+        !this.checkedForFunctions &&
+        prevProps.columns.length !== 0
+      ) {
+        const bothContainFunctions =
+          fixedPropsColumns.some((column) =>
+            Object.values(column).some((val) => typeof val === 'function')
+          ) &&
+          fixedPrevColumns.some((column) =>
+            Object.values(column).some((val) => typeof val === 'function')
+          );
+        if (bothContainFunctions) {
+          this.checkedForFunctions = true;
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
+          const columnsEqual = equal(
+            currentColumnsWithoutFunctions,
+            prevColumnsWithoutFunctions
+          );
+          if (columnsEqual) {
+            console.warn(
+              'The columns provided to material table are static, but contain functions which update on every render, resetting the table state. Provide a stable function or column reference or an row id to prevent state loss.'
+            );
+          }
+        }
+      }
     }
 
     const count = this.isRemoteData()
@@ -159,11 +190,11 @@ export default class MaterialTable extends React.Component {
       : this.state.pageSize;
 
     if (count <= pageSize * currentPage && currentPage !== 0) {
-      this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
+      this.onPageChange(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }
 
-  getProps(props) {
+  getProps(props, prevColumns) {
     const calculatedProps = { ...(props || this.props) };
     calculatedProps.components = {
       ...MaterialTable.defaultProps.components,
@@ -369,45 +400,45 @@ export default class MaterialTable extends React.Component {
     }
   };
 
-  onChangePage = (event, page) => {
+  onPageChange = (event, page) => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = page;
       this.onQueryChange(query, () => {
-        this.props.onChangePage &&
-          this.props.onChangePage(page, query.pageSize);
+        this.props.onPageChange &&
+          this.props.onPageChange(page, query.pageSize);
       });
     } else {
       if (!this.isOutsidePageNumbers(this.props)) {
         this.dataManager.changeCurrentPage(page);
       }
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onChangePage &&
-          this.props.onChangePage(page, this.state.pageSize);
+        this.props.onPageChange &&
+          this.props.onPageChange(page, this.state.pageSize);
       });
     }
   };
 
-  onChangeRowsPerPage = (event) => {
+  onRowsPerPageChange = (event) => {
     const pageSize = event.target.value;
 
     this.dataManager.changePageSize(pageSize);
 
-    this.props.onChangePage && this.props.onChangePage(0, pageSize);
+    this.props.onPageChange && this.props.onPageChange(0, pageSize);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.pageSize = event.target.value;
       query.page = 0;
       this.onQueryChange(query, () => {
-        this.props.onChangeRowsPerPage &&
-          this.props.onChangeRowsPerPage(pageSize);
+        this.props.onRowsPerPageChange &&
+          this.props.onRowsPerPageChange(pageSize);
       });
     } else {
       this.dataManager.changeCurrentPage(0);
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onChangeRowsPerPage &&
-          this.props.onChangeRowsPerPage(pageSize);
+        this.props.onRowsPerPageChange &&
+          this.props.onRowsPerPageChange(pageSize);
       });
     }
   };
@@ -784,8 +815,8 @@ export default class MaterialTable extends React.Component {
                   )
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
-                onChangePage={this.onChangePage}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
+                onPageChange={this.onPageChange}
+                onRowsPerPageChange={this.onRowsPerPageChange}
                 ActionsComponent={(subProps) =>
                   props.options.paginationType === 'normal' ? (
                     <MTablePagination
@@ -856,6 +887,7 @@ export default class MaterialTable extends React.Component {
           hasDetailPanel={!!props.detailPanel}
           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
           showActionsColumn={
+            !this.dataManager.bulkEditOpen &&
             props.actions &&
             props.actions.filter(
               (a) => a.position === 'row' || typeof a === 'function'
@@ -909,6 +941,7 @@ export default class MaterialTable extends React.Component {
           ...this.props.localization.body
         }}
         onRowClick={this.props.onRowClick}
+        onDoubleRowClick={this.props.onDoubleRowClick}
         showAddRow={this.state.showAddRow}
         hasAnyEditingRow={
           !!(this.state.lastEditingRow || this.state.showAddRow)
@@ -1067,7 +1100,7 @@ export default class MaterialTable extends React.Component {
                             top: 0,
                             right: 0,
                             boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
-                            overflowX: 'hidden',
+                            overflowX: 'clip',
                             zIndex: 11
                           }}
                         >
@@ -1109,6 +1142,11 @@ export default class MaterialTable extends React.Component {
                             style={{
                               width: this.state.width,
                               background: 'white'
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Tab') {
+                                e.preventDefault();
+                              }
                             }}
                           >
                             {table}
@@ -1214,3 +1252,14 @@ const ScrollBar = withStyles(style)(({ double, children, classes }) => {
     );
   }
 });
+
+function functionlessColumns(columns) {
+  return columns.map((col) =>
+    Object.entries(col).reduce((obj, [key, val]) => {
+      if (typeof val !== 'function') {
+        obj[key] = val;
+      }
+      return obj;
+    }, {})
+  );
+}

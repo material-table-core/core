@@ -19,24 +19,33 @@ export function MTableHeader({ onColumnResized, ...props }) {
   });
 
   const handleMouseDown = (e, columnDef) => {
+    let target = e.clientX;
     setState((prevState) => ({
       ...prevState,
       lastAdditionalWidth: columnDef.tableData.additionalWidth,
-      lastX: e.clientX,
+      lastX: target,
       resizingColumnDef: columnDef
     }));
   };
   const handleMouseMove = React.useCallback(
     // Use usecallback to prevent triggering theuse effect too much
     (e) => {
-      if (!resizingColumnDef) {
-        return;
-      }
+      if (!resizingColumnDef) return;
       let additionalWidth = lastAdditionalWidth + e.clientX - lastX;
       additionalWidth = Math.min(
         resizingColumnDef.maxWidth || additionalWidth,
         additionalWidth
       );
+      let th = e.target.closest('th');
+      let currentWidth = th && +window.getComputedStyle(th).width.slice(0, -2);
+      let realWidth =
+        currentWidth -
+        resizingColumnDef.tableData.additionalWidth +
+        lastAdditionalWidth -
+        lastX +
+        e.clientX;
+      if (realWidth <= resizingColumnDef.minWidth && realWidth < currentWidth)
+        return;
       if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
         onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
       }
@@ -83,10 +92,12 @@ export function MTableHeader({ onColumnResized, ...props }) {
   };
 
   const getCellStyle = (columnDef) => {
-    const width = CommonValues.reducePercentsInCalc(
-      columnDef.tableData.width,
-      props.scrollWidth
-    );
+    const width = props.options.columnResizable
+      ? CommonValues.reducePercentsInCalc(
+          columnDef.tableData.width,
+          props.scrollWidth
+        )
+      : columnDef.tableData.width;
     const style = {
       ...props.headerStyle,
       ...columnDef.headerStyle,
@@ -155,6 +166,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  style={
+                    snapshot.isDragging ? provided.draggableProps.style : {}
+                  }
                 >
                   {columnDef.title}
                 </div>
@@ -333,6 +347,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             padding="checkbox"
             key={'key-group-header' + columnDef.tableData.id}
             className={props.classes.header}
+            style={{ ...props.headerStyle }}
           />
         );
       });
@@ -390,7 +405,7 @@ MTableHeader.propTypes = {
 export const styles = (theme) => ({
   header: {
     // display: 'inline-block',
-    position: 'sticky',
+    // position: 'sticky',
     top: 0,
     zIndex: 10,
     backgroundColor: theme.palette.background.paper // Change according to theme,

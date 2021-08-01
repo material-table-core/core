@@ -47,6 +47,7 @@ function MTableGroupRow(props) {
             onCellEditStarted={props.onCellEditStarted}
             onCellEditFinished={props.onCellEditFinished}
             scrollWidth={props.scrollWidth}
+            treeDataMaxLevel={props.treeDataMaxLevel}
           />
         ));
       } else {
@@ -81,6 +82,7 @@ function MTableGroupRow(props) {
                 components={props.components}
                 data={rowData}
                 detailPanel={props.detailPanel}
+                level={(props.level || 0) + 1}
                 getFieldValue={props.getFieldValue}
                 icons={props.icons}
                 path={[...props.path, index]}
@@ -97,6 +99,7 @@ function MTableGroupRow(props) {
                 onCellEditStarted={props.onCellEditStarted}
                 onCellEditFinished={props.onCellEditFinished}
                 scrollWidth={props.scrollWidth}
+                treeDataMaxLevel={props.treeDataMaxLevel}
               />
             );
           }
@@ -164,18 +167,20 @@ function MTableGroupRow(props) {
 MTableGroupRow.defaultProps = {
   columns: [],
   groups: [],
-  options: {},
-  level: 0
+  level: 0,
+  options: {}
 };
 
 MTableGroupRow.propTypes = {
   actions: PropTypes.array,
   columns: PropTypes.arrayOf(PropTypes.object),
   components: PropTypes.object,
+  cellEditable: PropTypes.object,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.object)
   ]),
+  forwardedRef: PropTypes.element,
   getFieldValue: PropTypes.func,
   groupData: PropTypes.object,
   groups: PropTypes.arrayOf(PropTypes.object),
@@ -184,21 +189,20 @@ MTableGroupRow.propTypes = {
   isTreeData: PropTypes.bool.isRequired,
   level: PropTypes.number,
   localization: PropTypes.object,
+  onBulkEditRowChanged: PropTypes.func,
+  onCellEditFinished: PropTypes.func,
+  onCellEditStarted: PropTypes.func,
+  onEditingApproved: PropTypes.func,
+  onEditingCanceled: PropTypes.func,
   onGroupExpandChanged: PropTypes.func,
-  onRowSelected: PropTypes.func,
   onRowClick: PropTypes.func,
+  onRowSelected: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
-  onEditingCanceled: PropTypes.func,
-  onEditingApproved: PropTypes.func,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
   scrollWidth: PropTypes.number.isRequired,
-  cellEditable: PropTypes.object,
-  onCellEditStarted: PropTypes.func,
-  onCellEditFinished: PropTypes.func,
-  onBulkEditRowChanged: PropTypes.func,
-  forwardedRef: PropTypes.element
+  treeDataMaxLevel: PropTypes.number
 };
 
 export default React.forwardRef(function MTableGroupRowRef(props, ref) {

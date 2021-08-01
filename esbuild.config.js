@@ -7,7 +7,14 @@ const fs = require('fs');
 const { log } = console;
 const { stdout, stderr, exit } = process;
 
-const BUILD_DIR = 'dist'; // relative to root of project (no trailing slash)
+/**
+ * OUTPUT PATH IS SET HERE!!
+ *
+ * relative to root of project
+ *
+ * !! NO TRAILING SLASH !!
+ */
+const BUILD_DIR = 'dist';
 
 stdout.write(yellow(`-Cleaning build artifacts from : '${BUILD_DIR}' `));
 
@@ -21,9 +28,12 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
 
   const options = {
     entryPoints: getFilesRecursive('./src', '.js'),
+    minifySyntax: true,
     minify: true,
-    // format: 'esm',
+    bundle: false,
     outdir: `${BUILD_DIR}`,
+    target: 'es6',
+    // format: 'cjs',
     loader: {
       '.js': 'jsx'
     }

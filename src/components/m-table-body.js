@@ -88,7 +88,7 @@ class MTableBody extends React.Component {
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization
             }}
-            key={'row-' + data.tableData.id}
+            key={'row-' + data.tableData.uuid}
             mode={this.props.bulkEditOpen ? 'bulk' : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -109,7 +109,7 @@ class MTableBody extends React.Component {
             data={data}
             index={index}
             errorState={this.props.errorState}
-            key={'row-' + data.tableData.id}
+            key={'row-' + data.tableData.uuid}
             level={0}
             options={this.props.options}
             localization={{
@@ -126,6 +126,7 @@ class MTableBody extends React.Component {
             path={[index + this.props.pageSize * this.props.currentPage]}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
             onRowClick={this.props.onRowClick}
+            onDoubleRowClick={this.props.onDoubleRowClick}
             isTreeData={this.props.isTreeData}
             onTreeExpandChanged={this.props.onTreeExpandChanged}
             onEditingCanceled={this.props.onEditingCanceled}
@@ -146,37 +147,38 @@ class MTableBody extends React.Component {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
         actions={this.props.actions}
-        key={groupData.value == null ? '' + index : groupData.value}
+        cellEditable={this.props.cellEditable}
         columns={this.props.columns}
         components={this.props.components}
         detailPanel={this.props.detailPanel}
         getFieldValue={this.props.getFieldValue}
         groupData={groupData}
         groups={groups}
-        icons={this.props.icons}
-        level={0}
-        path={[index + this.props.pageSize * this.props.currentPage]}
-        onGroupExpandChanged={this.props.onGroupExpandChanged}
-        onRowSelected={this.props.onRowSelected}
-        onRowClick={this.props.onRowClick}
-        onEditingCanceled={this.props.onEditingCanceled}
-        onEditingApproved={this.props.onEditingApproved}
-        onToggleDetailPanel={this.props.onToggleDetailPanel}
-        onTreeExpandChanged={this.props.onTreeExpandChanged}
-        options={this.props.options}
-        isTreeData={this.props.isTreeData}
         hasAnyEditingRow={this.props.hasAnyEditingRow}
+        icons={this.props.icons}
+        isTreeData={this.props.isTreeData}
+        key={groupData.value == null ? '' + index : groupData.value}
+        level={0}
         localization={{
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
           dateTimePickerLocalization: this.props.localization
             .dateTimePickerLocalization
         }}
-        cellEditable={this.props.cellEditable}
-        onCellEditStarted={this.props.onCellEditStarted}
-        onCellEditFinished={this.props.onCellEditFinished}
         onBulkEditRowChanged={this.props.onBulkEditRowChanged}
+        onCellEditFinished={this.props.onCellEditFinished}
+        onCellEditStarted={this.props.onCellEditStarted}
+        onEditingApproved={this.props.onEditingApproved}
+        onEditingCanceled={this.props.onEditingCanceled}
+        onGroupExpandChanged={this.props.onGroupExpandChanged}
+        onRowClick={this.props.onRowClick}
+        onRowSelected={this.props.onRowSelected}
+        onToggleDetailPanel={this.props.onToggleDetailPanel}
+        onTreeExpandChanged={this.props.onTreeExpandChanged}
+        options={this.props.options}
+        path={[index + this.props.pageSize * this.props.currentPage]}
         scrollWidth={this.props.scrollWidth}
+        treeDataMaxLevel={this.props.treeDataMaxLevel}
       />
     ));
   }
@@ -188,24 +190,24 @@ class MTableBody extends React.Component {
           columns={this.props.columns.filter((columnDef) => {
             return !columnDef.hidden;
           })}
-          data={this.props.initialFormData}
           components={this.props.components}
+          data={this.props.initialFormData}
+          detailPanel={this.props.detailPanel}
           errorState={this.props.errorState}
+          getFieldValue={this.props.getFieldValue}
           icons={this.props.icons}
+          isTreeData={this.props.isTreeData}
           key="key-add-row"
-          mode="add"
           localization={{
             ...MTableBody.defaultProps.localization.editRow,
             ...this.props.localization.editRow,
             dateTimePickerLocalization: this.props.localization
               .dateTimePickerLocalization
           }}
-          options={this.props.options}
-          isTreeData={this.props.isTreeData}
-          detailPanel={this.props.detailPanel}
-          onEditingCanceled={this.props.onEditingCanceled}
+          mode="add"
           onEditingApproved={this.props.onEditingApproved}
-          getFieldValue={this.props.getFieldValue}
+          onEditingCanceled={this.props.onEditingCanceled}
+          options={this.props.options}
           scrollWidth={this.props.scrollWidth}
         />
       )
@@ -282,56 +284,56 @@ MTableBody.defaultProps = {
   actions: [],
   currentPage: 0,
   data: [],
+  localization: {
+    editRow: {},
+    emptyDataSourceMessage: 'No records to display',
+    filterRow: {}
+  },
   pageSize: 5,
   renderData: [],
-  selection: false,
-  localization: {
-    emptyDataSourceMessage: 'No records to display',
-    filterRow: {},
-    editRow: {}
-  }
+  selection: false
 };
 
 MTableBody.propTypes = {
   actions: PropTypes.array,
-  components: PropTypes.object.isRequired,
+  bulkEditChangedRows: PropTypes.object,
+  bulkEditOpen: PropTypes.bool,
+  cellEditable: PropTypes.object,
   columns: PropTypes.array.isRequired,
+  components: PropTypes.object.isRequired,
   currentPage: PropTypes.number,
   data: PropTypes.array,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
   hasDetailPanel: PropTypes.bool.isRequired,
   icons: PropTypes.object.isRequired,
+  initialFormData: PropTypes.object,
   isTreeData: PropTypes.bool.isRequired,
+  localization: PropTypes.object,
+  onBulkEditRowChanged: PropTypes.func,
+  onCellEditFinished: PropTypes.func,
+  onCellEditStarted: PropTypes.func,
+  onEditingApproved: PropTypes.func,
+  onEditingCanceled: PropTypes.func,
+  onFilterChanged: PropTypes.func,
+  onGroupExpandChanged: PropTypes.func,
+  onRowClick: PropTypes.func,
   onRowSelected: PropTypes.func,
+  onToggleDetailPanel: PropTypes.func.isRequired,
+  onTreeExpandChanged: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
   renderSummaryRow: PropTypes.func,
-  initialFormData: PropTypes.object,
-  selection: PropTypes.bool.isRequired,
   scrollWidth: PropTypes.number.isRequired,
+  selection: PropTypes.bool.isRequired,
   showAddRow: PropTypes.bool,
-  treeDataMaxLevel: PropTypes.number,
-  localization: PropTypes.object,
-  onFilterChanged: PropTypes.func,
-  onGroupExpandChanged: PropTypes.func,
-  onToggleDetailPanel: PropTypes.func.isRequired,
-  onTreeExpandChanged: PropTypes.func.isRequired,
-  onRowClick: PropTypes.func,
-  onEditingCanceled: PropTypes.func,
-  onEditingApproved: PropTypes.func,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  cellEditable: PropTypes.object,
-  onCellEditStarted: PropTypes.func,
-  onCellEditFinished: PropTypes.func,
-  bulkEditOpen: PropTypes.bool,
-  bulkEditChangedRows: PropTypes.object,
-  onBulkEditRowChanged: PropTypes.func
+  treeDataMaxLevel: PropTypes.number
 };
 
 export default MTableBody;

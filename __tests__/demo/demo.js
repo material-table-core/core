@@ -22,6 +22,7 @@ import { render } from 'react-dom';
 import {
   Basic,
   OneDetailPanel,
+  MultipleDetailPanels,
   DefaultOrderIssue,
   TestingNewActionHandlersProp,
   BulkEdit,
@@ -33,7 +34,11 @@ import {
   EditableCells,
   FrankensteinDemo,
   HidingColumns,
-  Resizable
+  Resizable,
+  EditableRowDateColumnIssue,
+  DataSwitcher,
+  DetailPanelIssuesProgrammaticallyHidingWhenOpen,
+  EventTargetErrorOnRowClick
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -41,6 +46,17 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>Switcher</h1>
+    <DataSwitcher />
+
+    <h1>EventTargetErrorOnRowClick</h1>
+    <EventTargetErrorOnRowClick
+      onSelectionChange={(d) => console.log('onSelectionChange', d)}
+    />
+
+    <h1>DetailPanelIssuesProgrammaticallyHidingWhenOpen</h1>
+    <DetailPanelIssuesProgrammaticallyHidingWhenOpen />
+
     <h1>Basic</h1>
     <Basic />
 
@@ -77,6 +93,9 @@ render(
 
     <h1>One Detail Panel</h1>
     <OneDetailPanel />
+
+    <h1>Multiple Detail Panels</h1>
+    <MultipleDetailPanels />
 
     <h1>Editable</h1>
     <EditableCells />
