@@ -54,7 +54,7 @@ export default function MTableBodyRow(props) {
       onToggleDetailPanel(path, panel);
     });
 
-  const onRowClickListener = useDoubleClick(
+  const handleOnRowClick = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
     onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined
   );
@@ -448,7 +448,7 @@ export default function MTableBodyRow(props) {
           if (persistEvents) {
             event.persist();
           }
-          onRowClickListener(event);
+          handleOnRowClick(event);
         }}
         hover={onRowClick !== null || onDoubleRowClick !== null}
         style={getStyle(props.index, props.level)}
@@ -516,9 +516,8 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: []
-  /** if this is not set, it's like it ignores this prop when overriding? */
-  // persistEvents: true
+  path: [],
+  persistEvents: false
 };
 
 MTableBodyRow.propTypes = {

@@ -547,8 +547,6 @@ export function EventTargetErrorOnRowClick(props) {
         tableRef={tableRef}
         columns={cols}
         data={datas}
-        // onSelectionChange={onRowSelectionChanged}
-        // onRowClick={onRowClicked}
         components={{
           Row: (props) => {
             return (
