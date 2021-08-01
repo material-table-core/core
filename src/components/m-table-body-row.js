@@ -56,8 +56,7 @@ export default function MTableBodyRow(props) {
 
   const onRowClickListener = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
-    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
-    persistEvents
+    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined
   );
 
   const getRenderColumns = () => {
@@ -445,8 +444,13 @@ export default function MTableBodyRow(props) {
       <TableRow
         selected={hasAnyEditingRow}
         {...rowProps}
-        onClick={onRowClickListener}
-        hover={!!onRowClick || !!onDoubleRowClick}
+        onClick={(event) => {
+          if (persistEvents) {
+            event.persist();
+          }
+          onRowClickListener(event);
+        }}
+        hover={onRowClick !== null || onDoubleRowClick !== null}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}

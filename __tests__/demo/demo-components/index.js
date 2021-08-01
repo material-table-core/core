@@ -547,12 +547,18 @@ export function EventTargetErrorOnRowClick(props) {
         tableRef={tableRef}
         columns={cols}
         data={datas}
-        onSelectionChange={onRowSelectionChanged}
-        onRowClick={onRowClicked}
+        // onSelectionChange={onRowSelectionChanged}
+        // onRowClick={onRowClicked}
         components={{
-          MTableBodyRow: (props, p2) => {
-            console.log({ props, p2 });
-            return <MTableBodyRow {...props} persistEvents={true} />;
+          Row: (props) => {
+            return (
+              <MTableBodyRow
+                {...props}
+                persistEvents={true}
+                onRowClick={onRowClicked}
+                onRowSelected={onRowSelectionChanged}
+              />
+            );
           }
         }}
         options={{

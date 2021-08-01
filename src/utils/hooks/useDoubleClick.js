@@ -1,6 +1,6 @@
 import React from 'react';
 
-function useDoubleClick(singleCallback, dbCallback, persistEvents) {
+function useDoubleClick(singleCallback, dbCallback) {
   const countRef = React.useRef(0);
   /** Refs for the timer **/
   const timerRef = React.useRef(null);
@@ -12,9 +12,6 @@ function useDoubleClick(singleCallback, dbCallback, persistEvents) {
     inputSingleCallbackRef.current = singleCallback;
   });
   const onClick = React.useCallback((e) => {
-    if (persistEvents) {
-      e.persist();
-    }
     const isDoubleClick = countRef.current + 1 === 2;
     const timerIsPresent = timerRef.current;
     if (timerIsPresent && isDoubleClick) {
