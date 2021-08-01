@@ -34,11 +34,13 @@ export default function MTableBodyRow(props) {
     cellEditable,
     onCellEditStarted,
     onCellEditFinished,
+    persistEvents,
     scrollWidth,
     onRowClick,
     onDoubleRowClick,
     ...rowProps
   } = props;
+
   const onClick = (event, callback) =>
     callback(event, data, (panelIndex) => {
       let panel = detailPanel;
@@ -51,11 +53,12 @@ export default function MTableBodyRow(props) {
       }
       onToggleDetailPanel(path, panel);
     });
-  const onRowClickListener = useDoubleClick(
+
+  const handleOnRowClick = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
-    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
-    onClick
+    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined
   );
+
   const getRenderColumns = () => {
     const size = CommonValues.elementSize(props);
     const mapArr = props.columns
@@ -441,8 +444,13 @@ export default function MTableBodyRow(props) {
       <TableRow
         selected={hasAnyEditingRow}
         {...rowProps}
-        onClick={onRowClickListener}
-        hover={!!onRowClick || !!onDoubleRowClick}
+        onClick={(event) => {
+          if (persistEvents) {
+            event.persist();
+          }
+          handleOnRowClick(event);
+        }}
+        hover={onRowClick !== null || onDoubleRowClick !== null}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}
@@ -508,7 +516,8 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: []
+  path: [],
+  persistEvents: false
 };
 
 MTableBodyRow.propTypes = {
@@ -524,6 +533,7 @@ MTableBodyRow.propTypes = {
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
+  persistEvents: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
