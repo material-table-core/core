@@ -1,14 +1,18 @@
+// Third-party
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import TableCell from '@material-ui/core/TableCell';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableRow from '@material-ui/core/TableRow';
-import { MTableDetailPanel } from './m-table-detailpanel';
 import PropTypes from 'prop-types';
-import * as CommonValues from '../utils/common-values';
-import { useDoubleClick } from '../utils/hooks/useDoubleClick';
+import {
+  Checkbox,
+  TableCell,
+  IconButton,
+  Icon,
+  Tooltip,
+  TableRow
+} from '@material-ui/core';
+// Internal
+import { MTableDetailPanel } from '../m-table-detailpanel';
+import * as CommonValues from '../../utils/common-values';
+import { useDoubleClick } from '../../utils/hooks/useDoubleClick';
 
 export default function MTableBodyRow(props) {
   const {
