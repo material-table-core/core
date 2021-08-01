@@ -475,7 +475,10 @@ export function OneDetailPanel() {
         );
       }}
       options={{ showDetailPanelIcon: false }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+      onRowClick={(event, rowData, togglePanel) => {
+        console.log(event.target);
+        togglePanel();
+      }}
     />
   );
 }

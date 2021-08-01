@@ -34,6 +34,7 @@ export default function MTableBodyRow(props) {
     cellEditable,
     onCellEditStarted,
     onCellEditFinished,
+    persistEvents,
     scrollWidth,
     onRowClick,
     onDoubleRowClick,
@@ -54,7 +55,7 @@ export default function MTableBodyRow(props) {
   const onRowClickListener = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
     onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
-    onClick
+    persistEvents
   );
   const getRenderColumns = () => {
     const size = CommonValues.elementSize(props);
@@ -508,7 +509,9 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: []
+  path: [],
+  // onRowClick, onRowDoubleClick events will be persisted
+  persistEvents: true
 };
 
 MTableBodyRow.propTypes = {
@@ -524,6 +527,7 @@ MTableBodyRow.propTypes = {
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
+  persistEvents: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
