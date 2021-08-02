@@ -27,6 +27,7 @@ export { default as MTableAction } from './MTableAction';
 export { default as MTableActions } from './MTableActions';
 export { default as MTableBodyRow } from './MTableBodyRow';
 export { default as MTableCell } from './MTableCell';
+export { default as MTableCustomIcon } from './MTableCustomIcon';
 export { default as MTableEditRow } from './MTableEditRow';
 export { default as MTableFilterRow } from './MTableFilterRow';
 export { default as MTableGroupbar } from './MTableGroupbar';
