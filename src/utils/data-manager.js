@@ -1,4 +1,5 @@
 import formatDate from 'date-fns/format';
+import uuid from 'uuid';
 import { byString } from './';
 
 export default class DataManager {
@@ -64,11 +65,15 @@ export default class DataManager {
       }
     }
     this.data = data.map((row, index) => {
-      const prevTableData =
-        prevDataObject[row.id] ||
-        prevDataObject[row.tableData && row.tableData.id] ||
-        {};
-      const tableData = { id: index, ...prevTableData, ...row.tableData };
+      const prevTableData = prevDataObject[row.id] || {};
+      const tableData = {
+        id: row.id || index,
+        // `uuid` acts as our 'key' and is generated when new data
+        // is passed into material-table externally.
+        uuid: row.uuid || uuid.v4(),
+        ...prevTableData,
+        ...row.tableData
+      };
       if (tableData.checked) {
         this.selectedCount++;
       }

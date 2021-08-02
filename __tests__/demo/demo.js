@@ -35,6 +35,9 @@ import {
   Resizable,
   EditableRowDateColumnIssue,
   PersistentGroupings
+  DataSwitcher,
+  DetailPanelIssuesProgrammaticallyHidingWhenOpen,
+  EventTargetErrorOnRowClick
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -42,6 +45,17 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>Switcher</h1>
+    <DataSwitcher />
+
+    <h1>EventTargetErrorOnRowClick</h1>
+    <EventTargetErrorOnRowClick
+      onSelectionChange={(d) => console.log('onSelectionChange', d)}
+    />
+
+    <h1>DetailPanelIssuesProgrammaticallyHidingWhenOpen</h1>
+    <DetailPanelIssuesProgrammaticallyHidingWhenOpen />
+
     <h1>Basic</h1>
     <Basic />
 

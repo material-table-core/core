@@ -1,3 +1,68 @@
+### 4.1.0 (2021-08-01)
+
+##### Chores
+
+- clean up how persisting row click events are handled ([d735ef84](https://github.com/material-table-core/core/commit/d735ef8423110d720c74ce6ed771f588cd1e0883))
+- change to force consumers to override ([48a08aa3](https://github.com/material-table-core/core/commit/48a08aa35afcdf7afd67f22efdf7ab9f0d94ed0b))
+
+##### Bug Fixes
+
+- persist row click events, single and double click ([6337c3bf](https://github.com/material-table-core/core/commit/6337c3bfefaee356228426af74f7ac02da55567a))
+
+##### Other Changes
+
+- rename handler ([d97e81e9](https://github.com/material-table-core/core/commit/d97e81e9d48a9ac454da193483e1a7e4dcba717f))
+- build clean up comments ([0bb41291](https://github.com/material-table-core/core/commit/0bb41291f83a737b884fca1c9de5dcced7ea0c22))
+
+## 4.0.0 (2021-07-31)
+
+##### Chores
+
+- update tests to start testing pre and post build ([e9d57280](https://github.com/material-table-core/core/commit/e9d5728003677704d177e714e457703dfe99a6fb))
+- change transpiler ([2d11d942](https://github.com/material-table-core/core/commit/2d11d9422743cdf479180d161507244bf603d3a8))
+
+#### 3.2.5 (2021-07-29)
+
+##### Bug Fixes
+
+- issue when programmatically hiding a shown detail panel [#282](https://github.com/material-table-core/core/pull/282) ([4696507d](https://github.com/material-table-core/core/commit/4696507d7bf71d9dcaa0b0bfc733c5b973b39bf2))
+
+#### 3.2.4 (2021-07-27)
+
+#### 3.2.3 (2021-07-27)
+
+#### 3.2.2 (2021-07-27)
+
+##### Chores
+
+- switch back to babel, still issues with esbuild ([b88892be](https://github.com/material-table-core/core/commit/b88892be20d7feb42013bcb3c474fe020e66d50d))
+
+#### 3.2.1 (2021-07-27)
+
+##### Chores
+
+- use esbuild for transpiing instead of babel ([e8383429](https://github.com/material-table-core/core/commit/e8383429e0642f9a8081939cd2b09e8fb03d3c9b))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c2566924](https://github.com/material-table-core/core/commit/c25669242a9d0f160f9782a4787796520c205a45))
+
+### 3.2.0 (2021-07-27)
+
+Fix issues with pagination/when we receive new data with the same ID. Our solution was to add an internal UUID prop for each row upon receiving new external data. Issue #272 has all you need to know
+
+##### Other Changes
+
+- build fix esbuild issues ([d37ff606](https://github.com/material-table-core/core/commit/d37ff606dcdd3a79ab66e0306b1fa235dde61154))
+
+#### 3.1.2 (2021-07-26)
+
+#### 3.1.1 (2021-07-26)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([72fbd53d](https://github.com/material-table-core/core/commit/72fbd53d6d9cdc9249d199279384c234b0f9ca7a))
+
 ### 3.1.0 (2021-07-19)
 
 ##### New Features

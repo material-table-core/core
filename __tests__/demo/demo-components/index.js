@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src'; // root of this project
-// import { ExportCsv, ExportPdf } from '../../../exporters'; // root of this project
+import React, { useState, useEffect, useRef } from 'react';
+
+// root of this project
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -93,6 +94,49 @@ const global_cols = [
   }
 ];
 
+const rando = (max) => Math.floor(Math.random() * max);
+
+const words = ['Paper', 'Rock', 'Scissors'];
+
+const rawData = [];
+for (let i = 0; i < 100; i++) {
+  rawData.push({ id: rando(300), word: words[i % words.length] });
+}
+
+const columns = [
+  { title: 'Id', field: 'id' },
+  { title: 'Word', field: 'word' }
+];
+
+export const DetailPanelIssuesProgrammaticallyHidingWhenOpen = () => {
+  const [data, setData] = useState(rawData);
+  const [isPanelVisible, setIsPanelVisible] = useState(true);
+
+  const components = {
+    Row: (props) => <MTableBodyRow {...props} />
+  };
+
+  return (
+    <>
+      <button onClick={() => setIsPanelVisible((prevState) => !prevState)}>
+        Toggle details panel visibility
+      </button>
+      <MaterialTable
+        data={data}
+        columns={columns}
+        components={components}
+        title="Starter Template"
+        detailPanel={
+          // rowData => {
+          //   return isPanelVisible ? <div>Details Panel</div> : null
+          // }
+          isPanelVisible ? [{ render: () => <div>Details panel</div> }] : null
+        }
+      />
+    </>
+  );
+};
+
 export function BulkEdit() {
   const [data, setData] = useState([
     { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
@@ -131,6 +175,49 @@ export function BulkEdit() {
         }}
       />
     </div>
+  );
+}
+
+export function DataSwitcher() {
+  const global_cols = [
+    { title: 'number', field: 'number', minWidth: 140, maxWidth: 400 }
+  ];
+
+  const global_data1 = [
+    {
+      number: '1',
+      id: 1
+    },
+    {
+      number: '2',
+      id: 2
+    }
+  ];
+
+  const global_data2 = [
+    {
+      number: '3',
+      id: 7
+    },
+    {
+      number: '4',
+      id: 2
+    }
+  ];
+
+  const [pdata, setPData] = React.useState([]);
+  const [switcher, setSwitcher] = React.useState(true);
+
+  React.useEffect(() => {
+    if (switcher) setPData(global_data1);
+    else setPData(global_data2);
+  }, [switcher]);
+
+  return (
+    <>
+      <button onClick={() => setSwitcher(!switcher)}>Cambiar</button>
+      <MaterialTable title="Basic" columns={global_cols} data={pdata} />
+    </>
   );
 }
 
@@ -388,8 +475,95 @@ export function OneDetailPanel() {
         );
       }}
       options={{ showDetailPanelIcon: false }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+      onRowClick={(event, rowData, togglePanel) => {
+        console.log(event.target);
+        togglePanel();
+      }}
     />
+  );
+}
+
+export function EventTargetErrorOnRowClick(props) {
+  const tableRef = React.createRef();
+
+  useEffect(() => {
+    tableRef.current.state.data.forEach((element) => {
+      if (props.selectedRows && props.selectedRows instanceof Array) {
+        const selectedRows = props.selectedRows.find((a) => a === element);
+        if (selectedRows !== undefined) {
+          element.tableData.checked = true;
+        } else if (element.tableData) {
+          element.tableData.checked = false;
+        }
+      }
+    });
+  }, [props.selectedRows, tableRef, props.dataSource]);
+
+  const onRowSelectionChanged = (rows) => {
+    props.onSelectionChange(rows);
+  };
+  const onRowClicked = (evt, rowData) => {
+    console.log(evt.target);
+  };
+
+  const datas = [
+    {
+      id: 1,
+      name: 'Mehmet',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 63
+    },
+    {
+      id: 2,
+      name: 'Zerya Betül',
+      surname: 'Baran',
+      birthYear: 2017,
+      birthCity: 34
+    },
+    {
+      id: 3,
+      name: 'Pratik',
+      surname: 'N',
+      birthYear: 1900,
+      birthCity: 64
+    }
+  ];
+
+  const cols = [
+    { title: 'Name', field: 'name' },
+    { title: 'Surname', field: 'surname' },
+    { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+    {
+      title: 'Birth Place',
+      field: 'birthCity'
+    }
+  ];
+
+  return (
+    <div>
+      <MaterialTable
+        title={'EventTargetErrorOnRowClick'}
+        tableRef={tableRef}
+        columns={cols}
+        data={datas}
+        components={{
+          Row: (props) => {
+            return (
+              <MTableBodyRow
+                {...props}
+                persistEvents={true}
+                onRowClick={onRowClicked}
+                onRowSelected={onRowSelectionChanged}
+              />
+            );
+          }
+        }}
+        options={{
+          selection: true
+        }}
+      />
+    </div>
   );
 }
 

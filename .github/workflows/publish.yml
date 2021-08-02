@@ -6,7 +6,6 @@ name: Publish
 # If your commit summary starts with `Release`
 #   - We will attempt to automatically publish your commit (although, your commit will not be automatically approved)
 #   - *NOTE*
-#     - We **DO NOT** increase the package.json version please do this yourself!!
 #   - We will attempt to create a new release using the commit description as release notes
 #
 #
@@ -30,7 +29,7 @@ jobs:
         run: |
           npm install
           npm run build
-          npm run test:build
+          npm run test
           npm config set @material-table:registry https://registry.npmjs.org/
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
           npm publish --ignore-scripts

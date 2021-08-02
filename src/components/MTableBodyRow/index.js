@@ -1,14 +1,18 @@
+// Third-party
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import TableCell from '@material-ui/core/TableCell';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableRow from '@material-ui/core/TableRow';
-import { MTableDetailPanel } from './m-table-detailpanel';
 import PropTypes from 'prop-types';
-import * as CommonValues from '../utils/common-values';
-import { useDoubleClick } from '../utils/hooks/useDoubleClick';
+import {
+  Checkbox,
+  TableCell,
+  IconButton,
+  Tooltip,
+  TableRow
+} from '@material-ui/core';
+// Internal
+import { MTableDetailPanel } from '../m-table-detailpanel';
+import * as CommonValues from '../../utils/common-values';
+import { useDoubleClick } from '../../utils/hooks/useDoubleClick';
+import { MTableCustomIcon } from '../../components';
 
 export default function MTableBodyRow(props) {
   const {
@@ -34,11 +38,13 @@ export default function MTableBodyRow(props) {
     cellEditable,
     onCellEditStarted,
     onCellEditFinished,
+    persistEvents,
     scrollWidth,
     onRowClick,
     onDoubleRowClick,
     ...rowProps
   } = props;
+
   const onClick = (event, callback) =>
     callback(event, data, (panelIndex) => {
       let panel = detailPanel;
@@ -51,11 +57,12 @@ export default function MTableBodyRow(props) {
       }
       onToggleDetailPanel(path, panel);
     });
-  const onRowClickListener = useDoubleClick(
+
+  const handleOnRowClick = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
-    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined,
-    onClick
+    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined
   );
+
   const getRenderColumns = () => {
     const size = CommonValues.elementSize(props);
     const mapArr = props.columns
@@ -199,19 +206,7 @@ export default function MTableBodyRow(props) {
     if (!props.options.showDetailPanelIcon) {
       return null;
     }
-
     const size = CommonValues.elementSize(props);
-
-    const CustomIcon = ({ icon, iconProps }) => {
-      if (!icon) {
-        return;
-      }
-      if (typeof icon === 'string') {
-        return <Icon {...iconProps}>{icon}</Icon>;
-      }
-      return React.createElement(icon, { ...iconProps });
-    };
-
     if (typeof props.detailPanel === 'function') {
       return (
         <TableCell
@@ -265,7 +260,7 @@ export default function MTableBodyRow(props) {
               if (isOpen) {
                 if (panel.openIcon) {
                   iconButton = (
-                    <CustomIcon
+                    <MTableCustomIcon
                       icon={panel.openIcon}
                       iconProps={panel.iconProps}
                     />
@@ -273,12 +268,18 @@ export default function MTableBodyRow(props) {
                   animation = false;
                 } else if (panel.icon) {
                   iconButton = (
-                    <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                    <MTableCustomIcon
+                      icon={panel.icon}
+                      iconProps={panel.iconProps}
+                    />
                   );
                 }
               } else if (panel.icon) {
                 iconButton = (
-                  <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                  <MTableCustomIcon
+                    icon={panel.icon}
+                    iconProps={panel.iconProps}
+                  />
                 );
                 animation = false;
               }
@@ -441,8 +442,13 @@ export default function MTableBodyRow(props) {
       <TableRow
         selected={hasAnyEditingRow}
         {...rowProps}
-        onClick={onRowClickListener}
-        hover={!!onRowClick || !!onDoubleRowClick}
+        onClick={(event) => {
+          if (persistEvents) {
+            event.persist();
+          }
+          handleOnRowClick(event);
+        }}
+        hover={onRowClick !== null || onDoubleRowClick !== null}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}
@@ -508,7 +514,8 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: []
+  path: [],
+  persistEvents: false
 };
 
 MTableBodyRow.propTypes = {
@@ -524,6 +531,7 @@ MTableBodyRow.propTypes = {
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
+  persistEvents: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
