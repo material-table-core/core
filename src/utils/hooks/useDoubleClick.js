@@ -40,7 +40,6 @@ function useDoubleClick(singleCallback, dbCallback) {
           inputSingleCallbackRef.current(e);
         }
       }, timeDelay);
-
       timerRef.current = timer;
     }
   }, []);
