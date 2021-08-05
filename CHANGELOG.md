@@ -1,3 +1,14 @@
+### 4.2.0 (2021-08-05)
+
+##### Chores
+
+- fix typo ([cb798b72](https://github.com/material-table-core/core/commit/cb798b721fb5ea22e4dbb88563045a607a23cdc5))
+- move MTableBodyRow to own directory ([4c5354f8](https://github.com/material-table-core/core/commit/4c5354f846ef653f3ce07370400f262114944b13))
+
+##### Refactors
+
+- create MTableCustomIcon component ([b1f8e617](https://github.com/material-table-core/core/commit/b1f8e617da0aab725dc8638189950a7d5c506ee3))
+
 ### 4.1.0 (2021-08-01)
 
 ##### Chores

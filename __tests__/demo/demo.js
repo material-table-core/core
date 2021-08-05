@@ -38,7 +38,8 @@ import {
   EditableRowDateColumnIssue,
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
-  EventTargetErrorOnRowClick
+  EventTargetErrorOnRowClick,
+  SelectionOnRowClick
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -48,6 +49,9 @@ render(
   <div>
     <h1>Switcher</h1>
     <DataSwitcher />
+
+    <h1>SelectionOnRowClick</h1>
+    <SelectionOnRowClick />
 
     <h1>EventTargetErrorOnRowClick</h1>
     <EventTargetErrorOnRowClick
