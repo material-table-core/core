@@ -65,6 +65,15 @@ export default class MaterialTable extends React.Component {
         if (this.isRemoteData()) {
           this.onQueryChange(this.state.query);
         }
+        /**
+         * THIS WILL NEED TO BE REMOVED EVENTUALLY.
+         * Warn consumer of renamed prop.
+         */
+        if (this.props.onDoubleRowClick !== undefined) {
+          console.error(
+            'Property `onDoubleRowClick` has been renamed to `onRowDoubleClick`'
+          );
+        }
       }
     );
   }
@@ -942,7 +951,7 @@ export default class MaterialTable extends React.Component {
           ...this.props.localization.body
         }}
         onRowClick={this.props.onRowClick}
-        onDoubleRowClick={this.props.onDoubleRowClick}
+        onRowDoubleClick={this.props.onRowDoubleClick}
         showAddRow={this.state.showAddRow}
         hasAnyEditingRow={
           !!(this.state.lastEditingRow || this.state.showAddRow)

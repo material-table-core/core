@@ -571,6 +571,7 @@ export function EventTargetErrorOnRowClick(props) {
         tableRef={tableRef}
         columns={cols}
         data={datas}
+        onRowDoubleClick={onRowClicked}
         options={{
           selection: true
         }}

@@ -1,5 +1,9 @@
 ### 4.2.0 (2021-08-05)
 
+##### Breaking Changes
+
+- rename `onDoubleRowClick` to `onRowDoubleClick` ([32a7f3ac](https://github.com/material-table-core/core/commit/32a7f3ac5f371d3e349e1d2790f325efaa3b3a48))
+
 ##### Chores
 
 - fix typo ([cb798b72](https://github.com/material-table-core/core/commit/cb798b721fb5ea22e4dbb88563045a607a23cdc5))
