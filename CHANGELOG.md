@@ -1,3 +1,9 @@
+#### 4.2.1 (2021-08-05)
+
+##### Bug Fixes
+
+- delay in onRowClick ([6301b34d](https://github.com/material-table-core/core/commit/6301b34dc71d3994dcc22673fef1ff480f81bb8a))
+
 ### 4.2.0 (2021-08-05)
 
 ##### Breaking Changes
