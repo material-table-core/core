@@ -100,11 +100,11 @@ const words = ['Paper', 'Rock', 'Scissors'];
 
 const rawData = [];
 for (let i = 0; i < 100; i++) {
-  rawData.push({ id: rando(300), word: words[i % words.length] });
+  rawData.push({ identifier: rando(300), word: words[i % words.length] });
 }
 
 const columns = [
-  { title: 'Id', field: 'id' },
+  { title: 'Id', field: 'identifier' },
   { title: 'Word', field: 'word' }
 ];
 
@@ -483,6 +483,30 @@ export function OneDetailPanel() {
   );
 }
 
+export function SelectionOnRowClick() {
+  const [data, setData] = useState(rawData);
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      options={{
+        selection: true
+      }}
+      onRowClick={(event, rowData) => {
+        // Copy row data and set checked state
+        const rowDataCopy = { ...rowData };
+        rowDataCopy.tableData.checked = !rowDataCopy.tableData.checked;
+        // Copy data so we can modify it
+        const dataCopy = [...data];
+        // Find the row we clicked and update it with `checked` prop
+        dataCopy[rowDataCopy.tableData.id] = rowDataCopy;
+        setData(dataCopy);
+      }}
+    />
+  );
+}
+
 export function EventTargetErrorOnRowClick(props) {
   const tableRef = React.createRef();
 
@@ -550,6 +574,9 @@ export function EventTargetErrorOnRowClick(props) {
         onRowDoubleClick={onRowClicked}
         options={{
           selection: true
+        }}
+        onRowClick={(first, second) => {
+          console.log({ first, second });
         }}
       />
     </div>
