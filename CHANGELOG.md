@@ -1,3 +1,9 @@
+#### 4.2.3 (2021-08-06)
+
+##### Chores
+
+- remove chalk package ([fb817a42](https://github.com/material-table-core/core/commit/fb817a421c4852b55c123b14821669e5fd8ec6b1))
+
 #### 4.2.2 (2021-08-06)
 
 ##### Chores
