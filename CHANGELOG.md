@@ -1,3 +1,17 @@
+#### 4.2.2 (2021-08-06)
+
+##### Chores
+
+- fix formatting/spacing ([9a7eb079](https://github.com/material-table-core/core/commit/9a7eb07991ce933b06df21c6067dfcb6db66a88e))
+
+##### New Features
+
+- add type module to package.json and fix esbuild issues ([e44ce4f3](https://github.com/material-table-core/core/commit/e44ce4f3d37daa4373faf31962235673a5802b52))
+
+##### Bug Fixes
+
+- issue with jest and modules ([64842a9b](https://github.com/material-table-core/core/commit/64842a9b2d47bdbb63fb1513bdcfd390e12aab3a))
+
 #### 4.2.1 (2021-08-05)
 
 ##### Bug Fixes
