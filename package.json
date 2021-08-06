@@ -1,5 +1,6 @@
 {
   "name": "@material-table/core",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -14,7 +15,7 @@
   ],
   "scripts": {
     "start": "./node_modules/.bin/webpack serve --config ./__tests__/demo/webpack.config.js --mode development --progress",
-    "build:esbuild": "node esbuild.config.js",
+    "build:esbuild": "node esbuild.config.js --experimental-modules",
     "build": "npm run build:esbuild",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore",
