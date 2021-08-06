@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "start": "./node_modules/.bin/webpack serve --config ./__tests__/demo/webpack.config.js --mode development --progress",
-    "build:esbuild": "node esbuild.config.js --experimental-modules",
+    "build:esbuild": "ts-node esbuild.config.js",
     "build": "npm run build:esbuild",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore",
@@ -94,6 +94,7 @@
     "react-dom": ">=16.8.0",
     "react-hot-loader": "^4.13.0",
     "react-test-renderer": ">=16.8.0",
+    "ts-node": "^10.1.0",
     "typescript": "^4.1.3",
     "webpack": "^5.11.0",
     "webpack-bundle-analyzer": "^4.3.0",
