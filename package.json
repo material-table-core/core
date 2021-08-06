@@ -70,7 +70,6 @@
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
     "buble": "^0.20.0",
-    "chalk": "^4.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "esbuild": "^0.8.57",
