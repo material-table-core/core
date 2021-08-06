@@ -64,7 +64,7 @@ export interface MaterialTableProps<RowData extends object> {
     rowData?: RowData,
     toggleDetailPanel?: (panelIndex?: number) => void
   ) => void;
-  onDoubleRowClick?: (
+  onRowDoubleClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
     toggleDetailPanel?: (panelIndex?: number) => void

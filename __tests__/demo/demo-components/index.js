@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // root of this project
 import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
@@ -100,11 +100,11 @@ const words = ['Paper', 'Rock', 'Scissors'];
 
 const rawData = [];
 for (let i = 0; i < 100; i++) {
-  rawData.push({ id: rando(300), word: words[i % words.length] });
+  rawData.push({ identifier: rando(300), word: words[i % words.length] });
 }
 
 const columns = [
-  { title: 'Id', field: 'id' },
+  { title: 'Id', field: 'identifier' },
   { title: 'Word', field: 'word' }
 ];
 
@@ -475,8 +475,111 @@ export function OneDetailPanel() {
         );
       }}
       options={{ showDetailPanelIcon: false }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+      onRowClick={(event, rowData, togglePanel) => {
+        console.log(event.target);
+        togglePanel();
+      }}
     />
+  );
+}
+
+export function SelectionOnRowClick() {
+  const [data, setData] = useState(rawData);
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      options={{
+        selection: true
+      }}
+      onRowClick={(event, rowData) => {
+        // Copy row data and set checked state
+        const rowDataCopy = { ...rowData };
+        rowDataCopy.tableData.checked = !rowDataCopy.tableData.checked;
+        // Copy data so we can modify it
+        const dataCopy = [...data];
+        // Find the row we clicked and update it with `checked` prop
+        dataCopy[rowDataCopy.tableData.id] = rowDataCopy;
+        setData(dataCopy);
+      }}
+    />
+  );
+}
+
+export function EventTargetErrorOnRowClick(props) {
+  const tableRef = React.createRef();
+
+  useEffect(() => {
+    tableRef.current.state.data.forEach((element) => {
+      if (props.selectedRows && props.selectedRows instanceof Array) {
+        const selectedRows = props.selectedRows.find((a) => a === element);
+        if (selectedRows !== undefined) {
+          element.tableData.checked = true;
+        } else if (element.tableData) {
+          element.tableData.checked = false;
+        }
+      }
+    });
+  }, [props.selectedRows, tableRef, props.dataSource]);
+
+  const onRowSelectionChanged = (rows) => {
+    props.onSelectionChange(rows);
+  };
+  const onRowClicked = (evt, rowData) => {
+    console.log(evt.target);
+  };
+
+  const datas = [
+    {
+      id: 1,
+      name: 'Mehmet',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 63
+    },
+    {
+      id: 2,
+      name: 'Zerya Betül',
+      surname: 'Baran',
+      birthYear: 2017,
+      birthCity: 34
+    },
+    {
+      id: 3,
+      name: 'Pratik',
+      surname: 'N',
+      birthYear: 1900,
+      birthCity: 64
+    }
+  ];
+
+  const cols = [
+    { title: 'Name', field: 'name' },
+    { title: 'Surname', field: 'surname' },
+    { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+    {
+      title: 'Birth Place',
+      field: 'birthCity'
+    }
+  ];
+
+  return (
+    <div>
+      <MaterialTable
+        title={'EventTargetErrorOnRowClick'}
+        tableRef={tableRef}
+        columns={cols}
+        data={datas}
+        onRowDoubleClick={onRowClicked}
+        options={{
+          selection: true
+        }}
+        onRowClick={(first, second) => {
+          console.log({ first, second });
+        }}
+      />
+    </div>
   );
 }
 

@@ -35,7 +35,9 @@ import {
   HidingColumns,
   Resizable,
   DataSwitcher,
-  DetailPanelIssuesProgrammaticallyHidingWhenOpen
+  DetailPanelIssuesProgrammaticallyHidingWhenOpen,
+  EventTargetErrorOnRowClick,
+  SelectionOnRowClick
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -45,6 +47,14 @@ render(
   <ThemeProvider theme={createTheme()}>
     <h1>Switcher</h1>
     <DataSwitcher />
+
+    <h1>SelectionOnRowClick</h1>
+    <SelectionOnRowClick />
+
+    <h1>EventTargetErrorOnRowClick</h1>
+    <EventTargetErrorOnRowClick
+      onSelectionChange={(d) => console.log('onSelectionChange', d)}
+    />
 
     <h1>DetailPanelIssuesProgrammaticallyHidingWhenOpen</h1>
     <DetailPanelIssuesProgrammaticallyHidingWhenOpen />
