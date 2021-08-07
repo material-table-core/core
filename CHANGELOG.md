@@ -1,3 +1,9 @@
+### 4.3.0 (2021-08-07)
+
+##### Bug Fixes
+
+- transpiler issues, move back to babel ([20e9a1e7](https://github.com/material-table-core/core/commit/20e9a1e7b01a74ca128ba615b8d1af0328ec1ab9))
+
 #### 4.2.3 (2021-08-06)
 
 ##### Chores
