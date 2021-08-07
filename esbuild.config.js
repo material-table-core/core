@@ -1,11 +1,9 @@
-const { build } = require('esbuild');
-const { red, green, yellow, italic } = require('chalk');
-const rimraf = require('rimraf');
-const path = require('path');
-const fs = require('fs');
+import esbuild from 'esbuild';
+import rimraf from 'rimraf';
+import path from 'path';
+import fs from 'fs';
 
-const { log } = console;
-const { stdout, stderr, exit } = process;
+const { log, error } = console;
 
 /**
  * OUTPUT PATH IS SET HERE!!
@@ -14,17 +12,17 @@ const { stdout, stderr, exit } = process;
  *
  * !! NO TRAILING SLASH !!
  */
-const BUILD_DIR = 'dist';
+const BUILD_DIR = './dist';
 
-stdout.write(yellow(`-Cleaning build artifacts from : '${BUILD_DIR}' `));
+log(`-Cleaning build artifacts from : '${BUILD_DIR}' `);
 
-rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
-  if (error) {
-    stderr.write(red(`err cleaning '${BUILD_DIR}' : ${error.stderr}`));
-    exit(1);
+rimraf(path.resolve(BUILD_DIR), async (err) => {
+  if (err) {
+    error(`err cleaning '${BUILD_DIR}' : ${error.stderr}`);
+    process.exit(1);
   }
 
-  log(green.italic('successfully cleaned build artifacts'));
+  log('successfully cleaned build artifacts');
 
   const options = {
     entryPoints: getFilesRecursive('./src', '.js'),
@@ -39,20 +37,18 @@ rimraf(path.resolve(__dirname, BUILD_DIR), async (error) => {
     }
   };
 
-  log(yellow('-Begin bundling'));
+  log('-Begin building');
 
   try {
-    await build(options);
+    await esbuild.build(options);
     log(
-      green(`\nSuccessfully bundled to '${BUILD_DIR}'`),
-      yellow('\n[note]'),
-      italic.green(': this path is relative to the root of this project)')
+      `\nSuccessfully built to '${BUILD_DIR}''\n[note] : this path is relative to the root of this project)'`
     );
-  } catch {
-    stderr.write(red(`\nerror bundling : ${error.stderr}`));
-    exit(1);
+  } catch (err) {
+    error(`\nERROR BUILDING : ${err}`);
+    process.exit(1);
   } finally {
-    exit(0);
+    process.exit(0);
   }
 });
 

@@ -1,3 +1,50 @@
+### 4.3.0 (2021-08-07)
+
+##### Bug Fixes
+
+- transpiler issues, move back to babel ([20e9a1e7](https://github.com/material-table-core/core/commit/20e9a1e7b01a74ca128ba615b8d1af0328ec1ab9))
+
+#### 4.2.3 (2021-08-06)
+
+##### Chores
+
+- remove chalk package ([fb817a42](https://github.com/material-table-core/core/commit/fb817a421c4852b55c123b14821669e5fd8ec6b1))
+
+#### 4.2.2 (2021-08-06)
+
+##### Chores
+
+- fix formatting/spacing ([9a7eb079](https://github.com/material-table-core/core/commit/9a7eb07991ce933b06df21c6067dfcb6db66a88e))
+
+##### New Features
+
+- add type module to package.json and fix esbuild issues ([e44ce4f3](https://github.com/material-table-core/core/commit/e44ce4f3d37daa4373faf31962235673a5802b52))
+
+##### Bug Fixes
+
+- issue with jest and modules ([64842a9b](https://github.com/material-table-core/core/commit/64842a9b2d47bdbb63fb1513bdcfd390e12aab3a))
+
+#### 4.2.1 (2021-08-05)
+
+##### Bug Fixes
+
+- delay in onRowClick ([6301b34d](https://github.com/material-table-core/core/commit/6301b34dc71d3994dcc22673fef1ff480f81bb8a))
+
+### 4.2.0 (2021-08-05)
+
+##### Breaking Changes
+
+- rename `onDoubleRowClick` to `onRowDoubleClick` ([32a7f3ac](https://github.com/material-table-core/core/commit/32a7f3ac5f371d3e349e1d2790f325efaa3b3a48))
+
+##### Chores
+
+- fix typo ([cb798b72](https://github.com/material-table-core/core/commit/cb798b721fb5ea22e4dbb88563045a607a23cdc5))
+- move MTableBodyRow to own directory ([4c5354f8](https://github.com/material-table-core/core/commit/4c5354f846ef653f3ce07370400f262114944b13))
+
+##### Refactors
+
+- create MTableCustomIcon component ([b1f8e617](https://github.com/material-table-core/core/commit/b1f8e617da0aab725dc8638189950a7d5c506ee3))
+
 ### 4.1.0 (2021-08-01)
 
 ##### Chores

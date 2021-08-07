@@ -1,14 +1,18 @@
+// Third-party
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import TableCell from '@material-ui/core/TableCell';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableRow from '@material-ui/core/TableRow';
-import { MTableDetailPanel } from './m-table-detailpanel';
 import PropTypes from 'prop-types';
-import * as CommonValues from '../utils/common-values';
-import { useDoubleClick } from '../utils/hooks/useDoubleClick';
+import {
+  Checkbox,
+  TableCell,
+  IconButton,
+  Tooltip,
+  TableRow
+} from '@material-ui/core';
+// Internal
+import { MTableDetailPanel } from '../m-table-detailpanel';
+import * as CommonValues from '../../utils/common-values';
+import { useDoubleClick } from '../../utils/hooks/useDoubleClick';
+import { MTableCustomIcon } from '../../components';
 
 export default function MTableBodyRow(props) {
   const {
@@ -37,7 +41,7 @@ export default function MTableBodyRow(props) {
     persistEvents,
     scrollWidth,
     onRowClick,
-    onDoubleRowClick,
+    onRowDoubleClick,
     ...rowProps
   } = props;
 
@@ -56,7 +60,7 @@ export default function MTableBodyRow(props) {
 
   const handleOnRowClick = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,
-    onDoubleRowClick ? (e) => onClick(e, onDoubleRowClick) : undefined
+    onRowDoubleClick ? (e) => onClick(e, onRowDoubleClick) : undefined
   );
 
   const getRenderColumns = () => {
@@ -202,19 +206,7 @@ export default function MTableBodyRow(props) {
     if (!props.options.showDetailPanelIcon) {
       return null;
     }
-
     const size = CommonValues.elementSize(props);
-
-    const CustomIcon = ({ icon, iconProps }) => {
-      if (!icon) {
-        return;
-      }
-      if (typeof icon === 'string') {
-        return <Icon {...iconProps}>{icon}</Icon>;
-      }
-      return React.createElement(icon, { ...iconProps });
-    };
-
     if (typeof props.detailPanel === 'function') {
       return (
         <TableCell
@@ -268,7 +260,7 @@ export default function MTableBodyRow(props) {
               if (isOpen) {
                 if (panel.openIcon) {
                   iconButton = (
-                    <CustomIcon
+                    <MTableCustomIcon
                       icon={panel.openIcon}
                       iconProps={panel.iconProps}
                     />
@@ -276,12 +268,18 @@ export default function MTableBodyRow(props) {
                   animation = false;
                 } else if (panel.icon) {
                   iconButton = (
-                    <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                    <MTableCustomIcon
+                      icon={panel.icon}
+                      iconProps={panel.iconProps}
+                    />
                   );
                 }
               } else if (panel.icon) {
                 iconButton = (
-                  <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                  <MTableCustomIcon
+                    icon={panel.icon}
+                    iconProps={panel.iconProps}
+                  />
                 );
                 animation = false;
               }
@@ -379,7 +377,7 @@ export default function MTableBodyRow(props) {
       };
     }
 
-    if (onRowClick || onDoubleRowClick) {
+    if (onRowClick || onRowDoubleClick) {
       style.cursor = 'pointer';
     }
 
@@ -450,7 +448,7 @@ export default function MTableBodyRow(props) {
           }
           handleOnRowClick(event);
         }}
-        hover={onRowClick !== null || onDoubleRowClick !== null}
+        hover={onRowClick !== null || onRowDoubleClick !== null}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}
@@ -539,7 +537,7 @@ MTableBodyRow.propTypes = {
   columns: PropTypes.array,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
-  onDoubleRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
