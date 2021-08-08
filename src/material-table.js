@@ -1,19 +1,20 @@
-/* eslint-disable no-unused-vars */
-import Table from '@material-ui/core/Table';
-import TableFooter from '@material-ui/core/TableFooter';
-import TableRow from '@material-ui/core/TableRow';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import DoubleScrollbar from 'react-double-scrollbar';
-import * as React from 'react';
-import { MTablePagination, MTableSteppedPagination } from './components';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DataManager from './utils/data-manager';
+import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
-import { withStyles } from '@material-ui/core';
+import {
+  Table,
+  TableFooter,
+  TableRow,
+  LinearProgress
+} from '@material-ui/core';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import DataManager from './utils/data-manager';
 import * as CommonValues from './utils/common-values';
-
-/* eslint-enable no-unused-vars */
+import {
+  MTablePagination,
+  MTableSteppedPagination,
+  MTableScrollbar
+} from './components';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -1083,7 +1084,7 @@ export default class MaterialTable extends React.Component {
               onGroupRemoved={this.onGroupRemoved}
             />
           )}
-          <ScrollBar double={props.options.doubleHorizontalScroll}>
+          <MTableScrollbar double={props.options.doubleHorizontalScroll}>
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
@@ -1169,7 +1170,7 @@ export default class MaterialTable extends React.Component {
                 );
               }}
             </Droppable>
-          </ScrollBar>
+          </MTableScrollbar>
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === 'linear' && (
               <div style={{ position: 'relative', width: '100%' }}>
@@ -1231,37 +1232,6 @@ export default class MaterialTable extends React.Component {
     );
   }
 }
-
-const style = () => ({
-  horizontalScrollContainer: {
-    '& ::-webkit-scrollbar': {
-      '-webkit-appearance': 'none'
-    },
-    '& ::-webkit-scrollbar:horizontal': {
-      height: 8
-    },
-    '& ::-webkit-scrollbar-thumb': {
-      borderRadius: 4,
-      border: '2px solid white',
-      backgroundColor: 'rgba(0, 0, 0, .3)'
-    }
-  }
-});
-
-const ScrollBar = withStyles(style)(({ double, children, classes }) => {
-  if (double) {
-    return <DoubleScrollbar>{children}</DoubleScrollbar>;
-  } else {
-    return (
-      <div
-        className={classes.horizontalScrollContainer}
-        style={{ overflowX: 'auto', position: 'relative' }}
-      >
-        {children}
-      </div>
-    );
-  }
-});
 
 function functionlessColumns(columns) {
   return columns.map((col) =>
