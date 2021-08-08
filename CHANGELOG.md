@@ -191,6 +191,32 @@
 
 - # //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+### 4.3.0 (2021-08-07)
+
+##### Bug Fixes
+
+- transpiler issues, move back to babel ([20e9a1e7](https://github.com/material-table-core/core/commit/20e9a1e7b01a74ca128ba615b8d1af0328ec1ab9))
+
+#### 4.2.3 (2021-08-06)
+
+##### Chores
+
+- remove chalk package ([fb817a42](https://github.com/material-table-core/core/commit/fb817a421c4852b55c123b14821669e5fd8ec6b1))
+
+#### 4.2.2 (2021-08-06)
+
+##### Chores
+
+- fix formatting/spacing ([9a7eb079](https://github.com/material-table-core/core/commit/9a7eb07991ce933b06df21c6067dfcb6db66a88e))
+
+##### New Features
+
+- add type module to package.json and fix esbuild issues ([e44ce4f3](https://github.com/material-table-core/core/commit/e44ce4f3d37daa4373faf31962235673a5802b52))
+
+##### Bug Fixes
+
+- issue with jest and modules ([64842a9b](https://github.com/material-table-core/core/commit/64842a9b2d47bdbb63fb1513bdcfd390e12aab3a))
+
 #### 4.2.1 (2021-08-05)
 
 ##### Bug Fixes
