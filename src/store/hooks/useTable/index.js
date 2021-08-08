@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { tableActions } from '../../actions';
-import { TableContext } from '../../context';
+import { tableActions } from '@store/actions';
+import { TableContext } from '@store/context';
 
 export default function useTable() {
   const { state, dispatch } = useContext(TableContext);

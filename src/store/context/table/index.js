@@ -1,24 +1,26 @@
 import { createContext } from 'react';
 
 // Default table state
+
+// This needs to be exported so we have access to the 'raw' context
 export const tableState = {
   bulkEditOpen: false,
-  columns: [],
+  // columns: [], // columns (and data) have been moved to the core context
   currentPage: 1,
-  data: [],
+  // data: [], // data (and columns) have been moved to the core context
   errorState: undefined,
   groupedDataLength: undefined, // int
   lastEditingRow: undefined,
-  orderBy: undefined, // this.orderBy,
-  orderDirection: undefined, // this.orderDirection,
-  originalData: [], // Not sure why this is here? //// this.data,
-  pageSize: 5, // this.pageSize,
+  orderBy: undefined,
+  orderDirection: undefined,
+  originalData: [], // Not sure why this is here?
+  pageSize: 5,
   renderData: undefined, // this.pagedData,
-  searchText: '', //  this.searchText,
-  selectedCount: undefined, // this.selectedCount,
+  searchText: '',
+  selectedCount: undefined,
   showAddRow: false,
-  treeDataMaxLevel: undefined, // this.treeDataMaxLevel,
-  treefiedDataLength: undefined, // this.treefiedDataLength,
+  treeDataMaxLevel: undefined,
+  treefiedDataLength: undefined,
   width: 0
   //
   // TODO:
@@ -45,6 +47,6 @@ export const tableState = {
   */
 };
 
-// Create context and export
 const tableContext = createContext(tableState);
+
 export default tableContext;

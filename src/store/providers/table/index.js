@@ -1,16 +1,16 @@
-import React, { useReducer } from 'react';
-import { tableState, TableContext } from '../../context';
-import { tableReducer } from '../../reducers';
+import React from 'react';
+import { ProviderFactory } from '@components';
+import { tableState, TableContext } from '@store/context';
+import { tableReducer } from '@store/reducers';
 
-export default function TableProvider(props) {
-  // eslint-disable-next-line react/prop-types
-  const { children } = props;
-
-  const [state, dispatch] = useReducer(tableReducer, tableState);
-
+export default function TableProvider({ children, ...props }) {
   return (
-    <TableContext.Provider value={{ state, dispatch }}>
+    <ProviderFactory
+      reducer={tableReducer}
+      defaultState={tableState}
+      contextComponent={TableContext}
+    >
       {children}
-    </TableContext.Provider>
+    </ProviderFactory>
   );
 }

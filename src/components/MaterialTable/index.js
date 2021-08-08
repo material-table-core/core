@@ -11,15 +11,15 @@ import {
   withStyles
 } from '@material-ui/core';
 // Imported 'internally'
-import { propTypes } from '../../props/prop-types';
-import defaultProps from '../../props/defaults';
-import DataManager from '../../utils/data-manager';
-import * as CommonValues from '../../utils/common-values';
+import { propTypes } from '@props/prop-types';
+import defaultProps from '@props/defaults';
+import DataManager from '@utils/data-manager';
+import * as CommonValues from '@utils/common-values';
 import {
   MTablePagination,
   MTableSteppedPagination,
   MTableScrollBar
-} from '../../components';
+} from '@components';
 
 /**
  * MaterialTable is the default export for this library.

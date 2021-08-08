@@ -19,7 +19,7 @@ import {
   MTableToolbar,
   OverlayError,
   OverlayLoading
-} from '../../components';
+} from '@components';
 
 /**
  * Defaults for props.components
