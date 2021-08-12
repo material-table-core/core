@@ -220,7 +220,7 @@ export default function MTableBodyRow(props) {
           }}
         >
           <IconButton
-            aria-label="Detail panel visiblity toggle"
+            aria-label="Detail panel visibility toggle"
             size={size}
             style={{
               transition: 'all ease 200ms',
@@ -286,7 +286,7 @@ export default function MTableBodyRow(props) {
 
               iconButton = (
                 <IconButton
-                  aria-label="Detail panel visiblity toggle"
+                  aria-label="Detail panel visibility toggle"
                   size={size}
                   key={'key-detail-panel-' + index}
                   style={{
@@ -336,7 +336,7 @@ export default function MTableBodyRow(props) {
           style={{ width: 48 + 9 * (props.treeDataMaxLevel - 2) }}
         >
           <IconButton
-            aria-label="Detail panel visiblity toggle"
+            aria-label="Detail panel visibility toggle"
             size={size}
             style={{
               transition: 'all ease 200ms',
