@@ -834,3 +834,17 @@ export function DefaultOrderIssue(props) {
     />
   );
 }
+
+export function PersistentGroupings(props) {
+  return (
+    <MaterialTable
+      title="Basic"
+      columns={global_cols}
+      data={global_data}
+      options={{
+        grouping: true,
+        persistentGroupingsId: props.persistentGroupingsId
+      }}
+    />
+  );
+}
