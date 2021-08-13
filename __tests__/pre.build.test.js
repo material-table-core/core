@@ -73,7 +73,7 @@ describe('Render Table : Pre Build', () => {
         name: /james brown 3/i
       });
       screen.getByRole('row', {
-        name: /5 rows First Page Previous Page 1-5 of 99 Next Page Last Page/i
+        name: /5 rows 1-5 of 99 First Page Previous Page Next Page Last Page/i
       });
     });
     it('navigates between the pages', () => {
@@ -93,7 +93,7 @@ describe('Render Table : Pre Build', () => {
         name: /james brown 3/i
       });
       screen.getByRole('row', {
-        name: /5 rows First Page Previous Page 1-5 of 99 Next Page Last Page/i
+        name: /5 rows 1-5 of 99 First Page Previous Page Next Page Last Page/i
       });
       fireEvent.click(screen.getByText(/chevron_right/i));
       screen.getByRole('row', {
@@ -106,7 +106,7 @@ describe('Render Table : Pre Build', () => {
         name: /michael wilson 9/i
       });
       screen.getByRole('row', {
-        name: /5 rows First Page Previous Page 6-10 of 99 Next Page Last Page/i
+        name: /5 rows 6-10 of 99 First Page Previous Page Next Page Last Page/i
       });
       fireEvent.click(screen.getByText(/last_page/i));
       screen.getByRole('row', {
@@ -119,7 +119,7 @@ describe('Render Table : Pre Build', () => {
         name: /William Thomas 98/i
       });
       screen.getByRole('row', {
-        name: /5 rows First Page Previous Page 96-99 of 99 Next Page Last Page/i
+        name: /5 rows 96-99 of 99 First Page Previous Page Next Page Last Page/i
       });
       expect(screen.getAllByRole('row')).toHaveLength(8);
     });
@@ -172,7 +172,7 @@ describe('Render Table : Pre Build', () => {
         name: /michael johnson 69/i
       });
       screen.getByRole('row', {
-        name: /5 rows First Page Previous Page 1-5 of 6 Next Page Last Page/i
+        name: /5 rows 1-5 of 6 First Page Previous Page Next Page Last Page/i
       });
       fireEvent.click(
         screen.getByRole('button', {
