@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import PropTypes from 'prop-types';
-import { getRenderValue, getStyle } from './utils';
-/* eslint-enable no-unused-vars */
+import { getRenderValue } from './cellUtils';
+import { getStyle } from '@utils';
 
 function MTableCell(props) {
   const {
@@ -22,12 +21,14 @@ function MTableCell(props) {
     }
   };
 
+  /* eslint-disable indent */
   const cellAlignment =
     columnDef.align !== undefined
       ? columnDef.align
       : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
       ? 'right'
       : 'left';
+  /* eslint-enable indent */
 
   let renderValue = getRenderValue(props);
 

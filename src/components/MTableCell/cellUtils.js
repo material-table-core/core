@@ -1,6 +1,5 @@
 import React from 'react';
 import parseISO from 'date-fns/parseISO';
-import * as CommonValues from '../../utils/common-values';
 
 /* eslint-disable no-useless-escape */
 export const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
@@ -40,37 +39,6 @@ export function getCurrencyValue(currencySetting, value) {
       currency: 'USD'
     }).format(value !== undefined ? value : 0);
   }
-}
-
-export function getStyle(props) {
-  const width = CommonValues.reducePercentsInCalc(
-    props.columnDef.tableData.width,
-    props.scrollWidth
-  );
-
-  let cellStyle = {
-    color: 'inherit',
-    width,
-    maxWidth: props.columnDef.maxWidth,
-    minWidth: props.columnDef.minWidth,
-    boxSizing: 'border-box',
-    fontSize: 'inherit',
-    fontFamily: 'inherit',
-    fontWeight: 'inherit'
-  };
-
-  if (typeof props.columnDef.cellStyle === 'function') {
-    cellStyle = {
-      ...cellStyle,
-      ...props.columnDef.cellStyle(props.value, props.rowData)
-    };
-  } else {
-    cellStyle = { ...cellStyle, ...props.columnDef.cellStyle };
-  }
-  if (props.columnDef.disableClick) {
-    cellStyle.cursor = 'default';
-  }
-  return { ...props.style, ...cellStyle };
 }
 
 export function getRenderValue(props) {

@@ -8,13 +8,13 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DataManager from './utils/data-manager';
-import * as CommonValues from './utils/common-values';
+import DataManager from '@utils/data-manager';
+import * as CommonValues from '@utils/common-values';
 import {
   MTablePagination,
   MTableSteppedPagination,
   MTableScrollbar
-} from './components';
+} from '@components';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();

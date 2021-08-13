@@ -68,6 +68,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-polyfill": "^6.26.0",
     "buble": "^0.20.0",
     "enzyme": "^3.11.0",

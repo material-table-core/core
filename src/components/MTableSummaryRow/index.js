@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TableRow, TableCell, withStyles } from '@material-ui/core';
-import { getStyle } from '../MTableCell/utils';
-import * as CommonValues from '../../utils/common-values';
+import { getStyle } from '@utils';
+import * as CommonValues from '@utils/common-values';
 import PropTypes from 'prop-types';
 
 export function MTableSummaryRow({

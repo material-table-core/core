@@ -9,10 +9,10 @@ import {
   TableRow
 } from '@material-ui/core';
 // Internal
-import { MTableDetailPanel } from '../m-table-detailpanel';
-import * as CommonValues from '../../utils/common-values';
-import { useDoubleClick } from '../../utils/hooks/useDoubleClick';
-import { MTableCustomIcon } from '../../components';
+import { MTableDetailPanel } from '@components/m-table-detailpanel';
+import * as CommonValues from '@utils/common-values';
+import { useDoubleClick } from '@utils/hooks/useDoubleClick';
+import { MTableCustomIcon } from '@components';
 
 export default function MTableBodyRow(props) {
   const {
