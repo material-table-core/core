@@ -34,7 +34,7 @@ import {
   HidingColumns,
   Resizable,
   EditableRowDateColumnIssue,
-  PersistentGroupings
+  PersistentGroupings,
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
