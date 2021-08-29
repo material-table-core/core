@@ -1,6 +1,7 @@
 import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
+import cloneDeep from 'lodash/cloneDeep';
 import {
   Table,
   TableFooter,
@@ -92,7 +93,7 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    const columnsCopy = JSON.parse(JSON.stringify(props.columns));
+    const columnsCopy = cloneDeep(props.columns);
 
     if (props.options.persistentGroupingsId) {
       let materialTableGroupings = localStorage.getItem(
