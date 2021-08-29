@@ -372,6 +372,7 @@ export interface Options<RowData extends object> {
   showDetailPanelIcon?: boolean;
   search?: boolean;
   searchText?: string;
+  searchDebounceDelay?: number;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   searchFieldVariant?: 'standard' | 'filled' | 'outlined';

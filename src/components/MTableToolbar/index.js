@@ -12,6 +12,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+let searchTimer;
+
 export function MTableToolbar(props) {
   const [state, setState] = React.useState(() => ({
     columnsButtonAnchorEl: null,
@@ -20,8 +22,20 @@ export function MTableToolbar(props) {
   }));
 
   const onSearchChange = (searchText) => {
+    setState({ ...state, searchText });
     props.dataManager.changeSearchText(searchText);
-    setState({ ...state, searchText }, props.onSearchChanged(searchText));
+    if (!props.isRemoteData) {
+      props.onSearchChanged(searchText);
+      return;
+    }
+
+    if (searchTimer) {
+      clearTimeout(searchTimer);
+    }
+    searchTimer = setTimeout(() => {
+      props.onSearchChanged(searchText);
+      searchTimer = null;
+    }, props.searchDebounceDelay);
   };
 
   const getTableData = () => {

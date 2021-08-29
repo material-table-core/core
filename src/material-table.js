@@ -153,6 +153,8 @@ export default class MaterialTable extends React.Component {
       );
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit &&
+      this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
+    isInit &&
       this.dataManager.changeCurrentPage(
         props.options.initialPage ? props.options.initialPage : 0
       );
@@ -1088,7 +1090,9 @@ export default class MaterialTable extends React.Component {
               searchFieldVariant={props.options.searchFieldVariant}
               title={props.title}
               searchText={this.dataManager.searchText}
+              searchDebounceDelay={this.dataManager.searchDebounceDelay}
               onSearchChanged={this.onSearchChangeDebounce}
+              isRemoteData={this.isRemoteData()}
               dataManager={this.dataManager}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{
