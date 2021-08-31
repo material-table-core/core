@@ -1,3 +1,24 @@
+#### 4.3.1 (2021-08-31)
+
+##### Chores
+
+- install babel module resolver ([092f8206](https://github.com/material-table-core/core/commit/092f82068e217744d4af881b243e77d9674f8ec4))
+- add babel import aliases ([6105afd6](https://github.com/material-table-core/core/commit/6105afd6b4ffd20247003bb3b916633c049e2e2b))
+- create MTableScrollbar ([07434b40](https://github.com/material-table-core/core/commit/07434b407f8b6dbe102746c9bb8a6e1869f6396c))
+
+##### New Features
+
+- **MaterialTable:** aggregate gropuings in localStoarge under material-table-groupings refactor(MTableGroupbar): map groupings feat(MTableGroupbar): clean up local storage when groupings are deleted ([0dd33f20](https://github.com/material-table-core/core/commit/0dd33f20fb515a895d743d01e1dcbde1fe6fad8b))
+
+##### Bug Fixes
+
+- typos in comments and components ([cc2b40e3](https://github.com/material-table-core/core/commit/cc2b40e374bc424fe4cdc3f466f9dff9e340d277))
+
+##### Refactors
+
+- cleanup unused imports ([e3cc8fba](https://github.com/material-table-core/core/commit/e3cc8fbae6eb4a979b72e8392f6f0a8b7336e8d2))
+- persist an array instead of object ([5bf5e92a](https://github.com/material-table-core/core/commit/5bf5e92ad9a90fb8c951f5ba6780dc1a777b6078))
+
 ### 4.3.0 (2021-08-07)
 
 ##### Bug Fixes
