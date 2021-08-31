@@ -12,7 +12,7 @@ export default class DataManager {
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
-  orderDirection = '';
+  orderDirection = 'desc';
   pageSize = 5;
   paging = true;
   parentFunc = null;
