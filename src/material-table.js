@@ -1,6 +1,7 @@
 import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
+import cloneDeep from 'lodash/cloneDeep';
 import {
   Table,
   TableFooter,
@@ -92,7 +93,7 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    const columnsCopy = JSON.parse(JSON.stringify(props.columns));
+    const columnsCopy = cloneDeep(props.columns);
 
     if (props.options.persistentGroupingsId) {
       let materialTableGroupings = localStorage.getItem(
@@ -152,6 +153,8 @@ export default class MaterialTable extends React.Component {
         defaultSortDirection
       );
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
+    isInit &&
+      this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
     isInit &&
       this.dataManager.changeCurrentPage(
         props.options.initialPage ? props.options.initialPage : 0
@@ -1088,7 +1091,9 @@ export default class MaterialTable extends React.Component {
               searchFieldVariant={props.options.searchFieldVariant}
               title={props.title}
               searchText={this.dataManager.searchText}
+              searchDebounceDelay={this.dataManager.searchDebounceDelay}
               onSearchChanged={this.onSearchChangeDebounce}
+              isRemoteData={this.isRemoteData()}
               dataManager={this.dataManager}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{

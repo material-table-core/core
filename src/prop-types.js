@@ -351,6 +351,7 @@ export const propTypes = {
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     search: PropTypes.bool,
     searchText: PropTypes.string,
+    searchDebounceDelay: PropTypes.number,
     toolbarButtonAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldStyle: PropTypes.object,

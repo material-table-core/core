@@ -17,6 +17,7 @@ export default class DataManager {
   paging = true;
   parentFunc = null;
   searchText = '';
+  searchDebounceDelay = 500;
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
@@ -234,6 +235,10 @@ export default class DataManager {
     this.searchText = searchText;
     this.searched = false;
     this.currentPage = 0;
+  }
+
+  changeSearchDebounce(searchDebounceDelay) {
+    this.searchDebounceDelay = searchDebounceDelay;
   }
 
   changeRowEditing(rowData, mode) {
