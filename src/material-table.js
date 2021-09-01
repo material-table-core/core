@@ -179,9 +179,9 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
-    propsChanged =
-      propsChanged || !equal(prevProps.options, this.props.options);
+    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns)
+    let propsChanged =
+      columnPropsChanged || !equal(prevProps.options, this.props.options);
     if (!this.isRemoteData()) {
       propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
     }
@@ -192,6 +192,7 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
       if (
         process.env.NODE_ENV === 'development' &&
+        columnPropsChanged &&
         !this.checkedForFunctions &&
         prevProps.columns.length !== 0
       ) {
