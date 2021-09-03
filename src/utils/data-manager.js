@@ -78,10 +78,23 @@ export default class DataManager {
       if (tableData.checked) {
         this.selectedCount++;
       }
-      return {
+      const newRow = {
         ...row,
         tableData
       };
+      if (
+        this.lastDetailPanelRow &&
+        this.lastDetailPanelRow.tableData === prevTableData
+      ) {
+        this.lastDetailPanelRow = newRow;
+      }
+      if (
+        this.lastEditingRow &&
+        this.lastEditingRow.tableData === prevTableData
+      ) {
+        this.lastEditingRow = newRow;
+      }
+      return newRow;
     });
 
     this.filtered = false;
@@ -134,8 +147,7 @@ export default class DataManager {
 
     usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width =
-        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -672,12 +684,7 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched =
-      this.grouped =
-      this.treefied =
-      this.sorted =
-      this.paged =
-        false;
+    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
 
