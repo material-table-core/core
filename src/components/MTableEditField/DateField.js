@@ -1,7 +1,7 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { TextField } from '@material-ui/core';
-import { LocalizationProvider, DatePicker } from '@material-ui/lab';
+import { TextField } from '@mui/material';
+import { LocalizationProvider, DatePicker } from '@mui/lab';
 
 function DateField({
   columnDef,

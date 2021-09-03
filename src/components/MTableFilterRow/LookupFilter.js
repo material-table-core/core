@@ -9,7 +9,7 @@ import {
   ListItemText,
   MenuItem,
   Select
-} from '@material-ui/core';
+} from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

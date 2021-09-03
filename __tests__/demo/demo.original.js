@@ -1,5 +1,5 @@
-import { Grid, ThemeProvider } from '@material-ui/core';
-import { createTheme } from '@material-ui/core/styles';
+import { Grid, ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 import React, { Component } from 'react';
 import MaterialTable from '../src';
 

@@ -16,7 +16,7 @@
  * built-in dev server (run `npm start`)
  */
 
-import { ThemeProvider, createTheme } from '@material-ui/core';
+import { ThemeProvider, createTheme } from '@mui/material';
 import React from 'react';
 import { render } from 'react-dom';
 

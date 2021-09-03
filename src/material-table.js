@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import Table from '@material-ui/core/Table';
-import TableFooter from '@material-ui/core/TableFooter';
-import TableRow from '@material-ui/core/TableRow';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Table from '@mui/material/Table';
+import TableFooter from '@mui/material/TableFooter';
+import TableRow from '@mui/material/TableRow';
+import LinearProgress from '@mui/material/LinearProgress';
 import DoubleScrollbar from 'react-double-scrollbar';
 import * as React from 'react';
 import { MTablePagination, MTableSteppedPagination } from './components';
@@ -11,7 +11,7 @@ import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 /* eslint-enable no-unused-vars */
 
@@ -170,12 +170,10 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions = functionlessColumns(
-            fixedPropsColumns
-          );
-          const prevColumnsWithoutFunctions = functionlessColumns(
-            fixedPrevColumns
-          );
+          const currentColumnsWithoutFunctions =
+            functionlessColumns(fixedPropsColumns);
+          const prevColumnsWithoutFunctions =
+            functionlessColumns(fixedPrevColumns);
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions

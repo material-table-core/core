@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconProps } from '@material-ui/core/Icon';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { IconProps } from '@mui/material/Icon';
+import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
 type SvgIconComponent = typeof SvgIcon;

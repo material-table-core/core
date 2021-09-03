@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { byString, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';

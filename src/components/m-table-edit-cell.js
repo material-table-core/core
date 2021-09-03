@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import TableCell from '@mui/material/TableCell';
+import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from '../utils/validate';
 class MTableEditCell extends React.Component {
   constructor(props) {
@@ -63,8 +63,10 @@ class MTableEditCell extends React.Component {
   };
 
   onApprove = () => {
-    const isValid = validateInput(this.props.columnDef, this.state.value)
-      .isValid;
+    const isValid = validateInput(
+      this.props.columnDef,
+      this.state.value
+    ).isValid;
     if (!isValid) {
       return;
     }

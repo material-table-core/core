@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme, Box } from '@material-ui/core';
+import { useTheme, Box } from '@mui/material';
 /* eslint-enable no-unused-vars */
 
 function MTablePagination(props) {
