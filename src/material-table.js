@@ -1,19 +1,22 @@
-/* eslint-disable no-unused-vars */
-import Table from '@material-ui/core/Table';
-import TableFooter from '@material-ui/core/TableFooter';
-import TableRow from '@material-ui/core/TableRow';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import DoubleScrollbar from 'react-double-scrollbar';
-import * as React from 'react';
-import { MTablePagination, MTableSteppedPagination } from './components';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DataManager from './utils/data-manager';
+import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import { Box } from '@material-ui/core';
-
-/* eslint-enable no-unused-vars */
+import cloneDeep from 'lodash/cloneDeep';
+import {
+  Box,
+  Table,
+  TableFooter,
+  TableRow,
+  LinearProgress
+} from '@material-ui/core';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import DataManager from '@utils/data-manager';
+import {
+  MTablePagination,
+  MTableSteppedPagination,
+  MTableScrollbar
+} from '@components';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -91,7 +94,37 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    this.dataManager.setColumns(props.columns, prevColumns);
+    const columnsCopy = cloneDeep(props.columns);
+
+    if (props.options.persistentGroupingsId) {
+      let materialTableGroupings = localStorage.getItem(
+        'material-table-groupings'
+      );
+
+      if (materialTableGroupings) {
+        materialTableGroupings = JSON.parse(materialTableGroupings);
+
+        if (materialTableGroupings[props.options.persistentGroupingsId]) {
+          materialTableGroupings[props.options.persistentGroupingsId].forEach(
+            (savedGrouping) => {
+              const column = columnsCopy.find(
+                (col) => col.field === savedGrouping.field
+              );
+              if (column) {
+                if (!column.tableData) {
+                  column.tableData = {};
+                }
+                column.tableData.groupOrder = savedGrouping.groupOrder;
+                column.tableData.groupSort = savedGrouping.groupSort;
+                column.tableData.columnOrder = savedGrouping.columnOrder;
+              }
+            }
+          );
+        }
+      }
+    }
+
+    this.dataManager.setColumns(columnsCopy, prevColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
@@ -122,6 +155,8 @@ export default class MaterialTable extends React.Component {
       );
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit &&
+      this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
+    isInit &&
       this.dataManager.changeCurrentPage(
         props.options.initialPage ? props.options.initialPage : 0
       );
@@ -145,9 +180,9 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
-    propsChanged =
-      propsChanged || !equal(prevProps.options, this.props.options);
+    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
+    let propsChanged =
+      columnPropsChanged || !equal(prevProps.options, this.props.options);
     if (!this.isRemoteData()) {
       propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
     }
@@ -158,6 +193,7 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
       if (
         process.env.NODE_ENV === 'development' &&
+        columnPropsChanged &&
         !this.checkedForFunctions &&
         prevProps.columns.length !== 0
       ) {
@@ -1060,7 +1096,9 @@ export default class MaterialTable extends React.Component {
               searchFieldVariant={props.options.searchFieldVariant}
               title={props.title}
               searchText={this.dataManager.searchText}
+              searchDebounceDelay={this.dataManager.searchDebounceDelay}
               onSearchChanged={this.onSearchChangeDebounce}
+              isRemoteData={this.isRemoteData()}
               dataManager={this.dataManager}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{
@@ -1084,9 +1122,10 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}
-          <ScrollBar double={props.options.doubleHorizontalScroll}>
+          <MTableScrollbar double={props.options.doubleHorizontalScroll}>
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
@@ -1172,7 +1211,7 @@ export default class MaterialTable extends React.Component {
                 );
               }}
             </Droppable>
-          </ScrollBar>
+          </MTableScrollbar>
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === 'linear' && (
               <div style={{ position: 'relative', width: '100%' }}>
@@ -1234,23 +1273,6 @@ export default class MaterialTable extends React.Component {
     );
   }
 }
-
-const ScrollBar = ({ double, children }) => {
-  if (double) {
-    return <DoubleScrollbar>{children}</DoubleScrollbar>;
-  } else {
-    return (
-      <Box
-        sx={{
-          overflowX: 'auto',
-          position: 'relative'
-        }}
-      >
-        {children}
-      </Box>
-    );
-  }
-};
 
 function functionlessColumns(columns) {
   return columns.map((col) =>

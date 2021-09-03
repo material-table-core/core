@@ -1,6 +1,7 @@
 {
   "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
+    "multiline-ternary": "off",
     "no-restricted-imports": [
       "error",
       {

@@ -3,9 +3,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { byString, setByString } from '../../utils';
-import * as CommonValues from '../../utils/common-values';
-import { validateInput } from '../../utils/validate';
+import { byString, setByString } from '@utils';
+import * as CommonValues from '@utils/common-values';
+import { validateInput } from '@utils/validate';
 
 function MTableEditRow(props) {
   const [state, setState] = useState(() => {
@@ -285,8 +285,8 @@ function MTableEditRow(props) {
 
     // Lastly we add detail panel icon
     if (props.detailPanel && props.mode !== 'bulk') {
-      const aligment = props.options.detailPanelColumnAlignment;
-      const index = aligment === 'left' ? 0 : columns.length;
+      const alignment = props.options.detailPanelColumnAlignment;
+      const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
         0,

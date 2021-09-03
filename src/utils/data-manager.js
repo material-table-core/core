@@ -12,11 +12,12 @@ export default class DataManager {
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
-  orderDirection = '';
+  orderDirection = 'desc';
   pageSize = 5;
   paging = true;
   parentFunc = null;
   searchText = '';
+  searchDebounceDelay = 500;
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
@@ -233,6 +234,10 @@ export default class DataManager {
     this.searchText = searchText;
     this.searched = false;
     this.currentPage = 0;
+  }
+
+  changeSearchDebounce(searchDebounceDelay) {
+    this.searchDebounceDelay = searchDebounceDelay;
   }
 
   changeRowEditing(rowData, mode) {
@@ -662,7 +667,7 @@ export default class DataManager {
   };
 
   // =====================================================================================================
-  // DATA MANUPULATIONS
+  // DATA MANIPULATIONS
   // =====================================================================================================
 
   filterData = () => {
