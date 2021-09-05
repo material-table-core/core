@@ -1,3 +1,35 @@
+### 0.2.0 (2021-09-05)
+
+##### Chores
+
+- Update mui to RC ([dff1619d](https://github.com/material-table-core/core/commit/dff1619dcff6ed8aefdd8178d74fb1f306994fd2))
+- update to mui beta v2 ([7e89b840](https://github.com/material-table-core/core/commit/7e89b8405a97b630b9adb4ed3870aeb2c77e11a3))
+- add styles and lab to package json ([f4fb0706](https://github.com/material-table-core/core/commit/f4fb0706084e9d4ce6d92912b9f9a58c428a0279))
+- adjust useTheme ([2235d9d0](https://github.com/material-table-core/core/commit/2235d9d00ecff14827f1876c60ccd6b6daf57d6f))
+
+##### Continuous Integration
+
+- set prelease tag ([bb0d2f20](https://github.com/material-table-core/core/commit/bb0d2f2003db86e3ef91005327c0895f264caba2))
+- add next tag to version ([10b0fbf7](https://github.com/material-table-core/core/commit/10b0fbf7abed4c811a51da9a303124da1a4c24a9))
+- Set next version to 1 ([4d9ef814](https://github.com/material-table-core/core/commit/4d9ef8148ec44cba69c4bbaefacbce09286a1d88))
+- add next release ([11c29727](https://github.com/material-table-core/core/commit/11c297276af9bdbb129919e8de6ac731acd54252))
+
+##### Documentation Changes
+
+- create brach on rlease ([c3e46fc9](https://github.com/material-table-core/core/commit/c3e46fc9ea0c9c85521cb54b32894cf39703312a))
+
+##### Bug Fixes
+
+- datepicker filter fix ([7bb91696](https://github.com/material-table-core/core/commit/7bb916963906a0ce5cf08161d922eb20a0ae6018))
+- set correct background color for toolbar ([ff21b47e](https://github.com/material-table-core/core/commit/ff21b47e496fad1803093c4b3b3a962e98fef591))
+- set next to prerelease ([8999c4fa](https://github.com/material-table-core/core/commit/8999c4fa89a442f54e811948e5dc0c2c926814ca))
+
+##### Other Changes
+
+- adapt to mui beta ([7ff84645](https://github.com/material-table-core/core/commit/7ff84645cbf66cb7228760ab6e860ac2fea25455))
+- //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
+- //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
+
 #### 0.1.3 (2021-08-08)
 
 ##### Chores
