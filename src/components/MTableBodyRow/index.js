@@ -7,7 +7,7 @@ import {
   IconButton,
   Tooltip,
   TableRow
-} from '@material-ui/core';
+} from '@mui/material';
 // Internal
 import { MTableDetailPanel } from '@components/m-table-detailpanel';
 import * as CommonValues from '@utils/common-values';

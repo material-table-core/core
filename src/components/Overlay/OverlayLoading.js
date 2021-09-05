@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, useTheme } from '@material-ui/core';
+import { CircularProgress, useTheme } from '@mui/material';
 
 function OverlayLoading(props) {
   const theme = useTheme();

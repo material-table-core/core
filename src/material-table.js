@@ -9,7 +9,7 @@ import {
   TableFooter,
   TableRow,
   LinearProgress
-} from '@material-ui/core';
+} from '@mui/material';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from '@utils/data-manager';
 import {

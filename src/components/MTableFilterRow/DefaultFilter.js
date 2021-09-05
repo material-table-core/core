@@ -1,6 +1,6 @@
 import React from 'react';
 import { getLocalizedFilterPlaceHolder, getLocalizationData } from './utils';
-import { InputAdornment, TextField, Tooltip } from '@material-ui/core';
+import { InputAdornment, TextField, Tooltip } from '@mui/material';
 
 function DefaultFilter({
   columnDef,

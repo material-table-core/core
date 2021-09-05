@@ -2,7 +2,7 @@
  * Default data for the `MaterialTable.components` attribute
  */
 
-import { TablePagination } from '@material-ui/core';
+import { TablePagination } from '@mui/material';
 
 import {
   Container,

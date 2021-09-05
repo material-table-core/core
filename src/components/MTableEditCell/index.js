@@ -13,7 +13,7 @@
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TableCell, CircularProgress } from '@material-ui/core';
+import { TableCell, CircularProgress } from '@mui/material';
 
 function MTableEditCell(props) {
   const [state, setState] = useState(() => ({

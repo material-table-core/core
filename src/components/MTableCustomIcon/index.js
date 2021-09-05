@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 
 export default function MTableCustomIcon({ icon, iconProps }) {
   if (!icon) {
@@ -17,6 +17,6 @@ MTableCustomIcon.defaultProps = {
 };
 
 MTableCustomIcon.propTypes = {
-  icon: PropTypes.element.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   iconProps: PropTypes.object
 };

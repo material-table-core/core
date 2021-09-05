@@ -1,13 +1,13 @@
 import React from 'react';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import TextField from '@material-ui/core/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import TextField from '@mui/material/TextField';
 import { getLocalizedFilterPlaceHolder } from './utils';
 import {
   DatePicker,
   DateTimePicker,
   TimePicker,
   LocalizationProvider
-} from '@material-ui/lab';
+} from '@mui/lab';
 
 function DateFilter({
   columnDef,

@@ -1,6 +1,6 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { LocalizationProvider, TimePicker } from '@material-ui/lab';
+import { LocalizationProvider, TimePicker } from '@mui/lab';
 
 function TimeField({ forwardedRef, ...props }) {
   return (

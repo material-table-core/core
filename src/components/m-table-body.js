@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableBody, TableCell, TableRow } from '@material-ui/core';
+import { TableBody, TableCell, TableRow } from '@mui/material';
 
 class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {

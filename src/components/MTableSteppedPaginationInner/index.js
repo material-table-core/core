@@ -1,10 +1,10 @@
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 
 function MTablePaginationInner(props) {
   const theme = useTheme();

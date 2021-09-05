@@ -4,7 +4,7 @@
 
 /* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 
 export default {
   Add: forwardRef((props, ref) => (
