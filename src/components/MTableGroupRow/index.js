@@ -1,6 +1,7 @@
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
+import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -34,6 +35,7 @@ function MTableGroupRow(props) {
             level={props.level + 1}
             path={[...props.path, index]}
             onGroupExpandChanged={props.onGroupExpandChanged}
+            onGroupSelected={props.onGroupSelected}
             onRowSelected={props.onRowSelected}
             onRowClick={props.onRowClick}
             onToggleDetailPanel={props.onToggleDetailPanel}
@@ -126,6 +128,34 @@ function MTableGroupRow(props) {
 
     const separator = props.options.groupRowSeparator || ': ';
 
+    const showSelectGroupCheckbox =
+      props.options.selection && props.options.showSelectGroupCheckbox;
+
+    const mapSelectedRows = (groupData) => {
+      let totalRows = 0;
+      let selectedRows = 0;
+
+      if (showSelectGroupCheckbox) {
+        if (groupData.data.length) {
+          totalRows += groupData.data.length;
+          groupData.data.forEach(
+            (row) => row.tableData.checked && selectedRows++
+          );
+        } else {
+          groupData.groups.forEach((group) => {
+            const [groupTotalRows, groupSelectedRows] = mapSelectedRows(group);
+
+            totalRows += groupTotalRows;
+            selectedRows += groupSelectedRows;
+          });
+        }
+      }
+
+      return [totalRows, selectedRows];
+    };
+
+    const [totalRows, selectedRows] = mapSelectedRows(props.groupData);
+
     return (
       <>
         <TableRow ref={props.forwardedRef}>
@@ -149,6 +179,17 @@ function MTableGroupRow(props) {
               >
                 <props.icons.DetailPanel />
               </IconButton>
+              {showSelectGroupCheckbox && (
+                <Checkbox
+                  indeterminate={selectedRows > 0 && totalRows !== selectedRows}
+                  checked={totalRows === selectedRows}
+                  onChange={(event, checked) =>
+                    props.onGroupSelected &&
+                    props.onGroupSelected(checked, props.groupData.path)
+                  }
+                  style={{ marginRight: 8 }}
+                />
+              )}
               <b>
                 {title}
                 {separator}
@@ -196,6 +237,7 @@ MTableGroupRow.propTypes = {
   onEditingCanceled: PropTypes.func,
   onGroupExpandChanged: PropTypes.func,
   onRowClick: PropTypes.func,
+  onGroupSelected: PropTypes.func,
   onRowSelected: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,

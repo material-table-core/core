@@ -134,8 +134,7 @@ export default class DataManager {
 
     usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width =
-        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -298,6 +297,33 @@ export default class DataManager {
 
     this.selectedCount = checked ? selectedCount : 0;
   }
+
+  changeGroupSelected = (checked, path) => {
+    let currentGroup;
+    let currentGroupArray = this.groupedData;
+
+    path.forEach((value) => {
+      currentGroup = currentGroupArray.find((group) => group.value == value);
+      currentGroupArray = currentGroup.groups;
+    });
+
+    const setCheck = (data) => {
+      data.forEach((element) => {
+        if (element.groups.length > 0) {
+          setCheck(element.groups);
+        } else {
+          element.data.forEach((d) => {
+            if (d.tableData.checked != checked) {
+              d.tableData.checked = d.tableData.disabled ? false : checked;
+              this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+            }
+          });
+        }
+      });
+    };
+
+    setCheck([currentGroup]);
+  };
 
   changeOrder(orderBy, orderDirection) {
     this.orderBy = orderBy;
@@ -672,12 +698,7 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched =
-      this.grouped =
-      this.treefied =
-      this.sorted =
-      this.paged =
-        false;
+    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
 
