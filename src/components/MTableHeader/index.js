@@ -255,6 +255,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             className={props.classes.header}
             style={getCellStyle(columnDef)}
             size={size}
+            aria-label={columnDef.ariaLabel}
           >
             {content}
           </TableCell>
