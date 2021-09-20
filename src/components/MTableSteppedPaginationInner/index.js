@@ -83,6 +83,7 @@ function MTablePaginationInner(props) {
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
                 aria-label={localization.firstAriaLabel}
+                size="large"
               >
                 {theme.direction === 'rtl' ? (
                   <props.icons.LastPage />
@@ -99,6 +100,7 @@ function MTablePaginationInner(props) {
               onClick={handleBackButtonClick}
               disabled={page === 0}
               aria-label={localization.previousAriaLabel}
+              size="large"
             >
               <props.icons.PreviousPage />
             </IconButton>
@@ -113,6 +115,7 @@ function MTablePaginationInner(props) {
               onClick={handleNextButtonClick}
               disabled={page >= maxPages}
               aria-label={localization.nextAriaLabel}
+              size="large"
             >
               <props.icons.NextPage />
             </IconButton>
@@ -125,6 +128,7 @@ function MTablePaginationInner(props) {
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label={localization.lastAriaLabel}
+                size="large"
               >
                 {theme.direction === 'rtl' ? (
                   <props.icons.FirstPage />

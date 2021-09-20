@@ -103,6 +103,7 @@ export function MTableToolbar(props) {
                   disabled={!state.searchText}
                   onClick={() => onSearchChange('')}
                   aria-label={localization.clearSearchAriaLabel}
+                  size="large"
                 >
                   <props.icons.ResetSearch
                     fontSize="small"
@@ -143,6 +144,7 @@ export function MTableToolbar(props) {
                   })
                 }
                 aria-label={localization.showColumnsAriaLabel}
+                size="large"
               >
                 <props.icons.ViewColumn />
               </IconButton>
@@ -216,6 +218,7 @@ export function MTableToolbar(props) {
                   })
                 }
                 aria-label={localization.exportAriaLabel}
+                size="large"
               >
                 <props.icons.Export />
               </IconButton>

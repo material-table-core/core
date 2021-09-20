@@ -146,6 +146,7 @@ function MTableGroupRow(props) {
                 onClick={(event) => {
                   props.onGroupExpandChanged(props.path);
                 }}
+                size="large"
               >
                 <props.icons.DetailPanel />
               </IconButton>

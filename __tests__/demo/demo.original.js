@@ -1,16 +1,18 @@
-import { Grid, ThemeProvider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { Grid, ThemeProvider, StyledEngineProvider } from '@mui/material';
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
 import React, { Component } from 'react';
 import MaterialTable from '../src';
 
 let direction = 'ltr';
 // direction = 'rtl';
-const theme = createTheme({
-  direction: direction,
-  palette: {
-    mode: 'light'
-  }
-});
+const theme = createTheme(
+  adaptV4Theme({
+    direction: direction,
+    palette: {
+      mode: 'light'
+    }
+  })
+);
 
 const bigData = [];
 for (let i = 0; i < 1; i++) {
@@ -485,202 +487,207 @@ class App extends Component {
   render() {
     return (
       <>
-        <ThemeProvider theme={theme}>
-          <div style={{ maxWidth: '100%', direction }}>
-            <Grid container>
-              <Grid item xs={12}>
-                {this.state.selectedRows && this.state.selectedRows.length}
-                <MaterialTable
-                  tableRef={this.tableRef}
-                  columns={this.state.columns}
-                  data={this.state.data}
-                  title="Demo Title"
-                  onFilterChange={(appliedFilter) => {
-                    console.log('selected Filters : ', appliedFilter);
-                  }}
-                  // cellEditable={{
-                  //   cellStyle: {},
-                  //   onCellEditApproved: (
-                  //     newValue,
-                  //     oldValue,
-                  //     rowData,
-                  //     columnDef
-                  //   ) => {
-                  //     return new Promise((resolve, reject) => {
-                  //       console.log("newValue: " + newValue);
-                  //       setTimeout(resolve, 4000);
-                  //     });
-                  //   },
-                  //   isCellEditable: (rowData, columnDef) => {
-                  //     return !(columnDef.field === "birthCity" && rowData.birthCity === 34);
-                  //   },
-                  // }}
-                  options={{
-                    filtering: true,
-                    tableLayout: 'fixed',
-                    columnResizable: true,
-                    exportButton: true,
-                    headerSelectionProps: {
-                      color: 'primary'
-                    },
-                    selection: false,
-                    selectionProps: (rowData) => {
-                      rowData.tableData.disabled = rowData.name === 'A1';
-
-                      return {
-                        disabled: rowData.name === 'A1',
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <div style={{ maxWidth: '100%', direction }}>
+              <Grid container>
+                <Grid item xs={12}>
+                  {this.state.selectedRows && this.state.selectedRows.length}
+                  <MaterialTable
+                    tableRef={this.tableRef}
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    title="Demo Title"
+                    onFilterChange={(appliedFilter) => {
+                      console.log('selected Filters : ', appliedFilter);
+                    }}
+                    // cellEditable={{
+                    //   cellStyle: {},
+                    //   onCellEditApproved: (
+                    //     newValue,
+                    //     oldValue,
+                    //     rowData,
+                    //     columnDef
+                    //   ) => {
+                    //     return new Promise((resolve, reject) => {
+                    //       console.log("newValue: " + newValue);
+                    //       setTimeout(resolve, 4000);
+                    //     });
+                    //   },
+                    //   isCellEditable: (rowData, columnDef) => {
+                    //     return !(columnDef.field === "birthCity" && rowData.birthCity === 34);
+                    //   },
+                    // }}
+                    options={{
+                      filtering: true,
+                      tableLayout: 'fixed',
+                      columnResizable: true,
+                      exportButton: true,
+                      headerSelectionProps: {
                         color: 'primary'
-                      };
-                    }
-                  }}
-                  // editable={{
-                  //   onBulkUpdate: (changedRows) =>
-                  //     new Promise((resolve, reject) => {
-                  //       console.log(changedRows);
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           data.push(newData);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowAdd: (newData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           data.push(newData);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowUpdate: (newData, oldData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           const index = data.indexOf(oldData);
-                  //           data[index] = newData;
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowDelete: (oldData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* let data = this.state.data;
-                  //           const index = data.indexOf(oldData);
-                  //           data.splice(index, 1);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  // }}
-                  localization={{
-                    body: {
-                      emptyDataSourceMessage: 'No records to display',
-                      filterRow: {
-                        filterTooltip: 'Filter',
-                        filterPlaceHolder: 'Filter'
+                      },
+                      selection: false,
+                      selectionProps: (rowData) => {
+                        rowData.tableData.disabled = rowData.name === 'A1';
+
+                        return {
+                          disabled: rowData.name === 'A1',
+                          color: 'primary'
+                        };
                       }
+                    }}
+                    // editable={{
+                    //   onBulkUpdate: (changedRows) =>
+                    //     new Promise((resolve, reject) => {
+                    //       console.log(changedRows);
+                    //       setTimeout(() => {
+                    //         {
+                    //           /* const data = this.state.data;
+                    //           data.push(newData);
+                    //           this.setState({ data }, () => resolve()); */
+                    //         }
+                    //         resolve();
+                    //       }, 1000);
+                    //     }),
+                    //   onRowAdd: (newData) =>
+                    //     new Promise((resolve, reject) => {
+                    //       setTimeout(() => {
+                    //         {
+                    //           /* const data = this.state.data;
+                    //           data.push(newData);
+                    //           this.setState({ data }, () => resolve()); */
+                    //         }
+                    //         resolve();
+                    //       }, 1000);
+                    //     }),
+                    //   onRowUpdate: (newData, oldData) =>
+                    //     new Promise((resolve, reject) => {
+                    //       setTimeout(() => {
+                    //         {
+                    //           /* const data = this.state.data;
+                    //           const index = data.indexOf(oldData);
+                    //           data[index] = newData;
+                    //           this.setState({ data }, () => resolve()); */
+                    //         }
+                    //         resolve();
+                    //       }, 1000);
+                    //     }),
+                    //   onRowDelete: (oldData) =>
+                    //     new Promise((resolve, reject) => {
+                    //       setTimeout(() => {
+                    //         {
+                    //           /* let data = this.state.data;
+                    //           const index = data.indexOf(oldData);
+                    //           data.splice(index, 1);
+                    //           this.setState({ data }, () => resolve()); */
+                    //         }
+                    //         resolve();
+                    //       }, 1000);
+                    //     }),
+                    // }}
+                    localization={{
+                      body: {
+                        emptyDataSourceMessage: 'No records to display',
+                        filterRow: {
+                          filterTooltip: 'Filter',
+                          filterPlaceHolder: 'Filter'
+                        }
+                      }
+                    }}
+                    onSearchChange={(e) => console.log('search changed: ' + e)}
+                    onColumnDragged={(oldPos, newPos) =>
+                      console.log(
+                        'Dropped column from ' +
+                          oldPos +
+                          ' to position ' +
+                          newPos
+                      )
                     }
-                  }}
-                  onSearchChange={(e) => console.log('search changed: ' + e)}
-                  onColumnDragged={(oldPos, newPos) =>
-                    console.log(
-                      'Dropped column from ' + oldPos + ' to position ' + newPos
-                    )
-                  }
-                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                />
+                    // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-            {this.state.text}
-            <button
-              onClick={() => this.tableRef.current.onAllSelected(true)}
-              style={{ margin: 10 }}
-            >
-              Select
-            </button>
-            {
-              // <MaterialTable
-              // title={
-              //   <Typography variant="h6" color="primary">
-              //     Remote Data Preview
-              //   </Typography>
-              // }
-              // columns={[
-              //   {
-              //     title: "Avatar",
-              //     field: "avatar",
-              //     render: (rowData) => (
-              //       <img
-              //         style={{ height: 36, borderRadius: "50%" }}
-              //         src={rowData.avatar}
-              //       />
-              //     ),
-              //   },
-              //   {
-              //     title: "Id",
-              //     field: "id",
-              //     filterOnItemSelect: true,
-              //     filterPlaceholder: "placeholder",
-              //     lookup: {
-              //       1: "1",
-              //       2: "2",
-              //       3: "3",
-              //       4: "4",
-              //       5: "5",
-              //       6: "6",
-              //       7: "7",
-              //       8: "8",
-              //       9: "9",
-              //       10: "10",
-              //       11: "11",
-              //       12: "12",
-              //     },
-              //   },
-              //   { title: "First Name", field: "first_name" },
-              //   { title: "Last Name", field: "last_name" },
-              // ]}
-              // options={{
-              //   filtering: true,
-              //   grouping: true,
-              //   groupTitle: (group) => group.data.length,
-              //   searchFieldVariant: "outlined",
-              // }}
-              // localization={{
-              //   toolbar: {
-              //     searchPlaceholder: "Outlined Search Field",
-              //   },
-              // }}
-              // data={(query) =>
-              //   new Promise((resolve, reject) => {
-              //     let url = "https://reqres.in/api/users?";
-              //     url += "per_page=" + query.pageSize;
-              //     url += "&page=" + (query.page + 1);
-              //     console.log(query);
-              //     fetch(url)
-              //       .then((response) => response.json())
-              //       .then((result) => {
-              //         resolve({
-              //           data: result.data,
-              //           page: result.page - 1,
-              //           totalCount: result.total,
-              //        });
-              //     });
-              //   })
-              // }
-              // />
-            }
-          </div>
-        </ThemeProvider>
+              {this.state.text}
+              <button
+                onClick={() => this.tableRef.current.onAllSelected(true)}
+                style={{ margin: 10 }}
+              >
+                Select
+              </button>
+              {
+                // <MaterialTable
+                // title={
+                //   <Typography variant="h6" color="primary">
+                //     Remote Data Preview
+                //   </Typography>
+                // }
+                // columns={[
+                //   {
+                //     title: "Avatar",
+                //     field: "avatar",
+                //     render: (rowData) => (
+                //       <img
+                //         style={{ height: 36, borderRadius: "50%" }}
+                //         src={rowData.avatar}
+                //       />
+                //     ),
+                //   },
+                //   {
+                //     title: "Id",
+                //     field: "id",
+                //     filterOnItemSelect: true,
+                //     filterPlaceholder: "placeholder",
+                //     lookup: {
+                //       1: "1",
+                //       2: "2",
+                //       3: "3",
+                //       4: "4",
+                //       5: "5",
+                //       6: "6",
+                //       7: "7",
+                //       8: "8",
+                //       9: "9",
+                //       10: "10",
+                //       11: "11",
+                //       12: "12",
+                //     },
+                //   },
+                //   { title: "First Name", field: "first_name" },
+                //   { title: "Last Name", field: "last_name" },
+                // ]}
+                // options={{
+                //   filtering: true,
+                //   grouping: true,
+                //   groupTitle: (group) => group.data.length,
+                //   searchFieldVariant: "outlined",
+                // }}
+                // localization={{
+                //   toolbar: {
+                //     searchPlaceholder: "Outlined Search Field",
+                //   },
+                // }}
+                // data={(query) =>
+                //   new Promise((resolve, reject) => {
+                //     let url = "https://reqres.in/api/users?";
+                //     url += "per_page=" + query.pageSize;
+                //     url += "&page=" + (query.page + 1);
+                //     console.log(query);
+                //     fetch(url)
+                //       .then((response) => response.json())
+                //       .then((result) => {
+                //         resolve({
+                //           data: result.data,
+                //           page: result.page - 1,
+                //           totalCount: result.total,
+                //        });
+                //     });
+                //   })
+                // }
+                // />
+              }
+            </div>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </>
     );
   }
