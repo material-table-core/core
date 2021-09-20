@@ -1,5 +1,7 @@
 #### 0.2.1 (2021-09-20)
 
+We updated to the stable release of MUI v5. Please update accordingly.
+
 ##### Chores
 
 - update to v5 stable ([ac8008e8](https://github.com/material-table-core/core/commit/ac8008e82cd3ea70e7307ab4475889c837c73824))
