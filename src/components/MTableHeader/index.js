@@ -145,10 +145,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
 
   function renderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
-    const localization = {
-      ...MTableHeader.defaultProps.localization,
-      ...props.localization
-    };
+
     const mapArr = props.columns
       .filter(
         (columnDef) =>
@@ -184,7 +181,6 @@ export function MTableHeader({ onColumnResized, ...props }) {
           content = (
             <TableSortLabel
               role=""
-              aria-label={localization.sorting}
               IconComponent={props.icons.SortArrow}
               active={props.orderBy === columnDef.tableData.id}
               direction={
@@ -376,8 +372,7 @@ MTableHeader.defaultProps = {
   sorting: true,
   keepSortDirectionOnColumnSwitch: true,
   localization: {
-    actions: 'Actions',
-    sorting: 'Sorting Button'
+    actions: 'Actions'
   },
   orderBy: undefined,
   orderDirection: 'asc',
