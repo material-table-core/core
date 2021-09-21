@@ -179,7 +179,7 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns)
+    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
       columnPropsChanged || !equal(prevProps.options, this.props.options);
     if (!this.isRemoteData()) {
@@ -1033,9 +1033,10 @@ export default class MaterialTable extends React.Component {
       result.push(selectionWidth + 'px');
     }
 
-    for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef =
-        props.columns[count >= 0 ? i : props.columns.length - 1 - i];
+    for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
