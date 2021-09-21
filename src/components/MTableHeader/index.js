@@ -183,6 +183,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
               role=""
               IconComponent={props.icons.SortArrow}
               active={props.orderBy === columnDef.tableData.id}
+              data-testid="mtableheader-sortlabel"
               direction={
                 // If current sorted column or prop asked to
                 // maintain sort order when switching sorted column,
