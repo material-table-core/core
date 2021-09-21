@@ -28,6 +28,7 @@ export default {
   showEmptyDataSourceMessage: true,
   showFirstLastPageButtons: true,
   showSelectAllCheckbox: true,
+  showSelectGroupCheckbox: true,
   search: true,
   showTitle: true,
   showTextRowsSelected: true,
