@@ -50,11 +50,13 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('columnheader', { name: /age/i });
       expect(
         screen.getAllByRole('button', { name: /first name/i })
-      ).toHaveLength(2);
+      ).toHaveLength(1);
       expect(
         screen.getAllByRole('button', { name: /last name/i })
-      ).toHaveLength(2);
-      expect(screen.getAllByRole('button', { name: 'Age' })).toHaveLength(2);
+      ).toHaveLength(1);
+
+      expect(screen.getAllByTestId('mtableheader-sortlabel')).toHaveLength(3);
+      expect(screen.getAllByRole('button', { name: 'Age' })).toHaveLength(1);
       expect(screen.getAllByRole('row')).toHaveLength(7);
       screen.getByRole('row', {
         name: /first name last name age/i
