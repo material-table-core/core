@@ -146,6 +146,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
 
   function renderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
+
     const mapArr = props.columns
       .filter(
         (columnDef) =>
@@ -155,7 +156,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       .map((columnDef, index) => {
         let content = columnDef.title;
 
-        if (props.draggable) {
+        if (props.draggable && columnDef.draggable !== false) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
@@ -180,8 +181,10 @@ export function MTableHeader({ onColumnResized, ...props }) {
         if (columnDef.sorting !== false && props.sorting) {
           content = (
             <TableSortLabel
+              role=""
               IconComponent={props.icons.SortArrow}
               active={props.orderBy === columnDef.tableData.id}
+              data-testid="mtableheader-sortlabel"
               direction={
                 // If current sorted column or prop asked to
                 // maintain sort order when switching sorted column,
@@ -250,6 +253,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             sx={styles.header}
             style={getCellStyle(columnDef)}
             size={size}
+            aria-label={columnDef.ariaLabel}
           >
             {content}
           </TableCell>

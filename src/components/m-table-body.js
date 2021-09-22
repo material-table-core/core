@@ -172,6 +172,7 @@ class MTableBody extends React.Component {
         onEditingCanceled={this.props.onEditingCanceled}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowClick={this.props.onRowClick}
+        onGroupSelected={this.props.onGroupSelected}
         onRowSelected={this.props.onRowSelected}
         onToggleDetailPanel={this.props.onToggleDetailPanel}
         onTreeExpandChanged={this.props.onTreeExpandChanged}
@@ -324,6 +325,7 @@ MTableBody.propTypes = {
   onGroupExpandChanged: PropTypes.func,
   onRowClick: PropTypes.func,
   onRowDoubleClick: PropTypes.func,
+  onGroupSelected: PropTypes.func,
   onRowSelected: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,

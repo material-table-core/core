@@ -21,15 +21,20 @@ function MTableDetailPanel(props) {
   if (!props.detailPanel) {
     return <React.Fragment />;
   } else {
+    console.log(typeof props.detailPanel, props.detailPanel);
     if (typeof props.detailPanel === 'function') {
       renderFunction = props.detailPanel;
     } else {
       renderFunction = props.detailPanel
-        ? props.detailPanel.find(
-            (panel) =>
-              panel.render.toString() ===
-              (props.data.tableData.showDetailPanel || '').toString()
-          )
+        ? props.detailPanel
+            .map((panel) =>
+              typeof panel === 'function' ? panel(props.data) : panel
+            )
+            .find(
+              (panel) =>
+                panel.render.toString() ===
+                (props.data.tableData.showDetailPanel || '').toString()
+            )
         : undefined;
       renderFunction = renderFunction ? renderFunction.render : null;
     }

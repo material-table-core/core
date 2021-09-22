@@ -48,6 +48,8 @@ export const propTypes = {
         minimumFractionDigits: PropTypes.number,
         maximumFractionDigits: PropTypes.number
       }),
+      ariaLabel: PropTypes.string,
+      draggable: PropTypes.bool,
       customFilterAndSearch: PropTypes.func,
       customSort: PropTypes.func,
       customExport: PropTypes.func,
@@ -362,6 +364,7 @@ export const propTypes = {
     showEmptyDataSourceMessage: PropTypes.bool,
     showFirstLastPageButtons: PropTypes.bool,
     showSelectAllCheckbox: PropTypes.bool,
+    showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
