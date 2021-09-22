@@ -1,3 +1,13 @@
+#### 4.3.2 (2021-09-22)
+
+##### New Features
+
+- Add group selection. ([#343](https://github.com/material-table-core/core/pull/343)) ([479798c2](https://github.com/material-table-core/core/commit/479798c28f63fe9c46b5f07b711362aff8c8d30a))
+
+##### Bug Fixes
+
+- regression of optional detail panel function ([6d55e366](https://github.com/material-table-core/core/commit/6d55e3660aa869df555197f1cf8bbfdf33b15d7f))
+
 #### 4.3.1 (2021-08-31)
 
 ##### Chores
