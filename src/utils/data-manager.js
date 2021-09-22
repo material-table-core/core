@@ -1082,6 +1082,17 @@ export default class DataManager {
           } else {
             if (this.orderBy >= 0 && this.orderDirection) {
               element.data = this.sortList(element.data);
+            } else if (this.orderDirection === '') {
+              element.data = element.data.sort((a, b) => {
+                return (
+                  this.data.findIndex(
+                    (val) => val.tableData.id === a.tableData.id
+                  ) -
+                  this.data.findIndex(
+                    (val) => val.tableData.id === b.tableData.id
+                  )
+                );
+              });
             }
           }
         });
