@@ -311,6 +311,33 @@ export default class DataManager {
     this.selectedCount = checked ? selectedCount : 0;
   }
 
+  changeGroupSelected = (checked, path) => {
+    let currentGroup;
+    let currentGroupArray = this.groupedData;
+
+    path.forEach((value) => {
+      currentGroup = currentGroupArray.find((group) => group.value == value);
+      currentGroupArray = currentGroup.groups;
+    });
+
+    const setCheck = (data) => {
+      data.forEach((element) => {
+        if (element.groups.length > 0) {
+          setCheck(element.groups);
+        } else {
+          element.data.forEach((d) => {
+            if (d.tableData.checked != checked) {
+              d.tableData.checked = d.tableData.disabled ? false : checked;
+              this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+            }
+          });
+        }
+      });
+    };
+
+    setCheck([currentGroup]);
+  };
+
   changeOrder(orderBy, orderDirection) {
     this.orderBy = orderBy;
     this.orderDirection = orderDirection;
@@ -1068,6 +1095,17 @@ export default class DataManager {
           } else {
             if (this.orderBy >= 0 && this.orderDirection) {
               element.data = this.sortList(element.data);
+            } else if (this.orderDirection === '') {
+              element.data = element.data.sort((a, b) => {
+                return (
+                  this.data.findIndex(
+                    (val) => val.tableData.id === a.tableData.id
+                  ) -
+                  this.data.findIndex(
+                    (val) => val.tableData.id === b.tableData.id
+                  )
+                );
+              });
             }
           }
         });

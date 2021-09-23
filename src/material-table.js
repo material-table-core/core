@@ -179,7 +179,7 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns)
+    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
       columnPropsChanged || !equal(prevProps.options, this.props.options);
     if (!this.isRemoteData()) {
@@ -404,6 +404,13 @@ export default class MaterialTable extends React.Component {
       checked,
       this.props.options.selectionProps
     );
+    this.setState(this.dataManager.getRenderState(), () =>
+      this.onSelectionChange()
+    );
+  };
+
+  onGroupSelected = (checked, path) => {
+    this.dataManager.changeGroupSelected(checked, path);
     this.setState(this.dataManager.getRenderState(), () =>
       this.onSelectionChange()
     );
@@ -939,6 +946,7 @@ export default class MaterialTable extends React.Component {
             ).length > 0
           }
           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+          showSelectGroupCheckbox={props.options.showSelectGroupCheckbox}
           orderBy={this.state.orderBy}
           orderDirection={this.state.orderDirection}
           onAllSelected={this.onAllSelected}
@@ -976,6 +984,7 @@ export default class MaterialTable extends React.Component {
         isTreeData={this.props.parentChildData !== undefined}
         onFilterChanged={this.onFilterChange}
         onRowSelected={this.onRowSelected}
+        onGroupSelected={this.onGroupSelected}
         onToggleDetailPanel={this.onToggleDetailPanel}
         onGroupExpandChanged={this.onGroupExpandChanged}
         onTreeExpandChanged={this.onTreeExpandChanged}
@@ -1033,9 +1042,10 @@ export default class MaterialTable extends React.Component {
       result.push(selectionWidth + 'px');
     }
 
-    for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef =
-        props.columns[count >= 0 ? i : props.columns.length - 1 - i];
+    for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
