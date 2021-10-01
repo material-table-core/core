@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import DateFnsUtils from '@date-io/date-fns';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   LocalizationProvider,
   TimePicker,
@@ -91,9 +91,10 @@ class MTableEditField extends React.Component {
       this.props.columnDef.dateSetting.format
         ? this.props.columnDef.dateSetting.format
         : 'dd.MM.yyyy';
+    console.log(this.props.locale);
     return (
       <LocalizationProvider
-        dateAdapter={DateFnsUtils}
+        dateAdapter={AdapterDateFns}
         locale={this.props.locale}
       >
         <DatePicker
@@ -119,7 +120,7 @@ class MTableEditField extends React.Component {
   renderTimeField() {
     return (
       <LocalizationProvider
-        dateAdapter={DateFnsUtils}
+        dateAdapter={AdapterDateFns}
         locale={this.props.locale}
       >
         <TimePicker
@@ -145,7 +146,7 @@ class MTableEditField extends React.Component {
   renderDateTimeField() {
     return (
       <LocalizationProvider
-        dateAdapter={DateFnsUtils}
+        dateAdapter={AdapterDateFns}
         locale={this.props.locale}
       >
         <DateTimePicker
