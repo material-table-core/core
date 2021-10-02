@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@mui/material';
+import { Icon } from '@material-ui/core';
 
 export default function MTableCustomIcon({ icon, iconProps }) {
   if (!icon) {
