@@ -38,6 +38,7 @@ function MTableCell(props) {
         style={{
           borderBottom: '1px dashed grey',
           cursor: 'pointer',
+          marginLeft: cellAlignment === 'right' ? 'auto' : undefined,
           width: 'max-content'
         }}
         onClick={(e) => {
