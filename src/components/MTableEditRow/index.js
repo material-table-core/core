@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { byString, setByString } from '@utils';
+import { setByString } from '@utils';
 import * as CommonValues from '@utils/common-values';
 import { validateInput } from '@utils/validate';
 
@@ -13,7 +13,7 @@ function MTableEditRow(props) {
       return props.columns
         .filter((column) => 'initialEditValue' in column && column.field)
         .reduce((prev, column) => {
-          prev[column.field] = column.initialEditValue;
+          setByString(prev, column.field, column.initialEditValue);
           return prev;
         }, {});
     }
@@ -37,10 +37,7 @@ function MTableEditRow(props) {
       )
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        const value =
-          typeof state.data[columnDef.field] !== 'undefined'
-            ? state.data[columnDef.field]
-            : byString(state.data, columnDef.field);
+        const value = props.getFieldValue(state.data, columnDef);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
             color: 'inherit'
