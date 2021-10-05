@@ -13,7 +13,7 @@ class MTableEditCell extends React.Component {
         helperText: ''
       },
       isLoading: false,
-      value: this.props.rowData[this.props.columnDef.field]
+      value: props.getFieldValue(this.props.rowData, this.props.columnDef)
     };
   }
 
@@ -72,7 +72,7 @@ class MTableEditCell extends React.Component {
       this.props.cellEditable
         .onCellEditApproved(
           this.state.value, // newValue
-          this.props.rowData[this.props.columnDef.field], // oldValue
+          this.props.getFieldValue(this.props.rowData, this.props.columnDef), // oldValue
           this.props.rowData, // rowData with old value
           this.props.columnDef // columnDef
         )
@@ -172,7 +172,8 @@ MTableEditCell.propTypes = {
   localization: PropTypes.object.isRequired,
   onCellEditFinished: PropTypes.func.isRequired,
   rowData: PropTypes.object.isRequired,
-  size: PropTypes.string
+  size: PropTypes.string,
+  getFieldValue: PropTypes.func.isRequired
 };
 
 export default MTableEditCell;

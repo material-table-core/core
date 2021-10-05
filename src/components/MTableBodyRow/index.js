@@ -82,6 +82,7 @@ export default function MTableBodyRow(props) {
         ) {
           return (
             <props.components.EditCell
+              getFieldValue={props.getFieldValue}
               components={props.components}
               icons={props.icons}
               localization={props.localization}

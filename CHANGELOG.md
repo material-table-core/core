@@ -274,6 +274,8 @@ We updated to the stable release of MUI v5. Please update accordingly.
 
 - # //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.4 (2021-10-03)
+
 #### 4.3.3 (2021-09-22)
 
 #### 4.3.2 (2021-09-22)
