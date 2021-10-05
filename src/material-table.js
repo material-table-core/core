@@ -97,7 +97,6 @@ export default class MaterialTable extends React.Component {
       let materialTableGroupings = localStorage.getItem(
         'material-table-groupings'
       );
-      console.log(materialTableGroupings);
       if (materialTableGroupings) {
         materialTableGroupings = JSON.parse(materialTableGroupings);
 
