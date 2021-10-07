@@ -323,6 +323,7 @@ export function MTableToolbar(props) {
     return (
       <Toolbar
         ref={props.forwardedRef}
+        className={props.className}
         sx={{
           ...styles.root,
           ...(props.showTextRowsSelected &&
@@ -376,6 +377,7 @@ MTableToolbar.defaultProps = {
 
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
+  className: PropTypes.string,
   columns: PropTypes.array,
   columnsButton: PropTypes.bool,
   components: PropTypes.object.isRequired,
