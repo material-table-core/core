@@ -323,6 +323,7 @@ export function MTableToolbar(props) {
     return (
       <Toolbar
         ref={props.forwardedRef}
+        className={props.className}
         sx={{
           ...styles.root,
           ...(props.showTextRowsSelected &&
