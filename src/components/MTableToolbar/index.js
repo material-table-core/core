@@ -377,6 +377,7 @@ MTableToolbar.defaultProps = {
 
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
+  className: PropTypes.string,
   columns: PropTypes.array,
   columnsButton: PropTypes.bool,
   components: PropTypes.object.isRequired,
