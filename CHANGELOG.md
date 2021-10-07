@@ -1,3 +1,9 @@
+#### 0.2.5 (2021-10-07)
+
+##### Other Changes
+
+- MTableToolbar style ([#364](https://github.com/material-table-core/core/pull/364)) ([c7ce0677](https://github.com/material-table-core/core/commit/c7ce06770334f8024e8a97f35923da3ea54f2007))
+
 #### 0.2.4 (2021-10-05)
 
 #### 0.2.3 (2021-10-01)
