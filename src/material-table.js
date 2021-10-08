@@ -308,6 +308,10 @@ export default class MaterialTable extends React.Component {
           disabled: !!this.dataManager.lastEditingRow,
           onClick: () => {
             this.dataManager.changeRowEditing();
+            if (this.state.showAddRow) {
+              this.props.editable.onRowAddCancelled &&
+                this.props.editable.onRowAddCancelled();
+            }
             this.setState({
               ...this.dataManager.getRenderState(),
               showAddRow: !this.state.showAddRow
