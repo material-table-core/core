@@ -37,7 +37,7 @@ function MTableEditRow(props) {
       )
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        const value = props.getFieldValue(state.data, columnDef);
+        const value = props.getFieldValue(state.data, columnDef, false);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
             color: 'inherit'
