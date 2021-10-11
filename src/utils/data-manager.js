@@ -78,10 +78,23 @@ export default class DataManager {
       if (tableData.checked) {
         this.selectedCount++;
       }
-      return {
+      const newRow = {
         ...row,
         tableData
       };
+      if (
+        this.lastDetailPanelRow &&
+        this.lastDetailPanelRow.tableData === prevTableData
+      ) {
+        this.lastDetailPanelRow = newRow;
+      }
+      if (
+        this.lastEditingRow &&
+        this.lastEditingRow.tableData === prevTableData
+      ) {
+        this.lastEditingRow = newRow;
+      }
+      return newRow;
     });
 
     this.filtered = false;
