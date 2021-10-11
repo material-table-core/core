@@ -3,8 +3,6 @@ import { TableCell, Collapse, TableRow } from '@material-ui/core';
 
 function MTableDetailPanel(props) {
   const [isOpen, setOpen] = React.useState(false);
-  const [, rerender] = React.useReducer((s) => s + 1, 0);
-  const renderRef = React.useRef();
 
   React.useEffect(() => {
     const shouldOpen = Boolean(
@@ -45,10 +43,10 @@ function MTableDetailPanel(props) {
     }
   });
 
-  if (!renderRef.current && !props.data.tableData.showDetailPanel) {
+  if (!props.data.tableData.showDetailPanel) {
     return null;
   }
-  const Render = renderFunction || renderRef.current;
+  const Render = renderFunction;
   return (
     <TableRow>
       {props.options.detailPanelOffset.left > 0 && (
@@ -73,7 +71,7 @@ function MTableDetailPanel(props) {
             rerender();
           }}
         >
-          <Render rowData={props.data} />
+          <props.detailPanel rowData={props.data} />
         </Collapse>
       </TableCell>
     </TableRow>
