@@ -73,7 +73,7 @@ function MTableDetailPanel(props) {
             rerender();
           }}
         >
-          <Render rowData={props.data} />
+          {Render({ rowData: props.data })}
         </Collapse>
       </TableCell>
     </TableRow>
