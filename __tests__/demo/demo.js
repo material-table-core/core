@@ -38,7 +38,8 @@ import {
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
-  SelectionOnRowClick
+  SelectionOnRowClick,
+  DetailPanelRemounting
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -46,6 +47,9 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>DetailPanelRemounting</h1>
+    <DetailPanelRemounting />
+
     <h1>Switcher</h1>
     <DataSwitcher />
 
