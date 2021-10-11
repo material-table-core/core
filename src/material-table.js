@@ -65,7 +65,10 @@ export default class MaterialTable extends React.Component {
       },
       () => {
         if (this.isRemoteData()) {
-          this.onQueryChange(this.state.query);
+          this.onQueryChange({
+            ...this.state.query,
+            page: this.props.options.initialPage || 0
+          });
         }
         /**
          * THIS WILL NEED TO BE REMOVED EVENTUALLY.
@@ -160,7 +163,9 @@ export default class MaterialTable extends React.Component {
         props.options.initialPage ? props.options.initialPage : 0
       );
     isInit && this.dataManager.changePageSize(props.options.pageSize);
-    this.dataManager.changePaging(props.options.paging);
+    this.dataManager.changePaging(
+      this.isRemoteData() ? false : props.options.paging
+    );
     isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
@@ -677,13 +682,18 @@ export default class MaterialTable extends React.Component {
         .then((result) => {
           query.totalCount = result.totalCount;
           query.page = result.page;
+          const nextQuery = {
+            ...query,
+            totalCount: result.totalCount,
+            page: result.page
+          };
           this.dataManager.setData(result.data);
           this.setState(
             {
               isLoading: false,
               errorState: false,
               ...this.dataManager.getRenderState(),
-              query
+              query: nextQuery
             },
             () => {
               callback && callback();
@@ -1060,7 +1070,6 @@ export default class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
-
     return (
       <DragDropContext
         onDragEnd={this.onDragEnd}
