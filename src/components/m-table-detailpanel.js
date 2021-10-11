@@ -21,7 +21,6 @@ function MTableDetailPanel(props) {
   if (!props.detailPanel) {
     return <React.Fragment />;
   } else {
-    console.log(typeof props.detailPanel, props.detailPanel);
     if (typeof props.detailPanel === 'function') {
       renderFunction = props.detailPanel;
     } else {

@@ -17,6 +17,7 @@ MTableCustomIcon.defaultProps = {
 };
 
 MTableCustomIcon.propTypes = {
-  icon: PropTypes.element.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.elementType])
+    .isRequired,
   iconProps: PropTypes.object
 };
