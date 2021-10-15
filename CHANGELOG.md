@@ -1,3 +1,13 @@
+#### 0.2.6 (2021-10-15)
+
+##### Bug Fixes
+
+- **actions-header:** Do not force textAlign ([#375](https://github.com/material-table-core/core/pull/375)) ([356a0555](https://github.com/material-table-core/core/commit/356a0555681fecfaff4d83c7f4a0a3b3b6c0f1a7))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([b316bf31](https://github.com/material-table-core/core/commit/b316bf319dc8c6aa26c06062cf5e723d404c0ad0))
+
 #### 0.2.5 (2021-10-07)
 
 ##### Other Changes
