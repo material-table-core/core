@@ -78,9 +78,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
         padding="checkbox"
         className={props.classes.header}
         style={{
+          textAlign: 'center',
           ...props.headerStyle,
           width: width,
-          textAlign: 'center',
           boxSizing: 'border-box'
         }}
       >
