@@ -1,7 +1,6 @@
 import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
-import cloneDeep from 'lodash/cloneDeep';
 import {
   Table,
   TableFooter,
@@ -96,37 +95,29 @@ export default class MaterialTable extends React.Component {
           : '';
     }
 
-    const columnsCopy = cloneDeep(props.columns);
-
+    const savedColumns = {};
     if (props.options.persistentGroupingsId) {
       let materialTableGroupings = localStorage.getItem(
         'material-table-groupings'
       );
-
       if (materialTableGroupings) {
         materialTableGroupings = JSON.parse(materialTableGroupings);
 
         if (materialTableGroupings[props.options.persistentGroupingsId]) {
           materialTableGroupings[props.options.persistentGroupingsId].forEach(
             (savedGrouping) => {
-              const column = columnsCopy.find(
-                (col) => col.field === savedGrouping.field
-              );
-              if (column) {
-                if (!column.tableData) {
-                  column.tableData = {};
-                }
-                column.tableData.groupOrder = savedGrouping.groupOrder;
-                column.tableData.groupSort = savedGrouping.groupSort;
-                column.tableData.columnOrder = savedGrouping.columnOrder;
-              }
+              savedColumns[savedGrouping.field] = {
+                groupOrder: savedGrouping.groupOrder,
+                groupSort: savedGrouping.groupSort,
+                columnOrder: savedGrouping.columnOrder
+              };
             }
           );
         }
       }
     }
 
-    this.dataManager.setColumns(columnsCopy, prevColumns);
+    this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
