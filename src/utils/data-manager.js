@@ -78,16 +78,29 @@ export default class DataManager {
       if (tableData.checked) {
         this.selectedCount++;
       }
-      return {
+      const newRow = {
         ...row,
         tableData
       };
+      if (
+        this.lastDetailPanelRow &&
+        this.lastDetailPanelRow.tableData === prevTableData
+      ) {
+        this.lastDetailPanelRow = newRow;
+      }
+      if (
+        this.lastEditingRow &&
+        this.lastEditingRow.tableData === prevTableData
+      ) {
+        this.lastEditingRow = newRow;
+      }
+      return newRow;
     });
 
     this.filtered = false;
   }
 
-  setColumns(columns, prevColumns = []) {
+  setColumns(columns, prevColumns = [], savedColumns = {}) {
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
@@ -104,6 +117,7 @@ export default class DataManager {
         usedWidth.push(width);
       }
       const prevColumn = prevColumns.find(({ id }) => id === index);
+      const savedColumnTableData = savedColumns[columnDef.field] ?? {};
       const tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
@@ -112,6 +126,7 @@ export default class DataManager {
         width,
         initialWidth: width,
         additionalWidth: 0,
+        ...savedColumnTableData,
         ...(prevColumn ? prevColumn.tableData : {}),
         ...columnDef.tableData,
         id: index
