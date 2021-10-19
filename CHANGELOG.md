@@ -1,3 +1,13 @@
+#### 4.3.7 (2021-10-19)
+
+##### Documentation Changes
+
+- add error for pagination with old mui version ([0617b8e3](https://github.com/material-table-core/core/commit/0617b8e30bebb8ec9491b209a1c347c4cfeb669f))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([51682e8d](https://github.com/material-table-core/core/commit/51682e8d07ba07f5823b99efeacfbfbdfef9fecb))
+
 #### 4.3.6 (2021-10-15)
 
 ##### Bug Fixes
