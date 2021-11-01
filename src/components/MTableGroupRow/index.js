@@ -61,7 +61,7 @@ function MTableGroupRow(props) {
                 components={props.components}
                 data={rowData}
                 icons={props.icons}
-                path={[...props.path, index]}
+                path={[...props.path, rowData.tableData.uuid]}
                 localization={props.localization}
                 key={index}
                 mode={rowData.tableData.editing}
@@ -87,7 +87,7 @@ function MTableGroupRow(props) {
                 level={(props.level || 0) + 1}
                 getFieldValue={props.getFieldValue}
                 icons={props.icons}
-                path={[...props.path, index]}
+                path={[...props.path, rowData.tableData.uuid]}
                 onRowSelected={props.onRowSelected}
                 onRowClick={props.onRowClick}
                 onToggleDetailPanel={props.onToggleDetailPanel}
