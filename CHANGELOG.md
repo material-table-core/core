@@ -1,3 +1,9 @@
+#### 4.3.8 (2021-11-01)
+
+##### Bug Fixes
+
+- prevent enter to save for invalid row ([905d5252](https://github.com/material-table-core/core/commit/905d525278a520755ee0367a13425f7dc8132e29))
+
 #### 4.3.7 (2021-10-19)
 
 ##### Documentation Changes
