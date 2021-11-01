@@ -178,48 +178,102 @@ export function BulkEdit() {
   );
 }
 
-export function DataSwitcher() {
-  const global_cols = [
-    { title: 'number', field: 'number', minWidth: 140, maxWidth: 400 }
-  ];
+export const TREE_DATA = [
+  {
+    id: 1,
+    name: 'a',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 63,
+    sex: 'Male',
+    type: 'adult'
+  },
+  {
+    id: 2,
+    name: 'b',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'adult',
+    parentId: 1
+  },
+  {
+    id: 3,
+    name: 'c',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 1
+  },
+  {
+    id: 4,
+    name: 'd',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 3
+  },
+  {
+    id: 5,
+    name: 'e',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child'
+  },
+  {
+    id: 6,
+    name: 'f',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 5
+  }
+];
 
-  const global_data1 = [
-    {
-      number: '1',
-      id: 1
-    },
-    {
-      number: '2',
-      id: 2
-    }
-  ];
-
-  const global_data2 = [
-    {
-      number: '3',
-      id: 7
-    },
-    {
-      number: '4',
-      id: 2
-    }
-  ];
-
-  const [pdata, setPData] = React.useState([]);
-  const [switcher, setSwitcher] = React.useState(true);
-
-  React.useEffect(() => {
-    if (switcher) setPData(global_data1);
-    else setPData(global_data2);
-  }, [switcher]);
-
+export const TREE_COLUMNS = [
+  { title: 'Adı', field: 'name' },
+  { title: 'Soyadı', field: 'surname' },
+  { title: 'Cinsiyet', field: 'sex' },
+  { title: 'Tipi', field: 'type', removable: false },
+  { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+  {
+    title: 'Doğum Yeri',
+    field: 'birthCity',
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+  }
+];
+export const DataSwitcher = () => {
+  const [path, setPath] = useState();
+  const myTableRef = useRef(null);
   return (
-    <>
-      <button onClick={() => setSwitcher(!switcher)}>Cambiar</button>
-      <MaterialTable title="Basic" columns={global_cols} data={pdata} />
-    </>
+    <React.Fragment>
+      <MaterialTable
+        tableRef={myTableRef}
+        data={TREE_DATA}
+        columns={TREE_COLUMNS}
+        parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
+        onRowClick={(e, rowData) => {
+          setPath(rowData.tableData.path);
+          console.log(!!myTableRef);
+          myTableRef.current.onTreeExpandChanged(
+            rowData.tableData.path,
+            rowData
+          );
+        }}
+      />
+      <pre>{JSON.stringify(path)}</pre>
+    </React.Fragment>
   );
-}
+};
 
 export function BulkEditWithDetailPanel() {
   const [data, setData] = useState([
