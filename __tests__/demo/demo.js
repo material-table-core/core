@@ -38,7 +38,8 @@ import {
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
-  SelectionOnRowClick
+  SelectionOnRowClick,
+  TreeData
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -67,14 +68,14 @@ render(
     <BasicRef />
 
     {/*
-    <h1>Export Data</h1>
-    <ExportData />
-    */}
+     <h1>Export Data</h1>
+     <ExportData />
+     */}
 
     {/*
-    <h1>Custom Export </h1>
-    <CustomExport />
-    */}
+     <h1>Custom Export </h1>
+     <CustomExport />
+     */}
 
     <h1>Bulk Edit</h1>
     <BulkEdit />
@@ -117,7 +118,8 @@ render(
 
     <h1>Persistent Groupings unshared</h1>
     <PersistentGroupings persistentGroupingsId="some-other-id" />
-
+    <h1>Tree data</h1>
+    <TreeData />
     <h1>Remote Data Related</h1>
     <ol>
       <li>

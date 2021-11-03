@@ -190,7 +190,9 @@ export default class MaterialTable extends React.Component {
         process.env.NODE_ENV === 'development' &&
         columnPropsChanged &&
         !this.checkedForFunctions &&
-        prevProps.columns.length !== 0
+        prevProps.columns.length !== 0 &&
+        props.data[0] &&
+        props.data[0].id !== undefined
       ) {
         const bothContainFunctions =
           fixedPropsColumns.some((column) =>
