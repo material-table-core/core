@@ -38,7 +38,8 @@ import {
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
-  SelectionOnRowClick
+  SelectionOnRowClick,
+  TableWithSummary
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -117,6 +118,9 @@ render(
 
     <h1>Persistent Groupings unshared</h1>
     <PersistentGroupings persistentGroupingsId="some-other-id" />
+
+    <h1>Table with Summary Row</h1>
+    <TableWithSummary />
 
     <h1>Remote Data Related</h1>
     <ol>

@@ -848,3 +848,21 @@ export function PersistentGroupings(props) {
     />
   );
 }
+
+export function TableWithSummary() {
+  return (
+    <MaterialTable
+      title="Last row of the Table shows summary and is visible across all pages."
+      columns={columns}
+      data={rawData}
+      renderSummaryRow={({ data, index, columns }) => {
+        if (columns[index].field == 'identifier') {
+          const total = data
+            .map((row) => row.identifier)
+            .reduce((a, b) => a + b);
+          return `Total identifiers: ${total}`;
+        } else return null;
+      }}
+    />
+  );
+}
