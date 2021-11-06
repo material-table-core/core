@@ -190,7 +190,9 @@ export default class MaterialTable extends React.Component {
         process.env.NODE_ENV === 'development' &&
         columnPropsChanged &&
         !this.checkedForFunctions &&
-        prevProps.columns.length !== 0
+        prevProps.columns.length !== 0 &&
+        props.data[0] &&
+        props.data[0].id !== undefined
       ) {
         const bothContainFunctions =
           fixedPropsColumns.some((column) =>
@@ -748,7 +750,9 @@ export default class MaterialTable extends React.Component {
       query.page = 0;
       query.search = searchText;
 
-      this.onQueryChange(query);
+      this.onQueryChange(query, () => {
+        this.props.onSearchChange && this.props.onSearchChange(searchText);
+      });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onSearchChange && this.props.onSearchChange(searchText);
@@ -773,7 +777,9 @@ export default class MaterialTable extends React.Component {
           value: a.tableData.filterValue
         }));
 
-      this.onQueryChange(query);
+      this.onQueryChange(query, () => {
+        this.props.onFilterChange && this.props.onFilterChange(query.filters);
+      });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
         if (this.props.onFilterChange) {
