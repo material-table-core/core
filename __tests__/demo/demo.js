@@ -42,7 +42,10 @@ import {
   DataSwitcher,
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
-  SelectionOnRowClick
+  SelectionOnRowClick,
+  DetailPanelRemounting,
+  TreeData,
+  TableWithSummary
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 
@@ -51,6 +54,9 @@ module.hot.accept();
 render(
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme={createTheme()}>
+      <h1>DetailPanelRemounting</h1>
+      <DetailPanelRemounting />
+
       <h1>Switcher</h1>
       <DataSwitcher />
 
@@ -64,6 +70,7 @@ render(
 
       <h1>DetailPanelIssuesProgrammaticallyHidingWhenOpen</h1>
       <DetailPanelIssuesProgrammaticallyHidingWhenOpen />
+
       <h1>Basic</h1>
       <Basic />
 
@@ -71,14 +78,14 @@ render(
       <BasicRef />
 
       {/*
-      <h1>Export Data</h1>
-      <ExportData />
-      */}
+     <h1>Export Data</h1>
+     <ExportData />
+     */}
 
       {/*
-      <h1>Custom Export </h1>
-      <CustomExport />
-      */}
+     <h1>Custom Export </h1>
+     <CustomExport />
+     */}
 
       <h1>Bulk Edit</h1>
       <BulkEdit />
@@ -121,7 +128,10 @@ render(
 
       <h1>Persistent Groupings unshared</h1>
       <PersistentGroupings persistentGroupingsId="some-other-id" />
-
+      <h1>Tree data</h1>
+      <TreeData />
+      <h1>Table with Summary Row</h1>
+      <TableWithSummary />
       <h1>Remote Data Related</h1>
       <ol>
         <li>

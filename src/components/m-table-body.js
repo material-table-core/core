@@ -102,6 +102,10 @@ class MTableBody extends React.Component {
           />
         );
       } else {
+        // Treeified data is using the uuid, while the grouped data used the index
+        const path = this.props.isTreeData
+          ? [data.tableData.uuid]
+          : [index + this.props.pageSize * this.props.currentPage];
         return (
           <this.props.components.Row
             components={this.props.components}
@@ -123,7 +127,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns}
             getFieldValue={this.props.getFieldValue}
             detailPanel={this.props.detailPanel}
-            path={[index + this.props.pageSize * this.props.currentPage]}
+            path={path}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
             onRowClick={this.props.onRowClick}
             onRowDoubleClick={this.props.onRowDoubleClick}
@@ -224,7 +228,7 @@ class MTableBody extends React.Component {
       );
 
     let emptyRowCount = 0;
-    if (this.props.options.paging) {
+    if (this.props.options.paging && this.props.pageSize > renderData.length) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
 
@@ -236,6 +240,7 @@ class MTableBody extends React.Component {
           <this.props.components.FilterRow
             columns={columns}
             icons={this.props.icons}
+            showDetailPanelIcon={this.props.options.showDetailPanelIcon}
             hasActions={
               this.props.actions.filter(
                 (a) => a.position === 'row' || typeof a === 'function'

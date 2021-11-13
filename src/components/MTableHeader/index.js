@@ -179,22 +179,35 @@ export function MTableHeader({ onColumnResized, ...props }) {
           );
         }
         if (columnDef.sorting !== false && props.sorting) {
+          const active = props.orderBy === columnDef.tableData.id;
+          // If current sorted column or prop asked to
+          // maintain sort order when switching sorted column,
+          // follow computed order direction if defined
+          // else default direction is asc
+          const direction =
+            active || props.keepSortDirectionOnColumnSwitch
+              ? props.orderDirection || 'asc'
+              : 'asc';
+          let ariaSort = 'none';
+
+          if (active && direction === 'asc')
+            ariaSort = columnDef.ariaSortAsc
+              ? columnDef.ariaSortAsc
+              : 'Ascendant';
+          if (active && direction === 'desc')
+            ariaSort = columnDef.ariaSortDesc
+              ? columnDef.ariaSortDesc
+              : 'Descendant';
+
           content = (
             <TableSortLabel
               role=""
+              aria-sort={ariaSort}
+              aria-label={columnDef.ariaLabel}
               IconComponent={props.icons.SortArrow}
-              active={props.orderBy === columnDef.tableData.id}
+              active={active}
               data-testid="mtableheader-sortlabel"
-              direction={
-                // If current sorted column or prop asked to
-                // maintain sort order when switching sorted column,
-                // follow computed order direction if defined
-                // else default direction is asc
-                columnDef.tableData.id === props.orderBy ||
-                props.keepSortDirectionOnColumnSwitch
-                  ? props.orderDirection || 'asc'
-                  : 'asc'
-              }
+              direction={direction}
               onClick={() => {
                 const orderDirection = computeNewOrderDirection(
                   props.orderBy,

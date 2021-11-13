@@ -135,8 +135,15 @@ function MTableEditRow(props) {
       });
     return mapArr;
   }
+  const isValid = props.columns.every((column) => {
+    const error = validateInput(column, state.data);
+    return error.isValid;
+  });
 
   const handleSave = () => {
+    if (!isValid) {
+      return;
+    }
     const newData = state.data;
     delete newData.tableData;
     props.onEditingApproved(props.mode, state.data, props.data);
@@ -152,10 +159,6 @@ function MTableEditRow(props) {
       ...MTableEditRow.defaultProps.localization,
       ...props.localization
     };
-    const isValid = props.columns.every((column) => {
-      const error = validateInput(column, state.data);
-      return error.isValid;
-    });
     const actions = [
       {
         icon: props.icons.Check,

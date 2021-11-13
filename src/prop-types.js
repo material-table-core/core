@@ -49,6 +49,8 @@ export const propTypes = {
         maximumFractionDigits: PropTypes.number
       }),
       ariaLabel: PropTypes.string,
+      ariaSortAsc: PropTypes.string,
+      ariaSortDesc: PropTypes.string,
       draggable: PropTypes.bool,
       customFilterAndSearch: PropTypes.func,
       customSort: PropTypes.func,

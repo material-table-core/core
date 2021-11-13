@@ -9,6 +9,13 @@ import { useTheme, Box } from '@mui/material';
 
 function MTablePagination(props) {
   const theme = useTheme();
+  if (process.env.NODE_ENV === 'development' && !props.onPageChange) {
+    console.error(
+      'The prop `onPageChange` in pagination is undefined and paging does not work. ' +
+        'This is most likely caused by an old material-ui version <= 4.11.X.' +
+        'To fix this, install either material-ui >=4.12 or downgrade material-table-core to <=3.0.15.'
+    );
+  }
   const handleFirstPageButtonClick = (event) => {
     props.onPageChange(event, 0);
   };
@@ -147,7 +154,6 @@ MTablePagination.propTypes = {
   rowsPerPage: PropTypes.number,
   classes: PropTypes.object,
   localization: PropTypes.object,
-  theme: PropTypes.any,
   showFirstLastPageButtons: PropTypes.bool
 };
 

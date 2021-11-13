@@ -848,3 +848,155 @@ export function PersistentGroupings(props) {
     />
   );
 }
+
+export function DetailPanelRemounting(props) {
+  const [data, setData] = useState(rawData);
+  const [selection, setSelection] = useState([]);
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      title="Starter Template"
+      detailPanel={({ rowData }) => (
+        <SubTable rowData={rowData} setSelection={setSelection} />
+      )}
+      options={{
+        selection: true
+      }}
+    />
+  );
+}
+
+const remountingSubColumns = [{ field: 'foo', name: 'foo' }];
+
+function SubTable(props) {
+  useEffect(() => {
+    console.log('sub-table mounted');
+    return () => console.log('sub-table unmounted');
+  }, []);
+
+  return (
+    <MaterialTable
+      data={[{ foo: props.rowData.word, id: 1 }]}
+      columns={remountingSubColumns}
+      options={{
+        selection: true
+      }}
+      onSelectionChange={(selection) => props.setSelection(selection)}
+    />
+  );
+}
+const TREE_DATA = [
+  {
+    id: 1,
+    name: 'a',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 63,
+    sex: 'Male',
+    type: 'adult'
+  },
+  {
+    id: 2,
+    name: 'b',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'adult',
+    parentId: 1
+  },
+  {
+    id: 3,
+    name: 'c',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 1
+  },
+  {
+    id: 4,
+    name: 'd',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 3
+  },
+  {
+    id: 5,
+    name: 'e',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child'
+  },
+  {
+    id: 6,
+    name: 'f',
+    surname: 'Baran',
+    birthYear: 1987,
+    birthCity: 34,
+    sex: 'Female',
+    type: 'child',
+    parentId: 5
+  }
+];
+
+const TREE_COLUMNS = [
+  { title: 'Adı', field: 'name' },
+  { title: 'Soyadı', field: 'surname' },
+  { title: 'Cinsiyet', field: 'sex' },
+  { title: 'Tipi', field: 'type', removable: false },
+  { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+  {
+    title: 'Doğum Yeri',
+    field: 'birthCity',
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' }
+  }
+];
+export function TreeData() {
+  const [path, setPath] = useState();
+  const myTableRef = useRef(null);
+  return (
+    <React.Fragment>
+      <MaterialTable
+        tableRef={myTableRef}
+        data={TREE_DATA}
+        columns={TREE_COLUMNS}
+        parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
+        onRowClick={(e, rowData) => {
+          setPath(rowData.tableData.path);
+          myTableRef.current.onTreeExpandChanged(
+            rowData.tableData.path,
+            rowData
+          );
+        }}
+      />
+      <pre>{JSON.stringify(path)}</pre>
+    </React.Fragment>
+  );
+}
+
+export function TableWithSummary() {
+  return (
+    <MaterialTable
+      title="Last row of the Table shows summary and is visible across all pages."
+      columns={columns}
+      data={rawData}
+      renderSummaryRow={({ data, index, columns }) => {
+        if (columns[index].field == 'identifier') {
+          const total = data
+            .map((row) => row.identifier)
+            .reduce((a, b) => a + b);
+          return `Total identifiers: ${total}`;
+        } else return null;
+      }}
+    />
+  );
+}
