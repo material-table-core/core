@@ -553,12 +553,13 @@ export default class DataManager {
             result &&
             result.tableData &&
             result.tableData.childRows &&
-            result.tableData.childRows[current]
+            result.tableData.childRows.find(
+              (row) => row && row.tableData.uuid === current
+            )
           );
         },
         { tableData: { childRows: renderData } }
       );
-
       return node;
     } else {
       const data = { groups: renderData };
@@ -583,7 +584,6 @@ export default class DataManager {
       if (!result) {
         return undefined;
       }
-
       if (result.groupsIndex[current] !== undefined) {
         return result.groups[result.groupsIndex[current]];
       }
@@ -933,7 +933,6 @@ export default class DataManager {
     this.treefiedData = [];
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
-
     // if filter or search is enabled, collapse the tree
     if (
       this.searchText ||
@@ -958,10 +957,10 @@ export default class DataManager {
         }
 
         addRow(parent);
-
         rowData.tableData.path = [
           ...parent.tableData.path,
-          parent.tableData.childRows.length - 1
+          parent.tableData.childRows[parent.tableData.childRows.length - 1]
+            .tableData.uuid
         ];
         this.treeDataMaxLevel = Math.max(
           this.treeDataMaxLevel,
@@ -971,7 +970,7 @@ export default class DataManager {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
           this.treefiedDataLength++;
-          rowData.tableData.path = [this.treefiedData.length - 1];
+          rowData.tableData.path = [rowData.tableData.uuid];
         }
       }
     };
