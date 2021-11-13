@@ -493,7 +493,7 @@ export default function MTableBodyRow(props) {
                 index={index}
                 key={index}
                 level={props.level + 1}
-                path={[...props.path, index]}
+                path={[...props.path, data.tableData.uuid]}
                 onEditingCanceled={onEditingCanceled}
                 onEditingApproved={onEditingApproved}
                 hasAnyEditingRow={props.hasAnyEditingRow}
@@ -531,7 +531,9 @@ MTableBodyRow.propTypes = {
   hasAnyEditingRow: PropTypes.bool,
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
-  path: PropTypes.arrayOf(PropTypes.number),
+  path: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ),
   persistEvents: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,

@@ -23,17 +23,13 @@ function useDoubleClick(singleCallback, dbCallback) {
     const timerIsPresent = timerRef.current;
     if (timerIsPresent && isDoubleClick) {
       reset();
-      if (inputDoubleCallbackRef.current) {
-        inputDoubleCallbackRef.current(e);
-      }
+      inputDoubleCallbackRef.current && inputDoubleCallbackRef.current(e);
     }
     if (!timerIsPresent) {
       countRef.current = countRef.current + 1;
       const singleClick = () => {
         reset();
-        if (inputSingleCallbackRef.current) {
-          inputSingleCallbackRef.current(e);
-        }
+        inputSingleCallbackRef.current && inputSingleCallbackRef.current(e);
       };
       if (inputDoubleCallbackRef.current) {
         const timer = setTimeout(singleClick, 250);

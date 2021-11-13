@@ -1,3 +1,31 @@
+#### 4.3.9 (2021-11-03)
+
+#### 4.3.8 (2021-11-01)
+
+##### Bug Fixes
+
+- prevent enter to save for invalid row ([905d5252](https://github.com/material-table-core/core/commit/905d525278a520755ee0367a13425f7dc8132e29))
+
+#### 4.3.7 (2021-10-19)
+
+##### Documentation Changes
+
+- add error for pagination with old mui version ([0617b8e3](https://github.com/material-table-core/core/commit/0617b8e30bebb8ec9491b209a1c347c4cfeb669f))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([51682e8d](https://github.com/material-table-core/core/commit/51682e8d07ba07f5823b99efeacfbfbdfef9fecb))
+
+#### 4.3.6 (2021-10-15)
+
+##### Bug Fixes
+
+- **actions-header:** Do not force textAlign ([#375](https://github.com/material-table-core/core/pull/375)) ([356a0555](https://github.com/material-table-core/core/commit/356a0555681fecfaff4d83c7f4a0a3b3b6c0f1a7))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([b316bf31](https://github.com/material-table-core/core/commit/b316bf319dc8c6aa26c06062cf5e723d404c0ad0))
+
 #### 4.3.5 (2021-10-07)
 
 #### 4.3.5 (2021-10-07)
