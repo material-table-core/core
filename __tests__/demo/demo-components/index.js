@@ -848,6 +848,43 @@ export function PersistentGroupings(props) {
     />
   );
 }
+
+
+export function DetailPanelRemounting(props) {
+  const [data, setData] = useState(rawData);
+  const [selection, setSelection] = useState([]);
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      title="Starter Template"
+      detailPanel={({ rowData }) => (
+        <SubTable rowData={rowData} setSelection={setSelection} />
+      )}
+      options={{
+        selection: true
+      }}
+    />
+  );
+}
+
+const remountingSubColumns = [{ field: 'foo', name: 'foo' }];
+
+function SubTable(props) {
+  useEffect(() => {
+    console.log('sub-table mounted');
+    return () => console.log('sub-table unmounted');
+  }, []);
+
+  return (
+    <MaterialTable
+      data={[{ foo: props.rowData.word, id: 1 }]}
+      columns={remountingSubColumns}
+      options={{
+        selection: true
+      }}
+      onSelectionChange={(selection) => props.setSelection(selection)}
 const TREE_DATA = [
   {
     id: 1,

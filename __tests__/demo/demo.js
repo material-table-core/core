@@ -39,6 +39,7 @@ import {
   DetailPanelIssuesProgrammaticallyHidingWhenOpen,
   EventTargetErrorOnRowClick,
   SelectionOnRowClick,
+  DetailPanelRemounting,
   TreeData,
   TableWithSummary
 } from './demo-components';
@@ -48,6 +49,9 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>DetailPanelRemounting</h1>
+    <DetailPanelRemounting />
+
     <h1>Switcher</h1>
     <DataSwitcher />
 
