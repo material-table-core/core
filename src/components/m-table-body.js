@@ -240,6 +240,7 @@ class MTableBody extends React.Component {
           <this.props.components.FilterRow
             columns={columns}
             icons={this.props.icons}
+            showDetailPanelIcon={this.props.options.showDetailPanelIcon}
             hasActions={
               this.props.actions.filter(
                 (a) => a.position === 'row' || typeof a === 'function'

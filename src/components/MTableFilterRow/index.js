@@ -76,7 +76,7 @@ export function MTableFilterRow(props) {
       }
     }
 
-    if (props.hasDetailPanel) {
+    if (props.hasDetailPanel && props.showDetailPanelIcon) {
       const alignment = props.detailPanelColumnAlignment;
       const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
@@ -140,6 +140,7 @@ MTableFilterRow.propTypes = {
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,
   filterRowStyle: PropTypes.object,
+  showDetailPanelIcon: PropTypes.bool,
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
