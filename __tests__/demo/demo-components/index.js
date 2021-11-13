@@ -849,7 +849,6 @@ export function PersistentGroupings(props) {
   );
 }
 
-
 export function DetailPanelRemounting(props) {
   const [data, setData] = useState(rawData);
   const [selection, setSelection] = useState([]);
@@ -885,6 +884,9 @@ function SubTable(props) {
         selection: true
       }}
       onSelectionChange={(selection) => props.setSelection(selection)}
+    />
+  );
+}
 const TREE_DATA = [
   {
     id: 1,
@@ -978,6 +980,9 @@ export function TreeData() {
       />
       <pre>{JSON.stringify(path)}</pre>
     </React.Fragment>
+  );
+}
+
 export function TableWithSummary() {
   return (
     <MaterialTable
