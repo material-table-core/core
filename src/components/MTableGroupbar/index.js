@@ -75,6 +75,7 @@ function MTableGroupbar(props) {
 
   return (
     <Toolbar
+      className={props.className}
       style={{ padding: 0, minHeight: 'unset' }}
       ref={props.forwardedRef}
     >
@@ -162,7 +163,8 @@ MTableGroupbar.propTypes = {
     groupedBy: PropTypes.string,
     placeholder: PropTypes.string
   }),
-  forwardedRef: PropTypes.element
+  forwardedRef: PropTypes.element,
+  className: PropTypes.string
 };
 
 export default React.forwardRef(function MTableGroupbarRef(props, ref) {
