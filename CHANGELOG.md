@@ -1,3 +1,9 @@
+#### 0.2.8 (2021-11-16)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([9245d2ff](https://github.com/material-table-core/core/commit/9245d2ff602e4444ac4c4b842dcee525254c9ec4))
+
 #### 0.2.7 (2021-11-13)
 
 ##### Chores
