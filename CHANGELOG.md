@@ -1,3 +1,9 @@
+#### 0.2.9 (2021-11-20)
+
+##### Chores
+
+- update package.lock ([d724c7ef](https://github.com/material-table-core/core/commit/d724c7ef6f5daffa8bdbe94749a9215f1b4902b9))
+
 #### 0.2.8 (2021-11-16)
 
 ##### Other Changes
