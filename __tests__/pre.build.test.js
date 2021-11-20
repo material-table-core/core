@@ -21,7 +21,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('heading', {
         name: /table title/i
       });
-      screen.getByText(/search/i);
+      screen.getByTestId(/search/i);
       screen.getByRole('textbox', {
         name: /search/i
       });
@@ -97,7 +97,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /5 rows First Page Previous Page 1-5 of 99 Next Page Last Page/i
       });
-      fireEvent.click(screen.getByText(/chevron_right/i));
+      fireEvent.click(screen.getByTestId(/chevron_right/i));
       screen.getByRole('row', {
         name: /lucas miller 5/i
       });
@@ -110,7 +110,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /5 rows First Page Previous Page 6-10 of 99 Next Page Last Page/i
       });
-      fireEvent.click(screen.getByText(/last_page/i));
+      fireEvent.click(screen.getByTestId(/last_page/i));
       screen.getByRole('row', {
         name: /Daniel Martinez 95/i
       });
