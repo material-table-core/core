@@ -284,7 +284,11 @@ function MTableEditRow(props) {
     }
 
     // Lastly we add detail panel icon
-    if (props.detailPanel && props.mode !== 'bulk') {
+    if (
+      props.detailPanel &&
+      props.options.showDetailPanelIcon !== false &&
+      props.mode !== 'bulk'
+    ) {
       const alignment = props.options.detailPanelColumnAlignment;
       const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
