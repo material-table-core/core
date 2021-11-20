@@ -38,6 +38,16 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.11 (2021-11-20)
+
+##### Chores
+
+- update package.lock ([d724c7ef](https://github.com/material-table-core/core/commit/d724c7ef6f5daffa8bdbe94749a9215f1b4902b9))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([9245d2ff](https://github.com/material-table-core/core/commit/9245d2ff602e4444ac4c4b842dcee525254c9ec4))
+
 #### 4.3.11 (2021-11-16)
 
 #### 4.3.10 (2021-11-13)

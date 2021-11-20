@@ -19,7 +19,9 @@ function LookupField({ forwardedRef, ...props }) {
           </MenuItem>
         ))}
       </Select>
-      {Boolean(helperText) && <FormHelperText>{helperText}</FormHelperText>}
+      {Boolean(props.helperText) && (
+        <FormHelperText>{props.helperText}</FormHelperText>
+      )}
     </FormControl>
   );
 }

@@ -5,105 +5,88 @@
 /* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
 import { Icon } from '@mui/material';
+import {
+  AddBox,
+  ArrowDownward,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Clear,
+  DeleteOutline,
+  Edit,
+  FilterList,
+  FirstPage,
+  LastPage,
+  Remove,
+  SaveAlt,
+  Search,
+  ViewColumn,
+  Replay
+} from '@mui/icons-material';
 
 export default {
   Add: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      add_box
-    </Icon>
+    <AddBox {...props} ref={ref} data-testid="add_box" />
   )),
   Check: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      check
-    </Icon>
+    <Check {...props} ref={ref} data-testid="check" />
   )),
   Clear: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      clear
-    </Icon>
+    <Clear {...props} ref={ref} data-testid="clear" />
   )),
   Delete: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      delete_outline
-    </Icon>
+    <DeleteOutline {...props} ref={ref} data-testid="delete_outline" />
   )),
   DetailPanel: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      chevron_right
-    </Icon>
+    <ChevronRight {...props} ref={ref} data-testid="chevron_right" />
   )),
   Edit: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      edit
-    </Icon>
+    <Edit {...props} ref={ref} data-testid="edit" />
   )),
   Export: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      save_alt
-    </Icon>
+    <SaveAlt {...props} ref={ref} data-testid="save_alt" />
   )),
   Filter: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      filter_list
-    </Icon>
+    <FilterList {...props} ref={ref} data-testid="filter_list" />
   )),
   FirstPage: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      first_page
-    </Icon>
+    <FirstPage {...props} ref={ref} data-testid="first_page" />
   )),
   LastPage: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      last_page
-    </Icon>
+    <LastPage {...props} ref={ref} data-testid="last_page" />
   )),
   NextPage: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      chevron_right
-    </Icon>
+    <ChevronRight {...props} ref={ref} data-testid="chevron_right" />
   )),
   PreviousPage: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      chevron_left
-    </Icon>
+    <ChevronLeft {...props} ref={ref} data-testid="chevron_left" />
   )),
   ResetSearch: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      clear
-    </Icon>
+    <Clear {...props} ref={ref} data-testid="clear" />
   )),
   Resize: forwardRef((props, ref) => (
     <Icon
       {...props}
       ref={ref}
-      style={{ ...props.style, transform: 'rotate(90deg)' }}
+      style={{ ...props.style }}
+      data-testid="drag_handle"
     >
-      drag_handle
-    </Icon>
-  )),
-  Search: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      search
-    </Icon>
-  )),
-  SortArrow: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      arrow_downward
-    </Icon>
-  )),
-  ThirdStateCheck: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      remove
-    </Icon>
-  )),
-  ViewColumn: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      view_column
+      |
     </Icon>
   )),
   Retry: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref}>
-      replay
-    </Icon>
+    <Replay {...props} ref={ref} data-testid="replay" />
+  )),
+  Search: forwardRef((props, ref) => (
+    <Search {...props} ref={ref} data-testid="search" />
+  )),
+  SortArrow: forwardRef((props, ref) => (
+    <ArrowDownward {...props} ref={ref} data-testid="arrow_downward" />
+  )),
+  ThirdStateCheck: forwardRef((props, ref) => (
+    <Remove {...props} ref={ref} data-testid="remove" />
+  )),
+  ViewColumn: forwardRef((props, ref) => (
+    <ViewColumn {...props} ref={ref} data-testid="view_column" />
   ))
 };

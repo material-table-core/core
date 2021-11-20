@@ -65,12 +65,12 @@ describe('Edit Row Row Add', () => {
       })
     );
 
-    screen.getByText(/check/i);
+    screen.getByTestId('check');
     const cancelButton = screen.getByRole('button', {
       name: /cancel/i
     });
 
-    within(cancelButton).getByText(/clear/i);
+    within(cancelButton).getByTestId('clear');
 
     screen.getByRole('textbox', {
       name: /name/i,
@@ -101,7 +101,7 @@ describe('Edit Row Row Add', () => {
       })
     );
 
-    screen.getByText(/check/i);
+    screen.getByTestId('check');
 
     fireEvent.click(
       screen.getByRole('button', {
@@ -137,7 +137,7 @@ describe('Edit Row Row Add', () => {
       })
     );
 
-    const checkButton = screen.getByText(/check/i);
+    const checkButton = screen.getByTestId('check');
 
     expect(onRowAdd.mock.calls.length).toBe(0);
     fireEvent.change(
@@ -232,12 +232,12 @@ describe('Edit Row Row Update', () => {
       })
     );
 
-    screen.getByText(/check/i);
+    screen.getByTestId('check');
     const cancelButton = screen.getByRole('button', {
       name: /cancel/i
     });
 
-    within(cancelButton).getByText(/clear/i);
+    within(cancelButton).getByTestId('clear');
     screen.getByRole('textbox', {
       name: /name/i
     });
@@ -250,7 +250,7 @@ describe('Edit Row Row Update', () => {
     });
     fireEvent.click(cancelButton);
 
-    screen.getByText(/edit/i);
+    screen.getByTestId('edit');
 
     screen.getByRole('cell', {
       name: /one/i
@@ -276,7 +276,7 @@ describe('Edit Row Row Update', () => {
       })
     );
 
-    const checkButton = screen.getByText(/check/i);
+    const checkButton = screen.getByTestId('check');
 
     expect(onRowUpdate.mock.calls.length).toBe(0);
     fireEvent.change(
@@ -315,7 +315,7 @@ describe('Edit Row Row Update', () => {
 
     fireEvent.click(checkButton);
 
-    await waitFor(() => screen.getByText(/edit/i));
+    await waitFor(() => screen.getByTestId('edit'));
 
     expect(onRowUpdate.mock.calls[0]).toMatchObject([
       { id: 'testName', enum: '2' },
