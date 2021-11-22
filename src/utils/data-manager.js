@@ -568,7 +568,10 @@ export default class DataManager {
         if (result.groups.length > 0) {
           return result.groups[current];
         } else if (result.data) {
-          return result.data[current];
+          return (
+            result.data[current] ||
+            result.data.find((data) => data.tableData?.uuid === current)
+          );
         } else {
           return undefined;
         }
