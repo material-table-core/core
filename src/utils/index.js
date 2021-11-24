@@ -1,12 +1,17 @@
 import * as CommonValues from '@utils/common-values';
 
-export const byString = (o, s) => {
+export const selectFromObject = (o, s) => {
   if (!s) {
     return;
   }
-  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-  s = s.replace(/^\./, ''); // strip a leading dot
-  const a = s.split('.');
+  let a;
+  if (!Array.isArray(s)) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, ''); // strip a leading dot
+    a = s.split('.');
+  } else {
+    a = s;
+  }
   for (let i = 0, n = a.length; i < n; ++i) {
     const x = a[i];
     if (o && x in o) {

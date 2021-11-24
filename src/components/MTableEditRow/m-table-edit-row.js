@@ -30,7 +30,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { byString, setByString } from '../../utils';
+import { selectFromObject, setByString } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 import { validateInput } from '../../utils/validate';
 /* eslint-enable no-unused-vars */
@@ -67,7 +67,7 @@ export default class MTableEditRow extends React.Component {
         const value =
           typeof this.state.data[columnDef.field] !== 'undefined'
             ? this.state.data[columnDef.field]
-            : byString(this.state.data, columnDef.field);
+            : selectFromObject(this.state.data, columnDef.field);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
             color: 'inherit'
