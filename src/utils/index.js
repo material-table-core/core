@@ -23,11 +23,16 @@ export const selectFromObject = (o, s) => {
   return o;
 };
 
-export const setByString = (obj, path, value) => {
+export const setObjectByKey = (obj, path, value) => {
   let schema = obj; // a moving reference to internal objects within obj
-  path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-  path = path.replace(/^\./, ''); // strip a leading dot
-  const pList = path.split('.');
+  let pList;
+  if (!Array.isArray(path)) {
+    path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    path = path.replace(/^\./, ''); // strip a leading dot
+    pList = path.split('.');
+  } else {
+    pList = path;
+  }
   const len = pList.length;
   for (let i = 0; i < len - 1; i++) {
     const elem = pList[i];

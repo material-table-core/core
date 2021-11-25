@@ -1,4 +1,4 @@
-import { selectFromObject } from '../src/utils/';
+import { selectFromObject, setObjectByKey } from '../src/utils/';
 
 describe('selectFromObject', () => {
   describe('by string', () => {
@@ -39,6 +39,24 @@ describe('selectFromObject', () => {
       const obj = { a: { b: { c: 'value' } } };
       const res = selectFromObject(obj, []);
       expect(res).toEqual(obj);
+    });
+  });
+});
+
+describe('setObjectByKey', () => {
+  describe('by string', () => {
+    test('Select valid value', () => {
+      const obj = { a: { b: { c: 'value' } } };
+      setObjectByKey(obj, 'a.b.c', 'newValue');
+      expect(obj).toEqual({ a: { b: { c: 'newValue' } } });
+    });
+  });
+
+  describe('by array', () => {
+    test('Select valid value', () => {
+      const obj = { a: { b: { c: 'value' } } };
+      setObjectByKey(obj, ['a', 'b', 'c'], 'newValue');
+      expect(obj).toEqual({ a: { b: { c: 'newValue' } } });
     });
   });
 });
