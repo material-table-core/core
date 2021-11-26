@@ -155,7 +155,7 @@ export interface EditComponentProps<RowData extends object> {
 }
 
 export interface EditCellColumnDef {
-  field: string;
+  field: string | string[];
   title: string;
   tableData: {
     columnOrder: number;
@@ -203,7 +203,7 @@ export interface Column<RowData extends object> {
     | React.ReactElement<any>
     | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
-  field?: keyof RowData | string;
+  field?: keyof RowData | string | Array<keyof RowData | string>;
   filtering?: boolean;
   filterComponent?: (props: {
     columnDef: Column<RowData>;
