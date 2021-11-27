@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 function OverlayError(props) {
   const theme = useTheme();

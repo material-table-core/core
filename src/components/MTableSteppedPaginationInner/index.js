@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 function MTablePaginationInner(props) {
   const theme = useTheme();
