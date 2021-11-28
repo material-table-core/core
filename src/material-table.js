@@ -83,18 +83,6 @@ export default class MaterialTable extends React.Component {
   }
 
   setDataManagerFields(props, isInit, prevColumns) {
-    let defaultSortColumnIndex = -1;
-    let defaultSortDirection = '';
-    if (props && props.options.sorting !== false) {
-      defaultSortColumnIndex = props.columns.findIndex(
-        (a) => a.defaultSort && a.sorting !== false
-      );
-      defaultSortDirection =
-        defaultSortColumnIndex > -1
-          ? props.columns[defaultSortColumnIndex].defaultSort
-          : '';
-    }
-
     const savedColumns = {};
     if (props.options.persistentGroupingsId) {
       let materialTableGroupings = localStorage.getItem(
@@ -132,14 +120,41 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    // If the columns changed and the defaultSorting differs from the current sorting, it will trigger a new sorting
+    let defaultSortColumnIndex = -1;
+    let defaultSortDirection = '';
+    let prevSortColumnIndex = -1;
+    let prevSortDirection = '';
+    if (props && props.options.sorting !== false) {
+      defaultSortColumnIndex = props.columns.findIndex(
+        (a) => a.defaultSort && a.sorting !== false
+      );
+      defaultSortDirection =
+        defaultSortColumnIndex > -1
+          ? props.columns[defaultSortColumnIndex].defaultSort
+          : '';
+    }
+    if (prevColumns) {
+      prevSortColumnIndex = prevColumns.findIndex(
+        (a) => a.defaultSort && a.sorting !== false
+      );
+      prevSortDirection =
+        prevSortColumnIndex > -1
+          ? props.columns[prevSortColumnIndex].defaultSort
+          : '';
+    }
+
+    // If the default sorting changed and differs from the current default sorting, it will trigger a new sorting
     const shouldReorder =
       isInit ||
-      (defaultSortColumnIndex !== this.dataManager.orderBy &&
-      !this.isRemoteData() &&
-      defaultSortDirection // Only if a defaultSortingDirection is passed, it will evaluate for changes
-        ? defaultSortDirection !== this.dataManager.orderDirection
-        : false);
+      (!this.isRemoteData() &&
+        // Only if a defaultSortingDirection is passed, it will evaluate for changes
+        defaultSortDirection &&
+        // Default sorting has changed
+        (defaultSortColumnIndex !== prevSortColumnIndex ||
+          defaultSortDirection !== prevSortDirection) &&
+        // Default sorting differs from current sorting
+        (defaultSortColumnIndex !== this.dataManager.orderBy ||
+          defaultSortDirection !== this.dataManager.orderDirection));
 
     shouldReorder &&
       this.dataManager.changeOrder(
@@ -184,7 +199,7 @@ export default class MaterialTable extends React.Component {
 
     if (propsChanged) {
       const props = this.getProps(this.props);
-      this.setDataManagerFields(props, false, this.props.columns);
+      this.setDataManagerFields(props, false, prevProps.columns);
       this.setState(this.dataManager.getRenderState());
       if (
         process.env.NODE_ENV === 'development' &&
