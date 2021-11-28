@@ -1,6 +1,6 @@
 import formatDate from 'date-fns/format';
 import uuid from 'uuid';
-import { byString } from './';
+import { selectFromObject } from './';
 
 export default class DataManager {
   checkForId = false;
@@ -601,7 +601,7 @@ export default class DataManager {
     let value =
       typeof rowData[columnDef.field] !== 'undefined'
         ? rowData[columnDef.field]
-        : byString(rowData, columnDef.field);
+        : selectFromObject(rowData, columnDef.field);
     if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
@@ -884,7 +884,8 @@ export default class DataManager {
         let object = result;
         object = groups.reduce((o, colDef) => {
           const value =
-            currentRow[colDef.field] || byString(currentRow, colDef.field);
+            currentRow[colDef.field] ||
+            selectFromObject(currentRow, colDef.field);
 
           let group;
           if (o.groupsIndex[value] !== undefined) {
