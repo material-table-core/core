@@ -10,19 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import { lighten, withStyles } from '@material-ui/core';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 let searchTimer;
 
 export function MTableToolbar(props) {
-  const [state, setState] = React.useState(() => ({
-    columnsButtonAnchorEl: null,
-    exportButtonAnchorEl: null,
-    searchText: props.searchText
-  }));
+  const [searchText, setSearchText] = useState(props.searchText);
+  const [exportButtonAnchorEl, setExportButtonAnchorEl] = useState(null);
+  const [columnsButtonAnchorEl, setColumnsButtonAnchorEl] = useState(null);
 
   const onSearchChange = (searchText) => {
-    setState({ ...state, searchText });
+    setSearchText(searchText);
     props.dataManager.changeSearchText(searchText);
     if (!props.isRemoteData) {
       props.onSearchChanged(searchText);
@@ -85,7 +83,7 @@ export function MTableToolbar(props) {
               ? null
               : props.classes.searchField
           }
-          value={state.searchText}
+          value={searchText}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder={localization.searchPlaceholder}
           variant={props.searchFieldVariant}
@@ -100,7 +98,7 @@ export function MTableToolbar(props) {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  disabled={!state.searchText}
+                  disabled={!searchText}
                   onClick={() => onSearchChange('')}
                   aria-label={localization.clearSearchAriaLabel}
                 >
@@ -138,10 +136,7 @@ export function MTableToolbar(props) {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  setState({
-                    ...state,
-                    columnsButtonAnchorEl: event.currentTarget
-                  })
+                  setColumnsButtonAnchorEl(event.currentTarget)
                 }
                 aria-label={localization.showColumnsAriaLabel}
               >
@@ -149,11 +144,9 @@ export function MTableToolbar(props) {
               </IconButton>
             </Tooltip>
             <Menu
-              anchorEl={state.columnsButtonAnchorEl}
-              open={Boolean(state.columnsButtonAnchorEl)}
-              onClose={() =>
-                setState({ ...state, columnsButtonAnchorEl: null })
-              }
+              anchorEl={columnsButtonAnchorEl}
+              open={Boolean(columnsButtonAnchorEl)}
+              onClose={() => setColumnsButtonAnchorEl(null)}
             >
               <MenuItem
                 key={'text'}
@@ -211,10 +204,7 @@ export function MTableToolbar(props) {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  setState({
-                    ...state,
-                    exportButtonAnchorEl: event.currentTarget
-                  })
+                  setExportButtonAnchorEl(event.currentTarget)
                 }
                 aria-label={localization.exportAriaLabel}
               >
@@ -222,9 +212,9 @@ export function MTableToolbar(props) {
               </IconButton>
             </Tooltip>
             <Menu
-              anchorEl={state.exportButtonAnchorEl}
-              open={Boolean(state.exportButtonAnchorEl)}
-              onClose={() => setState({ ...state, exportButtonAnchorEl: null })}
+              anchorEl={exportButtonAnchorEl}
+              open={Boolean(exportButtonAnchorEl)}
+              onClose={() => setExportButtonAnchorEl(null)}
             >
               {props.exportMenu.map((menuitem, index) => {
                 const [cols, datas] = getTableData();
@@ -233,10 +223,7 @@ export function MTableToolbar(props) {
                     key={`${menuitem.label}${index}`}
                     onClick={() => {
                       menuitem.exportFunc(cols, datas);
-                      setState({
-                        ...state,
-                        exportButtonAnchorEl: null
-                      });
+                      setExportButtonAnchorEl(null);
                     }}
                   >
                     {menuitem.label}
