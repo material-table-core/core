@@ -449,7 +449,7 @@ export default function MTableBodyRow(props) {
           }
           handleOnRowClick(event);
         }}
-        hover={onRowClick !== null || onRowDoubleClick !== null}
+        hover={onRowClick || onRowDoubleClick}
         style={getStyle(props.index, props.level)}
       >
         {renderColumns}
