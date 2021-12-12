@@ -989,7 +989,9 @@ export default class DataManager {
         if (pointer.tableData && pointer.tableData.childRows) {
           pointer = pointer.tableData.childRows;
         }
-        pointer = pointer[pathPart];
+        if (Array.isArray(pointer)) {
+          pointer = pointer.find(p => p.tableData.uuid === pathPart);
+        }
       });
       pointer.tableData.markedForTreeRemove = true;
     };
