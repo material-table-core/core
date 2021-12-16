@@ -4,7 +4,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme, Box } from '@mui/material';
+import { Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 /* eslint-enable no-unused-vars */
 
 function MTablePagination(props) {

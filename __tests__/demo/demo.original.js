@@ -1,5 +1,10 @@
-import { Grid, ThemeProvider, StyledEngineProvider } from '@mui/material';
-import { createTheme, adaptV4Theme } from '@mui/material/styles';
+import { Grid } from '@mui/material';
+import {
+  ThemeProvider,
+  StyledEngineProvider,
+  createTheme,
+  adaptV4Theme
+} from '@mui/material/styles';
 import React, { Component } from 'react';
 import MaterialTable from '../src';
 

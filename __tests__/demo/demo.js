@@ -20,7 +20,7 @@ import {
   ThemeProvider,
   StyledEngineProvider,
   createTheme
-} from '@mui/material';
+} from '@mui/material/styles';
 import React from 'react';
 import { render } from 'react-dom';
 

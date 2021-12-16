@@ -17,6 +17,33 @@ module.exports = {
           '@utils': './src/utils'
         }
       }
+    ],
+    [
+      'import',
+      {
+        camel2DashComponentName: false,
+        libraryDirectory: '',
+        libraryName: '@mui/material'
+      },
+      '@mui/material'
+    ],
+    [
+      'import',
+      {
+        camel2DashComponentName: false,
+        libraryDirectory: '',
+        libraryName: '@mui/lab'
+      },
+      '@mui/lab'
+    ],
+    [
+      'import',
+      {
+        camel2DashComponentName: false,
+        libraryDirectory: '',
+        libraryName: '@mui/icons-material'
+      },
+      '@mui/icons-material'
     ]
   ]
 };
