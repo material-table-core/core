@@ -20,7 +20,9 @@ const MenuProps = {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 250
     }
-  }
+  },
+  variant: 'menu',
+  getContentAnchorEl: null
 };
 
 function LookupFilter({ columnDef, onFilterChanged, forwardedRef }) {
