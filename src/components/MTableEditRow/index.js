@@ -3,7 +3,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import { setByString } from '@utils';
+import { setObjectByKey } from '@utils';
 import * as CommonValues from '@utils/common-values';
 import { validateInput } from '@utils/validate';
 
@@ -13,7 +13,7 @@ function MTableEditRow(props) {
       return props.columns
         .filter((column) => 'initialEditValue' in column && column.field)
         .reduce((prev, column) => {
-          setByString(prev, column.field, column.initialEditValue);
+          setObjectByKey(prev, column.field, column.initialEditValue);
           return prev;
         }, {});
     }
@@ -115,7 +115,7 @@ function MTableEditRow(props) {
                 rowData={state.data}
                 onChange={(value) => {
                   const data = { ...state.data };
-                  setByString(data, columnDef.field, value);
+                  setObjectByKey(data, columnDef.field, value);
                   // data[columnDef.field] = value;
                   setState({ data });
                   if (props.onBulkEditRowChanged) {

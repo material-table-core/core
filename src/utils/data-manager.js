@@ -1,6 +1,6 @@
 import formatDate from 'date-fns/format';
 import { v4 as uuidv4 } from 'uuid';
-import { byString } from './';
+import { selectFromObject } from './';
 
 export default class DataManager {
   checkForId = false;
@@ -568,7 +568,10 @@ export default class DataManager {
         if (result.groups.length > 0) {
           return result.groups[current];
         } else if (result.data) {
-          return result.data[current];
+          return (
+            result.data[current] ||
+            result.data.find((data) => data.tableData?.uuid === current)
+          );
         } else {
           return undefined;
         }
@@ -598,7 +601,7 @@ export default class DataManager {
     let value =
       typeof rowData[columnDef.field] !== 'undefined'
         ? rowData[columnDef.field]
-        : byString(rowData, columnDef.field);
+        : selectFromObject(rowData, columnDef.field);
     if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
@@ -881,7 +884,8 @@ export default class DataManager {
         let object = result;
         object = groups.reduce((o, colDef) => {
           const value =
-            currentRow[colDef.field] || byString(currentRow, colDef.field);
+            currentRow[colDef.field] ||
+            selectFromObject(currentRow, colDef.field);
 
           let group;
           if (o.groupsIndex[value] !== undefined) {
@@ -985,7 +989,9 @@ export default class DataManager {
         if (pointer.tableData && pointer.tableData.childRows) {
           pointer = pointer.tableData.childRows;
         }
-        pointer = pointer[pathPart];
+        if (Array.isArray(pointer)) {
+          pointer = pointer.find((p) => p.tableData.uuid === pathPart);
+        }
       });
       pointer.tableData.markedForTreeRemove = true;
     };
