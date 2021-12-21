@@ -438,4 +438,4 @@ const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   return <MTableToolbar {...props} forwardedRef={ref} />;
 });
 
-export default withStyles(styles)(MTableToolbarRef);
+export default withStyles(styles, { name: 'MTableToolbar' })(MTableToolbarRef);
