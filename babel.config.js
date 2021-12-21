@@ -17,6 +17,24 @@ module.exports = {
           '@utils': './src/utils'
         }
       }
+    ],
+    [
+      'import',
+      {
+        libraryName: '@material-ui/core',
+        libraryDirectory: '',
+        camel2DashComponentName: false
+      },
+      '@material-ui/core'
+    ],
+    [
+      'import',
+      {
+        libraryName: '@material-ui/icons',
+        libraryDirectory: '',
+        camel2DashComponentName: false
+      },
+      '@material-ui/icons'
     ]
   ]
 };
