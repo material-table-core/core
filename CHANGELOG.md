@@ -1,3 +1,9 @@
+#### 4.3.14 (2021-12-21)
+
+##### Bug Fixes
+
+- [#437](https://github.com/material-table-core/core/pull/437) ([#440](https://github.com/material-table-core/core/pull/440)) ([a9e65aac](https://github.com/material-table-core/core/commit/a9e65aaca4d47533482267cf0f948716ab48d65e))
+
 #### 4.3.13 (2021-12-21)
 
 ##### Bug Fixes
