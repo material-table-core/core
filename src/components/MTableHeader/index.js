@@ -434,4 +434,6 @@ const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
   return <MTableHeader {...props} forwardedRef={ref} />;
 });
 
-export default withStyles(styles, { withTheme: true })(MTableHeaderRef);
+export default withStyles(styles, { name: 'MTableHeader', withTheme: true })(
+  MTableHeaderRef
+);
