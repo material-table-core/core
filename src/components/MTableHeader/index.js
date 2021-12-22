@@ -10,52 +10,101 @@ import { Tooltip, withStyles } from '@material-ui/core';
 import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader({ onColumnResized, ...props }) {
-  const [
-    { resizingColumnDef, lastX, lastAdditionalWidth }, // Extract the props to use instead of the whole state object
-    setState
-  ] = React.useState({
-    lastX: 0,
-    resizingColumnDef: undefined
-  });
+  const [resizing, setResizing] = React.useState(undefined);
+  const [lastX, setLastX] = React.useState(0);
 
   const handleMouseDown = (e, columnDef) => {
-    let target = e.clientX;
-    setState((prevState) => ({
-      ...prevState,
-      lastAdditionalWidth: columnDef.tableData.additionalWidth,
-      lastX: target,
-      resizingColumnDef: columnDef
-    }));
+    const target = e.clientX;
+    const th = e.target.closest('th');
+    const currentWidth =
+      th && Math.round(+window.getComputedStyle(th).width.slice(0, -2));
+    let initialColWidths = resizing?.initialColWidths;
+    let nextWidth;
+    let nextCol;
+    if (props.tableWidth === 'full') {
+      const nextTh = th.nextSibling;
+      nextWidth =
+        nextTh &&
+        Math.round(+window.getComputedStyle(nextTh).width.slice(0, -2));
+      nextCol = props.columns.find(
+        (c) => c.tableData.id === columnDef.tableData.id + 1
+      );
+    } else if (!initialColWidths) {
+      // Ensure we have all column widths in pixels
+      initialColWidths = Array.from(th.parentNode.children).map((th) =>
+        Math.round(+window.getComputedStyle(th).width.slice(0, -2))
+      );
+    }
+
+    setLastX(target);
+    setResizing({
+      col: columnDef,
+      nextCol,
+      lastColData: { ...columnDef.tableData, width: currentWidth },
+      ...(nextCol && {
+        lastNextColData: { ...nextCol.tableData, width: nextWidth }
+      }),
+      initialColWidths
+    });
   };
+
+  const constrainedColumnResize = (col, lastWidth, offset) => {
+    // Extra max/min are to avoid sudden column changes when a column that starts without
+    // an explicit width is resized
+    const constrainedNewWidth = Math.min(
+      Math.max(col.maxWidth || 10000, lastWidth), // Avoid sudden decrease in column width
+      Math.max(
+        Math.min(col.minWidth || 20, lastWidth), // Avoid sudden increase in column width
+        lastWidth + offset
+      )
+    );
+    return constrainedNewWidth - lastWidth;
+  };
+
   const handleMouseMove = React.useCallback(
     // Use usecallback to prevent triggering theuse effect too much
     (e) => {
-      if (!resizingColumnDef) return;
-      let additionalWidth = lastAdditionalWidth + e.clientX - lastX;
-      additionalWidth = Math.min(
-        resizingColumnDef.maxWidth || additionalWidth,
-        additionalWidth
+      if (!resizing) return;
+
+      const curX = e.clientX;
+      const alreadyOffset =
+        resizing.col.tableData.additionalWidth -
+        resizing.lastColData.additionalWidth;
+      let offset = constrainedColumnResize(
+        resizing.col,
+        resizing.lastColData.width + alreadyOffset,
+        curX - lastX
       );
-      let th = e.target.closest('th');
-      let currentWidth = th && +window.getComputedStyle(th).width.slice(0, -2);
-      let realWidth =
-        currentWidth -
-        resizingColumnDef.tableData.additionalWidth +
-        lastAdditionalWidth -
-        lastX +
-        e.clientX;
-      if (realWidth <= resizingColumnDef.minWidth && realWidth < currentWidth)
-        return;
-      if (resizingColumnDef.tableData.additionalWidth !== additionalWidth) {
-        onColumnResized(resizingColumnDef.tableData.id, additionalWidth);
+      offset = Math.round(offset);
+      const widths = [resizing.lastColData.width + alreadyOffset];
+      if (props.tableWidth === 'full') {
+        offset = -constrainedColumnResize(
+          resizing.nextCol,
+          resizing.lastNextColData.width - alreadyOffset,
+          -offset
+        );
+        widths.push(resizing.lastNextColData.width - alreadyOffset);
+      }
+
+      setLastX(curX);
+      if (offset) {
+        onColumnResized(
+          resizing.col.tableData.id,
+          offset,
+          widths,
+          resizing.initialColWidths
+        );
       }
     },
-    [onColumnResized, resizingColumnDef, lastX, lastAdditionalWidth]
+    [lastX, resizing, onColumnResized]
   );
 
-  const handleMouseUp = React.useCallback((e) => {
-    setState((prevState) => ({ ...prevState, resizingColumnDef: undefined })); // Using the useState to always have to correct state object
-  }, []);
+  const handleMouseUp = React.useCallback(
+    (e) => {
+      setResizing(undefined);
+    },
+    [setResizing]
+  );
 
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
@@ -92,26 +141,31 @@ export function MTableHeader({ onColumnResized, ...props }) {
   };
 
   const getCellStyle = (columnDef) => {
-    const width = props.options.columnResizable
-      ? CommonValues.reducePercentsInCalc(
-          columnDef.tableData.width,
-          props.scrollWidth
-        )
-      : columnDef.tableData.width;
+    const width =
+      props.options.columnResizable && props.tableWidth === 'full'
+        ? CommonValues.reducePercentsInCalc(
+            columnDef.tableData.width,
+            props.scrollWidth
+          )
+        : columnDef.tableData.width;
     const style = {
       ...props.headerStyle,
       ...columnDef.headerStyle,
       boxSizing: 'border-box',
       width,
-      maxWidth: columnDef.maxWidth,
-      minWidth: columnDef.minWidth
+      ...(props.tableWidth === 'full' &&
+        columnDef.minWidth && { minWidth: columnDef.minWidth }),
+      ...(props.tableWidth === 'full' &&
+        columnDef.maxWidth && { maxWidth: columnDef.maxWidth })
     };
     if (
       props.options.tableLayout === 'fixed' &&
       props.options.columnResizable &&
       columnDef.resizable !== false
     ) {
+      style.paddingLeft = 8;
       style.paddingRight = 2;
+      style.position = 'relative';
     }
     return style;
   };
@@ -143,6 +197,54 @@ export function MTableHeader({ onColumnResized, ...props }) {
     return 'asc';
   };
 
+  function renderSortButton(columnDef) {
+    if (columnDef.sorting !== false && props.sorting) {
+      const active = props.orderBy === columnDef.tableData.id;
+      // If current sorted column or prop asked to
+      // maintain sort order when switching sorted column,
+      // follow computed order direction if defined
+      // else default direction is asc
+      const direction =
+        active || props.keepSortDirectionOnColumnSwitch
+          ? props.orderDirection || 'asc'
+          : 'asc';
+      let ariaSort = 'none';
+
+      if (active && direction === 'asc') {
+        ariaSort = columnDef.ariaSortAsc ? columnDef.ariaSortAsc : 'Ascendant';
+      }
+      if (active && direction === 'desc') {
+        ariaSort = columnDef.ariaSortDesc
+          ? columnDef.ariaSortDesc
+          : 'Descendant';
+      }
+
+      return (
+        <TableSortLabel
+          role=""
+          aria-sort={ariaSort}
+          aria-label={columnDef.ariaLabel}
+          IconComponent={props.icons.SortArrow}
+          active={active}
+          data-testid="mtableheader-sortlabel"
+          direction={direction}
+          onClick={() => {
+            const orderDirection = computeNewOrderDirection(
+              props.orderBy,
+              props.orderDirection,
+              columnDef,
+              props.thirdSortClick,
+              props.keepSortDirectionOnColumnSwitch
+            );
+            props.onOrderChange(columnDef.tableData.id, orderDirection);
+          }}
+        ></TableSortLabel>
+      );
+    } else {
+      return '';
+    }
+  }
+
   function renderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
 
@@ -152,7 +254,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
           !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
       )
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-      .map((columnDef, index) => {
+      .map((columnDef, index, allCols) => {
         let content = columnDef.title;
 
         if (props.draggable && columnDef.draggable !== false) {
@@ -168,60 +270,22 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                   style={
-                    snapshot.isDragging ? provided.draggableProps.style : {}
+                    snapshot.isDragging
+                      ? {
+                          ...provided.draggableProps.style,
+                          position: 'static'
+                        }
+                      : { position: 'relative', minWidth: 0, display: 'flex' }
                   }
                 >
                   {columnDef.title}
+                  {renderSortButton(columnDef)}
                 </div>
               )}
             </Draggable>
           );
         }
-        if (columnDef.sorting !== false && props.sorting) {
-          const active = props.orderBy === columnDef.tableData.id;
-          // If current sorted column or prop asked to
-          // maintain sort order when switching sorted column,
-          // follow computed order direction if defined
-          // else default direction is asc
-          const direction =
-            active || props.keepSortDirectionOnColumnSwitch
-              ? props.orderDirection || 'asc'
-              : 'asc';
-          let ariaSort = 'none';
 
-          if (active && direction === 'asc')
-            ariaSort = columnDef.ariaSortAsc
-              ? columnDef.ariaSortAsc
-              : 'Ascendant';
-          if (active && direction === 'desc')
-            ariaSort = columnDef.ariaSortDesc
-              ? columnDef.ariaSortDesc
-              : 'Descendant';
-
-          content = (
-            <TableSortLabel
-              role=""
-              aria-sort={ariaSort}
-              aria-label={columnDef.ariaLabel}
-              IconComponent={props.icons.SortArrow}
-              active={active}
-              data-testid="mtableheader-sortlabel"
-              direction={direction}
-              onClick={() => {
-                const orderDirection = computeNewOrderDirection(
-                  props.orderBy,
-                  props.orderDirection,
-                  columnDef,
-                  props.thirdSortClick,
-                  props.keepSortDirectionOnColumnSwitch
-                );
-                props.onOrderChange(columnDef.tableData.id, orderDirection);
-              }}
-            >
-              {content}
-            </TableSortLabel>
-          );
-        }
         if (columnDef.tooltip) {
           content = (
             <Tooltip title={columnDef.tooltip} placement="bottom">
@@ -232,18 +296,24 @@ export function MTableHeader({ onColumnResized, ...props }) {
         if (
           props.options.tableLayout === 'fixed' &&
           props.options.columnResizable &&
-          columnDef.resizable !== false
+          columnDef.resizable !== false &&
+          !(props.options.tableWidth === 'full' && index === allCols.length - 1)
         ) {
+          const Resize = props.icons.Resize
+            ? props.icons.Resize
+            : (props) => <div {...props} />;
           content = (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flex: 1 }}>{content}</div>
+            <div className={props.classes.headerWrap}>
+              <div className={props.classes.headerContent}>{content}</div>
               <div></div>
-              <props.icons.Resize
+              <Resize
+                className={props.classes.headerResize}
                 style={{
-                  cursor: 'col-resize',
+                  display: 'flex',
+                  justifyContent: 'center',
                   color:
-                    resizingColumnDef &&
-                    resizingColumnDef.tableData.id === columnDef.tableData.id
+                    resizing?.col &&
+                    resizing.col.tableData.id === columnDef.tableData.id
                       ? props.theme.palette.primary.main
                       : 'inherit'
                 }}
@@ -370,7 +440,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       });
     return (
       <TableHead ref={props.forwardedRef}>
-        <TableRow>{headers}</TableRow>
+        <TableRow className={props.classes.headerRow}>{headers}</TableRow>
       </TableHead>
     );
   }
@@ -420,12 +490,38 @@ MTableHeader.propTypes = {
 };
 
 export const styles = (theme) => ({
+  headerRow: {
+    zIndex: 10
+  },
   header: {
     // display: 'inline-block',
     // position: 'sticky',
     top: 0,
-    zIndex: 10,
     backgroundColor: theme.palette.background.paper // Change according to theme,
+  },
+  headerWrap: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    left: 4
+  },
+  headerContent: {
+    minWidth: 0,
+    display: 'flex',
+    flex: '1 0 100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    position: 'relative'
+  },
+  headerResize: {
+    flex: 1,
+    cursor: 'col-resize',
+    position: 'absolute', // allow div to straddle adjacent columns
+    height: '100%',
+    width: 16,
+    right: -8,
+    zIndex: 20 // so half that overlaps next column can be used to resize
   }
 });
 

@@ -34,6 +34,7 @@ export default {
   showTextRowsSelected: true,
   showDetailPanelIcon: true,
   tableLayout: 'auto',
+  tableWidth: 'full',
   toolbarButtonAlignment: 'right',
   searchFieldAlignment: 'right',
   searchFieldStyle: {},

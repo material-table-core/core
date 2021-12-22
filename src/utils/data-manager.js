@@ -1,6 +1,7 @@
 import formatDate from 'date-fns/format';
 import uuid from 'uuid';
 import { selectFromObject } from './';
+import { widthToNumber } from './common-values';
 
 export default class DataManager {
   checkForId = false;
@@ -43,6 +44,9 @@ export default class DataManager {
   treefied = false;
   sorted = false;
   paged = false;
+
+  tableWidth = 'full';
+  tableStyleWidth = '100%';
 
   rootGroupsIndex = {};
 
@@ -100,10 +104,17 @@ export default class DataManager {
     this.filtered = false;
   }
 
+  setTableWidth(tableWidth) {
+    this.tableWidth = tableWidth;
+  }
+
   setColumns(columns, prevColumns = [], savedColumns = {}) {
+    let usedWidthPx = 0;
     let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
+      const widthPx = widthToNumber(columnDef.width);
+      usedWidthPx += widthPx;
       const width =
         typeof columnDef.width === 'number'
           ? columnDef.width + 'px'
@@ -111,8 +122,8 @@ export default class DataManager {
 
       if (
         width &&
-        columnDef.tableData &&
-        columnDef.tableData.width !== undefined
+        columnDef.tableData // &&
+        // columnDef.tableData.width !== undefined
       ) {
         usedWidth.push(width);
       }
@@ -125,6 +136,7 @@ export default class DataManager {
         groupSort: columnDef.defaultGroupSort || 'asc',
         width,
         initialWidth: width,
+        widthPx: undefined,
         additionalWidth: 0,
         ...savedColumnTableData,
         ...(prevColumn ? prevColumn.tableData : {}),
@@ -134,6 +146,7 @@ export default class DataManager {
       columnDef.tableData = tableData;
       return columnDef;
     });
+
     const undefinedWidthColumns = this.columns.filter((c) => {
       if (c.hidden) {
         // Hidden column
@@ -149,8 +162,11 @@ export default class DataManager {
 
     usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
+
+    this.tableStyleWidth = isNaN(usedWidthPx) ? '100%' : usedWidthPx;
   }
 
   setDefaultExpanded(expanded) {
@@ -519,17 +535,57 @@ export default class DataManager {
     };
   };
 
-  onColumnResized(id, additionalWidth) {
+  onColumnResized(
+    id,
+    offset,
+    changedColumnWidthsBeforeOffset,
+    initialColWidths
+  ) {
     const column = this.columns.find((c) => c.tableData.id === id);
     if (!column) {
-      return;
+      return [];
     }
     const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
-    if (!nextColumn) {
-      return;
+    if (this.tableWidth === 'full' && !nextColumn) {
+      return [];
     }
-    column.tableData.additionalWidth = additionalWidth;
-    column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+    if (this.tableWidth === 'variable' && this.tableStyleWidth === '100%') {
+      // First time we're resizing - resolve all the column widths
+      this.columns.map((col, index) => ({
+        ...col,
+        tableData: {
+          ...col.tableData,
+          width: initialColWidths[index]
+          //initialWidth: `${initialColWidths[index]}px`
+        }
+      }));
+      this.tableStyleWidth = initialColWidths.reduce(
+        (acc, width) => acc + width
+      );
+      console.log(`tableStyleWidth ${this.tableStyleWidth}`);
+    }
+
+    const changed = [column];
+
+    column.tableData.widthPx = changedColumnWidthsBeforeOffset[0] + offset;
+    column.tableData.additionalWidth += offset;
+    column.tableData.width =
+      this.tableWidth === 'full'
+        ? `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`
+        : `${column.tableData.widthPx}px`;
+    console.log(`column.tableData.width ${column.tableData.width}`);
+    if (this.tableWidth === 'full') {
+      nextColumn.tableData.widthPx =
+        changedColumnWidthsBeforeOffset[1] - offset;
+      nextColumn.tableData.additionalWidth -= offset;
+      nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+      console.log(`nextColumn.tableData.width ${nextColumn.tableData.width}`);
+      changed.push(nextColumn);
+    }
+    if (this.tableWidth === 'variable') {
+      this.tableStyleWidth += offset;
+    }
+    return changed;
   }
 
   expandTreeForNodes = (data) => {
@@ -707,7 +763,8 @@ export default class DataManager {
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
-      groupedDataLength: this.groupedDataLength
+      groupedDataLength: this.groupedDataLength,
+      tableStyleWidth: this.tableStyleWidth
     };
   };
 
@@ -716,7 +773,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 

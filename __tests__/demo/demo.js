@@ -33,6 +33,7 @@ import {
   FrankensteinDemo,
   HidingColumns,
   Resizable,
+  ResizableTableWidthVariable,
   EditableRowDateColumnIssue,
   PersistentGroupings,
   DataSwitcher,
@@ -44,6 +45,10 @@ import {
   TableWithSummary
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
+import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
+import TableHead from '@material-ui/core/TableHead';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { MTableScrollbar } from '../../src/components';
 
 module.hot.accept();
 
@@ -112,8 +117,11 @@ render(
     <h1>Frankenstein</h1>
     <FrankensteinDemo />
 
-    <h1>Resizable Columns</h1>
+    <h1>Resizable Columns - TableWidth default/Full</h1>
     <Resizable />
+
+    <h1>Resizable Columns - TableWidth Variable</h1>
+    <ResizableTableWidthVariable />
 
     <h1>Persistent Groupings</h1>
     <PersistentGroupings persistentGroupingsId="persistence-id" />

@@ -15,6 +15,7 @@ import {
   MTableSteppedPagination,
   MTableScrollbar
 } from '@components';
+import { widthToNumber } from './utils/common-values';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -50,7 +51,9 @@ export default class MaterialTable extends React.Component {
       },
       showAddRow: false,
       bulkEditOpen: false,
-      width: 0
+      width: 0,
+      tableInitialWidthPx: undefined,
+      tableStyleWidth: '100%'
     };
 
     this.tableContainerDiv = React.createRef();
@@ -105,6 +108,7 @@ export default class MaterialTable extends React.Component {
       }
     }
 
+    this.dataManager.setTableWidth(props.options.tableWidth ?? 'full');
     this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
@@ -218,12 +222,10 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions = functionlessColumns(
-            fixedPropsColumns
-          );
-          const prevColumnsWithoutFunctions = functionlessColumns(
-            fixedPrevColumns
-          );
+          const currentColumnsWithoutFunctions =
+            functionlessColumns(fixedPropsColumns);
+          const prevColumnsWithoutFunctions =
+            functionlessColumns(fixedPrevColumns);
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -839,9 +841,34 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  onColumnResized = (id, additionalWidth) => {
-    this.dataManager.onColumnResized(id, additionalWidth);
-    this.setState(this.dataManager.getRenderState());
+  onColumnResized = (
+    id,
+    offset,
+    changedColumnWidthsBeforeOffset,
+    initialColWidths
+  ) => {
+    const colInfo = (col) => ({
+      field: col.field,
+      width: col.tableData.width,
+      widthPx: col.tableData.widthPx,
+      ...(col.id && { id: col.id }),
+      ...(col.minWidth && { minWidth: col.minWidth }),
+      ...(col.maxWidth && { maxWidth: col.maxWidth })
+    });
+    const colsResized = this.dataManager.onColumnResized(
+      id,
+      offset,
+      changedColumnWidthsBeforeOffset,
+      initialColWidths
+    );
+    this.setState(this.dataManager.getRenderState(), () => {
+      if (this.props.onColumnResized && colsResized.length > 0) {
+        this.props.onColumnResized(
+          colsResized.map((col) => colInfo(col)),
+          this.state.columns.map((col) => colInfo(col))
+        );
+      }
+    });
   };
 
   renderFooter() {
@@ -934,6 +961,9 @@ export default class MaterialTable extends React.Component {
   renderTable = (props) => (
     <Table
       style={{
+        ...(props.options.tableWidth === 'variable' && {
+          width: this.state.tableStyleWidth
+        }),
         tableLayout:
           props.options.fixedColumns &&
           (props.options.fixedColumns.left || props.options.fixedColumns.right)
@@ -990,6 +1020,7 @@ export default class MaterialTable extends React.Component {
           options={props.options}
           onColumnResized={this.onColumnResized}
           scrollWidth={this.state.width}
+          tableWidth={props.options.tableWidth ?? 'full'}
         />
       )}
       <props.components.Body
@@ -1039,6 +1070,13 @@ export default class MaterialTable extends React.Component {
     </Table>
   );
 
+  getInitialColumnWidth = () => {
+    return this.state.columns.reduce((colDef, acc) => {
+      acc += colDef?.tableData?.width;
+      return acc;
+    }, 0);
+  };
+
   getColumnsWidth = (props, count) => {
     const result = [];
 
@@ -1069,9 +1107,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef = this.state.columns[
-        count >= 0 ? i : this.state.columns.length - 1 - i
-      ];
+      const colDef =
+        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
