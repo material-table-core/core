@@ -58,8 +58,8 @@ export interface MaterialTableProps<RowData extends object> {
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onColumnResized?: (
-    changedColumns: Column<RowData>,
-    allColumns: Column<RowData>[]
+    changedColumns: ColumnSize[],
+    allColumns: ColumnSize[]
   ) => void;
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
@@ -458,6 +458,15 @@ export type CellStyle<RowData extends object> =
       rowData: RowData,
       column?: Column<RowData>
     ) => React.CSSProperties);
+
+export type ColumnSize = {
+  field: string;
+  width: string;
+  widthPx: number;
+  id?: string;
+  minWidth?: string;
+  maxWidth?: string;
+};
 
 export default class MaterialTable<
   RowData extends object

@@ -15,7 +15,6 @@ import {
   MTableSteppedPagination,
   MTableScrollbar
 } from '@components';
-import { widthToNumber } from './utils/common-values';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -222,10 +221,12 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions =
-            functionlessColumns(fixedPropsColumns);
-          const prevColumnsWithoutFunctions =
-            functionlessColumns(fixedPrevColumns);
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -862,7 +863,11 @@ export default class MaterialTable extends React.Component {
       initialColWidths
     );
     this.setState(this.dataManager.getRenderState(), () => {
-      if (this.props.onColumnResized && colsResized.length > 0) {
+      if (
+        offset === 0 &&
+        this.props.onColumnResized &&
+        colsResized.length > 0
+      ) {
         this.props.onColumnResized(
           colsResized.map((col) => colInfo(col)),
           this.state.columns.map((col) => colInfo(col))
@@ -1070,13 +1075,6 @@ export default class MaterialTable extends React.Component {
     </Table>
   );
 
-  getInitialColumnWidth = () => {
-    return this.state.columns.reduce((colDef, acc) => {
-      acc += colDef?.tableData?.width;
-      return acc;
-    }, 0);
-  };
-
   getColumnsWidth = (props, count) => {
     const result = [];
 
@@ -1107,8 +1105,9 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef =
-        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');

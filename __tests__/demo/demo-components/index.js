@@ -823,7 +823,11 @@ export function Resizable() {
       <MaterialTable
         title="Basic"
         //columns={global_cols}
-        columns={global_cols}
+        columns={global_cols.map((col) => ({
+          ...col,
+          minWidth: 10,
+          maxWidth: 500
+        }))}
         data={global_data}
         options={{
           columnResizable: true,
@@ -942,8 +946,9 @@ export function ResizableTableWidthVariable() {
               backgroundColor: 'lightblue'
             }*/
           }}
-          onColumnResized={(columnsChanged, columns) => {
+          onColumnResized={(columnsChanged, allColumns) => {
             setLastResize(columnsChanged);
+            console.log('onColumnsResize - allColumns', allColumns);
           }}
           components={{
             // Hide the bar Icon that's shown left of column border when you set one
