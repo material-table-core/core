@@ -46,7 +46,38 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.16 (2021-12-31)
+
+#### 4.3.15 (2021-12-21)
+
+##### Bug Fixes
+
+- [#441](https://github.com/material-table-core/core/pull/441) ([#443](https://github.com/material-table-core/core/pull/443)) ([ca3e4ee0](https://github.com/material-table-core/core/commit/ca3e4ee056e5b3d33254759426f5ada143710c1f))
+
+#### 4.3.14 (2021-12-21)
+
+##### Bug Fixes
+
+- [#437](https://github.com/material-table-core/core/pull/437) ([#440](https://github.com/material-table-core/core/pull/440)) ([a9e65aac](https://github.com/material-table-core/core/commit/a9e65aaca4d47533482267cf0f948716ab48d65e))
+
+#### 4.3.13 (2021-12-21)
+
+##### Bug Fixes
+
+- [#437](https://github.com/material-table-core/core/pull/437) ([#440](https://github.com/material-table-core/core/pull/440)) ([a9e65aac](https://github.com/material-table-core/core/commit/a9e65aaca4d47533482267cf0f948716ab48d65e))
+
+#### 4.3.13 (2021-12-21)
+
+##### Bug Fixes
+
+- [#437](https://github.com/material-table-core/core/pull/437) ([#440](https://github.com/material-table-core/core/pull/440)) ([a9e65aac](https://github.com/material-table-core/core/commit/a9e65aaca4d47533482267cf0f948716ab48d65e))
+
 #### 4.3.12 (2021-12-19)
+
+- Improve resiliance of UUID lookup ([8932e17267d830ce15ea4344c67bba316202b04b](https://github.com/material-table-core/core/commit/8932e17267d830ce15ea4344c67bba316202b04b) and [089917160b200179d9b2ace6e65c3402f74ad08a](https://github.com/material-table-core/core/commit/089917160b200179d9b2ace6e65c3402f74ad08a))
+- Re-use column definitions in reorder logic ((1cae2379e7b6830b1a2af83e73751af76b1cf4c3)[https://github.com/material-table-core/core/commit/1cae2379e7b6830b1a2af83e73751af76b1cf4c3])
+- Separate state for controlled vs. uncontrolled input warnings per [React FAQ](https://reactjs.org/docs/hooks-faq.html#should-i-use-one-or-many-state-variables) ([8ea10b5901f1da4b081775377798231692d49e5b](https://github.com/material-table-core/core/commit/8ea10b5901f1da4b081775377798231692d49e5b)).
+- Improve detection of row hover events ([62117c548e1a4d29fa9863830a5a8839ba4727e8](https://github.com/material-table-core/core/commit/62117c548e1a4d29fa9863830a5a8839ba4727e8))
 
 #### 4.3.11 (2021-11-20)
 

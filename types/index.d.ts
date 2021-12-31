@@ -232,6 +232,8 @@ export interface Column<RowData extends object> {
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
   render?: (data: RowData, type: 'row' | 'group') => any;
+  // A function to be called for each column during the csv export to manipulate the exported data
+  exportTransformer?: (row: RowData) => unknown;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
