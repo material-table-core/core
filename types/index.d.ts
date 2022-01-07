@@ -57,6 +57,10 @@ export interface MaterialTableProps<RowData extends object> {
   onPageChange?: (page: number, pageSize: number) => void;
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
+  onColumnResized?: (
+    changedColumns: ColumnSize[],
+    allColumns: ColumnSize[]
+  ) => void;
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (
@@ -387,6 +391,7 @@ export interface Options<RowData extends object> {
   sorting?: boolean;
   keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
+  tableWidth?: 'full' | 'variable';
   thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
@@ -456,6 +461,15 @@ export type CellStyle<RowData extends object> =
       rowData: RowData,
       column?: Column<RowData>
     ) => React.CSSProperties);
+
+export type ColumnSize = {
+  field: string;
+  width: string;
+  widthPx: number;
+  id?: string;
+  minWidth?: string;
+  maxWidth?: string;
+};
 
 export default class MaterialTable<
   RowData extends object
