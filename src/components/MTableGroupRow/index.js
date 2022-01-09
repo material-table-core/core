@@ -177,7 +177,10 @@ function MTableGroupRow(props) {
                   props.onGroupExpandChanged(props.path);
                 }}
               >
-                <props.icons.DetailPanel />
+                <props.icons.DetailPanel
+                  row={props}
+                  level={props.path.length - 1}
+                />
               </IconButton>
               {showSelectGroupCheckbox && (
                 <Checkbox
