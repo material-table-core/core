@@ -46,7 +46,7 @@ export interface MaterialTableProps<RowData extends object> {
     isEditHidden?: (rowData: RowData) => boolean;
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
-  icons?: Icons;
+  icons?: Icons<RowData>;
   initialFormData?: object;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
@@ -283,7 +283,7 @@ export const MTablePagination: (props: any) => React.ReactElement<any>;
 export const MTableToolbar: (props: any) => React.ReactElement<any>;
 export const MTable: (props: any) => React.ReactElement<any>;
 
-export interface Icons {
+export interface Icons<RowData = any> {
   Add?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Check?: React.ForwardRefExoticComponent<any> &
@@ -293,7 +293,7 @@ export interface Icons {
   Delete?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   DetailPanel?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
+    React.RefAttributes<SVGSVGElement> & { level?: number; row?: RowData };
   Edit?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Export?: React.ForwardRefExoticComponent<any> &
