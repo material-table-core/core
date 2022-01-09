@@ -178,7 +178,10 @@ function MTableGroupRow(props) {
                 }}
                 size="large"
               >
-                <props.icons.DetailPanel />
+                <props.icons.DetailPanel
+                  row={props}
+                  level={props.path.length - 1}
+                />
               </IconButton>
               {showSelectGroupCheckbox && (
                 <Checkbox

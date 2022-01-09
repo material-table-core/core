@@ -1,6 +1,7 @@
 import formatDate from 'date-fns/format';
 import { v4 as uuidv4 } from 'uuid';
 import { selectFromObject } from './';
+import { widthToNumber } from './common-values';
 
 export default class DataManager {
   checkForId = false;
@@ -43,6 +44,9 @@ export default class DataManager {
   treefied = false;
   sorted = false;
   paged = false;
+
+  tableWidth = 'full';
+  tableStyleWidth = '100%';
 
   rootGroupsIndex = {};
 
@@ -100,21 +104,31 @@ export default class DataManager {
     this.filtered = false;
   }
 
+  setTableWidth(tableWidth) {
+    this.tableWidth = tableWidth;
+  }
+
   setColumns(columns, prevColumns = [], savedColumns = {}) {
-    let usedWidth = ['0px'];
+    let usedWidthPx = 0;
+    let usedWidthNotPx = [];
 
     this.columns = columns.map((columnDef, index) => {
+      const widthPx = widthToNumber(columnDef.width);
       const width =
         typeof columnDef.width === 'number'
           ? columnDef.width + 'px'
           : columnDef.width;
 
       if (
-        width &&
-        columnDef.tableData &&
-        columnDef.tableData.width !== undefined
+        width //&&
+        //columnDef.tableData // &&
+        // columnDef.tableData.width !== undefined
       ) {
-        usedWidth.push(width);
+        if (widthPx !== NaN) {
+          usedWidthPx += widthPx;
+        } else {
+          usedWidthNotPx.push(width);
+        }
       }
       const prevColumn = prevColumns.find(({ id }) => id === index);
       const savedColumnTableData = savedColumns[columnDef.field] ?? {};
@@ -125,6 +139,7 @@ export default class DataManager {
         groupSort: columnDef.defaultGroupSort || 'asc',
         width,
         initialWidth: width,
+        widthPx: widthPx === NaN ? undefined : widthPx,
         additionalWidth: 0,
         ...savedColumnTableData,
         ...(prevColumn ? prevColumn.tableData : {}),
@@ -134,7 +149,8 @@ export default class DataManager {
       columnDef.tableData = tableData;
       return columnDef;
     });
-    const undefinedWidthColumns = this.columns.filter((c) => {
+
+    const undefWidthCols = this.columns.filter((c) => {
       if (c.hidden) {
         // Hidden column
         return false;
@@ -147,10 +163,19 @@ export default class DataManager {
       return c.width === undefined;
     });
 
-    usedWidth = '(' + usedWidth.join(' + ') + ')';
-    undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+    const usedWidth =
+      (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
+      (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
+    undefWidthCols.forEach((columnDef) => {
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
+
+    this.tableStyleWidth =
+      this.tableWidth === 'full' ||
+      undefWidthCols.length > 0 ||
+      usedWidthNotPx.length > 0
+        ? '100%'
+        : usedWidthPx;
   }
 
   setDefaultExpanded(expanded) {
@@ -519,17 +544,58 @@ export default class DataManager {
     };
   };
 
-  onColumnResized(id, additionalWidth) {
+  onColumnResized(
+    id,
+    offset,
+    changedColumnWidthsBeforeOffset,
+    initialColWidths
+  ) {
     const column = this.columns.find((c) => c.tableData.id === id);
     if (!column) {
-      return;
+      return [];
     }
     const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
-    if (!nextColumn) {
-      return;
+    if (this.tableWidth === 'full' && !nextColumn) {
+      return [];
     }
-    column.tableData.additionalWidth = additionalWidth;
-    column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+    if (offset === 0) {
+      // We've finished the column resize
+      return this.tableWidth === 'full' ? [column, nextColumn] : [column];
+    }
+    if (this.tableWidth === 'variable' && this.tableStyleWidth === '100%') {
+      // First time we're resizing - resolve all the column widths
+      // MTableHeader has ref to
+      this.columns.forEach((col, index) => ({
+        ...col,
+        tableData: {
+          ...col.tableData,
+          width: `${initialColWidths[index]}px`,
+          widthPx: initialColWidths[index]
+        }
+      }));
+      this.tableStyleWidth = initialColWidths.reduce(
+        (acc, width) => acc + width
+      );
+    }
+
+    const changed = [column];
+    column.tableData.widthPx = changedColumnWidthsBeforeOffset[0] + offset;
+    column.tableData.additionalWidth += offset;
+    column.tableData.width =
+      this.tableWidth === 'full'
+        ? `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`
+        : `${column.tableData.widthPx}px`;
+    if (this.tableWidth === 'full') {
+      nextColumn.tableData.widthPx =
+        changedColumnWidthsBeforeOffset[1] - offset;
+      nextColumn.tableData.additionalWidth -= offset;
+      nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+      changed.push(nextColumn);
+    }
+    if (this.tableWidth === 'variable') {
+      this.tableStyleWidth += offset;
+    }
+    return changed;
   }
 
   expandTreeForNodes = (data) => {
@@ -707,7 +773,8 @@ export default class DataManager {
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
-      groupedDataLength: this.groupedDataLength
+      groupedDataLength: this.groupedDataLength,
+      tableStyleWidth: this.tableStyleWidth
     };
   };
 

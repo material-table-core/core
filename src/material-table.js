@@ -51,7 +51,9 @@ export default class MaterialTable extends React.Component {
       },
       showAddRow: false,
       bulkEditOpen: false,
-      width: 0
+      width: 0,
+      tableInitialWidthPx: undefined,
+      tableStyleWidth: '100%'
     };
 
     this.tableContainerDiv = React.createRef();
@@ -106,6 +108,7 @@ export default class MaterialTable extends React.Component {
       }
     }
 
+    this.dataManager.setTableWidth(props.options.tableWidth ?? 'full');
     this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
@@ -840,9 +843,38 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  onColumnResized = (id, additionalWidth) => {
-    this.dataManager.onColumnResized(id, additionalWidth);
-    this.setState(this.dataManager.getRenderState());
+  onColumnResized = (
+    id,
+    offset,
+    changedColumnWidthsBeforeOffset,
+    initialColWidths
+  ) => {
+    const colInfo = (col) => ({
+      field: col.field,
+      width: col.tableData.width,
+      widthPx: col.tableData.widthPx,
+      ...(col.id && { id: col.id }),
+      ...(col.minWidth && { minWidth: col.minWidth }),
+      ...(col.maxWidth && { maxWidth: col.maxWidth })
+    });
+    const colsResized = this.dataManager.onColumnResized(
+      id,
+      offset,
+      changedColumnWidthsBeforeOffset,
+      initialColWidths
+    );
+    this.setState(this.dataManager.getRenderState(), () => {
+      if (
+        offset === 0 &&
+        this.props.onColumnResized &&
+        colsResized.length > 0
+      ) {
+        this.props.onColumnResized(
+          colsResized.map((col) => colInfo(col)),
+          this.state.columns.map((col) => colInfo(col))
+        );
+      }
+    });
   };
 
   renderFooter() {
@@ -938,6 +970,9 @@ export default class MaterialTable extends React.Component {
   renderTable = (props) => (
     <Table
       style={{
+        ...(props.options.tableWidth === 'variable' && {
+          width: this.state.tableStyleWidth
+        }),
         tableLayout:
           props.options.fixedColumns &&
           (props.options.fixedColumns.left || props.options.fixedColumns.right)
@@ -994,6 +1029,7 @@ export default class MaterialTable extends React.Component {
           options={props.options}
           onColumnResized={this.onColumnResized}
           scrollWidth={this.state.width}
+          tableWidth={props.options.tableWidth ?? 'full'}
         />
       )}
       <props.components.Body

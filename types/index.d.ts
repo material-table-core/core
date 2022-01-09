@@ -46,7 +46,7 @@ export interface MaterialTableProps<RowData extends object> {
     isEditHidden?: (rowData: RowData) => boolean;
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
-  icons?: Icons;
+  icons?: Icons<RowData>;
   initialFormData?: object;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
@@ -57,6 +57,10 @@ export interface MaterialTableProps<RowData extends object> {
   onPageChange?: (page: number, pageSize: number) => void;
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
+  onColumnResized?: (
+    changedColumns: ColumnSize[],
+    allColumns: ColumnSize[]
+  ) => void;
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (
@@ -190,6 +194,7 @@ export interface Column<RowData extends object> {
   //customExport prop handle flattening of data at column level before passing data to exporter. Note exportMenu.exportFunc is an alternative to handle data change at exporter level
   customExport?: (rowData: RowData) => unknown;
   defaultFilter?: any;
+  filterOnItemSelect?: boolean;
   defaultGroupOrder?: number;
   id?: unknown;
   defaultGroupSort?: 'asc' | 'desc';
@@ -283,7 +288,7 @@ export const MTablePagination: (props: any) => React.ReactElement<any>;
 export const MTableToolbar: (props: any) => React.ReactElement<any>;
 export const MTable: (props: any) => React.ReactElement<any>;
 
-export interface Icons {
+export interface Icons<RowData = any> {
   Add?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Check?: React.ForwardRefExoticComponent<any> &
@@ -293,7 +298,7 @@ export interface Icons {
   Delete?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   DetailPanel?: React.ForwardRefExoticComponent<any> &
-    React.RefAttributes<SVGSVGElement>;
+    React.RefAttributes<SVGSVGElement> & { level?: number; row?: RowData };
   Edit?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Export?: React.ForwardRefExoticComponent<any> &
@@ -386,6 +391,7 @@ export interface Options<RowData extends object> {
   sorting?: boolean;
   keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
+  tableWidth?: 'full' | 'variable';
   thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
@@ -455,6 +461,15 @@ export type CellStyle<RowData extends object> =
       rowData: RowData,
       column?: Column<RowData>
     ) => React.CSSProperties);
+
+export type ColumnSize = {
+  field: string;
+  width: string;
+  widthPx: number;
+  id?: string;
+  minWidth?: string;
+  maxWidth?: string;
+};
 
 export default class MaterialTable<
   RowData extends object

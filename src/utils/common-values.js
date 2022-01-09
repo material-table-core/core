@@ -21,3 +21,9 @@ export const reducePercentsInCalc = (calc, fullValue) => {
   }
   return calc.replace(/\d*%/, `${fullValue}px`);
 };
+
+export const widthToNumber = (width) => {
+  if (typeof width === 'number') return width;
+  if (!width || !width.match(/^\s*\d+(px)?\s*$/)) return NaN;
+  return Number(width.replace(/px$/, ''));
+};

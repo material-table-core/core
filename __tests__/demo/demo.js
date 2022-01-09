@@ -48,6 +48,10 @@ import {
   TableWithSummary
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
+import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
+import TableHead from '@material-ui/core/TableHead';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { MTableScrollbar } from '../../src/components';
 
 module.hot.accept();
 

@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // root of this project
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../src';
+import MaterialTable, {
+  MTableBodyRow,
+  MTableEditRow,
+  MTableHeader
+} from '../../../src';
+import { makeStyles } from '@material-ui/core/styles';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -14,45 +19,45 @@ const global_data = [
     birthCity: 34,
     id: 1
   },
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 2 },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    id: 1
+    id: 3
   },
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 4 },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    id: 1
+    id: 5
   },
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 6 },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    id: 1
+    id: 7
   },
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 8 },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    id: 1
+    id: 9
   },
-  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 0 },
+  { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, id: 10 },
   {
     name: 'Zerya Betül',
     surname: 'Baran',
     birthYear: 2017,
     birthCity: 34,
-    id: 1
+    id: 11
   }
 ];
 
@@ -100,7 +105,11 @@ const words = ['Paper', 'Rock', 'Scissors'];
 
 const rawData = [];
 for (let i = 0; i < 100; i++) {
-  rawData.push({ identifier: rando(300), word: words[i % words.length] });
+  rawData.push({
+    identifier: rando(300),
+    word: words[i % words.length],
+    id: i
+  });
 }
 
 const columns = [
@@ -783,18 +792,175 @@ export function ExportData() {
 }
 */
 
+const ColumnResized = ({ columns }) => {
+  return columns.map((column) => (
+    <div key={column.field}>
+      {column && (
+        <>
+          <em>
+            <span
+              key={column.field}
+              style={{ display: 'inline-block', width: 70 }}
+            >
+              {column.field}
+            </span>
+          </em>
+          widthPx:<em>{column.widthPx}</em>
+        </>
+      )}
+      {column?.minWidth && <> min:{column.minWidth}</>}
+      {column?.maxWidth && <> max:{column.maxWidth}</>}
+      &nbsp;width:{column.width}
+    </div>
+  ));
+};
+
 export function Resizable() {
+  const [lastResize, setLastResize] = React.useState([]);
+
   return (
-    <MaterialTable
-      title="Basic"
-      columns={global_cols}
-      data={global_data}
-      options={{
-        columnResizable: true,
-        tableLayout: 'fixed',
-        paging: true
+    <>
+      <MaterialTable
+        title="Basic"
+        //columns={global_cols}
+        columns={global_cols.map((col) => ({
+          ...col,
+          minWidth: 10,
+          maxWidth: 500
+        }))}
+        data={global_data}
+        options={{
+          columnResizable: true,
+          tableLayout: 'fixed',
+          paging: true
+        }}
+        onColumnResized={(columnsChanged, columns) => {
+          setLastResize(columnsChanged);
+        }}
+      />
+      <br />
+      Last onColumnResized: <ColumnResized columns={lastResize} />
+    </>
+  );
+}
+
+const heading = (heading) => {
+  return (
+    <span
+      style={{
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }}
-    />
+    >
+      {heading}
+    </span>
+  );
+};
+
+const resizeCols = [
+  { title: heading('Name'), field: 'name', minWidth: 5, width: 100 },
+  { title: heading('Surname'), field: 'surname', width: 120 },
+  {
+    title: heading('Birth Year'),
+    field: 'birthYear',
+    type: 'numeric',
+    minWidth: 60,
+    width: 100,
+    maxWidth: 120
+  },
+  {
+    title: heading('Notes'),
+    field: 'notes',
+    //width: 'calc(calc((100% - (0px)) / 4) + -18px)',
+    width: 300
+  },
+  {
+    title: heading('Birth Place'),
+    field: 'birthCity',
+    lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+    width: 110,
+    maxWidth: 200
+  }
+];
+
+const useHeaderStyles = makeStyles({
+  header: {
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: 'grey',
+    padding: '1px',
+    whiteSpace: 'nowrap',
+    backgroundColor: 'lightblue'
+  }
+});
+
+const HeaderWithClassesChange = ({ classes, icons, ...other }) => (
+  <MTableHeader
+    classes={{ classes, ...useHeaderStyles() }}
+    icons={{ ...icons, Resize: undefined }}
+    {...other}
+  />
+);
+
+export function ResizableTableWidthVariable() {
+  const [lastResize, setLastResize] = React.useState([]);
+
+  return (
+    <div>
+      <div style={{ overflowX: 'auto' }}>
+        <MaterialTable
+          title="Basic"
+          columns={resizeCols.map((col) => ({
+            ...col,
+            cellStyle: {
+              borderStyle: 'solid',
+              borderWidth: '1px',
+              borderColor: 'lightGrey',
+              padding: '1px',
+              ...(col.field === 'birthYear' && { paddingRight: '10px' }),
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }
+          }))}
+          data={global_data.map((row, index) => ({
+            ...row,
+            ...(index === 1
+              ? { notes: 'A very very long note that is very interesting' }
+              : {})
+          }))}
+          options={{
+            toolbar: false,
+            columnResizable: true,
+            tableLayout: 'fixed',
+            tableWidth: 'variable',
+            paging: false
+            /* Changing class instead of setting headerStyle here
+            headerStyle: {
+              borderStyle: 'solid',
+              borderWidth: '1px',
+              borderColor: 'grey',
+              padding: '1px',
+              whiteSpace: 'nowrap',
+              backgroundColor: 'lightblue'
+            }*/
+          }}
+          onColumnResized={(columnsChanged, allColumns) => {
+            setLastResize(columnsChanged);
+            console.log('onColumnsResize - allColumns', allColumns);
+          }}
+          components={{
+            // Hide the bar Icon that's shown left of column border when you set one
+            // Using reference to function to prevent re-rendering which resets state
+            // If we re-render the call to onColumnResized we keep getting called
+            Header: HeaderWithClassesChange
+          }}
+        />
+      </div>
+      <br />
+      Last onColumnResized: <ColumnResized columns={lastResize} />
+    </div>
   );
 }
 
