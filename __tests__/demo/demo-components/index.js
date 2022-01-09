@@ -6,7 +6,7 @@ import MaterialTable, {
   MTableEditRow,
   MTableHeader
 } from '../../../src';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
