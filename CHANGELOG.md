@@ -1,3 +1,9 @@
+#### 0.2.13 (2022-01-16)
+
+##### Other Changes
+
+- new version for MTableHeader ([5b20fcb7](https://github.com/material-table-core/core/commit/5b20fcb75ab245ae5c0536011405f67e85afea6d))
+
 #### 0.2.12 (2022-01-09)
 
 #### 0.2.11 (2021-12-31)
