@@ -6,7 +6,6 @@ import MaterialTable, {
   MTableEditRow,
   MTableHeader
 } from '../../../src';
-import { makeStyles } from '@material-ui/core/styles';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -884,7 +883,7 @@ const resizeCols = [
   }
 ];
 
-const useHeaderStyles = makeStyles({
+const headerStyles = {
   header: {
     borderStyle: 'solid',
     borderWidth: '1px',
@@ -893,12 +892,13 @@ const useHeaderStyles = makeStyles({
     whiteSpace: 'nowrap',
     backgroundColor: 'lightblue'
   }
-});
+};
 
 const HeaderWithClassesChange = ({ classes, icons, ...other }) => (
   <MTableHeader
-    classes={{ classes, ...useHeaderStyles() }}
+    classes={classes}
     icons={{ ...icons, Resize: undefined }}
+    sx={headerStyles.header}
     {...other}
   />
 );

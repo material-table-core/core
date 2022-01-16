@@ -6,17 +6,17 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Draggable } from 'react-beautiful-dnd';
-import { Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
+import { useTheme } from '@mui/styles';
 import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader({ onColumnResized, ...props }) {
-  const [
-    { lastX } // Extract the props to use instead of the whole state object
-  ] = React.useState({
-    lastX: 0
-  });
+  const theme = useTheme();
   const defaultMinColumnWidth = 20;
   const defaultMaxColumnWidth = 10000;
+
+  const [resizing, setResizing] = React.useState(undefined);
+  const [lastX, setLastX] = React.useState(0);
 
   const handleMouseDown = (e, columnDef, colIndex) => {
     const startX = e.clientX;
@@ -259,25 +259,25 @@ export function MTableHeader({ onColumnResized, ...props }) {
         ) {
           const Resize = props.icons.Resize
             ? props.icons.Resize
-            : (props) => <div {...props} data-test-id="drag_handle" />;
+            : (props) => <Box {...props} data-test-id="drag_handle" />;
           content = (
-            <div className={props.classes.headerWrap}>
-              <div className={props.classes.headerContent}>{content}</div>
+            <Box sx={styles.headerWrap}>
+              <Box sx={styles.headerContent}>{content}</Box>
               <div></div>
               <Resize
-                className={props.classes.headerResize}
+                sx={styles.headerResize}
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
                   color:
                     resizing?.col &&
                     resizing.col.tableData.id === columnDef.tableData.id
-                      ? props.theme.palette.primary.main
+                      ? theme.palette.primary.main
                       : 'inherit'
                 }}
                 onMouseDown={(e) => handleMouseDown(e, columnDef, index)}
               />
-            </div>
+            </Box>
           );
         }
         const cellAlignment =
@@ -337,7 +337,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
         padding="none"
         key="key-detail-panel-column"
         sx={styles.header}
-        style={{ ...props.headerStyle }}
+        style={props.headerStyle}
       />
     );
   }
@@ -377,7 +377,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
           padding="none"
           key={'key-tree-data-header'}
           sx={styles.header}
-          style={{ ...props.headerStyle }}
+          style={props.headerStyle}
         />
       );
     }
@@ -391,13 +391,13 @@ export function MTableHeader({ onColumnResized, ...props }) {
             padding="checkbox"
             key={'key-group-header' + columnDef.tableData.id}
             sx={styles.header}
-            style={{ ...props.headerStyle }}
+            style={props.headerStyle}
           />
         );
       });
     return (
       <TableHead ref={props.forwardedRef}>
-        <TableRow className={props.classes.headerRow}>{headers}</TableRow>
+        <TableRow sx={styles.headerRow}>{headers}</TableRow>
       </TableHead>
     );
   }
@@ -521,7 +521,7 @@ MTableHeader.propTypes = {
   tooltip: PropTypes.string
 };
 
-export const styles = (theme) => ({
+export const styles = {
   headerRow: {
     zIndex: 10
   },
@@ -529,7 +529,7 @@ export const styles = (theme) => ({
     // display: 'inline-block',
     // position: 'sticky',
     top: 0,
-    backgroundColor: theme.palette.background.paper // Change according to theme,
+    backgroundColor: 'background.paper' // Change according to theme,
   },
   headerWrap: {
     display: 'flex',
@@ -555,7 +555,7 @@ export const styles = (theme) => ({
     right: -8,
     zIndex: 20 // so half that overlaps next column can be used to resize
   }
-});
+};
 
 const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
   return <MTableHeader {...props} forwardedRef={ref} />;
