@@ -7,7 +7,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Draggable } from 'react-beautiful-dnd';
 import { Box, Tooltip } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/system';
 import * as CommonValues from '../../utils/common-values';
 
 export function MTableHeader({ onColumnResized, ...props }) {
