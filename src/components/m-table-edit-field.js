@@ -24,6 +24,7 @@ class MTableEditField extends React.Component {
       onRowDataChange,
       errorState,
       onBulkEditRowChanged,
+      autofocus,
       scrollWidth,
       ...props
     } = this.props;
@@ -91,7 +92,6 @@ class MTableEditField extends React.Component {
       this.props.columnDef.dateSetting.format
         ? this.props.columnDef.dateSetting.format
         : 'dd.MM.yyyy';
-    console.log(this.props.locale);
     return (
       <LocalizationProvider
         dateAdapter={AdapterDateFns}
@@ -170,12 +170,12 @@ class MTableEditField extends React.Component {
   }
 
   renderTextField() {
-    const { autofocus, ...props } = this.getProps();
+    const props = this.getProps();
     return (
       <TextField
         {...props}
         variant="standard"
-        inputRef={(input) => autofocus && input && input.focus()}
+        inputRef={(input) => this.props.autofocus && input && input.focus()}
         fullWidth
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
@@ -207,12 +207,12 @@ class MTableEditField extends React.Component {
   }
 
   renderCurrencyField() {
-    const { autofocus, ...props } = this.getProps();
+    const props = this.getProps();
     return (
       <TextField
         {...props}
         variant="standard"
-        inputRef={(input) => autofocus && input && input.focus()}
+        inputRef={(input) => this.props.autofocus && input && input.focus()}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
