@@ -108,6 +108,7 @@ function MTableEditRow(props) {
               <EditComponent
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
+                autofocus={index === 0}
                 value={value}
                 error={!error.isValid}
                 helperText={error.helperText}

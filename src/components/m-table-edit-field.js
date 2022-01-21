@@ -170,10 +170,12 @@ class MTableEditField extends React.Component {
   }
 
   renderTextField() {
+    const { autofocus, ...props } = this.getProps();
     return (
       <TextField
-        {...this.getProps()}
+        {...props}
         variant="standard"
+        inputRef={(input) => autofocus && input && input.focus()}
         fullWidth
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
@@ -205,10 +207,12 @@ class MTableEditField extends React.Component {
   }
 
   renderCurrencyField() {
+    const { autofocus, ...props } = this.getProps();
     return (
       <TextField
-        {...this.getProps()}
+        {...props}
         variant="standard"
+        inputRef={(input) => autofocus && input && input.focus()}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
@@ -232,7 +236,6 @@ class MTableEditField extends React.Component {
           style: { textAlign: 'right' }
         }}
         onKeyDown={this.props.onKeyDown}
-        autoFocus={this.props.autoFocus}
       />
     );
   }
