@@ -6,8 +6,8 @@ type Concrete<Type> = {
 
 type Handlers = Concrete<
   Omit<
-    Omit<React.DOMAttributes<HTMLDivElement>, 'children'>,
-    'dangerouslySetInnerHTML'
+    React.DOMAttributes<HTMLDivElement>,
+    'children' | 'dangerouslySetInnerHTML'
   >
 >;
 
