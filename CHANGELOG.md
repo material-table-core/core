@@ -1,3 +1,13 @@
+#### 4.3.20 (2022-01-22)
+
+##### Bug Fixes
+
+- autofocus of edit rows ([77107104](https://github.com/material-table-core/core/commit/771071044bd4ff38fa1a9e5b2b93f27dc33b9bd3))
+
+##### Refactors
+
+- omit one `Omit` ([#463](https://github.com/material-table-core/core/pull/463)) ([d99d551d](https://github.com/material-table-core/core/commit/d99d551dee04ceb0ebdc165c0b4aaad42b49e28c))
+
 #### 4.3.19 (2022-01-21)
 
 #### 4.3.18 (2022-01-09)
