@@ -30,6 +30,7 @@ function MTableEditRow(props) {
 
   function renderColumns() {
     const size = CommonValues.elementSize(props);
+    let focusedCol = -1;
     const mapArr = props.columns
       .filter(
         (columnDef) =>
@@ -96,6 +97,9 @@ function MTableEditRow(props) {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent = editComponent || props.components.EditField;
           const error = validateInput(columnDef, state.data);
+          if (focusedCol === -1) {
+            focusedCol = index;
+          }
           return (
             <TableCell
               size={size}
@@ -108,7 +112,7 @@ function MTableEditRow(props) {
               <EditComponent
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
-                autofocus={index === 0}
+                autoFocus={focusedCol === index}
                 value={value}
                 error={!error.isValid}
                 helperText={error.helperText}
