@@ -1,3 +1,9 @@
+#### 4.3.21 (2022-01-22)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([1f5638f5](https://github.com/material-table-core/core/commit/1f5638f58f6f79234ead098ffb4313117c32b3d6))
+
 #### 4.3.20 (2022-01-22)
 
 ##### Bug Fixes
