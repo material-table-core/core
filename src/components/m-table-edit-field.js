@@ -23,8 +23,8 @@ class MTableEditField extends React.Component {
       rowData,
       onRowDataChange,
       errorState,
+      autoFocus,
       onBulkEditRowChanged,
-      autofocus,
       scrollWidth,
       ...props
     } = this.props;
@@ -41,6 +41,9 @@ class MTableEditField extends React.Component {
           onChange={(event) => this.props.onChange(event.target.value)}
           style={{
             fontSize: 13
+          }}
+          inputProps={{
+            autoFocus: this.props.autoFocus
           }}
           SelectDisplayProps={{ 'aria-label': this.props.columnDef.title }}
         >
@@ -75,6 +78,7 @@ class MTableEditField extends React.Component {
                   marginLeft: 9
                 }}
                 inputProps={{
+                  autoFocus: this.props.autoFocus,
                   'aria-label': this.props.columnDef.title
                 }}
               />
@@ -110,6 +114,7 @@ class MTableEditField extends React.Component {
             }
           }}
           inputProps={{
+            autoFocus: this.props.autoFocus,
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
@@ -136,6 +141,7 @@ class MTableEditField extends React.Component {
             }
           }}
           inputProps={{
+            autoFocus: this.props.autoFocus,
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
@@ -162,6 +168,7 @@ class MTableEditField extends React.Component {
             }
           }}
           inputProps={{
+            autoFocus: this.props.autoFocus,
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
@@ -170,12 +177,10 @@ class MTableEditField extends React.Component {
   }
 
   renderTextField() {
-    const props = this.getProps();
     return (
       <TextField
-        {...props}
+        {...this.getProps()}
         variant="standard"
-        inputRef={(input) => this.props.autofocus && input && input.focus()}
         fullWidth
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
@@ -196,6 +201,7 @@ class MTableEditField extends React.Component {
           }
         }}
         inputProps={{
+          autoFocus: this.props.autoFocus,
           'aria-label': this.props.columnDef.title,
           style:
             this.props.columnDef.type === 'numeric'
@@ -207,12 +213,10 @@ class MTableEditField extends React.Component {
   }
 
   renderCurrencyField() {
-    const props = this.getProps();
     return (
       <TextField
-        {...props}
+        {...this.getProps()}
         variant="standard"
-        inputRef={(input) => this.props.autofocus && input && input.focus()}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
@@ -232,6 +236,7 @@ class MTableEditField extends React.Component {
           }
         }}
         inputProps={{
+          autoFocus: this.props.autoFocus,
           'aria-label': this.props.columnDef.title,
           style: { textAlign: 'right' }
         }}
@@ -269,7 +274,14 @@ MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   columnDef: PropTypes.object.isRequired,
-  locale: PropTypes.object
+  locale: PropTypes.object,
+  rowData: PropTypes.object,
+  onRowDataChange: PropTypes.func,
+  errorState: PropTypes.func,
+  autoFocus: PropTypes.bool,
+  onBulkEditRowChanged: PropTypes.func,
+  scrollWidth: PropTypes.number,
+  onKeyDown: PropTypes.func
 };
 
 export default MTableEditField;

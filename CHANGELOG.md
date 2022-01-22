@@ -90,6 +90,22 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.21 (2022-01-22)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([1f5638f5](https://github.com/material-table-core/core/commit/1f5638f58f6f79234ead098ffb4313117c32b3d6))
+
+#### 4.3.20 (2022-01-22)
+
+##### Bug Fixes
+
+- autofocus of edit rows ([77107104](https://github.com/material-table-core/core/commit/771071044bd4ff38fa1a9e5b2b93f27dc33b9bd3))
+
+##### Refactors
+
+- omit one `Omit` ([#463](https://github.com/material-table-core/core/pull/463)) ([d99d551d](https://github.com/material-table-core/core/commit/d99d551dee04ceb0ebdc165c0b4aaad42b49e28c))
+
 #### 4.3.19 (2022-01-21)
 
 #### 4.3.18 (2022-01-09)
