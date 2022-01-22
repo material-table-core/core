@@ -14,7 +14,11 @@ class MTableEditCell extends React.Component {
         helperText: ''
       },
       isLoading: false,
-      value: props.getFieldValue(this.props.rowData, this.props.columnDef)
+      value: props.getFieldValue(
+        this.props.rowData,
+        this.props.columnDef,
+        false
+      )
     };
   }
 
