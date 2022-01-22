@@ -1,3 +1,9 @@
+#### 0.2.16 (2022-01-22)
+
+##### Bug Fixes
+
+- extract the correct value for select edit cell ([3f681ba3](https://github.com/material-table-core/core/commit/3f681ba36d8daa36fbeaa5386a387787aff8afae))
+
 #### 0.2.15 (2022-01-22)
 
 ##### Bug Fixes
