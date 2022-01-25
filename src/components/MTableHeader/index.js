@@ -242,8 +242,24 @@ export function MTableHeader({ onColumnResized, ...props }) {
               )}
             </Draggable>
           );
+        } else if (columnDef.sorting !== false && props.sorting) {
+          content = (
+            <>
+              {columnDef.title}
+              <RenderSortButton
+                columnDef={columnDef}
+                orderBy={props.orderBy}
+                keepSortDirectionOnColumnSwitch={
+                  props.keepSortDirectionOnColumnSwitch
+                }
+                orderDirection={props.orderDirection}
+                icon={props.icons.SortArrow}
+                thirdSortClick={props.thirdSortClick}
+                onOrderChange={props.onOrderChange}
+              />
+            </>
+          );
         }
-
         if (columnDef.tooltip) {
           content = (
             <Tooltip title={columnDef.tooltip} placement="bottom">
