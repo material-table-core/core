@@ -1,3 +1,9 @@
+#### 0.2.17 (2022-01-25)
+
+##### Bug Fixes
+
+- Add sorting icon for draggable false ([c7918619](https://github.com/material-table-core/core/commit/c791861932ac09fbcd8bb269019645c2cb5601cc))
+
 #### 0.2.16 (2022-01-22)
 
 ##### Bug Fixes
