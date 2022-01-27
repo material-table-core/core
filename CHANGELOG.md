@@ -1,3 +1,13 @@
+#### 0.2.18 (2022-01-27)
+
+##### New Features
+
+- Improve renderSummaryRow ([756d225f](https://github.com/material-table-core/core/commit/756d225f45bc763e3d2faee46ffb3ed8779f29cc))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([f017eeca](https://github.com/material-table-core/core/commit/f017eeca328f228454a90e81345d8ec00a20494d))
+
 #### 0.2.17 (2022-01-25)
 
 ##### Bug Fixes
