@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: "bug"
+labels: 'bug'
 ---
 
 # Guidelines
@@ -12,7 +12,8 @@ labels: "bug"
 
 - #### You may fork one of the following starter templates if you would like:
 
-  - #### [CodeSandbox](https://codesandbox.io/s/material-table-starter-template-xnfpo)
+  - #### [CodeSandbox mui v4](https://codesandbox.io/s/material-table-starter-template-forked-q85qi?file=/src/index.js)
+  - #### [CodeSandbox mui v5](https://codesandbox.io/s/material-table-starter-template-forked-q85qi?file=/src/index.js)
   - #### [StackBlitz](https://stackblitz.com/edit/material-table-starter-template)
 
 **Describe the bug**
