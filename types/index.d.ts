@@ -26,10 +26,7 @@ export interface MaterialTableProps<RowData extends object> {
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
     | (({ rowData }: { rowData: RowData }) => React.ReactNode)
-    | (
-        | DetailPanel<RowData>
-        | (({ rowData }: { rowData: RowData }) => DetailPanel<RowData>)
-      )[];
+    | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
