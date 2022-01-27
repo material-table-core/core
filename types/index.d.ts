@@ -95,7 +95,9 @@ export interface MaterialTableProps<RowData extends object> {
     index: number;
     data: RowData[];
     currentData: RowData[];
-  }) => { value: unknown; style: React.CSSProperties } | unknown;
+  }) =>
+    | { value?: React.ReactNode; style?: React.CSSProperties }
+    | React.ReactNode;
   style?: React.CSSProperties;
   tableRef?: React.RefObject<any> | React.MutableRefObject<undefined>;
   page?: number;
