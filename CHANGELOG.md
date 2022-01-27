@@ -116,6 +116,16 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.24 (2022-01-27)
+
+##### New Features
+
+- Improve renderSummaryRow ([756d225f](https://github.com/material-table-core/core/commit/756d225f45bc763e3d2faee46ffb3ed8779f29cc))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([f017eeca](https://github.com/material-table-core/core/commit/f017eeca328f228454a90e81345d8ec00a20494d))
+
 #### 4.3.23 (2022-01-25)
 
 ##### Bug Fixes

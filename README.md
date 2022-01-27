@@ -59,6 +59,11 @@
 ✅ [Why does this repo exist?](https://material-table-core.com/docs/about) 🚧 [Documentation](https://material-table-core.com/docs) ⚙️ [Demos](https://material-table-core.com/demos)
 </div>
 
+# Sponsoring
+
+We are now able to be sponsored via [Github Sponsors!](https://github.com/sponsors/material-table-core?o=esb)
+So if you want to help us maintain this package, everything is appreciated.
+
 # Contributing
 
 Thanks for taking interest in contributing! :rocket: In being a community based repository, we wouldn't be here without you!
