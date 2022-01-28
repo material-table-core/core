@@ -78,7 +78,7 @@ MTableCell.propTypes = {
   value: PropTypes.any,
   rowData: PropTypes.object,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  forwardedRef: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  forwardedRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   size: PropTypes.string,
   colSpan: PropTypes.number,
   children: PropTypes.element,
