@@ -88,7 +88,7 @@ export function MTableSummaryRow({
         let value = '';
         let style = getStyle({ columnDef: column, scrollWidth: 0 });
 
-        if (typeof summaryColumn === 'object') {
+        if (typeof summaryColumn === 'object' && summaryColumn !== null) {
           value = summaryColumn.value;
           style = summaryColumn.style;
         } else {
