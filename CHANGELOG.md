@@ -1,3 +1,19 @@
+#### 4.3.25 (2022-01-29)
+
+##### New Features
+
+- Update prop types for table cell ref ([105a2dbd](https://github.com/material-table-core/core/commit/105a2dbd97e280995bf17677a8d2fd2363b75a10))
+
+##### Bug Fixes
+
+- RenderSortButton renders content correctly ([5faa47cb](https://github.com/material-table-core/core/commit/5faa47cb3562208e5cbf4d52a7ec3cbbebe876c6))
+- Check for null summary row value ([3e93e915](https://github.com/material-table-core/core/commit/3e93e9156fdd335da5ddd955c7ac459c42503341))
+- [#455](https://github.com/material-table-core/core/pull/455) Use proper detailPanel callback signature when detailPanel is an array of callbacks ([#468](https://github.com/material-table-core/core/pull/468)) ([b6ae7bc2](https://github.com/material-table-core/core/commit/b6ae7bc2ef0997c966c17119679f3024461779bc))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([33fffdf3](https://github.com/material-table-core/core/commit/33fffdf38e0e755f1ac59db63913a3c1dac40508))
+
 #### 4.3.24 (2022-01-27)
 
 ##### New Features
