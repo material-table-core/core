@@ -222,7 +222,7 @@ export function MTableToolbar(props) {
                   <MenuItem
                     key={`${menuitem.label}${index}`}
                     onClick={() => {
-                      menuitem.exportFunc(cols, datas);
+                      menuitem.exportFunc(cols, datas, props.filteredData);
                       setExportButtonAnchorEl(null);
                     }}
                   >

@@ -344,7 +344,11 @@ export interface Options<RowData extends object> {
   exportAllData?: boolean;
   exportMenu?: {
     label: string;
-    exportFunc: (columns: any[], renderData: any[]) => void;
+    exportFunc: (
+      columns: Column<RowData>[],
+      renderData: RowData[],
+      filteredData: RowData[]
+    ) => void;
   }[];
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
