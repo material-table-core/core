@@ -223,7 +223,6 @@ export function MTableHeader({ onColumnResized, ...props }) {
                       : { position: 'relative', minWidth: 0, display: 'flex' }
                   }
                 >
-                  {columnDef.title}
                   {columnDef.sorting !== false && props.sorting && (
                     <RenderSortButton
                       columnDef={columnDef}
@@ -235,7 +234,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
                       icon={props.icons.SortArrow}
                       thirdSortClick={props.thirdSortClick}
                       onOrderChange={props.onOrderChange}
-                    />
+                    >
+                      {columnDef.title}
+                    </RenderSortButton>
                   )}
                 </div>
               )}
@@ -243,20 +244,19 @@ export function MTableHeader({ onColumnResized, ...props }) {
           );
         } else if (columnDef.sorting !== false && props.sorting) {
           content = (
-            <>
+            <RenderSortButton
+              columnDef={columnDef}
+              orderBy={props.orderBy}
+              keepSortDirectionOnColumnSwitch={
+                props.keepSortDirectionOnColumnSwitch
+              }
+              orderDirection={props.orderDirection}
+              icon={props.icons.SortArrow}
+              thirdSortClick={props.thirdSortClick}
+              onOrderChange={props.onOrderChange}
+            >
               {columnDef.title}
-              <RenderSortButton
-                columnDef={columnDef}
-                orderBy={props.orderBy}
-                keepSortDirectionOnColumnSwitch={
-                  props.keepSortDirectionOnColumnSwitch
-                }
-                orderDirection={props.orderDirection}
-                icon={props.icons.SortArrow}
-                thirdSortClick={props.thirdSortClick}
-                onOrderChange={props.onOrderChange}
-              />
-            </>
+            </RenderSortButton>
           );
         }
         if (columnDef.tooltip) {
@@ -454,7 +454,8 @@ function RenderSortButton({
   orderDirection,
   icon,
   thirdSortClick,
-  onOrderChange
+  onOrderChange,
+  children
 }) {
   const active = orderBy === columnDef.tableData.id;
   // If current sorted column or prop asked to
@@ -491,7 +492,9 @@ function RenderSortButton({
         );
         onOrderChange(columnDef.tableData.id, newOrderDirection);
       }}
-    />
+    >
+      {children}
+    </TableSortLabel>
   );
 }
 
