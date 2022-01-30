@@ -1,3 +1,13 @@
+#### 0.2.20 (2022-01-30)
+
+##### New Features
+
+- export filtred data for exportFunc ([052b7871](https://github.com/material-table-core/core/commit/052b78716addffa4c4fc9cc3caf5dae761008c04))
+
+##### Bug Fixes
+
+- dispaly header for sorting false and grouping true ([80cbd95b](https://github.com/material-table-core/core/commit/80cbd95bbbb9f56f84376c462dd0e97a64414d24))
+
 #### 0.2.19 (2022-01-29)
 
 ##### New Features
