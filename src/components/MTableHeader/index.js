@@ -224,7 +224,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
                       : { position: 'relative', minWidth: 0, display: 'flex' }
                   }
                 >
-                  {columnDef.sorting !== false && props.sorting && (
+                  {columnDef.sorting !== false && props.sorting ? (
                     <RenderSortButton
                       columnDef={columnDef}
                       orderBy={props.orderBy}
@@ -238,6 +238,8 @@ export function MTableHeader({ onColumnResized, ...props }) {
                     >
                       {columnDef.title}
                     </RenderSortButton>
+                  ) : (
+                    columnDef.title
                   )}
                 </div>
               )}

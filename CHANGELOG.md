@@ -143,6 +143,16 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.26 (2022-01-30)
+
+##### New Features
+
+- export filtred data for exportFunc ([052b7871](https://github.com/material-table-core/core/commit/052b78716addffa4c4fc9cc3caf5dae761008c04))
+
+##### Bug Fixes
+
+- dispaly header for sorting false and grouping true ([80cbd95b](https://github.com/material-table-core/core/commit/80cbd95bbbb9f56f84376c462dd0e97a64414d24))
+
 #### 4.3.25 (2022-01-29)
 
 ##### New Features
