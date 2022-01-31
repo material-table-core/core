@@ -1,3 +1,9 @@
+#### 4.3.27 (2022-01-31)
+
+##### New Features
+
+- export additional data for export func ([abf09a4e](https://github.com/material-table-core/core/commit/abf09a4eaf50269230b3db7ae800908a430d2155))
+
 #### 4.3.26 (2022-01-30)
 
 ##### New Features
