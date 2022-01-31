@@ -218,11 +218,16 @@ export function MTableToolbar(props) {
             >
               {props.exportMenu.map((menuitem, index) => {
                 const [cols, datas] = getTableData();
+                console.log(props);
                 return (
                   <MenuItem
                     key={`${menuitem.label}${index}`}
                     onClick={() => {
-                      menuitem.exportFunc(cols, datas, props.filteredData);
+                      menuitem.exportFunc(cols, datas, {
+                        searchedData: props.dataManager.searchedData,
+                        filteredData: props.dataManager.filteredData,
+                        groupedData: props.dataManager.groupedData
+                      });
                       setExportButtonAnchorEl(null);
                     }}
                   >
