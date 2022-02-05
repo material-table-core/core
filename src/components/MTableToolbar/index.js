@@ -218,7 +218,6 @@ export function MTableToolbar(props) {
             >
               {props.exportMenu.map((menuitem, index) => {
                 const [cols, datas] = getTableData();
-                console.log(props);
                 return (
                   <MenuItem
                     key={`${menuitem.label}${index}`}
