@@ -228,7 +228,7 @@ export default function MTableBodyRow(props) {
               ...rotateIconStyle(props.data.tableData.showDetailPanel)
             }}
             onClick={
-              !props.options.disableDetailPanelToggle
+              !props.options.detailPanelDefaultToggle
                 ? (event) => {
                     props.onToggleDetailPanel(props.path, props.detailPanel);
                     event.stopPropagation();
@@ -300,7 +300,7 @@ export default function MTableBodyRow(props) {
                   }}
                   disabled={panel.disabled}
                   onClick={
-                    !props.options.disableDetailPanelToggle
+                    !props.options.detailPanelDefaultToggle
                       ? (event) => {
                           props.onToggleDetailPanel(props.path, panel.render);
                           event.stopPropagation();
