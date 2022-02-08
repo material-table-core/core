@@ -227,10 +227,14 @@ export default function MTableBodyRow(props) {
               transition: 'all ease 200ms',
               ...rotateIconStyle(props.data.tableData.showDetailPanel)
             }}
-            onClick={(event) => {
-              props.onToggleDetailPanel(props.path, props.detailPanel);
-              event.stopPropagation();
-            }}
+            onClick={
+              !props.options.disableDetailPanelToggle
+                ? (event) => {
+                    props.onToggleDetailPanel(props.path, props.detailPanel);
+                    event.stopPropagation();
+                  }
+                : undefined
+            }
           >
             <props.icons.DetailPanel />
           </IconButton>
@@ -295,10 +299,14 @@ export default function MTableBodyRow(props) {
                     ...rotateIconStyle(animation && isOpen)
                   }}
                   disabled={panel.disabled}
-                  onClick={(event) => {
-                    props.onToggleDetailPanel(props.path, panel.render);
-                    event.stopPropagation();
-                  }}
+                  onClick={
+                    !props.options.disableDetailPanelToggle
+                      ? (event) => {
+                          props.onToggleDetailPanel(props.path, panel.render);
+                          event.stopPropagation();
+                        }
+                      : undefined
+                  }
                 >
                   {iconButton}
                 </IconButton>
