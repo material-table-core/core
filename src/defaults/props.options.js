@@ -46,7 +46,7 @@ export default {
   toolbar: true,
   defaultExpanded: false,
   detailPanelColumnAlignment: 'left',
-  detailPanelDefaultToggle: false,
+  detailPanelDefaultToggle: true,
   detailPanelOffset: { left: 0, right: 0 },
   thirdSortClick: true,
   overflowY: 'auto'
