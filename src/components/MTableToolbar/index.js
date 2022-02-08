@@ -49,7 +49,8 @@ export function MTableToolbar(props) {
       );
     const data = (props.exportAllData ? props.data : props.renderData).map(
       (rowData) =>
-        columns.map((columnDef) => {
+        columns.reduce((agg, columnDef) => {
+          let value;
           /*
           About: column.customExport
           This bit of code checks if prop customExport in column is a function, and if it is then it
@@ -60,12 +61,15 @@ export function MTableToolbar(props) {
           using a custom function (exportMenu.exportFunc) for each exporter.
           */
           if (typeof columnDef.customExport === 'function') {
-            return columnDef.customExport(rowData);
+            value = columnDef.customExport(rowData);
+          } else {
+            value = props.getFieldValue(rowData, columnDef);
           }
-          return props.getFieldValue(rowData, columnDef);
-        })
+          agg[columnDef.field] = value;
+          return agg;
+        }, {})
     );
-
+    console.log(columns, data);
     return [columns, data];
   };
 
@@ -218,7 +222,6 @@ export function MTableToolbar(props) {
             >
               {props.exportMenu.map((menuitem, index) => {
                 const [cols, datas] = getTableData();
-                console.log(props);
                 return (
                   <MenuItem
                     key={`${menuitem.label}${index}`}

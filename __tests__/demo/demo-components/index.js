@@ -435,11 +435,10 @@ export function BasicRef() {
   );
 }
 
-/*
 export function CustomExport() {
   return (
     <MaterialTable
-      title="Basic"
+      title="Custom Export"
       columns={global_cols}
       data={global_data_CustomExport}
       options={{
@@ -461,7 +460,6 @@ export function CustomExport() {
     />
   );
 }
-*/
 
 export function OneDetailPanel() {
   return (

@@ -21,6 +21,7 @@ import { render } from 'react-dom';
 
 import {
   Basic,
+  CustomExport,
   OneDetailPanel,
   MultipleDetailPanels,
   DefaultOrderIssue,
@@ -82,10 +83,8 @@ render(
      <ExportData />
      */}
 
-    {/*
-     <h1>Custom Export </h1>
-     <CustomExport />
-     */}
+    <h1>Custom Export </h1>
+    <CustomExport />
 
     <h1>Bulk Edit</h1>
     <BulkEdit />
