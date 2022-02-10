@@ -461,7 +461,10 @@ export default class DataManager {
       // get the effective start and end considering hidden columns
       const sorted = this.columns
         .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter((column) => column.tableData.groupOrder === undefined);
+        .filter(
+          (column) =>
+            column.tableData.groupOrder === undefined && !column.hidden
+        );
       let numHiddenBeforeStart = 0;
       let numVisibleBeforeStart = 0;
       for (
@@ -1057,7 +1060,7 @@ export default class DataManager {
           pointer = pointer.tableData.childRows;
         }
         if (Array.isArray(pointer)) {
-          pointer = pointer.find(p => p.tableData.uuid === pathPart);
+          pointer = pointer.find((p) => p.tableData.uuid === pathPart);
         }
       });
       pointer.tableData.markedForTreeRemove = true;
