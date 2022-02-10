@@ -1,3 +1,14 @@
+#### 4.3.28 (2022-02-10)
+
+##### Bug Fixes
+
+- column sort works for hidden ([b32d3bd3](https://github.com/material-table-core/core/commit/b32d3bd37c9179df2390454fd5add358bc7010ed))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([2d1da8d0](https://github.com/material-table-core/core/commit/2d1da8d01a86e6dbbc4fb5be100464097492f960))
+- improve exports to only export correct data ([a8644bc3](https://github.com/material-table-core/core/commit/a8644bc31acf3ff26af59d357bea1cddaa839ec8))
+
 #### 4.3.27 (2022-01-31)
 
 ##### New Features
