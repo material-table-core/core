@@ -153,6 +153,25 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.29 (2022-02-10)
+
+#### 4.3.28 (2022-02-10)
+
+##### Bug Fixes
+
+- column sort works for hidden ([b32d3bd3](https://github.com/material-table-core/core/commit/b32d3bd37c9179df2390454fd5add358bc7010ed))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([2d1da8d0](https://github.com/material-table-core/core/commit/2d1da8d01a86e6dbbc4fb5be100464097492f960))
+- improve exports to only export correct data ([a8644bc3](https://github.com/material-table-core/core/commit/a8644bc31acf3ff26af59d357bea1cddaa839ec8))
+
+#### 4.3.27 (2022-01-31)
+
+##### New Features
+
+- export additional data for export func ([abf09a4e](https://github.com/material-table-core/core/commit/abf09a4eaf50269230b3db7ae800908a430d2155))
+
 #### 4.3.26 (2022-01-30)
 
 ##### New Features

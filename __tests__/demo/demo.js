@@ -26,6 +26,7 @@ import { render } from 'react-dom';
 
 import {
   Basic,
+  CustomExport,
   OneDetailPanel,
   MultipleDetailPanels,
   DefaultOrderIssue,
@@ -151,8 +152,7 @@ render(
           </h3>
           <I122 />
         </li>
-      </ol>{' '}
-      */}
+      </ol>
     </ThemeProvider>
   </StyledEngineProvider>,
   document.querySelector('#app')

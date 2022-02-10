@@ -350,7 +350,11 @@ export interface Options<RowData extends object> {
     exportFunc: (
       columns: Column<RowData>[],
       renderData: RowData[],
-      filteredData: RowData[]
+      tableData: {
+        searchedData: RowData[];
+        filteredData: RowData[];
+        groupedData: RowData[];
+      }
     ) => void;
   }[];
   filtering?: boolean;
