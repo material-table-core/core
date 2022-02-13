@@ -3,6 +3,7 @@
  */
 
 export default {
+  idSynonym: 'id',
   actionsColumnIndex: 0,
   addRowPosition: 'last',
   columnsButton: false,

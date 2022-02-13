@@ -120,7 +120,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
       this.dataManager.changeApplySort(true);
-      this.dataManager.setData(props.data);
+      this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
     let defaultSortColumnIndex = -1;
@@ -702,7 +702,7 @@ export default class MaterialTable extends React.Component {
             totalCount: result.totalCount,
             page: result.page
           };
-          this.dataManager.setData(result.data);
+          this.dataManager.setData(result.data, this.props.options.idSynonym);
           this.setState(
             {
               isLoading: false,

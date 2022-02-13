@@ -331,6 +331,8 @@ export interface Options<RowData extends object> {
   actionsCellStyle?: React.CSSProperties;
   detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
+  // A key to override the default `id` tag to persist state between rerenders
+  idSynonym?: string | number;
   actionsColumnIndex?: number;
   addRowPosition?: 'first' | 'last';
   columnsButton?: boolean;

@@ -52,10 +52,11 @@ export default class DataManager {
 
   constructor() {}
 
-  setData(data) {
+  setData(data, idSynonym) {
     this.selectedCount = 0;
     let prevDataObject = {};
-    if (this.data.length !== 0 && this.data[0].id !== undefined) {
+
+    if (this.data.length !== 0 && this.data[0][idSynonym] !== undefined) {
       prevDataObject = this.data.reduce((obj, row) => {
         obj[row.tableData.id] = row.tableData;
         return obj;
@@ -70,9 +71,9 @@ export default class DataManager {
       }
     }
     this.data = data.map((row, index) => {
-      const prevTableData = prevDataObject[row.id] || {};
+      const prevTableData = prevDataObject[row[idSynonym]] || {};
       const tableData = {
-        id: row.id || index,
+        id: row[idSynonym] || index,
         // `uuid` acts as our 'key' and is generated when new data
         // is passed into material-table externally.
         uuid: row.uuid || uuid.v4(),
@@ -100,7 +101,6 @@ export default class DataManager {
       }
       return newRow;
     });
-
     this.filtered = false;
   }
 

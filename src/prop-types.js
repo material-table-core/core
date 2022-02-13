@@ -310,6 +310,7 @@ export const propTypes = {
   options: PropTypes.shape({
     actionsCellStyle: PropTypes.object,
     editCellStyle: PropTypes.object,
+    idSynonym: PropTypes.string,
     detailPanelColumnStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
