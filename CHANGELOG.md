@@ -1,3 +1,9 @@
+#### 4.3.30 (2022-02-13)
+
+##### New Features
+
+- A key to override the default `id` tag to persist state between rerenders ([5a7d2b35](https://github.com/material-table-core/core/commit/5a7d2b3516c5347dcec1d389734a9ae33db47dca))
+
 #### 4.3.29 (2022-02-10)
 
 #### 4.3.28 (2022-02-10)
