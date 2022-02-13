@@ -69,7 +69,7 @@ export function MTableToolbar(props) {
           return agg;
         }, {})
     );
-    console.log(columns, data);
+
     return [columns, data];
   };
 
