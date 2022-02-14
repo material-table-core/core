@@ -64,7 +64,7 @@ export default class DataManager {
     }
     if (process.env.NODE_ENV === 'development' && !this.checkForId) {
       this.checkForId = true;
-      if (data.some((d) => d.id === undefined)) {
+      if (data.some((d) => d[idSynonym] === undefined)) {
         console.warn(
           'The table requires all rows to have an unique id property. A row was provided without id in the rows prop. To prevent the loss of state between renders, please provide an unique id for each row.'
         );
