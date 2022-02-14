@@ -1,3 +1,9 @@
+#### 0.2.23 (2022-02-14)
+
+##### Other Changes
+
+- add missing idSynonym ([027becc8](https://github.com/material-table-core/core/commit/027becc8a56628697ca033ecee71269226adde16))
+
 #### 0.2.22 (2022-02-13)
 
 ##### New Features
