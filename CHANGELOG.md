@@ -1,3 +1,17 @@
+#### 4.3.32 (2022-02-26)
+
+##### New Features
+
+- Rows cannot be clicked while editing ([96afa7d2](https://github.com/material-table-core/core/commit/96afa7d2236fd00768b9037ad850f0d6a2f8ec44))
+
+##### Bug Fixes
+
+- show dragging header text on drag ([479b7532](https://github.com/material-table-core/core/commit/479b7532d263a2b9f2069dc7d449316e00970c86))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c13b88a4](https://github.com/material-table-core/core/commit/c13b88a45aa7d6a33d275da2c869a76074aae8a0))
+
 #### 4.3.31 (2022-02-14)
 
 ##### Other Changes
