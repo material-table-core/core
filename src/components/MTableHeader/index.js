@@ -209,6 +209,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
               index={index}
+              style={{ zIndex: 99 }}
             >
               {(provided, snapshot) => (
                 <div
@@ -217,10 +218,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   {...provided.dragHandleProps}
                   style={
                     snapshot.isDragging
-                      ? {
-                          ...provided.draggableProps.style,
-                          position: 'static'
-                        }
+                      ? provided.draggableProps.style
                       : { position: 'relative', minWidth: 0, display: 'flex' }
                   }
                 >

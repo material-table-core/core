@@ -199,6 +199,20 @@
 - //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
 - //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
+#### 4.3.32 (2022-02-26)
+
+##### New Features
+
+- Rows cannot be clicked while editing ([96afa7d2](https://github.com/material-table-core/core/commit/96afa7d2236fd00768b9037ad850f0d6a2f8ec44))
+
+##### Bug Fixes
+
+- show dragging header text on drag ([479b7532](https://github.com/material-table-core/core/commit/479b7532d263a2b9f2069dc7d449316e00970c86))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c13b88a4](https://github.com/material-table-core/core/commit/c13b88a45aa7d6a33d275da2c869a76074aae8a0))
+
 #### 4.3.31 (2022-02-14)
 
 ##### Other Changes
