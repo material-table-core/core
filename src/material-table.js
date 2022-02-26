@@ -141,7 +141,7 @@ export default class MaterialTable extends React.Component {
         (a) => a.defaultSort && a.sorting !== false
       );
       prevSortDirection =
-        prevSortColumnIndex > -1
+        prevSortColumnIndex > -1 && props.columns[prevSortColumnIndex]
           ? props.columns[prevSortColumnIndex].defaultSort
           : '';
     }
