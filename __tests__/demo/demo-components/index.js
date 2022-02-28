@@ -1164,3 +1164,70 @@ export function TableWithSummary() {
     />
   );
 }
+
+export function FixedColumnWithEdit() {
+  const [data, setData] = useState([
+    { name: 'jack', id: 1 },
+    { name: 'nancy', id: 2 }
+  ]);
+  const columns = [
+    { field: 'id', title: 'Id', editable: 'never', width: 100 },
+    { field: 'firstName', title: 'First Name', width: 200 },
+    { field: 'lastName', title: 'Last Name', width: 200 },
+    { field: 'lastName', title: 'Last Name', width: 200 },
+    { field: 'lastName', title: 'Last Name', width: 200 },
+    { field: 'lastName', title: 'Last Name', width: 200 }
+  ];
+
+  return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      options={{
+        fixedColumns: { left: 1, right: 0 }
+      }}
+      editable={{
+        onRowAddCancelled: (rowData) => console.log('Row adding cancelled'),
+        onRowUpdateCancelled: (rowData) => console.log('Row editing cancelled'),
+        onRowAdd: (newData) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              newData.id = 'uuid-' + Math.random() * 10000000;
+              setData([...data, newData]);
+              resolve();
+            }, 1000);
+          });
+        },
+        onRowUpdate: (newData, oldData) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              // In dataUpdate, find target
+              const target = dataUpdate.find(
+                (el) => el.id === oldData.tableData.id
+              );
+              const index = dataUpdate.indexOf(target);
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+              resolve();
+            }, 1000);
+          });
+        },
+        onRowDelete: (oldData) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const target = dataDelete.find(
+                (el) => el.id === oldData.tableData.id
+              );
+              const index = dataDelete.indexOf(target);
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              resolve();
+            }, 1000);
+          });
+        }
+      }}
+    />
+  );
+}

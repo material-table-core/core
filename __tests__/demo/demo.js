@@ -43,7 +43,8 @@ import {
   SelectionOnRowClick,
   DetailPanelRemounting,
   TreeData,
-  TableWithSummary
+  TableWithSummary,
+  FixedColumnWithEdit
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
@@ -159,6 +160,8 @@ render(
         <I122 />
       </li>
     </ol>
+    <h1>Fixed Column with Row Edits</h1>
+    <FixedColumnWithEdit />
   </div>,
   document.querySelector('#app')
 );
