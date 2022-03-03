@@ -43,7 +43,8 @@ import {
   SelectionOnRowClick,
   DetailPanelRemounting,
   TreeData,
-  TableWithSummary
+  TableWithSummary,
+  TableWithNumberOfPagesAround
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
@@ -159,6 +160,11 @@ render(
         <I122 />
       </li>
     </ol>
+    <h1>
+      Table with custom numbers of pages around current page in stepped
+      navigation
+    </h1>
+    <TableWithNumberOfPagesAround />
   </div>,
   document.querySelector('#app')
 );

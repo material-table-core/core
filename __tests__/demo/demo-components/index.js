@@ -1164,3 +1164,21 @@ export function TableWithSummary() {
     />
   );
 }
+
+export function TableWithNumberOfPagesAround() {
+  const numberOfPagesAround = 5;
+  return (
+    <>
+      <p>{`current option:{numberOfPagesAround: ${numberOfPagesAround}, paginationType: "stepped"}`}</p>
+      <MaterialTable
+        title="Table with custom amount of pages around current"
+        columns={columns}
+        data={rawData}
+        options={{
+          numberOfPagesAround: numberOfPagesAround,
+          paginationType: 'stepped'
+        }}
+      />
+    </>
+  );
+}

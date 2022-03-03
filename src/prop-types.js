@@ -373,7 +373,19 @@ export const propTypes = {
     sorting: PropTypes.bool,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool
+    thirdSortClick: PropTypes.bool,
+    numberOfPagesAround: (props, propName) => {
+      if (!props[propName]) return;
+      if (props[propName] <= 0) {
+        throw Error('Parameter numberOfPagesAround must be greater than 0!');
+      } else if (props[propName] > 10) {
+        throw Error(
+          "Parameter numberOfPagesAround shoudn't be greater than 10!"
+        );
+      } else if (!Number.isInteger(props[propName])) {
+        throw Error('Parameter numberOfPagesAround must be integer!');
+      }
+    }
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
