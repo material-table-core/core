@@ -73,7 +73,13 @@ function MTablePaginationInner(props) {
 
     return (
       <Box
-        sx={{ flexShrink: 0, color: 'text.secondary', marginLeft: 2.5 }}
+        sx={{
+          flexShrink: 0,
+          color: 'text.secondary',
+          marginLeft: 2.5,
+          display: 'flex',
+          alignItems: 'center'
+        }}
         ref={props.forwardedRef}
       >
         {showFirstLastPageButtons && (
