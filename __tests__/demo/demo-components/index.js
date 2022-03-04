@@ -1166,10 +1166,18 @@ export function TableWithSummary() {
 }
 
 export function TableWithNumberOfPagesAround() {
-  const numberOfPagesAround = 5;
+  const [numberOfPagesAround, setNumberOfPagesAround] = useState(1);
+
   return (
     <>
-      <p>{`current option:{numberOfPagesAround: ${numberOfPagesAround}, paginationType: "stepped"}`}</p>
+      <button onClick={() => setNumberOfPagesAround(numberOfPagesAround + 1)}>
+        +1
+      </button>
+      <button onClick={() => setNumberOfPagesAround(numberOfPagesAround - 1)}>
+        -1
+      </button>
+      <p>Available options: integer from 1 to 10</p>
+      <p>{`current option: {numberOfPagesAround: ${numberOfPagesAround}, paginationType: "stepped"}`}</p>
       <MaterialTable
         title="Table with custom amount of pages around current"
         columns={columns}

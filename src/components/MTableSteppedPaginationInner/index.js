@@ -36,13 +36,10 @@ function MTablePaginationInner(props) {
     const buttons = [];
 
     for (
-      let p = start - numberOfPagesAround + 1;
-      p <= end + numberOfPagesAround - 1;
+      let p = Math.max(start - numberOfPagesAround + 1, 0);
+      p <= Math.min(end + numberOfPagesAround - 1, maxPages);
       p++
     ) {
-      if (p < 0 || p > maxPages) {
-        continue;
-      }
       const buttonVariant = p === props.page ? 'contained' : 'text';
       buttons.push(
         <Button

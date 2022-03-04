@@ -374,18 +374,7 @@ export const propTypes = {
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
-    numberOfPagesAround: (props, propName) => {
-      if (!props[propName]) return;
-      if (props[propName] <= 0) {
-        throw Error('Parameter numberOfPagesAround must be greater than 0!');
-      } else if (props[propName] > 10) {
-        throw Error(
-          "Parameter numberOfPagesAround shoudn't be greater than 10!"
-        );
-      } else if (!Number.isInteger(props[propName])) {
-        throw Error('Parameter numberOfPagesAround must be integer!');
-      }
-    }
+    numberOfPagesAround: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
