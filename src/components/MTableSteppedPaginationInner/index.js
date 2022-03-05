@@ -35,6 +35,9 @@ function MTablePaginationInner(props) {
   function renderPagesButton(start, end, maxPages, numberOfPagesAround) {
     const buttons = [];
 
+    // normalize to 1 - 10
+    numberOfPagesAround = Math.max(1, Math.min(10, numberOfPagesAround));
+
     for (
       let p = Math.max(start - numberOfPagesAround + 1, 0);
       p <= Math.min(end + numberOfPagesAround - 1, maxPages);
