@@ -1,3 +1,9 @@
+#### 4.3.33 (2022-03-06)
+
+##### Bug Fixes
+
+- edit mode with fixed columns breaks table layout ([#498](https://github.com/material-table-core/core/pull/498)) ([58cdfa45](https://github.com/material-table-core/core/commit/58cdfa45638b386b18aca8b4cffc8775900640d2))
+
 #### 4.3.32 (2022-02-26)
 
 ##### New Features
