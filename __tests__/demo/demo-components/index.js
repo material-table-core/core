@@ -1188,6 +1188,8 @@ export function TableWithNumberOfPagesAround() {
         }}
       />
     </>
+  );
+}
 export function FixedColumnWithEdit() {
   const [data, setData] = useState([
     { name: 'jack', id: 1 },
