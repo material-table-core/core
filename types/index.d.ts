@@ -373,6 +373,7 @@ export interface Options<RowData extends object> {
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
   padding?: 'normal' | 'dense';
+  numberOfPagesAround?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   paging?: boolean;
   grouping?: boolean;
   groupTitle?: (groupData: any) => any;

@@ -49,5 +49,6 @@ export default {
   detailPanelColumnAlignment: 'left',
   detailPanelOffset: { left: 0, right: 0 },
   thirdSortClick: true,
-  overflowY: 'auto'
+  overflowY: 'auto',
+  numberOfPagesAround: 1
 };

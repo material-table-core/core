@@ -47,15 +47,10 @@ import {
   DetailPanelRemounting,
   TreeData,
   TableWithSummary,
-  Table,
-  TableCell,
-  TableRow,
-  Paper,
-  TableHead
+  TableWithNumberOfPagesAround,
+  FixedColumnWithEdit
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { MTableScrollbar } from '../../src/components';
 
 module.hot.accept();
 
@@ -124,6 +119,13 @@ render(
       <TreeData />
       <h1>Table with Summary Row</h1>
       <TableWithSummary />
+      <h1>
+        Table with custom numbers of pages around current page in stepped
+        navigation
+      </h1>
+      <TableWithNumberOfPagesAround />
+      <h1>Fixed Column with Row Edits</h1>
+      <FixedColumnWithEdit />
       <h1>Remote Data Related</h1>
       <ol>
         <li>
