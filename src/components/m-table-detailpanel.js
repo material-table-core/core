@@ -2,18 +2,19 @@ import React from 'react';
 import { TableCell, Collapse, TableRow } from '@material-ui/core';
 
 function MTableDetailPanel(props) {
-  const [isOpen, setOpen] = React.useState(false);
+  const shouldOpen = Boolean(
+    props.data.tableData && props.data.tableData.showDetailPanel
+  );
+
+  const [isOpen, setOpen] = React.useState(shouldOpen);
   const [, rerender] = React.useReducer((s) => s + 1, 0);
   const renderRef = React.useRef();
 
   React.useEffect(() => {
-    const shouldOpen = Boolean(
-      props.data.tableData && props.data.tableData.showDetailPanel
-    );
     setTimeout(() => {
       setOpen(shouldOpen);
     }, 5);
-  }, [props.data.tableData.showDetailPanel]);
+  }, [shouldOpen]);
 
   let renderFunction;
 
