@@ -44,7 +44,8 @@ import {
   DetailPanelRemounting,
   TreeData,
   TableWithSummary,
-  TableWithNumberOfPagesAround
+  TableWithNumberOfPagesAround,
+  FixedColumnWithEdit
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
@@ -165,6 +166,8 @@ render(
       navigation
     </h1>
     <TableWithNumberOfPagesAround />
+    <h1>Fixed Column with Row Edits</h1>
+    <FixedColumnWithEdit />
   </div>,
   document.querySelector('#app')
 );
