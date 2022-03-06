@@ -369,6 +369,7 @@ export interface Options<RowData extends object> {
   loadingType?: 'overlay' | 'linear';
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
+  numberOfPagesAround?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;

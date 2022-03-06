@@ -32,10 +32,17 @@ function MTablePaginationInner(props) {
     );
   };
 
-  function renderPagesButton(start, end) {
+  function renderPagesButton(start, end, maxPages, numberOfPagesAround) {
     const buttons = [];
 
-    for (let p = start; p <= end; p++) {
+    // normalize to 1 - 10
+    numberOfPagesAround = Math.max(1, Math.min(10, numberOfPagesAround));
+
+    for (
+      let p = Math.max(start - numberOfPagesAround + 1, 0);
+      p <= Math.min(end + numberOfPagesAround - 1, maxPages);
+      p++
+    ) {
       const buttonVariant = p === props.page ? 'contained' : 'text';
       buttons.push(
         <Button
@@ -67,7 +74,8 @@ function MTablePaginationInner(props) {
       page,
       rowsPerPage,
       theme,
-      showFirstLastPageButtons
+      showFirstLastPageButtons,
+      numberOfPagesAround
     } = props;
 
     const localization = {
@@ -109,7 +117,9 @@ function MTablePaginationInner(props) {
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden smDown={true}>{renderPagesButton(pageStart, pageEnd)}</Hidden>
+        <Hidden smDown={true}>
+          {renderPagesButton(pageStart, pageEnd, maxPages, numberOfPagesAround)}
+        </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton

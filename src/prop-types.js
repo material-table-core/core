@@ -373,7 +373,8 @@ export const propTypes = {
     sorting: PropTypes.bool,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool
+    thirdSortClick: PropTypes.bool,
+    numberOfPagesAround: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({

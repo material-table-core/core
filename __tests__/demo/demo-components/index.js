@@ -1165,6 +1165,31 @@ export function TableWithSummary() {
   );
 }
 
+export function TableWithNumberOfPagesAround() {
+  const [numberOfPagesAround, setNumberOfPagesAround] = useState(1);
+
+  return (
+    <>
+      <button onClick={() => setNumberOfPagesAround(numberOfPagesAround + 1)}>
+        +1
+      </button>
+      <button onClick={() => setNumberOfPagesAround(numberOfPagesAround - 1)}>
+        -1
+      </button>
+      <p>Available options: integer from 1 to 10</p>
+      <p>{`current option: {numberOfPagesAround: ${numberOfPagesAround}, paginationType: "stepped"}`}</p>
+      <MaterialTable
+        title="Table with custom amount of pages around current"
+        columns={columns}
+        data={rawData}
+        options={{
+          numberOfPagesAround: numberOfPagesAround,
+          paginationType: 'stepped'
+        }}
+      />
+    </>
+  );
+}
 export function FixedColumnWithEdit() {
   const [data, setData] = useState([
     { name: 'jack', id: 1 },

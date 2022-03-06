@@ -44,6 +44,7 @@ import {
   DetailPanelRemounting,
   TreeData,
   TableWithSummary,
+  TableWithNumberOfPagesAround,
   FixedColumnWithEdit
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
@@ -160,6 +161,11 @@ render(
         <I122 />
       </li>
     </ol>
+    <h1>
+      Table with custom numbers of pages around current page in stepped
+      navigation
+    </h1>
+    <TableWithNumberOfPagesAround />
     <h1>Fixed Column with Row Edits</h1>
     <FixedColumnWithEdit />
   </div>,

@@ -945,6 +945,7 @@ export default class MaterialTable extends React.Component {
                       showFirstLastPageButtons={
                         props.options.showFirstLastPageButtons
                       }
+                      numberOfPagesAround={props.options.numberOfPagesAround}
                     />
                   )
                 }
