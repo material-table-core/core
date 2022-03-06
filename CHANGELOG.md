@@ -1,3 +1,9 @@
+#### 4.3.34 (2022-03-06)
+
+##### New Features
+
+- keep detail panel open on rerender ([a881c1b8](https://github.com/material-table-core/core/commit/a881c1b8d9a3729d86e00643e3d513dc419ab47a))
+
 #### 4.3.33 (2022-03-06)
 
 ##### Bug Fixes
