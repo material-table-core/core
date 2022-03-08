@@ -1254,7 +1254,7 @@ export default class MaterialTable extends React.Component {
                             top: 0,
                             left: 0,
                             boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
-                            overflowX: 'visible',
+                            overflowX: 'clip',
                             zIndex: 11
                           }}
                         >
