@@ -1,3 +1,9 @@
+#### 0.2.27 (2022-03-08)
+
+##### Bug Fixes
+
+- background shadow breaks for fixed columns ([#503](https://github.com/material-table-core/core/pull/503)) ([02543a52](https://github.com/material-table-core/core/commit/02543a521863c0f4f6305fe882fae5ac09078e53))
+
 #### 0.2.26 (2022-03-06)
 
 #### 4.3.36 (2022-03-08)
