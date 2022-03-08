@@ -4,7 +4,7 @@
     "access": "public"
   },
   "url": "https://github.com/material-table-core/core",
-  "version": "4.3.35",
+  "version": "4.3.36",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
