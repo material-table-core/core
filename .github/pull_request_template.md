@@ -23,4 +23,4 @@ List general components of the application that this PR will affect:
 
 ## Additional Notes
 
-This is optional, feel free to follow your hearth and write here :)
+This is optional, feel free to follow your heart and write here :)
