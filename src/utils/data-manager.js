@@ -217,7 +217,9 @@ export default class DataManager {
   }
 
   changeFilterValue(columnId, value) {
-    this.columns[columnId].tableData.filterValue = value;
+    const column = this.columns.find((c) => c.tableData.id === columnId);
+
+    column.tableData.filterValue = value;
     this.filtered = false;
   }
 
