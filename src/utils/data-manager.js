@@ -716,7 +716,9 @@ export default class DataManager {
       if (this.orderDirection === 'desc') {
         result = list.sort((a, b) => columnDef.customSort(b, a, 'row', 'desc'));
       } else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
+        result = list.sort((a, b) =>
+          columnDef.customSort(a, b, 'row', this.orderDirection)
+        );
       }
     } else {
       result = list.sort(
@@ -1135,8 +1137,20 @@ export default class DataManager {
         if (columnDef.customSort) {
           return list.sort(
             columnDef.tableData.groupSort === 'desc'
-              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
-              : (a, b) => columnDef.customSort(a.value, b.value, 'group')
+              ? (a, b) =>
+                  columnDef.customSort(
+                    b.value,
+                    a.value,
+                    'group',
+                    columnDef.tableData.groupSort
+                  )
+              : (a, b) =>
+                  columnDef.customSort(
+                    a.value,
+                    b.value,
+                    'group',
+                    columnDef.tableData.groupSort
+                  )
           );
         } else {
           return list.sort(
