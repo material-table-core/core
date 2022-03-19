@@ -201,6 +201,13 @@ export function MTableHeader({ onColumnResized, ...props }) {
       )
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index, allCols) => {
+        const cellAlignment =
+          columnDef.align !== undefined
+            ? columnDef.align
+            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
+            ? 'right'
+            : 'left';
+
         let content = columnDef.title;
 
         if (props.draggable && columnDef.draggable !== false) {
@@ -219,7 +226,15 @@ export function MTableHeader({ onColumnResized, ...props }) {
                   style={
                     snapshot.isDragging
                       ? provided.draggableProps.style
-                      : { position: 'relative', minWidth: 0, display: 'flex' }
+                      : {
+                          position: 'relative',
+                          minWidth: 0,
+                          display: 'flex',
+                          flexDirection:
+                            cellAlignment === 'right'
+                              ? 'row-reverse'
+                              : undefined
+                        }
                   }
                 >
                   {columnDef.sorting !== false && props.sorting ? (
@@ -277,31 +292,21 @@ export function MTableHeader({ onColumnResized, ...props }) {
             ? props.icons.Resize
             : (props) => <Box {...props} data-test-id="drag_handle" />;
           content = (
-            <Box sx={styles.headerWrap}>
-              <Box sx={styles.headerContent}>{content}</Box>
+            <Box sx={styles.headerWrap(cellAlignment === 'right')}>
+              <Box sx={styles.headerContent(cellAlignment === 'right')}>
+                {content}
+              </Box>
               <div></div>
               <Resize
-                sx={styles.headerResize}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color:
-                    resizing?.col &&
+                sx={styles.headerResize(
+                  resizing?.col &&
                     resizing.col.tableData.id === columnDef.tableData.id
-                      ? theme.palette.primary.main
-                      : 'inherit'
-                }}
+                )}
                 onMouseDown={(e) => handleMouseDown(e, columnDef, index)}
               />
             </Box>
           );
         }
-        const cellAlignment =
-          columnDef.align !== undefined
-            ? columnDef.align
-            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
-            ? 'right'
-            : 'left';
         return (
           <TableCell
             key={columnDef.tableData.id}
@@ -550,30 +555,35 @@ export const styles = {
     top: 0,
     backgroundColor: 'background.paper' // Change according to theme,
   },
-  headerWrap: {
+  headerWrap: (alignRight) => ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    left: 4
-  },
-  headerContent: {
+    left: 4,
+    pr: alignRight ? 1 : undefined
+  }),
+  headerContent: (alignRight) => ({
     minWidth: 0,
     display: 'flex',
     flex: '1 0 100%',
+    flexDirection: alignRight ? 'row-reverse' : undefined,
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
     position: 'relative'
-  },
-  headerResize: {
+  }),
+  headerResize: (resize) => ({
+    color: resize ? 'primary.main' : 'inherit',
     flex: 1,
     cursor: 'col-resize',
     position: 'absolute', // allow div to straddle adjacent columns
     height: '100%',
     width: 16,
+    display: 'flex',
+    justifyContent: 'center',
     right: -8,
     zIndex: 20 // so half that overlaps next column can be used to resize
-  }
+  })
 };
 
 const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
