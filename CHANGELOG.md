@@ -1,3 +1,13 @@
+#### 0.2.28 (2022-03-19)
+
+##### New Features
+
+- add sortDirection to customSort ([23b02f1f](https://github.com/material-table-core/core/commit/23b02f1f7ab8bc47e56f50bb450799a485150422))
+
+##### Other Changes
+
+- numeric header align ([9ec8c0b6](https://github.com/material-table-core/core/commit/9ec8c0b601791eeb811600a9fbef2c3389f1a557))
+
 #### 0.2.27 (2022-03-08)
 
 ##### Bug Fixes
