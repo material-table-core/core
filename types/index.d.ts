@@ -191,7 +191,8 @@ export interface Column<RowData extends object> {
   customSort?: (
     data1: RowData,
     data2: RowData,
-    type: 'row' | 'group'
+    type: 'row' | 'group',
+    sortDirection?: 'desc' | 'asc'
   ) => number;
   //customExport prop handle flattening of data at column level before passing data to exporter. Note exportMenu.exportFunc is an alternative to handle data change at exporter level
   customExport?: (rowData: RowData) => unknown;

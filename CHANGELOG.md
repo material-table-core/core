@@ -6,6 +6,12 @@
 
 #### 0.2.26 (2022-03-06)
 
+#### 4.3.37 (2022-03-19)
+
+##### New Features
+
+- add sortDirection to customSort ([23b02f1f](https://github.com/material-table-core/core/commit/23b02f1f7ab8bc47e56f50bb450799a485150422))
+
 #### 4.3.36 (2022-03-08)
 
 ##### Bug Fixes
