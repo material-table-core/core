@@ -16,6 +16,12 @@
 
 #### 0.2.26 (2022-03-06)
 
+#### 4.3.38 (2022-03-19)
+
+##### New Features
+
+- add index to tableData ([8187c0fd](https://github.com/material-table-core/core/commit/8187c0fd36c3aa2dd451ce36e23b84cff2988009))
+
 #### 4.3.37 (2022-03-19)
 
 ##### New Features
