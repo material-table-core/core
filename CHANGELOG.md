@@ -1,5 +1,7 @@
 #### 4.3.39 (2022-04-01)
 
+- fix pagination for small screens #524 ([746740e](https://github.com/material-table-core/core/commit/746740e4656021f3f2a55937f367eb7f9a1520fc))
+
 #### 4.3.38 (2022-03-19)
 
 ##### New Features
