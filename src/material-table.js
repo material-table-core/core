@@ -898,7 +898,7 @@ export default class MaterialTable extends React.Component {
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
-            <TableRow>
+            <TableRow style={{ display: 'grid' }}>
               <props.components.Pagination
                 classes={{
                   root: props.classes.paginationRoot,
