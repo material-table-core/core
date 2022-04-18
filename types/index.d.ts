@@ -32,6 +32,7 @@ export interface MaterialTableProps<RowData extends object> {
       )[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
+    isBulkEditable?: () => boolean;
     isDeletable?: (rowData: RowData) => boolean;
     onBulkUpdate?: (
       changes: Record<number, { oldData: RowData; newData: RowData }>

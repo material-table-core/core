@@ -183,6 +183,7 @@ export const propTypes = {
   ]).isRequired,
   editable: PropTypes.shape({
     isEditable: PropTypes.func,
+    isBulkEditable: PropTypes.func,
     isDeletable: PropTypes.func,
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,

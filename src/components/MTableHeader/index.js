@@ -7,16 +7,17 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Draggable } from 'react-beautiful-dnd';
 import { Box, Tooltip } from '@mui/material';
-import { useTheme } from '@mui/system';
 import * as CommonValues from '../../utils/common-values';
-
-export function MTableHeader({ onColumnResized, ...props }) {
-  const theme = useTheme();
+export function MTableHeader({ onColumnResized, columns, ...props }) {
   const defaultMinColumnWidth = 20;
   const defaultMaxColumnWidth = 10000;
 
   const [resizing, setResizing] = React.useState(undefined);
   const [lastX, setLastX] = React.useState(0);
+  const displayingColumns = React.useMemo(
+    () => columns.filter((c) => c.hidden !== true),
+    [columns]
+  );
 
   const handleMouseDown = (e, columnDef, colIndex) => {
     const startX = e.clientX;
@@ -31,7 +32,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       nextWidth =
         nextTh &&
         Math.round(+window.getComputedStyle(nextTh).width.slice(0, -2));
-      nextColIndex = props.columns.findIndex(
+      nextColIndex = displayingColumns.findIndex(
         (c) => c.tableData.id === columnDef.tableData.id + 1
       );
     } else if (!initialColWidths) {
@@ -46,9 +47,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
       colIndex,
       nextColIndex,
       lastColData: { ...columnDef.tableData, width: currentWidth },
-      ...(nextColIndex && {
+      ...(nextColIndex !== -1 && {
         lastNextColData: {
-          ...props.columns[nextColIndex].tableData,
+          ...displayingColumns[nextColIndex].tableData,
           width: nextWidth
         }
       }),
@@ -81,7 +82,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
       }
 
       const curX = e.clientX;
-      const col = props.columns[resizing.colIndex];
+      const col = displayingColumns[resizing.colIndex];
       const alreadyOffset =
         col.tableData.additionalWidth - resizing.lastColData.additionalWidth;
       let offset = constrainedColumnResize(
@@ -91,9 +92,9 @@ export function MTableHeader({ onColumnResized, ...props }) {
       );
       offset = Math.round(offset);
       const widths = [resizing.lastColData.width + alreadyOffset];
-      if (props.tableWidth === 'full') {
+      if (props.tableWidth === 'full' && resizing.lastNextColData) {
         offset = -constrainedColumnResize(
-          props.columns[resizing.nextColIndex],
+          displayingColumns[resizing.nextColIndex],
           resizing.lastNextColData.width - alreadyOffset,
           -offset
         );
@@ -117,7 +118,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
     (e) => {
       if (resizing && lastX !== resizing.startX) {
         onColumnResized(
-          props.columns[resizing.colIndex].tableData.id,
+          displayingColumns[resizing.colIndex].tableData.id,
           0,
           [],
           []
@@ -194,11 +195,8 @@ export function MTableHeader({ onColumnResized, ...props }) {
   function RenderHeader() {
     const size = props.options.padding === 'default' ? 'medium' : 'small';
 
-    return props.columns
-      .filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      )
+    return displayingColumns
+      .filter((columnDef) => !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index, allCols) => {
         const cellAlignment =
@@ -215,7 +213,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             <Draggable
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
-              index={index}
+              index={columnDef.tableData.id}
               style={{ zIndex: 99 }}
             >
               {(provided, snapshot) => (
@@ -402,7 +400,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
         />
       );
     }
-    props.columns
+    displayingColumns
       .filter((columnDef) => columnDef.tableData.groupOrder > -1)
       .forEach((columnDef) => {
         headers.splice(

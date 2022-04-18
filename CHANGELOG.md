@@ -22,6 +22,17 @@
 
 #### 0.2.26 (2022-03-06)
 
+#### 4.3.40 (2022-04-18)
+
+##### Bug Fixes
+
+- hidden columns resizing now works for correct col ([080ce82d](https://github.com/material-table-core/core/commit/080ce82d00332da7bec55db35c13af9afaa992fa))
+- correct index for hidden column drag ([febedb34](https://github.com/material-table-core/core/commit/febedb347a84a43873d588ba5d68344ccc731f0f))
+
+#### 4.3.39 (2022-04-01)
+
+- fix pagination for small screens #524 ([746740e](https://github.com/material-table-core/core/commit/746740e4656021f3f2a55937f367eb7f9a1520fc))
+
 #### 4.3.38 (2022-03-19)
 
 ##### New Features
