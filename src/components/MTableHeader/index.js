@@ -47,7 +47,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
       colIndex,
       nextColIndex,
       lastColData: { ...columnDef.tableData, width: currentWidth },
-      ...(nextColIndex !== -1 && {
+      ...(nextColIndex && {
         lastNextColData: {
           ...displayingColumns[nextColIndex].tableData,
           width: nextWidth

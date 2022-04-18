@@ -191,12 +191,6 @@ describe('Resize Column', () => {
       resize(thNotes, [-1]);
       expect(table).toHaveStyle({ width: '1023px' });
       expect(thNotes).toHaveStyle({ width: `${1024 - widthName - 1}px` });
-
-      // Props are changed by material table, with tableData added
-      // Not good practice
-      columns.forEach((col) => {
-        console.log(col);
-      });
     });
 
     test('min width', async () => {
