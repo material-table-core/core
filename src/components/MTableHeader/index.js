@@ -207,7 +207,7 @@ export function MTableHeader({ onColumnResized, ...props }) {
             <Draggable
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
-              index={index}
+              index={columnDef.tableData.id}
               style={{ zIndex: 99 }}
             >
               {(provided, snapshot) => (
