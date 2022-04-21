@@ -1,3 +1,9 @@
+#### 0.2.32 (2022-04-21)
+
+##### Bug Fixes
+
+- adjust current page to display detailpanel for remote data ([dfea2713](https://github.com/material-table-core/core/commit/dfea27133954dedbdd8a7018dea13b638a445257))
+
 #### 0.2.31 (2022-04-18)
 
 #### 0.2.30 (2022-04-18)
