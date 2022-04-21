@@ -1038,7 +1038,7 @@ export default class MaterialTable extends React.Component {
         renderData={this.state.renderData}
         data={this.state.data}
         renderSummaryRow={this.props.renderSummaryRow}
-        currentPage={this.state.currentPage}
+        currentPage={this.isRemoteData() ? 0 : this.state.currentPage}
         initialFormData={props.initialFormData}
         pageSize={this.state.pageSize}
         columns={this.state.columns}
