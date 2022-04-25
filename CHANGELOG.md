@@ -1,3 +1,9 @@
+#### 4.3.43 (2022-04-25)
+
+##### Other Changes
+
+- do not fail on hidden columns dragging ([5966ee37](https://github.com/material-table-core/core/commit/5966ee373e88836e7f47f266af6da314f9ad88ad))
+
 #### 4.3.42 (2022-04-21)
 
 ##### Bug Fixes
