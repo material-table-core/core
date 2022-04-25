@@ -37,6 +37,18 @@
 
 #### 0.2.26 (2022-03-06)
 
+#### 4.3.43 (2022-04-25)
+
+##### Other Changes
+
+- do not fail on hidden columns dragging ([5966ee37](https://github.com/material-table-core/core/commit/5966ee373e88836e7f47f266af6da314f9ad88ad))
+
+#### 4.3.42 (2022-04-21)
+
+##### Bug Fixes
+
+- adjust current page to display detailpanel for remote data ([bcbb53ba](https://github.com/material-table-core/core/commit/bcbb53ba3db386b6ec3c8182b27fa33f44df1686))
+
 #### 4.3.41 (2022-04-18)
 
 #### 4.3.40 (2022-04-18)
