@@ -1,3 +1,17 @@
+#### 0.2.33 (2022-04-25)
+
+##### New Features
+
+- update datepicker import ([34214cd3](https://github.com/material-table-core/core/commit/34214cd34fbdb15325bd6805766b35c943afec3b))
+
+##### Bug Fixes
+
+- adjust current page to display detailpanel for remote data ([bcbb53ba](https://github.com/material-table-core/core/commit/bcbb53ba3db386b6ec3c8182b27fa33f44df1686))
+
+##### Other Changes
+
+- do not fail on hidden columns dragging ([5966ee37](https://github.com/material-table-core/core/commit/5966ee373e88836e7f47f266af6da314f9ad88ad))
+
 #### 0.2.32 (2022-04-21)
 
 ##### Bug Fixes
