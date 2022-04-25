@@ -45,16 +45,18 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     }
 
     setLastX(startX);
+    const nextColumn = displayingColumns[nextColIndex];
     setResizing({
       colIndex,
       nextColIndex,
       lastColData: { ...columnDef.tableData, width: currentWidth },
-      ...(nextColIndex && {
-        lastNextColData: {
-          ...displayingColumns[nextColIndex].tableData,
-          width: nextWidth
-        }
-      }),
+      ...(nextColIndex &&
+        nextColumn && {
+          lastNextColData: {
+            ...nextColumn.tableData,
+            width: nextWidth
+          }
+        }),
       initialColWidths,
       startX
     });
