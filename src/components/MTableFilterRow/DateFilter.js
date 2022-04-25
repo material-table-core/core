@@ -1,5 +1,5 @@
 import React from 'react';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import { getLocalizedFilterPlaceHolder } from './utils';
 import {
@@ -7,7 +7,8 @@ import {
   DateTimePicker,
   TimePicker,
   LocalizationProvider
-} from '@mui/lab';
+} from '@mui/x-date-pickers';
+import '@mui/lab';
 
 function DateFilter({
   columnDef,

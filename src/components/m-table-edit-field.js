@@ -7,13 +7,14 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {
   LocalizationProvider,
   TimePicker,
   DatePicker,
   DateTimePicker
-} from '@mui/lab';
+} from '@mui/x-date-pickers';
+import '@mui/lab';
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
