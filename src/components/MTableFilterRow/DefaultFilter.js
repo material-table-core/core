@@ -16,7 +16,11 @@ function DefaultFilter({
   return (
     <TextField
       ref={forwardedRef}
-      style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
+      style={
+        columnDef.type === 'numeric'
+          ? { float: columnDef.align ?? 'right' }
+          : { float: columnDef.align ?? 'left' }
+      }
       type={columnDef.type === 'numeric' ? 'number' : 'search'}
       value={columnDef.tableData.filterValue || ''}
       placeholder={getLocalizedFilterPlaceHolder(columnDef)}
