@@ -32,15 +32,6 @@ module.exports = {
       {
         camel2DashComponentName: false,
         libraryDirectory: '',
-        libraryName: '@mui/lab'
-      },
-      '@mui/lab'
-    ],
-    [
-      'import',
-      {
-        camel2DashComponentName: false,
-        libraryDirectory: '',
         libraryName: '@mui/icons-material'
       },
       '@mui/icons-material'

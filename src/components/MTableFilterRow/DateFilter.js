@@ -8,7 +8,6 @@ import {
   TimePicker,
   LocalizationProvider
 } from '@mui/x-date-pickers';
-import '@mui/lab';
 
 function DateFilter({
   columnDef,

@@ -14,7 +14,6 @@ import {
   DatePicker,
   DateTimePicker
 } from '@mui/x-date-pickers';
-import '@mui/lab';
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {

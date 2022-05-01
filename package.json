@@ -112,7 +112,6 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": ">=5.0.0",
-    "@mui/lab": ">=5.0.0-alpha.61",
     "@mui/material": ">=5.0.0",
     "@mui/x-date-pickers": "^5.0.0-alpha.2",
     "classnames": "^2.2.6",
