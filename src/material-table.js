@@ -7,7 +7,7 @@ import {
   TableRow,
   LinearProgress
 } from '@material-ui/core';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from '@react-forked/dnd';
 import DataManager from '@utils/data-manager';
 import * as CommonValues from '@utils/common-values';
 import {
