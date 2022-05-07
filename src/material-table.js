@@ -2,14 +2,8 @@ import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import {
-  Box,
-  Table,
-  TableFooter,
-  TableRow,
-  LinearProgress
-} from '@mui/material';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Table, TableFooter, TableRow, LinearProgress } from '@mui/material';
+import { DragDropContext, Droppable } from '@react-forked/dnd';
 import DataManager from '@utils/data-manager';
 import {
   MTablePagination,

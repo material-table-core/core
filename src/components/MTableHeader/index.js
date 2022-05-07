@@ -5,7 +5,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable } from '@react-forked/dnd';
 import { Box, Tooltip } from '@mui/material';
 import * as CommonValues from '../../utils/common-values';
 export function MTableHeader({ onColumnResized, columns, ...props }) {
