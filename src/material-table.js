@@ -86,7 +86,7 @@ export default class MaterialTable extends React.Component {
 
   setDataManagerFields(props, isInit, prevColumns) {
     const savedColumns = {};
-    if (props.options.persistentGroupingsId) {
+    if (props.options.persistentGroupingsId && localStorage) {
       let materialTableGroupings = localStorage.getItem(
         'material-table-groupings'
       );
