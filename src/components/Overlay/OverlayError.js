@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useIconStore } from '@store';
 
 function OverlayError(props) {
+  const icons = useIconStore();
   return (
     <div
       ref={props.forwardedRef}
@@ -23,7 +25,7 @@ function OverlayError(props) {
         }}
       >
         <span>{props.error.message}</span>{' '}
-        <props.icon
+        <icons.Retry
           onClick={props.retry}
           style={{ cursor: 'pointer', position: 'relative', top: 5 }}
         />
@@ -35,8 +37,7 @@ function OverlayError(props) {
 OverlayError.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   retry: PropTypes.func,
-  theme: PropTypes.any,
-  icon: PropTypes.any
+  theme: PropTypes.any
 };
 
 export default React.forwardRef(function OverlayErrorRef(props, ref) {

@@ -50,5 +50,7 @@ export default {
   detailPanelOffset: { left: 0, right: 0 },
   thirdSortClick: true,
   overflowY: 'auto',
-  numberOfPagesAround: 1
+  numberOfPagesAround: 1,
+  actionsHeaderIndex: 0,
+  draggable: true
 };

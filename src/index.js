@@ -4,6 +4,7 @@ import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
 import { withStyles } from '@material-ui/core/styles';
+import { useMergeProps, withContext } from './store/LocalizationStore';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
@@ -24,9 +25,20 @@ const styles = (theme) => ({
   }
 });
 
-export default withStyles(styles, { withTheme: true })((props) => (
-  <MaterialTable {...props} ref={props.tableRef} />
-));
+export default withContext(
+  withStyles(styles, { withTheme: true })((props) => {
+    const { localization, options, components } = useMergeProps(props);
+    return (
+      <MaterialTable
+        {...props}
+        options={options}
+        components={components}
+        localization={localization}
+        ref={props.tableRef}
+      />
+    );
+  })
+);
 
 export {
   MTableAction,

@@ -5,9 +5,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useLocalizationStore, useIconStore } from '@store/LocalizationStore';
 /* eslint-enable no-unused-vars */
 
 function MTablePagination(props) {
+  const icons = useIconStore();
+  const localization = useLocalizationStore().pagination;
   if (process.env.NODE_ENV === 'development' && !props.onPageChange) {
     console.error(
       'The prop `onPageChange` in pagination is undefined and paging does not work. ' +
@@ -33,113 +36,102 @@ function MTablePagination(props) {
       Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     );
   };
-
-  function render() {
-    const {
-      classes,
-      count,
-      page,
-      rowsPerPage,
-      theme,
-      showFirstLastPageButtons
-    } = props;
-
-    const localization = {
-      ...MTablePagination.defaultProps.localization,
-      ...props.localization
-    };
-
-    return (
-      <div className={classes.root} ref={props.forwardedRef}>
-        {showFirstLastPageButtons && (
-          <Tooltip title={localization.firstTooltip}>
-            <span>
-              <IconButton
-                onClick={handleFirstPageButtonClick}
-                disabled={page === 0}
-                aria-label={localization.firstAriaLabel}
-              >
-                {theme.direction === 'rtl' ? (
-                  <props.icons.LastPage />
-                ) : (
-                  <props.icons.FirstPage />
-                )}
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-        <Tooltip title={localization.previousTooltip}>
+  const {
+    classes,
+    count,
+    page,
+    rowsPerPage,
+    theme,
+    showFirstLastPageButtons
+  } = props;
+  return (
+    <div className={classes.root} ref={props.forwardedRef}>
+      {showFirstLastPageButtons && (
+        <Tooltip title={localization.firstTooltip}>
           <span>
             <IconButton
-              onClick={handleBackButtonClick}
+              onClick={handleFirstPageButtonClick}
               disabled={page === 0}
-              aria-label={localization.previousAriaLabel}
+              aria-label={localization.firstAriaLabel}
             >
               {theme.direction === 'rtl' ? (
-                <props.icons.NextPage />
+                <icons.LastPage />
               ) : (
-                <props.icons.PreviousPage />
+                <icons.FirstPage />
               )}
             </IconButton>
           </span>
         </Tooltip>
-        <Typography
-          variant="caption"
-          style={{
-            flex: 1,
-            textAlign: 'center',
-            alignSelf: 'center',
-            flexBasis: 'inherit'
-          }}
-        >
-          {localization.labelDisplayedRows
-            .replace(
-              '{from}',
-              props.count === 0 ? 0 : props.page * props.rowsPerPage + 1
-            )
-            .replace(
-              '{to}',
-              Math.min((props.page + 1) * props.rowsPerPage, props.count)
-            )
-            .replace('{count}', props.count)}
-        </Typography>
-        <Tooltip title={localization.nextTooltip}>
+      )}
+      <Tooltip title={localization.previousTooltip}>
+        <span>
+          <IconButton
+            onClick={handleBackButtonClick}
+            disabled={page === 0}
+            aria-label={localization.previousAriaLabel}
+          >
+            {theme.direction === 'rtl' ? (
+              <icons.NextPage />
+            ) : (
+              <icons.PreviousPage />
+            )}
+          </IconButton>
+        </span>
+      </Tooltip>
+      <Typography
+        variant="caption"
+        style={{
+          flex: 1,
+          textAlign: 'center',
+          alignSelf: 'center',
+          flexBasis: 'inherit'
+        }}
+      >
+        {localization.labelDisplayedRows
+          .replace(
+            '{from}',
+            props.count === 0 ? 0 : props.page * props.rowsPerPage + 1
+          )
+          .replace(
+            '{to}',
+            Math.min((props.page + 1) * props.rowsPerPage, props.count)
+          )
+          .replace('{count}', props.count)}
+      </Typography>
+      <Tooltip title={localization.nextTooltip}>
+        <span>
+          <IconButton
+            onClick={handleNextButtonClick}
+            disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+            aria-label={localization.nextAriaLabel}
+          >
+            {theme.direction === 'rtl' ? (
+              <icons.PreviousPage />
+            ) : (
+              <icons.NextPage />
+            )}
+          </IconButton>
+        </span>
+      </Tooltip>
+      {showFirstLastPageButtons && (
+        <Tooltip title={localization.lastTooltip}>
           <span>
             <IconButton
-              onClick={handleNextButtonClick}
+              onClick={handleLastPageButtonClick}
               disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-              aria-label={localization.nextAriaLabel}
+              aria-label={localization.lastAriaLabel}
             >
               {theme.direction === 'rtl' ? (
-                <props.icons.PreviousPage />
+                <icons.FirstPage />
               ) : (
-                <props.icons.NextPage />
+                <icons.LastPage />
               )}
             </IconButton>
           </span>
         </Tooltip>
-        {showFirstLastPageButtons && (
-          <Tooltip title={localization.lastTooltip}>
-            <span>
-              <IconButton
-                onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label={localization.lastAriaLabel}
-              >
-                {theme.direction === 'rtl' ? (
-                  <props.icons.FirstPage />
-                ) : (
-                  <props.icons.LastPage />
-                )}
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-      </div>
-    );
-  }
-
-  return render();
+      )}
+    </div>
+  );
 }
 
 const actionsStyles = (theme) => ({
@@ -159,23 +151,12 @@ MTablePagination.propTypes = {
   classes: PropTypes.object,
   localization: PropTypes.object,
   theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool
+  showFirstLastPageButtons: PropTypes.bool,
+  forwardedRef: PropTypes.func
 };
 
 MTablePagination.defaultProps = {
-  showFirstLastPageButtons: true,
-  localization: {
-    firstAriaLabel: 'First Page',
-    firstTooltip: 'First Page',
-    previousAriaLabel: 'Previous Page',
-    previousTooltip: 'Previous Page',
-    nextAriaLabel: 'Next Page',
-    nextTooltip: 'Next Page',
-    lastAriaLabel: 'Last Page',
-    lastTooltip: 'Last Page',
-    labelDisplayedRows: '{from}-{to} of {count}',
-    labelRowsPerPage: 'Rows per page:'
-  }
+  showFirstLastPageButtons: true
 };
 
 const MTableGroupRowRef = React.forwardRef(function MTablePaginationRef(

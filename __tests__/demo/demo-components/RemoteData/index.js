@@ -1,8 +1,5 @@
-import React, { useState, useRef, Component } from 'react';
-import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../../src';
-import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import React, { useState, useRef } from 'react';
+import MaterialTable from '../../../../src';
 
 // check if removing this.isRemoteData()@https://github.com/material-table-core/core/blob/0e953441fd9f9912d8cf97db103a8e0cb4f43912/src/material-table.js#L119-L120
 // is any good

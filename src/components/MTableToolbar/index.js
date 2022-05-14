@@ -7,17 +7,26 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import { lighten, withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import { lighten, withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
 
 let searchTimer;
 
 export function MTableToolbar(props) {
+  const localization = useLocalizationStore().toolbar;
   const [searchText, setSearchText] = useState(props.searchText);
   const [exportButtonAnchorEl, setExportButtonAnchorEl] = useState(null);
   const [columnsButtonAnchorEl, setColumnsButtonAnchorEl] = useState(null);
+  const icons = useIconStore();
+  const options = useOptionStore();
+
+  const selectedRows = React.useMemo(
+    () => props.selectedRows.filter((a) => a.tableData.checked),
+    [props.selectedRows]
+  );
 
   const onSearchChange = (searchText) => {
     setSearchText(searchText);
@@ -47,11 +56,10 @@ export function MTableToolbar(props) {
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
-    const data = (props.exportAllData ? props.data : props.renderData).map(
-      (rowData) =>
-        columns.reduce((agg, columnDef) => {
-          let value;
-          /*
+    const data = props.data().map((rowData) =>
+      columns.reduce((agg, columnDef) => {
+        let value;
+        /*
           About: column.customExport
           This bit of code checks if prop customExport in column is a function, and if it is then it
           uses that function to transform the data, this is useful in cases where a column contains
@@ -60,42 +68,39 @@ export function MTableToolbar(props) {
           Please note that it is also possible to transform data within under exportMenu 
           using a custom function (exportMenu.exportFunc) for each exporter.
           */
-          if (typeof columnDef.customExport === 'function') {
-            value = columnDef.customExport(rowData);
-          } else {
-            value = props.getFieldValue(rowData, columnDef);
-          }
-          agg[columnDef.field] = value;
-          return agg;
-        }, {})
+        if (typeof columnDef.customExport === 'function') {
+          value = columnDef.customExport(rowData);
+        } else {
+          value = props.getFieldValue(rowData, columnDef);
+        }
+        agg[columnDef.field] = value;
+        return agg;
+      }, {})
     );
 
     return [columns, data];
   };
 
   function renderSearch() {
-    const localization = {
-      ...MTableToolbar.defaultProps.localization,
-      ...props.localization
-    };
-    if (props.search) {
+    if (options.search) {
       return (
         <TextField
-          autoFocus={props.searchAutoFocus}
+          autoFocus={options.searchAutoFocus}
           className={
-            props.searchFieldAlignment === 'left' && props.showTitle === false
+            options.searchFieldAlignment === 'left' &&
+            options.showTitle === false
               ? null
               : props.classes.searchField
           }
           value={searchText}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder={localization.searchPlaceholder}
-          variant={props.searchFieldVariant}
+          variant={options.searchFieldVariant}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <Tooltip title={localization.searchTooltip}>
-                  <props.icons.Search fontSize="small" />
+                  <icons.Search fontSize="small" />
                 </Tooltip>
               </InputAdornment>
             ),
@@ -106,14 +111,11 @@ export function MTableToolbar(props) {
                   onClick={() => onSearchChange('')}
                   aria-label={localization.clearSearchAriaLabel}
                 >
-                  <props.icons.ResetSearch
-                    fontSize="small"
-                    aria-label="clear"
-                  />
+                  <icons.ResetSearch fontSize="small" aria-label="clear" />
                 </IconButton>
               </InputAdornment>
             ),
-            style: props.searchFieldStyle,
+            style: options.searchFieldStyle,
             inputProps: {
               'aria-label': localization.searchAriaLabel
             }
@@ -126,15 +128,11 @@ export function MTableToolbar(props) {
   }
 
   function renderDefaultActions() {
-    const localization = {
-      ...MTableToolbar.defaultProps.localization,
-      ...props.localization
-    };
     const { classes } = props;
 
     return (
       <div style={{ display: 'flex' }}>
-        {props.columnsButton && (
+        {options.columnsButton && (
           <span>
             <Tooltip title={localization.showColumnsTitle}>
               <IconButton
@@ -144,7 +142,7 @@ export function MTableToolbar(props) {
                 }
                 aria-label={localization.showColumnsAriaLabel}
               >
-                <props.icons.ViewColumn />
+                <icons.ViewColumn />
               </IconButton>
             </Tooltip>
             <Menu
@@ -202,7 +200,7 @@ export function MTableToolbar(props) {
             </Menu>
           </span>
         )}
-        {props.exportMenu.length > 0 && (
+        {options.exportMenu.length > 0 && (
           <span>
             <Tooltip title={localization.exportTitle}>
               <IconButton
@@ -212,7 +210,7 @@ export function MTableToolbar(props) {
                 }
                 aria-label={localization.exportAriaLabel}
               >
-                <props.icons.Export />
+                <icons.Export />
               </IconButton>
             </Tooltip>
             <Menu
@@ -220,7 +218,7 @@ export function MTableToolbar(props) {
               open={Boolean(exportButtonAnchorEl)}
               onClose={() => setExportButtonAnchorEl(null)}
             >
-              {props.exportMenu.map((menuitem, index) => {
+              {options.exportMenu.map((menuitem, index) => {
                 const [cols, datas] = getTableData();
                 return (
                   <MenuItem
@@ -261,7 +259,7 @@ export function MTableToolbar(props) {
           actions={props.actions.filter(
             (a) => a.position === 'toolbarOnSelect'
           )}
-          data={props.selectedRows}
+          data={selectedRows}
           components={props.components}
         />
       </React.Fragment>
@@ -274,7 +272,7 @@ export function MTableToolbar(props) {
     return (
       <div className={classes.actions}>
         <div>
-          {props.selectedRows && props.selectedRows.length > 0
+          {selectedRows.length > 0
             ? renderSelectedActions()
             : renderDefaultActions()}
         </div>
@@ -304,70 +302,38 @@ export function MTableToolbar(props) {
     return <div className={classes.title}>{toolBarTitle}</div>;
   }
 
-  function render() {
-    const { classes } = props;
-    const localization = {
-      ...MTableToolbar.defaultProps.localization,
-      ...props.localization
-    };
-    const title =
-      props.showTextRowsSelected &&
-      props.selectedRows &&
-      props.selectedRows.length > 0
-        ? typeof localization.nRowsSelected === 'function'
-          ? localization.nRowsSelected(props.selectedRows.length)
-          : localization.nRowsSelected.replace('{0}', props.selectedRows.length)
-        : props.showTitle
-        ? props.title
-        : null;
-    return (
-      <Toolbar
-        ref={props.forwardedRef}
-        className={classNames(classes.root, {
-          [classes.highlight]:
-            props.showTextRowsSelected &&
-            props.selectedRows &&
-            props.selectedRows.length > 0
-        })}
-      >
-        {title && renderToolbarTitle(title)}
-        {props.searchFieldAlignment === 'left' && renderSearch()}
-        {props.toolbarButtonAlignment === 'left' && renderActions()}
-        <div className={classes.spacer} />
-        {props.searchFieldAlignment === 'right' && renderSearch()}
-        {props.toolbarButtonAlignment === 'right' && renderActions()}
-      </Toolbar>
-    );
-  }
-
-  return render();
+  const { classes } = props;
+  const title =
+    options.showTextRowsSelected && selectedRows.length > 0
+      ? typeof localization.nRowsSelected === 'function'
+        ? localization.nRowsSelected(selectedRows.length)
+        : localization.nRowsSelected.replace('{0}', selectedRows.length)
+      : options.showTitle
+      ? props.title
+      : null;
+  return (
+    <Toolbar
+      ref={props.forwardedRef}
+      className={classNames(classes.root, {
+        [classes.highlight]:
+          options.showTextRowsSelected && selectedRows.length > 0
+      })}
+    >
+      {title && renderToolbarTitle(title)}
+      {options.searchFieldAlignment === 'left' && renderSearch()}
+      {options.toolbarButtonAlignment === 'left' && renderActions()}
+      <div className={classes.spacer} />
+      {options.searchFieldAlignment === 'right' && renderSearch()}
+      {options.toolbarButtonAlignment === 'right' && renderActions()}
+    </Toolbar>
+  );
 }
 
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
   columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)
-  columnsButton: false,
-  localization: {
-    addRemoveColumns: 'Add or remove columns',
-    nRowsSelected: '{0} row(s) selected',
-    showColumnsTitle: 'Show Columns',
-    showColumnsAriaLabel: 'Show Columns',
-    exportTitle: 'Export',
-    exportAriaLabel: 'Export',
-    searchTooltip: 'Search',
-    searchPlaceholder: 'Search',
-    searchAriaLabel: 'Search',
-    clearSearchAriaLabel: 'Clear Search'
-  },
-  search: true,
-  showTitle: true,
   searchText: '',
-  showTextRowsSelected: true,
-  toolbarButtonAlignment: 'right',
-  searchAutoFocus: false,
-  searchFieldAlignment: 'right',
-  searchFieldVariant: 'standard',
   selectedRows: [],
   title: 'No Title!'
 };
@@ -375,34 +341,16 @@ MTableToolbar.defaultProps = {
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
   columns: PropTypes.array,
-  columnsButton: PropTypes.bool,
   components: PropTypes.object.isRequired,
   getFieldValue: PropTypes.func.isRequired,
-  localization: PropTypes.object.isRequired,
   onColumnsChanged: PropTypes.func.isRequired,
   dataManager: PropTypes.object.isRequired,
   searchText: PropTypes.string,
   onSearchChanged: PropTypes.func.isRequired,
-  search: PropTypes.bool.isRequired,
-  searchFieldStyle: PropTypes.object,
-  searchFieldVariant: PropTypes.string,
   selectedRows: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  showTitle: PropTypes.bool.isRequired,
-  showTextRowsSelected: PropTypes.bool.isRequired,
-  toolbarButtonAlignment: PropTypes.string.isRequired,
-  searchFieldAlignment: PropTypes.string.isRequired,
-  renderData: PropTypes.array,
-  data: PropTypes.array,
-  exportAllData: PropTypes.bool,
-  exportMenu: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      handler: PropTypes.func
-    })
-  ),
-  classes: PropTypes.object,
-  searchAutoFocus: PropTypes.bool
+  data: PropTypes.func,
+  classes: PropTypes.object
 };
 
 export const styles = (theme) => ({
@@ -446,4 +394,6 @@ const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   return <MTableToolbar {...props} forwardedRef={ref} />;
 });
 
-export default withStyles(styles, { name: 'MTableToolbar' })(MTableToolbarRef);
+export default React.memo(
+  withStyles(styles, { name: 'MTableToolbar' })(MTableToolbarRef)
+);

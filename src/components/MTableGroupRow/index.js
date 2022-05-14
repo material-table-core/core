@@ -4,15 +4,18 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useOptionStore, useIconStore } from '@store';
 
 function MTableGroupRow(props) {
+  const options = useOptionStore();
+  const icons = useIconStore();
   const rotateIconStyle = (isOpen) => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
   function render() {
     let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
-    props.options.selection && colSpan++;
+    options.selection && colSpan++;
     props.detailPanel && colSpan++;
     props.actions && props.actions.length > 0 && colSpan++;
     const column = props.groups[props.level];
@@ -31,7 +34,6 @@ function MTableGroupRow(props) {
             getFieldValue={props.getFieldValue}
             groupData={groupData}
             groups={props.groups}
-            icons={props.icons}
             level={props.level + 1}
             path={[...props.path, index]}
             onGroupExpandChanged={props.onGroupExpandChanged}
@@ -42,7 +44,6 @@ function MTableGroupRow(props) {
             onTreeExpandChanged={props.onTreeExpandChanged}
             onEditingCanceled={props.onEditingCanceled}
             onEditingApproved={props.onEditingApproved}
-            options={props.options}
             hasAnyEditingRow={props.hasAnyEditingRow}
             isTreeData={props.isTreeData}
             cellEditable={props.cellEditable}
@@ -60,12 +61,11 @@ function MTableGroupRow(props) {
                 columns={props.columns}
                 components={props.components}
                 data={rowData}
-                icons={props.icons}
+                icons={icons}
                 path={[...props.path, rowData.tableData.uuid]}
                 localization={props.localization}
                 key={index}
                 mode={rowData.tableData.editing}
-                options={props.options}
                 isTreeData={props.isTreeData}
                 detailPanel={props.detailPanel}
                 onEditingCanceled={props.onEditingCanceled}
@@ -86,12 +86,10 @@ function MTableGroupRow(props) {
                 detailPanel={props.detailPanel}
                 level={(props.level || 0) + 1}
                 getFieldValue={props.getFieldValue}
-                icons={props.icons}
                 path={[...props.path, rowData.tableData.uuid]}
                 onRowSelected={props.onRowSelected}
                 onRowClick={props.onRowClick}
                 onToggleDetailPanel={props.onToggleDetailPanel}
-                options={props.options}
                 isTreeData={props.isTreeData}
                 onTreeExpandChanged={props.onTreeExpandChanged}
                 onEditingCanceled={props.onEditingCanceled}
@@ -120,16 +118,16 @@ function MTableGroupRow(props) {
     }
 
     let title = column.title;
-    if (typeof props.options.groupTitle === 'function') {
-      title = props.options.groupTitle(props.groupData);
+    if (typeof options.groupTitle === 'function') {
+      title = options.groupTitle(props.groupData);
     } else if (typeof title !== 'string') {
       title = React.cloneElement(title);
     }
 
-    const separator = props.options.groupRowSeparator || ': ';
+    const separator = options.groupRowSeparator || ': ';
 
     const showSelectGroupCheckbox =
-      props.options.selection && props.options.showSelectGroupCheckbox;
+      options.selection && options.showSelectGroupCheckbox;
 
     const mapSelectedRows = (groupData) => {
       let totalRows = 0;
@@ -165,7 +163,7 @@ function MTableGroupRow(props) {
             padding="none"
             columnDef={column}
             value={value}
-            icons={props.icons}
+            icons={icons}
           >
             <>
               <IconButton
@@ -177,10 +175,7 @@ function MTableGroupRow(props) {
                   props.onGroupExpandChanged(props.path);
                 }}
               >
-                <props.icons.DetailPanel
-                  row={props}
-                  level={props.path.length - 1}
-                />
+                <icons.DetailPanel row={props} level={props.path.length - 1} />
               </IconButton>
               {showSelectGroupCheckbox && (
                 <Checkbox

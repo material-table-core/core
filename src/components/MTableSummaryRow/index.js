@@ -3,22 +3,19 @@ import { TableRow, TableCell } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { getStyle } from '@utils';
 import * as CommonValues from '@utils/common-values';
+import { useOptionStore } from '@store';
 import PropTypes from 'prop-types';
 
-export function MTableSummaryRow({
-  data,
-  columns,
-  currentData,
-  rowProps,
-  renderSummaryRow
-}) {
+export function MTableSummaryRow({ columns, rowProps, renderSummaryRow }) {
+  const options = useOptionStore();
   if (!renderSummaryRow) {
     return null;
   }
 
   function renderPlaceholderColumn(key, numIcons = 1) {
-    const size = CommonValues.elementSize(rowProps);
-    const width = numIcons * CommonValues.baseIconSize(rowProps);
+    const size = CommonValues.elementSize({ ...rowProps, options });
+    const width =
+      numIcons * CommonValues.baseIconSize({ ...rowProps, options });
     return (
       <TableCell
         key={`placeholder.${key}`}
@@ -37,7 +34,7 @@ export function MTableSummaryRow({
   let placeholderKey = 0;
 
   // Create empty columns corresponding to selection, actions, detail panel, and tree data icons
-  if (rowProps.options.selection) {
+  if (options.selection) {
     placeholderLeftColumns.push(renderPlaceholderColumn(placeholderKey++));
   }
   if (
@@ -47,18 +44,18 @@ export function MTableSummaryRow({
     ).length > 0
   ) {
     const numRowActions = CommonValues.rowActions(rowProps).length;
-    if (rowProps.options.actionsColumnIndex === -1) {
+    if (options.actionsColumnIndex === -1) {
       placeholderRightColumns.push(
         renderPlaceholderColumn(placeholderKey++, numRowActions)
       );
-    } else if (rowProps.options.actionsColumnIndex >= 0) {
+    } else if (options.actionsColumnIndex >= 0) {
       placeholderLeftColumns.push(
         renderPlaceholderColumn(placeholderKey++, numRowActions)
       );
     }
   }
-  if (rowProps.detailPanel && rowProps.options.showDetailPanelIcon) {
-    if (rowProps.options.detailPanelColumnAlignment === 'right') {
+  if (rowProps.detailPanel && options.showDetailPanelIcon) {
+    if (options.detailPanelColumnAlignment === 'right') {
       placeholderRightColumns.push(renderPlaceholderColumn(placeholderKey++));
     } else {
       placeholderLeftColumns.push(renderPlaceholderColumn(placeholderKey++));
@@ -75,8 +72,6 @@ export function MTableSummaryRow({
         const summaryColumn = renderSummaryRow({
           index,
           column,
-          data,
-          currentData,
           columns
         });
         const cellAlignment =
@@ -107,8 +102,6 @@ export function MTableSummaryRow({
 }
 
 MTableSummaryRow.propTypes = {
-  data: PropTypes.array,
-  currentData: PropTypes.array,
   columns: PropTypes.array,
   renderSummaryRow: PropTypes.func
 };

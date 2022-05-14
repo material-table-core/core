@@ -4,23 +4,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { setObjectByKey } from '@utils';
+import { useOptionStore } from '@store/LocalizationStore';
 import * as CommonValues from '@utils/common-values';
 import { validateInput } from '@utils/validate';
 
 function MTableEditRow(props) {
+  const options = useOptionStore();
   const [state, setState] = useState(() => {
-    function createRowData() {
-      return props.columns
-        .filter((column) => 'initialEditValue' in column && column.field)
-        .reduce((prev, column) => {
-          setObjectByKey(prev, column.field, column.initialEditValue);
-          return prev;
-        }, {});
-    }
-
     let data = props.data
-      ? JSON.parse(JSON.stringify(props.data))
-      : createRowData();
+      ? props.data
+      : props.columns
+          .filter((column) => 'initialEditValue' in column && column.field)
+          .reduce((prev, column) => {
+            setObjectByKey(prev, column.field, column.initialEditValue);
+            return prev;
+          }, {});
 
     if (props.mode === 'bulk' && props.bulkEditChangedRows[data.tableData.id]) {
       data = props.bulkEditChangedRows[data.tableData.id].newData;
@@ -160,20 +158,17 @@ function MTableEditRow(props) {
     }
 
     const size = CommonValues.elementSize(props);
-    const localization = {
-      ...MTableEditRow.defaultProps.localization,
-      ...props.localization
-    };
+
     const actions = [
       {
         icon: props.icons.Check,
-        tooltip: localization.saveTooltip,
+        tooltip: props.localization.saveTooltip,
         disabled: !isValid,
         onClick: handleSave
       },
       {
         icon: props.icons.Clear,
-        tooltip: localization.cancelTooltip,
+        tooltip: props.localization.cancelTooltip,
         onClick: () => {
           props.onEditingCanceled(props.mode, props.data);
         }
@@ -187,7 +182,7 @@ function MTableEditRow(props) {
         style={{
           width: 42 * actions.length,
           padding: '0px 5px',
-          ...props.options.editCellStyle
+          ...options.editCellStyle
         }}
       >
         <props.components.Actions
@@ -225,10 +220,7 @@ function MTableEditRow(props) {
 
   function render() {
     const size = CommonValues.elementSize(props);
-    const localization = {
-      ...MTableEditRow.defaultProps.localization,
-      ...props.localization
-    };
+
     let columns;
     if (
       props.mode === 'add' ||
@@ -244,16 +236,16 @@ function MTableEditRow(props) {
       columns = [
         <TableCell
           size={size}
-          padding={props.options.actionsColumnIndex === 0 ? 'none' : undefined}
+          padding={options.actionsColumnIndex === 0 ? 'none' : undefined}
           key="key-edit-cell"
           colSpan={colSpan}
         >
-          <Typography variant="h6">{localization.deleteText}</Typography>
+          <Typography variant="h6">{props.localization.deleteText}</Typography>
         </TableCell>
       ];
     }
 
-    if (props.options.selection) {
+    if (options.selection) {
       columns.splice(
         0,
         0,
@@ -268,33 +260,29 @@ function MTableEditRow(props) {
       );
     }
 
-    if (props.options.actionsColumnIndex === -1) {
+    if (options.actionsColumnIndex === -1) {
       columns.push(renderActions());
-    } else if (props.options.actionsColumnIndex >= 0) {
+    } else if (options.actionsColumnIndex >= 0) {
       let endPos = 0;
-      if (props.options.selection) {
+      if (options.selection) {
         endPos = 1;
       }
       if (props.isTreeData) {
         endPos = 1;
-        if (props.options.selection) {
+        if (options.selection) {
           columns.splice(1, 1);
         }
       }
-      columns.splice(
-        props.options.actionsColumnIndex + endPos,
-        0,
-        renderActions()
-      );
+      columns.splice(options.actionsColumnIndex + endPos, 0, renderActions());
     }
 
     // Lastly we add detail panel icon
     if (
       props.detailPanel &&
-      props.options.showDetailPanelIcon !== false &&
+      options.showDetailPanelIcon !== false &&
       props.mode !== 'bulk'
     ) {
-      const alignment = props.options.detailPanelColumnAlignment;
+      const alignment = options.detailPanelColumnAlignment;
       const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
@@ -329,7 +317,6 @@ function MTableEditRow(props) {
       components,
       icons,
       columns: columnsProp, // renamed to not conflict with definition above
-      localization: localizationProp, // renamed to not conflict with definition above
       options,
       actions,
       errorState,
@@ -360,11 +347,6 @@ MTableEditRow.defaultProps = {
   index: 0,
   options: {},
   path: [],
-  localization: {
-    saveTooltip: 'Save',
-    cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure you want to delete this row?'
-  },
   onBulkEditRowChanged: () => {}
 };
 
@@ -377,7 +359,6 @@ MTableEditRow.propTypes = {
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
-  options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
   columns: PropTypes.array,

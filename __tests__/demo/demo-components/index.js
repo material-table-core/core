@@ -894,11 +894,7 @@ const useHeaderStyles = makeStyles({
 });
 
 const HeaderWithClassesChange = ({ classes, icons, ...other }) => (
-  <MTableHeader
-    classes={{ classes, ...useHeaderStyles() }}
-    icons={{ ...icons, Resize: undefined }}
-    {...other}
-  />
+  <MTableHeader classes={{ classes, ...useHeaderStyles() }} {...other} />
 );
 
 export function ResizableTableWidthVariable() {
@@ -922,6 +918,7 @@ export function ResizableTableWidthVariable() {
               whiteSpace: 'nowrap'
             }
           }))}
+          icons={{ Resize: null }}
           data={global_data.map((row, index) => ({
             ...row,
             ...(index === 1
