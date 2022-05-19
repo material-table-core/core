@@ -382,6 +382,7 @@ export interface Options<RowData extends object> {
   overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
   pageSize?: number;
   pageSizeOptions?: number[];
+  paginationAlignment?: React.CSSProperties['justifyContent'];
   paginationType?: 'normal' | 'stepped';
   paginationPosition?: 'bottom' | 'top' | 'both';
   persistentGroupingsId?: string;

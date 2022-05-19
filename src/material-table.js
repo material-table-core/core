@@ -81,7 +81,7 @@ export default class MaterialTable extends React.Component {
 
   setDataManagerFields(props, isInit, prevColumns) {
     const savedColumns = {};
-    if (props.options.persistentGroupingsId) {
+    if (props.options.persistentGroupingsId && localStorage) {
       let materialTableGroupings = localStorage.getItem(
         'material-table-groupings'
       );
@@ -896,17 +896,13 @@ export default class MaterialTable extends React.Component {
           <TableFooter style={{ display: 'grid' }}>
             <TableRow style={{ display: 'grid' }}>
               <props.components.Pagination
-                classes={{
-                  root: props.classes.paginationRoot,
-                  toolbar: props.classes.paginationToolbar,
-                  caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot
-                }}
                 sx={{
-                  float: (theme) => (theme.direction === 'rtl' ? '' : 'right'),
+                  display: 'flex',
+                  justifyContent: props.options.paginationAlignment
+                    ? props.options.paginationAlignment
+                    : 'flex-end',
                   overflowX: 'auto',
-                  width: '100%',
-                  '& .MuiTypography-root': {
+                  '& .MuiTablePagination-selectLabel': {
                     display: 'none'
                   }
                 }}

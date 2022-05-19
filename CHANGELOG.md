@@ -51,6 +51,18 @@
 
 #### 0.2.26 (2022-03-06)
 
+#### 4.3.44 (2022-05-19)
+
+##### New Features
+
+- be able to adjust pagination position using flex ([c262a95f](https://github.com/material-table-core/core/commit/c262a95f7bc5607038e85a1765d6c22cf028419a))
+- move to @react-forked/dnd ([0d4b020f](https://github.com/material-table-core/core/commit/0d4b020fdc23727f380ce811ab99e6273af833aa))
+
+##### Other Changes
+
+- check for localStorage for SSR ([ce738354](https://github.com/material-table-core/core/commit/ce738354563e3bbf9b5ba63c5adf60f28cf9801c))
+- //github.com/material-table-core/core ([b8023ead](https://github.com/material-table-core/core/commit/b8023ead8f63d8887bee31474a4845d7a2afd2c0))
+
 #### 4.3.43 (2022-04-25)
 
 ##### Other Changes

@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Draggable } from '@react-forked/dnd';
 import { Box, Tooltip } from '@mui/material';
 import * as CommonValues from '../../utils/common-values';
+
 export function MTableHeader({ onColumnResized, columns, ...props }) {
   const defaultMinColumnWidth = 20;
   const defaultMaxColumnWidth = 10000;
