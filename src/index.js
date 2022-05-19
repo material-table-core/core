@@ -9,12 +9,8 @@ MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
 const styles = (theme) => ({
-  paginationRoot: {
-    width: '100%'
-  },
   paginationToolbar: {
-    padding: 0,
-    width: '100%'
+    padding: 0
   },
   paginationCaption: {
     display: 'none'

@@ -903,14 +903,17 @@ export default class MaterialTable extends React.Component {
             <TableRow style={{ display: 'grid' }}>
               <props.components.Pagination
                 classes={{
-                  root: props.classes.paginationRoot,
                   toolbar: props.classes.paginationToolbar,
                   caption: props.classes.paginationCaption,
                   selectRoot: props.classes.paginationSelectRoot
                 }}
                 style={{
-                  float: props.theme.direction === 'rtl' ? '' : 'right',
-                  overflowX: 'auto'
+                  overflowX: 'auto',
+                  display: 'flex',
+                  direction: props.theme.direction,
+                  justifyContent: props.options.paginationAlignment
+                    ? props.options.paginationAlignment
+                    : 'flex-end'
                 }}
                 colSpan={3}
                 count={
