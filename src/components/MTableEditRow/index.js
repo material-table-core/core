@@ -218,128 +218,113 @@ function MTableEditRow(props) {
     }
   };
 
-  function render() {
-    const size = CommonValues.elementSize(props);
+  const size = CommonValues.elementSize(props);
 
-    let columns;
-    if (
-      props.mode === 'add' ||
-      props.mode === 'update' ||
-      props.mode === 'bulk'
-    ) {
-      columns = renderColumns();
-    } else {
-      const colSpan = props.columns.filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      ).length;
-      columns = [
-        <TableCell
-          size={size}
-          padding={options.actionsColumnIndex === 0 ? 'none' : undefined}
-          key="key-edit-cell"
-          colSpan={colSpan}
-        >
-          <Typography variant="h6">{props.localization.deleteText}</Typography>
-        </TableCell>
-      ];
-    }
+  let columns;
+  if (
+    props.mode === 'add' ||
+    props.mode === 'update' ||
+    props.mode === 'bulk'
+  ) {
+    columns = renderColumns();
+  } else {
+    const colSpan = props.columns.filter(
+      (columnDef) => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+    ).length;
+    columns = [
+      <TableCell
+        size={size}
+        padding={options.actionsColumnIndex === 0 ? 'none' : undefined}
+        key="key-edit-cell"
+        colSpan={colSpan}
+      >
+        <Typography variant="h6">{props.localization.deleteText}</Typography>
+      </TableCell>
+    ];
+  }
 
+  if (options.selection) {
+    columns.splice(0, 0, <TableCell padding="none" key="key-selection-cell" />);
+  }
+  if (props.isTreeData) {
+    columns.splice(0, 0, <TableCell padding="none" key="key-tree-data-cell" />);
+  }
+
+  if (options.actionsColumnIndex === -1) {
+    columns.push(renderActions());
+  } else if (options.actionsColumnIndex >= 0) {
+    let endPos = 0;
     if (options.selection) {
-      columns.splice(
-        0,
-        0,
-        <TableCell padding="none" key="key-selection-cell" />
-      );
+      endPos = 1;
     }
     if (props.isTreeData) {
-      columns.splice(
-        0,
-        0,
-        <TableCell padding="none" key="key-tree-data-cell" />
-      );
-    }
-
-    if (options.actionsColumnIndex === -1) {
-      columns.push(renderActions());
-    } else if (options.actionsColumnIndex >= 0) {
-      let endPos = 0;
+      endPos = 1;
       if (options.selection) {
-        endPos = 1;
+        columns.splice(1, 1);
       }
-      if (props.isTreeData) {
-        endPos = 1;
-        if (options.selection) {
-          columns.splice(1, 1);
-        }
-      }
-      columns.splice(options.actionsColumnIndex + endPos, 0, renderActions());
     }
+    columns.splice(options.actionsColumnIndex + endPos, 0, renderActions());
+  }
 
-    // Lastly we add detail panel icon
-    if (
-      props.detailPanel &&
-      options.showDetailPanelIcon !== false &&
-      props.mode !== 'bulk'
-    ) {
-      const alignment = options.detailPanelColumnAlignment;
-      const index = alignment === 'left' ? 0 : columns.length;
-      columns.splice(
-        index,
-        0,
-        <TableCell padding="none" key="key-detail-panel-cell" />
-      );
-    }
-
-    props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        columns.splice(
-          0,
-          0,
-          <TableCell
-            padding="none"
-            key={'key-group-cell' + columnDef.tableData.id}
-          />
-        );
-      });
-
-    const {
-      detailPanel,
-      isTreeData,
-      onRowClick,
-      onRowSelected,
-      onTreeExpandChanged,
-      onToggleDetailPanel,
-      onEditingApproved,
-      onEditingCanceled,
-      getFieldValue,
-      components,
-      icons,
-      columns: columnsProp, // renamed to not conflict with definition above
-      options,
-      actions,
-      errorState,
-      onBulkEditRowChanged,
-      bulkEditChangedRows,
-      scrollWidth,
-      forwardedRef,
-      ...rowProps
-    } = props;
-
-    return (
-      <TableRow
-        onKeyDown={handleKeyDown}
-        {...rowProps}
-        ref={forwardedRef}
-        style={getStyle()}
-      >
-        {columns}
-      </TableRow>
+  // Lastly we add detail panel icon
+  if (
+    props.detailPanel &&
+    options.showDetailPanelIcon !== false &&
+    props.mode !== 'bulk'
+  ) {
+    const alignment = options.detailPanelColumnAlignment;
+    const index = alignment === 'left' ? 0 : columns.length;
+    columns.splice(
+      index,
+      0,
+      <TableCell padding="none" key="key-detail-panel-cell" />
     );
   }
 
-  return render();
+  props.columns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
+      columns.splice(
+        0,
+        0,
+        <TableCell
+          padding="none"
+          key={'key-group-cell' + columnDef.tableData.id}
+        />
+      );
+    });
+
+  const {
+    detailPanel,
+    isTreeData,
+    onRowClick,
+    onRowSelected,
+    onTreeExpandChanged,
+    onToggleDetailPanel,
+    onEditingApproved,
+    onEditingCanceled,
+    getFieldValue,
+    components,
+    icons,
+    columns: columnsProp, // renamed to not conflict with definition above
+    errorState,
+    onBulkEditRowChanged,
+    bulkEditChangedRows,
+    scrollWidth,
+    forwardedRef,
+    ...rowProps
+  } = props;
+
+  return (
+    <TableRow
+      onKeyDown={handleKeyDown}
+      {...rowProps}
+      ref={forwardedRef}
+      style={getStyle()}
+    >
+      {columns}
+    </TableRow>
+  );
 }
 
 MTableEditRow.defaultProps = {

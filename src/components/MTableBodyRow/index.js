@@ -19,6 +19,7 @@ export default function MTableBodyRow(props) {
   const localization = useLocalizationStore().body;
   const options = useOptionStore();
   const icons = useIconStore();
+  const propsWithOptions = { ...props, options };
   const {
     data,
     components,
@@ -127,9 +128,8 @@ export default function MTableBodyRow(props) {
     return mapArr;
   };
 
-  const size = CommonValues.elementSize({ ...props, options });
-  const width =
-    actions.length * CommonValues.baseIconSize({ ...props, options });
+  const size = CommonValues.elementSize(propsWithOptions);
+  const width = actions.length * CommonValues.baseIconSize(propsWithOptions);
   const renderActions = (actions) => {
     return (
       <TableCell
@@ -161,7 +161,10 @@ export default function MTableBodyRow(props) {
     }
 
     const selectionWidth =
-      CommonValues.selectionMaxWidth(props, props.treeDataMaxLevel) || 0;
+      CommonValues.selectionMaxWidth(
+        propsWithOptions,
+        props.treeDataMaxLevel
+      ) || 0;
 
     const styles =
       size === 'medium'

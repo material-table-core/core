@@ -32,7 +32,7 @@ const createStore = () =>
     options: defaultOptions,
     mergeOptions: (nextOptions) => {
       set(() => {
-        const mergedOptions = deepmerge(nextOptions, defaultOptions);
+        const mergedOptions = { ...defaultOptions, ...nextOptions };
         if (!equal(mergedOptions, nextOptions)) {
           return { options: mergedOptions };
         } else {

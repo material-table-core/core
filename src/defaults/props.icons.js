@@ -65,7 +65,9 @@ export default {
     <Clear {...props} ref={ref} data-testid="clear" />
   )),
   Resize: forwardRef((props, ref) => (
-    <Icon {...props} ref={ref} data-testid="drag_handle"></Icon>
+    <Icon {...props} ref={ref} data-testid="drag_handle">
+      |
+    </Icon>
   )),
   Retry: forwardRef((props, ref) => (
     <Replay {...props} ref={ref} data-testid="replay" />

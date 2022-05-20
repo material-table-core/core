@@ -201,13 +201,12 @@ function MTableBody(props) {
   }
   const renderSummaryRow = React.useRef(
     props.renderSummaryRow
-      ? (columnData) => {
+      ? (columnData) =>
           props.renderSummaryRow({
             ...columnData,
             data: props.data,
             currentData: props.currentData
-          });
-        }
+          })
       : undefined
   ).current;
   return (

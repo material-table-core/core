@@ -205,6 +205,12 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
       .map((columnDef, index, allCols) => {
         let content = columnDef.title;
 
+        const cellAlignment =
+          columnDef.align !== undefined
+            ? columnDef.align
+            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
+            ? 'right'
+            : 'left';
         if (options.draggable && columnDef.draggable !== false) {
           content = (
             <Draggable
@@ -221,7 +227,13 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                   style={
                     snapshot.isDragging
                       ? provided.draggableProps.style
-                      : { position: 'relative', minWidth: 0, display: 'flex' }
+                      : {
+                          position: 'relative',
+                          minWidth: 0,
+                          display: 'flex',
+                          justifyContent:
+                            cellAlignment === 'right' ? 'flex-end' : undefined
+                        }
                   }
                 >
                   {columnDef.sorting !== false && options.sorting ? (
@@ -279,7 +291,13 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
             ? icons.Resize
             : (props) => <div {...props} data-test-id="drag_handle" />;
           content = (
-            <div className={props.classes.headerWrap}>
+            <div
+              className={
+                cellAlignment === 'right'
+                  ? props.classes.headerWrapRight
+                  : props.classes.headerWrap
+              }
+            >
               <div className={props.classes.headerContent}>{content}</div>
               <div></div>
               <Resize
@@ -298,12 +316,6 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
             </div>
           );
         }
-        const cellAlignment =
-          columnDef.align !== undefined
-            ? columnDef.align
-            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
-            ? 'right'
-            : 'left';
         return (
           <TableCell
             key={columnDef.tableData.id}
@@ -360,67 +372,63 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     );
   }
 
-  function render() {
-    const headers = RenderHeader();
-    if (options.selection) {
-      headers.splice(0, 0, renderSelectionHeader());
-    }
-    if (props.showActionsColumn) {
-      if (options.actionsColumnIndex >= 0) {
-        let endPos = 0;
-        if (options.selection) {
-          endPos = 1;
-        }
-        headers.splice(
-          options.actionsColumnIndex + endPos,
-          0,
-          renderActionsHeader()
-        );
-      } else if (options.actionsColumnIndex === -1) {
-        headers.push(renderActionsHeader());
+  const headers = RenderHeader();
+  if (options.selection) {
+    headers.splice(0, 0, renderSelectionHeader());
+  }
+  if (props.showActionsColumn) {
+    if (options.actionsColumnIndex >= 0) {
+      let endPos = 0;
+      if (options.selection) {
+        endPos = 1;
       }
+      headers.splice(
+        options.actionsColumnIndex + endPos,
+        0,
+        renderActionsHeader()
+      );
+    } else if (options.actionsColumnIndex === -1) {
+      headers.push(renderActionsHeader());
     }
-    if (props.hasDetailPanel && options.showDetailPanelIcon) {
-      if (options.detailPanelColumnAlignment === 'right') {
-        headers.push(renderDetailPanelColumnCell());
-      } else {
-        headers.splice(0, 0, renderDetailPanelColumnCell());
-      }
+  }
+  if (props.hasDetailPanel && options.showDetailPanelIcon) {
+    if (options.detailPanelColumnAlignment === 'right') {
+      headers.push(renderDetailPanelColumnCell());
+    } else {
+      headers.splice(0, 0, renderDetailPanelColumnCell());
     }
-    if (props.isTreeData > 0) {
+  }
+  if (props.isTreeData > 0) {
+    headers.splice(
+      0,
+      0,
+      <TableCell
+        padding="none"
+        key={'key-tree-data-header'}
+        className={props.classes.header}
+        style={options.headerStyle}
+      />
+    );
+  }
+  displayingColumns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
       headers.splice(
         0,
         0,
         <TableCell
-          padding="none"
-          key={'key-tree-data-header'}
+          padding="checkbox"
+          key={'key-group-header' + columnDef.tableData.id}
           className={props.classes.header}
           style={options.headerStyle}
         />
       );
-    }
-    displayingColumns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        headers.splice(
-          0,
-          0,
-          <TableCell
-            padding="checkbox"
-            key={'key-group-header' + columnDef.tableData.id}
-            className={props.classes.header}
-            style={options.headerStyle}
-          />
-        );
-      });
-    return (
-      <TableHead ref={props.forwardedRef}>
-        <TableRow className={props.classes.headerRow}>{headers}</TableRow>
-      </TableHead>
-    );
-  }
-
-  return render();
+    });
+  return (
+    <TableHead ref={props.forwardedRef}>
+      <TableRow className={props.classes.headerRow}>{headers}</TableRow>
+    </TableHead>
+  );
 }
 
 const computeNewOrderDirection = (
@@ -537,13 +545,17 @@ export const styles = (theme) => ({
     position: 'relative',
     left: 4
   },
+  headerWrapRight: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    left: 4,
+    justifyContent: 'flex-end'
+  },
   headerContent: {
     minWidth: 0,
     display: 'flex',
-    flex: '1 0 100%',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%',
     position: 'relative'
   },
   headerResize: {
