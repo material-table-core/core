@@ -309,9 +309,10 @@ export default class DataManager {
   changeAllSelected(checked, selectionProps) {
     let selectedCount = 0;
     const isChecked = (row) => {
-      const selectionResult = selectionProps
-        ? selectionProps(row)
-        : { disabled: false };
+      const selectionResult =
+        selectionProps instanceof Function
+          ? selectionProps(row)
+          : { disabled: false };
       return row.tableData.disabled || selectionResult.disabled
         ? false
         : checked;
