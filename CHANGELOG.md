@@ -1,3 +1,9 @@
+#### 5.0.1 (2022-06-06)
+
+##### Bug Fixes
+
+- typo in ts file ([761f71d5](https://github.com/material-table-core/core/commit/761f71d537bfa8dbfe25d9e0b9b678897095062c))
+
 #### 5.0.1.0 (2022-06-06)
 
 ##### Documentation Changes
