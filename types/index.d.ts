@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
+import { CheckboxProps } from '@material-ui/core/Checkbox';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { OnHandlers } from './helper';
 
@@ -33,10 +34,10 @@ export interface MaterialTableProps<RowData extends object> {
     isDeletable?: (rowData: RowData) => boolean;
     onBulkUpdate?: (
       changes: Record<number, { oldData: RowData; newData: RowData }>
-    ) => Promise<any>;
-    onRowAdd?: (newData: RowData) => Promise<any>;
-    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
-    onRowDelete?: (oldData: RowData) => Promise<any>;
+    ) => Promise<unknown>;
+    onRowAdd?: (newData: RowData) => Promise<unknown>;
+    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<unknown>;
+    onRowDelete?: (oldData: RowData) => Promise<unknown>;
     editTooltip?: (rowData: RowData) => string;
     deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
@@ -47,7 +48,7 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons<RowData>;
   initialFormData?: object;
   isLoading?: boolean;
-  title?: string | React.ReactElement<any>;
+  title?: React.ReactNode;
   options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
@@ -139,7 +140,7 @@ export interface DetailPanel<RowData extends object> {
 
 export interface Action<RowData extends object> {
   disabled?: boolean;
-  icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
+  icon: string | (() => React.ReactNode) | SvgIconComponent;
   isFreeAction?: boolean;
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
@@ -201,13 +202,11 @@ export interface Column<RowData extends object> {
   defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
   disableClick?: boolean;
-  editComponent?: (
-    props: EditComponentProps<RowData>
-  ) => React.ReactElement<any>;
+  editComponent?: (props: EditComponentProps<RowData>) => React.ReactNode;
   emptyValue?:
     | string
-    | React.ReactElement<any>
-    | ((data: any) => React.ReactElement<any> | string);
+    | React.ReactNode
+    | ((data: any) => React.ReactNode | string);
   export?: boolean;
   field?: keyof RowData | string | Array<keyof RowData | string>;
   filtering?: boolean;
@@ -215,7 +214,7 @@ export interface Column<RowData extends object> {
     columnDef: Column<RowData>;
     // The columnId can be extracted from columnDef.tableData.id
     onFilterChanged: (columnId: string, value: any) => void;
-  }) => React.ReactElement<any>;
+  }) => RReact.ReactNode;
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
@@ -238,12 +237,12 @@ export interface Column<RowData extends object> {
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
-  render?: (data: RowData, type: 'row' | 'group') => any;
+  render?: (data: RowData, type: 'row' | 'group') => React.ReactNode;
   // A function to be called for each column during the csv export to manipulate the exported data
   exportTransformer?: (row: RowData) => unknown;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string | React.ReactElement<any>;
+  title?: React.ReactNode;
   tooltip?: string;
   type?:
     | 'string'
@@ -275,22 +274,22 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
-export const MTableAction: (props: any) => React.ReactElement<any>;
-export const MTableActions: (props: any) => React.ReactElement<any>;
-export const MTableBody: (props: any) => React.ReactElement<any>;
-export const MTableBodyRow: (props: any) => React.ReactElement<any>;
-export const MTableCell: (props: any) => React.ReactElement<any>;
-export const MTableEditField: (props: any) => React.ReactElement<any>;
-export const MTableEditRow: (props: any) => React.ReactElement<any>;
-export const MTableFilterRow: (props: any) => React.ReactElement<any>;
-export const MTableGroupbar: (props: any) => React.ReactElement<any>;
-export const MTableGroupRow: (props: any) => React.ReactElement<any>;
-export const MTableHeader: (props: any) => React.ReactElement<any>;
-export const MTablePagination: (props: any) => React.ReactElement<any>;
-export const MTableToolbar: (props: any) => React.ReactElement<any>;
-export const MTable: (props: any) => React.ReactElement<any>;
+export const MTableAction: (props: any) => React.ReactNode;
+export const MTableActions: (props: any) => React.ReactNode;
+export const MTableBody: (props: any) => React.ReactNode;
+export const MTableBodyRow: (props: any) => React.ReactNode;
+export const MTableCell: (props: any) => React.ReactNode;
+export const MTableEditField: (props: any) => React.ReactNode;
+export const MTableEditRow: (props: any) => React.ReactNode;
+export const MTableFilterRow: (props: any) => React.ReactNode;
+export const MTableGroupbar: (props: any) => React.ReactNode;
+export const MTableGroupRow: (props: any) => React.ReactNode;
+export const MTableHeader: (props: any) => React.ReactNode;
+export const MTablePagination: (props: any) => React.ReactNode;
+export const MTableToolbar: (props: any) => React.ReactNode;
+export const MTable: (props: any) => React.ReactNode;
 
-export interface Icons<RowData = any> {
+export interface Icons<RowData extends object> {
   Add?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Check?: React.ForwardRefExoticComponent<any> &
@@ -339,7 +338,7 @@ export interface Options<RowData extends object> {
   addRowPosition?: 'first' | 'last';
   columnsButton?: boolean;
   columnResizable?: boolean;
-  defaultExpanded?: boolean | ((rowData: any) => boolean);
+  defaultExpanded?: boolean | ((rowData: RowData) => boolean);
   debounceInterval?: number;
   detailPanelType?: 'single' | 'multiple';
   doubleHorizontalScroll?: boolean;
@@ -364,7 +363,7 @@ export interface Options<RowData extends object> {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
-  headerSelectionProps?: object;
+  headerSelectionProps?: CheckboxProps;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
@@ -375,7 +374,7 @@ export interface Options<RowData extends object> {
   padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
-  groupTitle?: (groupData: any) => any;
+  groupTitle?: (groupData: object) => React.ReactNode;
   overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
   pageSize?: number;
   pageSizeOptions?: number[];
@@ -384,7 +383,7 @@ export interface Options<RowData extends object> {
   persistentGroupingsId?: string;
   rowStyle?:
     | React.CSSProperties
-    | ((data: any, index: number, level: number) => React.CSSProperties);
+    | ((data: RowData, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
@@ -400,7 +399,7 @@ export interface Options<RowData extends object> {
   searchFieldVariant?: 'standard' | 'filled' | 'outlined';
   searchAutoFocus?: boolean;
   selection?: boolean;
-  selectionProps?: any | ((data: any) => any);
+  selectionProps?: CheckboxProps | ((data: RowData) => CheckboxProps);
   sorting?: boolean;
   keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
