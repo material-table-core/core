@@ -1,3 +1,9 @@
+#### 5.0.1.0 (2022-06-06)
+
+##### Documentation Changes
+
+- impove ts types ([4e01730a](https://github.com/material-table-core/core/commit/4e01730aca5bc9df543be8c7fe001f6dc6cbb8a9))
+
 #### 4.3.43 (2022-04-25)
 
 ##### Other Changes
