@@ -376,7 +376,14 @@ export interface Options<RowData extends object> {
   paging?: boolean;
   grouping?: boolean;
   groupTitle?: (groupData: any) => any;
-  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
+  overflowY?:
+    | 'visible'
+    | 'hidden'
+    | 'scroll'
+    | 'auto'
+    | 'initial'
+    | 'inherit'
+    | 'overlay';
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationAlignment?: React.CSSProperties['justifyContent'];
