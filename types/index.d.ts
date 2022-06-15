@@ -60,7 +60,7 @@ export interface MaterialTableProps<RowData extends object> {
     allColumns: ColumnSize[]
   ) => void;
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
-  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: number) => void;
   onRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
