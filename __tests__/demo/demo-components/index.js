@@ -963,6 +963,13 @@ export function ResizableTableWidthVariable() {
 }
 
 export function DefaultOrderIssue(props) {
+  const handleGroupChange = (columns) => {
+    console.log(columns);
+  };
+  const handleGroupRemoved = (column, index) => {
+    console.log(column);
+    console.log(index, typeof index);
+  };
   return (
     <MaterialTable
       title="Default Grouped Field Preview"
@@ -995,6 +1002,8 @@ export function DefaultOrderIssue(props) {
       options={{
         grouping: true
       }}
+      onGroupChange={handleGroupChange}
+      onGroupRemoved={handleGroupRemoved}
     />
   );
 }

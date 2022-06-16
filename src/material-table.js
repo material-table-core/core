@@ -1195,6 +1195,7 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              onGroupChange={this.props.onGroupChange}
               persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}
