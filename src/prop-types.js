@@ -394,6 +394,7 @@ export const propTypes = {
   onColumnDragged: PropTypes.func,
   onColumnResized: PropTypes.func,
   onGroupRemoved: PropTypes.func,
+  onGroupChange: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
   onPageChange: PropTypes.func,
