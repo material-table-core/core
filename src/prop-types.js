@@ -345,7 +345,8 @@ export const propTypes = {
       'scroll',
       'auto',
       'initial',
-      'inherit'
+      'inherit',
+      'overlay'
     ]),
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
