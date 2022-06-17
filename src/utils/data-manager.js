@@ -1038,8 +1038,7 @@ export default class DataManager {
         addRow(parent);
         rowData.tableData.path = [
           ...parent.tableData.path,
-          parent.tableData.childRows[parent.tableData.childRows.length - 1]
-            .tableData.uuid
+          rowData.tableData.uuid
         ];
         this.treeDataMaxLevel = Math.max(
           this.treeDataMaxLevel,
