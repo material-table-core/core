@@ -14,7 +14,7 @@ import * as CommonValues from '@utils/common-values';
 import { useDoubleClick } from '@utils/hooks/useDoubleClick';
 import { MTableCustomIcon } from '@components';
 
-export default function MTableBodyRow(props) {
+function MTableBodyRow({ forwardedRef, ...props }) {
   const {
     icons,
     data,
@@ -441,6 +441,7 @@ export default function MTableBodyRow(props) {
   return (
     <>
       <TableRow
+        ref={forwardedRef}
         selected={hasAnyEditingRow}
         {...rowProps}
         onClick={(event) => {
@@ -546,3 +547,7 @@ MTableBodyRow.propTypes = {
   onEditingCanceled: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };
+
+export default React.forwardRef(function MTableBodyRowRef(props, ref) {
+  return <MTableBodyRow {...props} forwardedRef={ref} />;
+});
