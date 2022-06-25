@@ -1,4 +1,3 @@
-import './utils/polyfill';
 import React from 'react';
 import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
