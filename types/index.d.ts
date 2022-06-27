@@ -495,4 +495,10 @@ export type ColumnSize = {
 
 export default class MaterialTable<
   RowData extends object
-> extends React.Component<MaterialTableProps<RowData>> {}
+> extends React.Component<MaterialTableProps<RowData>> {
+  onQueryChange: (
+    query: Partial<Query<RowData>>,
+    callback?: () => void
+  ) => void;
+  clearCriteria: () => void;
+}
