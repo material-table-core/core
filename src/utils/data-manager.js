@@ -775,7 +775,7 @@ export default class DataManager {
       lastEditingRow: this.lastEditingRow,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
-      originalData: this.data,
+      originalData: [...this.data],
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,

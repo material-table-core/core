@@ -24,8 +24,8 @@ export function MTableToolbar(props) {
   const options = useOptionStore();
 
   const selectedRows = React.useMemo(
-    () => props.selectedRows.filter((a) => a.tableData.checked),
-    [props.selectedRows]
+    () => props.originalData.filter((a) => a.tableData.checked),
+    [props.originalData]
   );
 
   const onSearchChange = (searchText) => {
@@ -127,12 +127,12 @@ export function MTableToolbar(props) {
     }
   }
 
-  function renderDefaultActions() {
+  function renderDefaultActions(isSelectionActive) {
     const { classes } = props;
-
+    const diplayedActions = isSelectionActive ? 'toolbarOnSelect' : 'toolbar';
     return (
       <div style={{ display: 'flex' }}>
-        {options.columnsButton && (
+        {options.columnsButton && !isSelectionActive && (
           <span>
             <Tooltip title={localization.showColumnsTitle}>
               <IconButton
@@ -243,26 +243,13 @@ export function MTableToolbar(props) {
           <props.components.Actions
             actions={
               props.actions &&
-              props.actions.filter((a) => a.position === 'toolbar')
+              props.actions.filter((a) => a.position === diplayedActions)
             }
+            data={isSelectionActive ? selectedRows : undefined}
             components={props.components}
           />
         </span>
       </div>
-    );
-  }
-
-  function renderSelectedActions() {
-    return (
-      <React.Fragment>
-        <props.components.Actions
-          actions={props.actions.filter(
-            (a) => a.position === 'toolbarOnSelect'
-          )}
-          data={selectedRows}
-          components={props.components}
-        />
-      </React.Fragment>
     );
   }
 
@@ -271,11 +258,7 @@ export function MTableToolbar(props) {
 
     return (
       <div className={classes.actions}>
-        <div>
-          {selectedRows.length > 0
-            ? renderSelectedActions()
-            : renderDefaultActions()}
-        </div>
+        <div>{renderDefaultActions(selectedRows.length > 0)}</div>
       </div>
     );
   }
@@ -311,6 +294,7 @@ export function MTableToolbar(props) {
       : options.showTitle
       ? props.title
       : null;
+
   return (
     <Toolbar
       ref={props.forwardedRef}
@@ -334,7 +318,7 @@ MTableToolbar.defaultProps = {
   columns: [],
   columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)
   searchText: '',
-  selectedRows: [],
+  originalData: [],
   title: 'No Title!'
 };
 
@@ -347,7 +331,7 @@ MTableToolbar.propTypes = {
   dataManager: PropTypes.object.isRequired,
   searchText: PropTypes.string,
   onSearchChanged: PropTypes.func.isRequired,
-  selectedRows: PropTypes.array,
+  originalData: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   data: PropTypes.func,
   classes: PropTypes.object

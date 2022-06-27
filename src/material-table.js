@@ -1071,6 +1071,7 @@ export default class MaterialTable extends React.Component {
   };
   getRenderData = () =>
     this.props.options.exportAll ? this.state.data : this.state.renderData;
+
   render() {
     const props = this.getProps();
     return (
@@ -1089,7 +1090,7 @@ export default class MaterialTable extends React.Component {
             <this.props.components.Toolbar
               actions={this.state.actions}
               components={this.props.components}
-              selectedRows={this.state.originalData}
+              originalData={this.state.originalData}
               columns={this.state.columns}
               getFieldValue={this.dataManager.getFieldValue}
               data={this.getRenderData}
