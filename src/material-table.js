@@ -945,12 +945,7 @@ export default class MaterialTable extends React.Component {
                     />
                   )
                 }
-                labelDisplayedRows={(row) =>
-                  localization.labelDisplayedRows
-                    .replace('{from}', row.from)
-                    .replace('{to}', row.to)
-                    .replace('{count}', row.count)
-                }
+                labelDisplayedRows={() => ''}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
             </TableRow>
