@@ -1258,5 +1258,7 @@ export default class DataManager {
     for (const column of this.columns) {
       this.changeFilterValue(column.tableData.id, '');
     }
+    this.changeSearchText('');
+    this.changePaging(0);
   };
 }
