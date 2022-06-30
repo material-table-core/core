@@ -221,10 +221,12 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions =
-            functionlessColumns(fixedPropsColumns);
-          const prevColumnsWithoutFunctions =
-            functionlessColumns(fixedPrevColumns);
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -1114,8 +1116,9 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef =
-        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
