@@ -74,9 +74,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /james brown 3/i
       });
-      screen.getByRole('row', {
-        name: /5 rows 1-5 of 99 First Page Previous Page Next Page Last Page/i
-      });
+      screen.getByText(/1-5 of 99/i);
     });
     it('navigates between the pages', () => {
       const data = makeData();
@@ -94,9 +92,8 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /james brown 3/i
       });
-      screen.getByRole('row', {
-        name: /5 rows 1-5 of 99 First Page Previous Page Next Page Last Page/i
-      });
+      screen.getByText(/1-5 of 99/i);
+
       fireEvent.click(screen.getByTestId(/chevron_right/i));
       screen.getByRole('row', {
         name: /lucas miller 5/i
@@ -107,9 +104,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /michael wilson 9/i
       });
-      screen.getByRole('row', {
-        name: /5 rows 6-10 of 99 First Page Previous Page Next Page Last Page/i
-      });
+      screen.getByText(/6-10 of 99/i);
       fireEvent.click(screen.getByTestId(/last_page/i));
       screen.getByRole('row', {
         name: /Daniel Martinez 95/i
@@ -120,8 +115,19 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /William Thomas 98/i
       });
-      screen.getByRole('row', {
-        name: /5 rows 96-99 of 99 First Page Previous Page Next Page Last Page/i
+      screen.getByText(/96-99 of 99/i);
+      screen.getByText(/5 rows/i);
+      screen.getByRole('button', {
+        name: /next page/i
+      });
+      screen.getByRole('button', {
+        name: /last page/i
+      });
+      screen.getByRole('button', {
+        name: /previous page/i
+      });
+      screen.getByRole('button', {
+        name: /first page/i
       });
       expect(screen.getAllByRole('row')).toHaveLength(8);
     });
@@ -173,8 +179,20 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /michael johnson 69/i
       });
-      screen.getByRole('row', {
-        name: /5 rows 1-5 of 6 First Page Previous Page Next Page Last Page/i
+
+      screen.getByText(/1–5 of 6/i);
+      screen.getByText(/5 rows/i);
+      screen.getByRole('button', {
+        name: /next page/i
+      });
+      screen.getByRole('button', {
+        name: /last page/i
+      });
+      screen.getByRole('button', {
+        name: /previous page/i
+      });
+      screen.getByRole('button', {
+        name: /first page/i
       });
       fireEvent.click(
         screen.getByRole('button', {
