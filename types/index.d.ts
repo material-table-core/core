@@ -187,6 +187,7 @@ export interface Column<RowData extends object> {
     rowData: RowData,
     columnDef: Column<RowData>
   ) => boolean;
+  draggable?: boolean;
   customSort?: (
     data1: RowData,
     data2: RowData,
