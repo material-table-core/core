@@ -1,3 +1,9 @@
+#### 5.0.3 (2022-07-01)
+
+##### Bug Fixes
+
+- display export button for selected state ([cf6c06b3](https://github.com/material-table-core/core/commit/cf6c06b31f7b586399031c988ae8d22443115859))
+
 #### 5.0.2 (2022-06-06)
 
 #### 5.0.1 (2022-06-06)
