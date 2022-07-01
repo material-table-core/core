@@ -36,7 +36,7 @@ const createStore = () =>
         if (!equal(mergedOptions, nextOptions)) {
           return { options: mergedOptions };
         } else {
-          return { defaultOptions };
+          return { options: defaultOptions };
         }
       });
     },
@@ -44,17 +44,21 @@ const createStore = () =>
     icons: defaultIcons,
     mergeIcons: (nextIcons) => {
       set({
-        ...defaultIcons,
-        ...nextIcons
+        icons: {
+          ...defaultIcons,
+          ...nextIcons
+        }
       });
     },
     // Components
     components: defaultComponents,
     mergeComponents: (nextComponents) => {
-      set({
-        ...defaultComponents,
-        ...nextComponents
-      });
+      set(({ components }) => ({
+        components: {
+          ...components,
+          ...nextComponents
+        }
+      }));
     }
   }));
 
@@ -100,11 +104,12 @@ function useMergeProps(props) {
     }
   }, [props.icons]);
   React.useEffect(() => {
+    console.log('effect', props.components);
     if (props.components) {
       mergeComponents(props.components);
     }
   }, [props.components]);
-
+  console.log(components);
   return {
     localization,
     options,
