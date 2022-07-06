@@ -255,6 +255,7 @@ export interface Column<RowData extends object> {
     | 'time'
     | 'currency';
   width?: string | number;
+  minWidth?: number;
 }
 
 export interface Components {
