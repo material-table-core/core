@@ -1245,4 +1245,14 @@ export default class DataManager {
 
     this.paged = true;
   }
+
+  clearCriteria = () => {
+    this.changeOrder(-1, '');
+    this.changeSearchText('');
+    for (const column of this.columns) {
+      this.changeFilterValue(column.tableData.id, '');
+    }
+    this.changeSearchText('');
+    this.changePaging(0);
+  };
 }

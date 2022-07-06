@@ -416,6 +416,11 @@ export default class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
+  clearCriteria = () => {
+    this.dataManager.clearCriteria();
+    this.setState(this.dataManager.getRenderState());
+  };
+
   isRemoteData = (props) => !Array.isArray((props || this.props).data);
 
   isOutsidePageNumbers = (props) =>
