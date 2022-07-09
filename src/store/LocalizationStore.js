@@ -108,7 +108,7 @@ function useMergeProps(props) {
       mergeComponents(props.components);
     }
   }, [props.components]);
-  console.log(localization, props.localization);
+
   return {
     localization,
     options,
