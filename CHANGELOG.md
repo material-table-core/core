@@ -1,3 +1,11 @@
+#### 5.0.4 (2022-07-09)
+
+##### Bug Fixes
+
+- pagesize not ignored ([eda9e430](https://github.com/material-table-core/core/commit/eda9e4305910dd480896c80634016c8b4f97213f))
+- correct merging in store ([13f1b7c7](https://github.com/material-table-core/core/commit/13f1b7c75f9a0f5cf466246e440ca661d26892d6))
+- export of component types ([b086c4e5](https://github.com/material-table-core/core/commit/b086c4e5be6e723965235e5bca028b26523fa259))
+
 #### 5.0.3 (2022-07-01)
 
 ##### Bug Fixes
