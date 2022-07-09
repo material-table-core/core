@@ -16,7 +16,7 @@ const createStore = () =>
     localization: defaultLocalization,
     mergeLocalization: (nextLocalization) => {
       set(({ localization }) => {
-        const mergedLocalization = deepmerge(nextLocalization, localization);
+        const mergedLocalization = deepmerge(localization, nextLocalization);
         mergedLocalization.body.editRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
         mergedLocalization.body.filterRow.dateTimePickerLocalization =
@@ -104,12 +104,11 @@ function useMergeProps(props) {
     }
   }, [props.icons]);
   React.useEffect(() => {
-    console.log('effect', props.components);
     if (props.components) {
       mergeComponents(props.components);
     }
   }, [props.components]);
-  console.log(components);
+  console.log(localization, props.localization);
   return {
     localization,
     options,
