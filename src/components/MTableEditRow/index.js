@@ -148,7 +148,6 @@ function MTableEditRow(props) {
       return;
     }
     const newData = state.data;
-    delete newData.tableData;
     props.onEditingApproved(props.mode, state.data, props.data);
   };
 

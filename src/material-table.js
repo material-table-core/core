@@ -603,7 +603,12 @@ export default class MaterialTable extends React.Component {
     ) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
-          .onRowDelete(oldData)
+          .onRowDelete(
+            Object.entries(oldData).reduce((old, [key, val]) => {
+              if (key !== 'tableData') old[key] = val;
+              return old;
+            }, {})
+          )
           .then((result) => {
             this.dataManager.changeRowEditing(oldData);
             this.setState(
