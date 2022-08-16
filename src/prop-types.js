@@ -371,7 +371,16 @@ export const propTypes = {
     showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
+    // TODO Remove Sorting
     sorting: PropTypes.bool,
+    initialOrderByCollection: PropTypes.arrayOf(
+      PropTypes.shape({
+        orderBy: PropTypes.string,
+        oderDirection: PropTypes.string,
+        orderIndex: PropTypes.string
+      })
+    ),
+    maxColumnSort: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,

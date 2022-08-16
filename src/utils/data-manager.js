@@ -12,6 +12,8 @@ export default class DataManager {
   detailPanelType = 'multiple';
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
+  maxColumnSort = 1;
+  orderByCollection = [];
   orderBy = -1;
   orderDirection = 'desc';
   pageSize = 5;
@@ -181,6 +183,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setMaxColumnSort(maxColumnSort) {
+    this.maxColumnSort = maxColumnSort;
   }
 
   changeApplySearch(applySearch) {
@@ -369,11 +375,32 @@ export default class DataManager {
     setCheck([currentGroup]);
   };
 
+  // TODO: remove this function
   changeOrder(orderBy, orderDirection) {
     this.orderBy = orderBy;
     this.orderDirection = orderDirection;
     this.currentPage = 0;
 
+    this.sorted = false;
+  }
+
+  changeColumnOrder(orderBy, orderDirection, columnIndex) {
+    const prevColumns = this.orderByCollection.filter(
+      ({ orderBy }) => orderBy !== columnIndex
+    );
+
+    if (prevColumns.length == this.maxColumnSort) {
+      prevColumns.shift();
+    }
+
+    console.log('prevColumns', prevColumns, orderBy, columnIndex);
+    if (orderBy > -1) {
+      prevColumns.push({ orderBy, orderDirection, columnIndex });
+    }
+    this.orderByCollection = [...prevColumns];
+
+    console.log('changeColumnOrder', this.orderByCollection);
+    this.currentPage = 0;
     this.sorted = false;
   }
 
@@ -707,7 +734,72 @@ export default class DataManager {
     }
   }
 
+  sortBy(arr, columnsDefs, orderCollection) {
+    const sort = this.sort;
+    const getFieldValue = this.getFieldValue;
+    return arr.sort(function sortData(
+      a,
+      b,
+      columns = columnsDefs,
+      collection = orderCollection
+    ) {
+      const { orderBy, orderDirection } = collection[0];
+
+      const columnDef = columns.get(orderBy);
+
+      let compareValue = 0;
+      if (columnDef.customSort) {
+        if (orderDirection === 'desc') {
+          compareValue = columnDef.customSort(b, a, 'row', orderDirection);
+        } else {
+          compareValue = columnDef.customSort(a, b, 'row', orderDirection);
+        }
+      } else {
+        // Calculate compare value and modify based on order
+        compareValue = sort(
+          getFieldValue(a, columnDef),
+          getFieldValue(b, columnDef),
+          columnDef.type
+        );
+
+        compareValue =
+          orderDirection.toLowerCase() === 'desc'
+            ? compareValue * -1
+            : compareValue;
+      }
+
+      // See if the next key needs to be considered
+      const checkNextKey = compareValue === 0 && collection.length !== 1;
+
+      return checkNextKey
+        ? sortData(a, b, columns, collection.slice(1))
+        : compareValue;
+    });
+  }
+
   sortList(list) {
+    let sortedList = [...list];
+    // TODO: order the collection based on the order
+    console.log('sortList ===>', this.orderByCollection);
+
+    const collectionIds = this.orderByCollection.map(
+      (collection) => collection.orderBy
+    );
+    const columnsDefs = new Map();
+    this.columns.forEach((column) => {
+      const columnId = column.tableData.id;
+      if (collectionIds.includes(columnId)) {
+        columnsDefs.set(columnId, column);
+      }
+    });
+
+    return (sortedList = this.sortBy(
+      sortedList,
+      columnsDefs,
+      this.orderByCollection
+    ));
+    console.log('sortedList ===>', sortedList);
+
     let columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
     if (!columnDef) {
       columnDef = this.columns[0];
@@ -773,6 +865,7 @@ export default class DataManager {
       currentPage: this.currentPage,
       data: this.sortedData,
       lastEditingRow: this.lastEditingRow,
+      orderByCollection: this.orderByCollection,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
       originalData: [...this.data],
@@ -1125,6 +1218,7 @@ export default class DataManager {
 
   sortData() {
     this.paged = false;
+    console.log('getRenderState', this.sorted);
 
     if (this.isDataType('group')) {
       this.sortedData = [...this.groupedData];
@@ -1227,7 +1321,8 @@ export default class DataManager {
       }
     } else if (this.isDataType('normal')) {
       this.sortedData = [...this.searchedData];
-      if (this.orderBy != -1 && this.applySort) {
+      // if (this.orderBy != -1 && this.applySort) {
+      if (this.orderByCollection.length && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
       }
     }

@@ -1253,3 +1253,100 @@ export function FixedColumnWithEdit() {
     />
   );
 }
+
+export function TableMultiSorting(props) {
+  const [data, setData] = useState(rawData);
+  // const [selection, setSelection] = useState([]);
+
+  const global_cols = [
+    {
+      title: 'number',
+      field: 'number',
+      minWidth: 140,
+      maxWidth: 400 /* , sorting: false */
+    },
+    {
+      title: 'title',
+      field: 'title',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true
+    },
+    {
+      title: 'name',
+      field: 'name',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true
+    },
+    {
+      title: 'lastName',
+      field: 'lastName',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true
+    }
+  ];
+
+  const global_data1 = [
+    {
+      number: '1',
+      title: 'Developer',
+      name: 'Mehmet',
+      lastName: 'Baran',
+      id: 1
+    },
+    {
+      number: '2',
+      title: 'Developer',
+      name: 'Pratik',
+      lastName: 'N',
+      id: 2
+    },
+    {
+      number: '2',
+      title: 'Human Resources',
+      name: 'Juan',
+      lastName: 'Lopez',
+      id: 3
+    },
+    {
+      number: '2',
+      title: 'Consultant',
+      name: 'Edgar',
+      lastName: 'Martinez',
+      id: 4
+    }
+  ];
+
+  return (
+    <MaterialTable
+      data={global_data1}
+      columns={global_cols}
+      title="Starter Template"
+      /* detailPanel={({ rowData }) => (
+        <SubTable rowData={rowData} setSelection={setSelection} />
+      )} */
+      options={{
+        // selection: true
+        // sorting: true,
+        keepSortDirectionOnColumnSwitch: false,
+        maxColumnSort: 3
+      }}
+    />
+  );
+  /* return (
+    <MaterialTable
+      data={data}
+      columns={columns}
+      title="Starter Template"
+      // detailPanel={({ rowData }) => (
+        // <SubTable rowData={rowData} setSelection={setSelection} />
+      // )}
+      options={{
+        // selection: true
+        sorting: false
+      }}
+    />
+  ); */
+}

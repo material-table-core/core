@@ -43,6 +43,8 @@ export default {
   selection: false,
   selectionProps: {},
   sorting: true,
+  maxColumnSort: 1,
+  initialOrderByCollection: [],
   keepSortDirectionOnColumnSwitch: true,
   toolbar: true,
   defaultExpanded: false,

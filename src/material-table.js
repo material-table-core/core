@@ -16,9 +16,21 @@ import {
   MTableScrollbar
 } from '@components';
 
+/* TODO:
+  Initi data based on maxColumnSort
+  do a initSort if predefaultsort
+
+  On click add columns to be sorted
+  add an sort order id
+  on click sort the elements
+
+  On arrow button show only the arrow on buttons that are on the column sort array
+*/
+
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
   checkedForFunctions = false;
+
   constructor(props) {
     super(props);
 
@@ -111,6 +123,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setTableWidth(props.options.tableWidth ?? 'full');
     this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.setMaxColumnSort(props.options.maxColumnSort);
     this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
@@ -162,6 +175,12 @@ export default class MaterialTable extends React.Component {
 
     shouldReorder &&
       this.dataManager.changeOrder(
+        defaultSortColumnIndex,
+        defaultSortDirection
+      );
+    shouldReorder &&
+      props.multipleSort &&
+      this.dataManager.changeColumnOrder(
         defaultSortColumnIndex,
         defaultSortDirection
       );
@@ -441,9 +460,16 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  onChangeOrder = (orderBy, orderDirection) => {
+  onChangeOrder = (orderBy, orderDirection, columnIndex) => {
     const newOrderBy = orderDirection === '' ? -1 : orderBy;
     this.dataManager.changeOrder(newOrderBy, orderDirection);
+    /* this.props.multipleSort &&  */ this.dataManager.changeColumnOrder(
+      newOrderBy,
+      orderDirection,
+      columnIndex
+    );
+
+    // console.log('onChangeOrder ===>', orderBy, orderDirection)
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
@@ -457,11 +483,26 @@ export default class MaterialTable extends React.Component {
           this.props.onOrderChange(newOrderBy, orderDirection);
       });
     } else {
+      // console.log('orderByCollection ===>', this.dataManager.getRenderState().orderByCollection)
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(newOrderBy, orderDirection);
       });
     }
+  };
+
+  onChangeColumnOrder = (orderBy, orderDirection) => {
+    const newOrderBy = orderDirection === '' ? -1 : orderBy;
+    /* this.props.multipleSort &&  */ this.dataManager.changeColumnOrder(
+      newOrderBy,
+      orderDirection
+    );
+
+    // console.log('orderByCollection ===>', this.dataManager.getRenderState().orderByCollection)
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onOrderChange &&
+        this.props.onOrderChange(newOrderBy, orderDirection);
+    });
   };
 
   onPageChange = (event, page) => {
@@ -944,6 +985,7 @@ export default class MaterialTable extends React.Component {
       );
     }
   }
+
   renderTable = (props) => (
     <Table
       style={{
@@ -981,6 +1023,7 @@ export default class MaterialTable extends React.Component {
           orderDirection={this.state.orderDirection}
           onAllSelected={this.onAllSelected}
           onOrderChange={this.onChangeOrder}
+          orderByCollection={this.state.orderByCollection}
           isTreeData={this.props.parentChildData !== undefined}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           onColumnResized={this.onColumnResized}
@@ -1073,6 +1116,7 @@ export default class MaterialTable extends React.Component {
 
     return 'calc(' + result.join(' + ') + ')';
   };
+
   getRenderData = () =>
     this.props.options.exportAll ? this.state.data : this.state.renderData;
 
