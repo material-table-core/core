@@ -204,7 +204,7 @@ export default class MaterialTable extends React.Component {
     if (prevProps.options.pageSize !== this.props.options.pageSize) {
       this.dataManager.changePageSize(this.props.options.pageSize);
     }
-    console.log(this.props.options.pageSize);
+
     if (propsChanged) {
       const props = this.getProps(this.props);
       this.setDataManagerFields(props, false, prevProps.columns);
