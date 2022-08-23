@@ -219,7 +219,7 @@ export default class MaterialTable extends React.Component {
     if (prevProps.options.pageSize !== this.props.options.pageSize) {
       this.dataManager.changePageSize(this.props.options.pageSize);
     }
-    console.log(this.props.options.pageSize);
+
     if (propsChanged) {
       const props = this.getProps(this.props);
       this.setDataManagerFields(props, false, prevProps.columns);
@@ -629,7 +629,12 @@ export default class MaterialTable extends React.Component {
     ) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
-          .onRowDelete(oldData)
+          .onRowDelete(
+            Object.entries(oldData).reduce((old, [key, val]) => {
+              if (key !== 'tableData') old[key] = val;
+              return old;
+            }, {})
+          )
           .then((result) => {
             this.dataManager.changeRowEditing(oldData);
             this.setState(
