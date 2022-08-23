@@ -987,6 +987,20 @@ export function DefaultOrderIssue(props) {
           birthYear: 2017,
           birthCity: 34,
           id: 1
+        },
+        {
+          name: 'Mehmet',
+          surname: 'Terot',
+          birthYear: 1997,
+          birthCity: 63,
+          id: 3
+        },
+        {
+          name: 'Mehmet',
+          surname: 'Terot',
+          birthYear: 2000,
+          birthCity: 34,
+          id: 4
         }
       ]}
       options={{
@@ -1255,69 +1269,154 @@ export function FixedColumnWithEdit() {
 }
 
 export function TableMultiSorting(props) {
-  const [data, setData] = useState(rawData);
-  // const [selection, setSelection] = useState([]);
-
-  const global_cols = [
+  /* const global_cols = [
     {
-      title: 'number',
+      title: 'Number',
       field: 'number',
       minWidth: 140,
-      maxWidth: 400 /* , sorting: false */
+      maxWidth: 400, 
+      // type: 'numeric'
+      // , sorting: false
     },
     {
-      title: 'title',
+      title: 'Title',
       field: 'title',
       minWidth: 140,
       maxWidth: 400,
-      sorting: true
+      sorting: true,
+      defaultSort: 'desc'
     },
     {
-      title: 'name',
+      title: 'Name',
       field: 'name',
       minWidth: 140,
       maxWidth: 400,
-      sorting: true
+      sorting: true,
+      defaultSort: 'desc'
     },
     {
-      title: 'lastName',
+      title: 'Last Name',
       field: 'lastName',
       minWidth: 140,
       maxWidth: 400,
-      sorting: true
+      sorting: true,
+      defaultSort: 'asc'
+    }
+  ]; */
+
+  const global_cols = [
+    { title: 'Adl', field: 'name' },
+    { title: 'Soyadl', field: 'surname' },
+    { title: 'Cinsiyet', field: 'sex' },
+    { title: 'Tipi', field: 'type', removable: false },
+    { title: 'Doğum Yili', field: 'birthYear', type: 'numeric' },
+    {
+      title: 'Doğum Yeri',
+      field: 'birthCity',
+      lookup: { 34: 'İstanbul', 63: 'Şanliurfa' }
     }
   ];
 
-  const global_data1 = [
+  /*   const global_data1 = [
     {
-      number: '1',
+      number: 1,
       title: 'Developer',
       name: 'Mehmet',
       lastName: 'Baran',
-      id: 1
+      id: '1231'
     },
     {
-      number: '2',
+      number: 22,
       title: 'Developer',
       name: 'Pratik',
       lastName: 'N',
-      id: 2
+      id: '1234'
     },
     {
-      number: '2',
+      number: 25,
       title: 'Human Resources',
       name: 'Juan',
       lastName: 'Lopez',
-      id: 3
+      id: '1235'
     },
     {
-      number: '2',
+      number: 3,
       title: 'Consultant',
       name: 'Edgar',
       lastName: 'Martinez',
-      id: 4
+      id: '1236'
+    }
+  ]; */
+
+  const global_data1 = [
+    {
+      id: 1,
+      name: 'a',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 63,
+      sex: 'Male',
+      type: 'adult'
+    },
+    {
+      id: 2,
+      name: 'b',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 34,
+      sex: 'Female',
+      type: 'adult',
+      parentId: 1
+    },
+    {
+      id: 3,
+      name: 'c',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 34,
+      sex: 'Female',
+      type: 'child',
+      parentId: 1
+    },
+    {
+      id: 4,
+      name: 'd',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 34,
+      sex: 'Female',
+      type: 'child',
+      parentId: 3
+    },
+    {
+      id: 5,
+      name: 'e',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 34,
+      sex: 'Female',
+      type: 'child'
+    },
+    {
+      id: 6,
+      name: 'f',
+      surname: 'Baran',
+      birthYear: 1987,
+      birthCity: 34,
+      sex: 'Female',
+      type: 'child',
+      parentId: 5
     }
   ];
+
+  const orderCollection = [
+    { orderBy: 1, orderDirection: 'asc', columnIndex: 1 },
+    { orderBy: 2, orderDirection: 'desc', columnIndex: 2 }
+  ];
+
+  const onOrderCollectionChange = (orderByCollection) => {
+    console.log('onOrderCollectionChange ===>', orderByCollection);
+  };
 
   return (
     <MaterialTable
@@ -1327,12 +1426,16 @@ export function TableMultiSorting(props) {
       /* detailPanel={({ rowData }) => (
         <SubTable rowData={rowData} setSelection={setSelection} />
       )} */
+      parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
       options={{
+        selection: true,
         // selection: true
         // sorting: true,
         keepSortDirectionOnColumnSwitch: false,
-        maxColumnSort: 3
+        maxColumnSort: 3,
+        defaultOrderByCollection: orderCollection
       }}
+      onOrderCollectionChange={onOrderCollectionChange}
     />
   );
   /* return (

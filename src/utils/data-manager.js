@@ -3,6 +3,8 @@ import uuid from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
 
+const MANY = 'many';
+
 export default class DataManager {
   checkForId = false;
   applyFilters = false;
@@ -14,8 +16,6 @@ export default class DataManager {
   lastEditingRow = undefined;
   maxColumnSort = 1;
   orderByCollection = [];
-  orderBy = -1;
-  orderDirection = 'desc';
   pageSize = 5;
   paging = true;
   parentFunc = null;
@@ -186,7 +186,25 @@ export default class DataManager {
   }
 
   setMaxColumnSort(maxColumnSort) {
-    this.maxColumnSort = maxColumnSort;
+    const notAvailableColumns = this.columns.filter(
+      (column) => column.sorting === false
+    );
+    const availableColumnsLength =
+      this.columns.length - notAvailableColumns.length;
+
+    console.log('set maxColumnSort', maxColumnSort, availableColumnsLength);
+    if (maxColumnSort === MANY) {
+      this.maxColumnSort = availableColumnsLength.length;
+    } else {
+      this.maxColumnSort =
+        maxColumnSort > availableColumnsLength
+          ? availableColumnsLength
+          : maxColumnSort;
+    }
+  }
+
+  setOrderByCollection(orderByCollection) {
+    this.orderByCollection = orderByCollection;
   }
 
   changeApplySearch(applySearch) {
@@ -375,15 +393,6 @@ export default class DataManager {
     setCheck([currentGroup]);
   };
 
-  // TODO: remove this function
-  changeOrder(orderBy, orderDirection) {
-    this.orderBy = orderBy;
-    this.orderDirection = orderDirection;
-    this.currentPage = 0;
-
-    this.sorted = false;
-  }
-
   changeColumnOrder(orderBy, orderDirection, columnIndex) {
     const prevColumns = this.orderByCollection.filter(
       ({ orderBy }) => orderBy !== columnIndex
@@ -394,7 +403,7 @@ export default class DataManager {
     }
 
     console.log('prevColumns', prevColumns, orderBy, columnIndex);
-    if (orderBy > -1) {
+    if (orderDirection !== '') {
       prevColumns.push({ orderBy, orderDirection, columnIndex });
     }
     this.orderByCollection = [...prevColumns];
@@ -734,10 +743,11 @@ export default class DataManager {
     }
   }
 
-  sortBy(arr, columnsDefs, orderCollection) {
+  sortBy(list, columnsDefs, orderCollection) {
     const sort = this.sort;
     const getFieldValue = this.getFieldValue;
-    return arr.sort(function sortData(
+
+    return list.sort(function sortData(
       a,
       b,
       columns = columnsDefs,
@@ -755,6 +765,7 @@ export default class DataManager {
           compareValue = columnDef.customSort(a, b, 'row', orderDirection);
         }
       } else {
+        console.log('getFieldValue ===>', getFieldValue(a, columnDef));
         // Calculate compare value and modify based on order
         compareValue = sort(
           getFieldValue(a, columnDef),
@@ -778,7 +789,6 @@ export default class DataManager {
   }
 
   sortList(list) {
-    let sortedList = [...list];
     // TODO: order the collection based on the order
     console.log('sortList ===>', this.orderByCollection);
 
@@ -793,46 +803,7 @@ export default class DataManager {
       }
     });
 
-    return (sortedList = this.sortBy(
-      sortedList,
-      columnsDefs,
-      this.orderByCollection
-    ));
-    console.log('sortedList ===>', sortedList);
-
-    let columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
-    if (!columnDef) {
-      columnDef = this.columns[0];
-    }
-    let result = list;
-
-    if (columnDef.customSort) {
-      if (this.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a, 'row', 'desc'));
-      } else {
-        result = list.sort((a, b) =>
-          columnDef.customSort(a, b, 'row', this.orderDirection)
-        );
-      }
-    } else {
-      result = list.sort(
-        this.orderDirection === 'desc'
-          ? (a, b) =>
-              this.sort(
-                this.getFieldValue(b, columnDef),
-                this.getFieldValue(a, columnDef),
-                columnDef.type
-              )
-          : (a, b) =>
-              this.sort(
-                this.getFieldValue(a, columnDef),
-                this.getFieldValue(b, columnDef),
-                columnDef.type
-              )
-      );
-    }
-
-    return result;
+    return this.sortBy(list, columnsDefs, this.orderByCollection);
   }
 
   getRenderState = () => {
@@ -866,8 +837,7 @@ export default class DataManager {
       data: this.sortedData,
       lastEditingRow: this.lastEditingRow,
       orderByCollection: this.orderByCollection,
-      orderBy: this.orderBy,
-      orderDirection: this.orderDirection,
+      maxColumnSort: this.maxColumnSort,
       originalData: [...this.data],
       pageSize: this.pageSize,
       renderData: this.pagedData,
@@ -1282,9 +1252,9 @@ export default class DataManager {
             element.groupsIndex = getGroupsIndex(element.groups);
             sortGroupData(element.groups, level + 1);
           } else {
-            if (this.orderBy >= 0 && this.orderDirection) {
+            if (this.maxColumnSort > 0 && this.orderByCollection.length) {
               element.data = this.sortList(element.data);
-            } else if (this.orderDirection === '') {
+            } else if (!this.orderByCollection.length) {
               element.data = element.data.sort((a, b) => {
                 return (
                   this.data.findIndex(
@@ -1303,7 +1273,7 @@ export default class DataManager {
       sortGroupData(this.sortedData, 1);
     } else if (this.isDataType('tree')) {
       this.sortedData = [...this.treefiedData];
-      if (this.orderBy != -1) {
+      if (this.maxColumnSort > 0 && this.orderByCollection.length) {
         this.sortedData = this.sortList(this.sortedData);
 
         const sortTree = (list) => {
@@ -1321,8 +1291,11 @@ export default class DataManager {
       }
     } else if (this.isDataType('normal')) {
       this.sortedData = [...this.searchedData];
-      // if (this.orderBy != -1 && this.applySort) {
-      if (this.orderByCollection.length && this.applySort) {
+      if (
+        this.maxColumnSort > 0 &&
+        this.orderByCollection.length &&
+        this.applySort
+      ) {
         this.sortedData = this.sortList(this.sortedData);
       }
     }

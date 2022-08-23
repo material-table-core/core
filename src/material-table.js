@@ -16,17 +16,6 @@ import {
   MTableScrollbar
 } from '@components';
 
-/* TODO:
-  Initi data based on maxColumnSort
-  do a initSort if predefaultsort
-
-  On click add columns to be sorted
-  add an sort order id
-  on click sort the elements
-
-  On arrow button show only the arrow on buttons that are on the column sort array
-*/
-
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
   checkedForFunctions = false;
@@ -54,10 +43,10 @@ export default class MaterialTable extends React.Component {
           (a) => a.tableData.id === renderState.orderBy
         ),
         orderDirection: renderState.orderDirection,
+        orderByCollection: renderState.orderByCollection,
         page: 0,
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
-
         totalCount: 0
       },
       showAddRow: false,
@@ -84,6 +73,7 @@ export default class MaterialTable extends React.Component {
             page: this.props.options.initialPage || 0
           });
         }
+
         /**
          * THIS WILL NEED TO BE REMOVED EVENTUALLY.
          * Warn consumer of renamed prop.
@@ -91,6 +81,16 @@ export default class MaterialTable extends React.Component {
         if (this.props.onDoubleRowClick !== undefined) {
           console.error(
             'Property `onDoubleRowClick` has been renamed to `onRowDoubleClick`'
+          );
+        }
+
+        /**
+         * THIS WILL NEED TO BE REMOVED EVENTUALLY.
+         * Warn consumer of deprecated prop.
+         */
+        if (this.props.sorting !== undefined) {
+          console.error(
+            'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
           );
         }
       }
@@ -123,8 +123,10 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setTableWidth(props.options.tableWidth ?? 'full');
     this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
-    this.dataManager.setMaxColumnSort(props.options.maxColumnSort);
     this.dataManager.changeRowEditing();
+
+    const { grouping, maxColumnSort } = props.options;
+    this.dataManager.setMaxColumnSort(grouping ? 1 : maxColumnSort);
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -137,53 +139,47 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
-    let defaultSortColumnIndex = -1;
-    let defaultSortDirection = '';
-    let prevSortColumnIndex = -1;
-    let prevSortDirection = '';
-    if (props && props.options.sorting !== false) {
-      defaultSortColumnIndex = props.columns.findIndex(
-        (a) => a.defaultSort && a.sorting !== false
+    const { defaultOrderByCollection } = props.options;
+    let defaultCollectionSort = [];
+    let prevCollectionSort = [];
+
+    if (defaultOrderByCollection && defaultOrderByCollection.length) {
+      defaultCollectionSort = [...defaultOrderByCollection];
+    } else {
+      const defaultSorts = getDefaultCollectionSort(
+        props.columns,
+        prevColumns,
+        this.dataManager.maxColumnSort
       );
-      defaultSortDirection =
-        defaultSortColumnIndex > -1
-          ? props.columns[defaultSortColumnIndex].defaultSort
-          : '';
-    }
-    if (prevColumns) {
-      prevSortColumnIndex = prevColumns.findIndex(
-        (a) => a.defaultSort && a.sorting !== false
-      );
-      prevSortDirection =
-        prevSortColumnIndex > -1 && props.columns[prevSortColumnIndex]
-          ? props.columns[prevSortColumnIndex].defaultSort
-          : '';
+      defaultCollectionSort = [...defaultSorts[0]];
+      prevCollectionSort = [...defaultSorts[1]];
     }
 
+    const defaultSort = JSON.stringify(defaultCollectionSort);
+    const prevSort = JSON.stringify(prevCollectionSort);
+    const currentSort = JSON.stringify(this.dataManager.orderByCollection);
     // If the default sorting changed and differs from the current default sorting, it will trigger a new sorting
     const shouldReorder =
       isInit ||
       (!this.isRemoteData() &&
         // Only if a defaultSortingDirection is passed, it will evaluate for changes
-        defaultSortDirection &&
+        defaultCollectionSort.length &&
         // Default sorting has changed
-        (defaultSortColumnIndex !== prevSortColumnIndex ||
-          defaultSortDirection !== prevSortDirection) &&
+        defaultSort !== prevSort &&
         // Default sorting differs from current sorting
-        (defaultSortColumnIndex !== this.dataManager.orderBy ||
-          defaultSortDirection !== this.dataManager.orderDirection));
+        defaultSort !== currentSort);
 
-    shouldReorder &&
-      this.dataManager.changeOrder(
-        defaultSortColumnIndex,
-        defaultSortDirection
+    if (shouldReorder) {
+      defaultCollectionSort.forEach(
+        ({ orderBy, orderDirection, columnIndex }) =>
+          this.dataManager.changeColumnOrder(
+            orderBy,
+            orderDirection,
+            columnIndex
+          )
       );
-    shouldReorder &&
-      props.multipleSort &&
-      this.dataManager.changeColumnOrder(
-        defaultSortColumnIndex,
-        defaultSortDirection
-      );
+    }
+
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit &&
       this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
@@ -461,15 +457,7 @@ export default class MaterialTable extends React.Component {
   };
 
   onChangeOrder = (orderBy, orderDirection, columnIndex) => {
-    const newOrderBy = orderDirection === '' ? -1 : orderBy;
-    this.dataManager.changeOrder(newOrderBy, orderDirection);
-    /* this.props.multipleSort &&  */ this.dataManager.changeColumnOrder(
-      newOrderBy,
-      orderDirection,
-      columnIndex
-    );
-
-    // console.log('onChangeOrder ===>', orderBy, orderDirection)
+    this.dataManager.changeColumnOrder(orderBy, orderDirection, columnIndex);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
@@ -478,31 +466,28 @@ export default class MaterialTable extends React.Component {
         (a) => a.tableData.id === newOrderBy
       );
       query.orderDirection = orderDirection;
+      console.warn(
+        'Properties orderBy and orderDirection had been deprecated when remote data, please start using orderByCollection instead'
+      );
+      query.orderByCollection = this.dataManager.orderByCollection;
       this.onQueryChange(query, () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(newOrderBy, orderDirection);
+        this.props.onOrderCollectionChange &&
+          this.props.onOrderCollectionChange(
+            this.dataManager.orderByCollection
+          );
       });
     } else {
-      // console.log('orderByCollection ===>', this.dataManager.getRenderState().orderByCollection)
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(newOrderBy, orderDirection);
+        this.props.onOrderCollectionChange &&
+          this.props.onOrderCollectionChange(
+            this.dataManager.orderByCollection
+          );
       });
     }
-  };
-
-  onChangeColumnOrder = (orderBy, orderDirection) => {
-    const newOrderBy = orderDirection === '' ? -1 : orderBy;
-    /* this.props.multipleSort &&  */ this.dataManager.changeColumnOrder(
-      newOrderBy,
-      orderDirection
-    );
-
-    // console.log('orderByCollection ===>', this.dataManager.getRenderState().orderByCollection)
-    this.setState(this.dataManager.getRenderState(), () => {
-      this.props.onOrderChange &&
-        this.props.onOrderChange(newOrderBy, orderDirection);
-    });
   };
 
   onPageChange = (event, page) => {
@@ -1019,8 +1004,6 @@ export default class MaterialTable extends React.Component {
               (a) => a.position === 'row' || typeof a === 'function'
             )
           }
-          orderBy={this.state.orderBy}
-          orderDirection={this.state.orderDirection}
           onAllSelected={this.onAllSelected}
           onOrderChange={this.onChangeOrder}
           orderByCollection={this.state.orderByCollection}
@@ -1321,4 +1304,35 @@ function functionlessColumns(columns) {
       return obj;
     }, {})
   );
+}
+
+function getDefaultCollectionSort(currentColumns, prevColumns, maxColumnSort) {
+  let defaultCollectionSort = [];
+  let prevCollectionSort = [];
+
+  if (maxColumnSort > 0) {
+    defaultCollectionSort = reduceByDefaultSort(currentColumns);
+  }
+
+  if (prevColumns) {
+    prevCollectionSort = reduceByDefaultSort(prevColumns);
+  }
+
+  return [
+    defaultCollectionSort.slice(0, maxColumnSort),
+    prevCollectionSort.slice(0, maxColumnSort)
+  ];
+}
+
+function reduceByDefaultSort(list) {
+  return list.reduce((acc, column, index) => {
+    if (column.defaultSort && column.sorting !== false) {
+      acc.push({
+        orderBy: index,
+        orderDirection: column.defaultSort,
+        columnIndex: index
+      });
+    }
+    return acc;
+  }, []);
 }

@@ -25,8 +25,6 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     [columns]
   );
 
-  // console.log('multipleSort ===>', props.multipleSort)
-
   const handleMouseDown = (e, columnDef, colIndex) => {
     const startX = e.clientX;
     const th = e.target.closest('th');

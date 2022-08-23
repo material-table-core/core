@@ -44,7 +44,7 @@ export default {
   selectionProps: {},
   sorting: true,
   maxColumnSort: 1,
-  initialOrderByCollection: [],
+  defaultOrderByCollection: [],
   keepSortDirectionOnColumnSwitch: true,
   toolbar: true,
   defaultExpanded: false,

@@ -371,16 +371,16 @@ export const propTypes = {
     showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
-    // TODO Remove Sorting
-    sorting: PropTypes.bool,
-    initialOrderByCollection: PropTypes.arrayOf(
+    sorting: PropTypes.bool, // TODO: This will be removed eventually
+    defaultOrderByCollection: PropTypes.arrayOf(
       PropTypes.shape({
-        orderBy: PropTypes.string,
+        orderBy: PropTypes.number,
         oderDirection: PropTypes.string,
-        orderIndex: PropTypes.string
+        orderIndex: PropTypes.number
       })
     ),
-    maxColumnSort: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    maxColumnSort: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'many']),
+    showColumnSortOrder: PropTypes.bool,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
@@ -407,6 +407,7 @@ export const propTypes = {
   onPageChange: PropTypes.func,
   onChangeColumnHidden: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onOrderCollectionChange: PropTypes.func,
   onRowClick: PropTypes.func,
   onRowDoubleClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,
