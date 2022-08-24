@@ -192,7 +192,6 @@ export default class DataManager {
     const availableColumnsLength =
       this.columns.length - notAvailableColumns.length;
 
-    console.log('set maxColumnSort', maxColumnSort, availableColumnsLength);
     if (maxColumnSort === MANY) {
       this.maxColumnSort = availableColumnsLength.length;
     } else {
@@ -402,13 +401,11 @@ export default class DataManager {
       prevColumns.shift();
     }
 
-    console.log('prevColumns', prevColumns, orderBy, columnIndex);
     if (orderDirection !== '') {
       prevColumns.push({ orderBy, orderDirection, columnIndex });
     }
     this.orderByCollection = [...prevColumns];
 
-    console.log('changeColumnOrder', this.orderByCollection);
     this.currentPage = 0;
     this.sorted = false;
   }
@@ -765,7 +762,6 @@ export default class DataManager {
           compareValue = columnDef.customSort(a, b, 'row', orderDirection);
         }
       } else {
-        console.log('getFieldValue ===>', getFieldValue(a, columnDef));
         // Calculate compare value and modify based on order
         compareValue = sort(
           getFieldValue(a, columnDef),
@@ -789,9 +785,6 @@ export default class DataManager {
   }
 
   sortList(list) {
-    // TODO: order the collection based on the order
-    console.log('sortList ===>', this.orderByCollection);
-
     const collectionIds = this.orderByCollection.map(
       (collection) => collection.orderBy
     );
@@ -1188,7 +1181,6 @@ export default class DataManager {
 
   sortData() {
     this.paged = false;
-    console.log('getRenderState', this.sorted);
 
     if (this.isDataType('group')) {
       this.sortedData = [...this.groupedData];

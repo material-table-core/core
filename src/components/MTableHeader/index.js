@@ -470,7 +470,6 @@ function RenderSortButton({
   columnIndex,
   orderByCollection
 }) {
-  // console.log('orderByCollection', orderByCollection)
   const activeColumn = orderByCollection.find(
     ({ orderBy }) => orderBy === columnDef.tableData.id
   );
