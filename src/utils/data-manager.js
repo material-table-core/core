@@ -202,8 +202,12 @@ export default class DataManager {
     }
   }
 
-  setOrderByCollection(orderByCollection) {
-    this.orderByCollection = orderByCollection;
+  setOrderByCollection() {
+    this.orderByCollection = this.columns.map((columnDef) => ({
+      orderBy: columnDef.tableData.id,
+      sortOrder: undefined,
+      orderDirection: ''
+    }));
   }
 
   changeApplySearch(applySearch) {
@@ -392,18 +396,50 @@ export default class DataManager {
     setCheck([currentGroup]);
   };
 
-  changeColumnOrder(orderBy, orderDirection, columnIndex) {
-    const prevColumns = this.orderByCollection.filter(
-      ({ orderBy }) => orderBy !== columnIndex
+  sortOrderCollection = (list) => {
+    return list.sort((a, b) => {
+      if (!a.sortOrder) return 1;
+      if (!b.sortOrder) return -1;
+      return a.sortOrder < b.sortOrder ? -1 : a.sortOrder > b.sortOrder ? 1 : 0;
+    });
+  };
+
+  changeColumnOrder(orderBy, orderDirection, sortOrder) {
+    let prevColumns = [];
+
+    const sortColumns = this.orderByCollection.filter(
+      (collection) => collection.sortOrder
     );
+    if (sortColumns.length === this.maxColumnSort && !sortOrder) {
+      this.orderByCollection[0].orderDirection = '';
+      this.orderByCollection[0].sortOrder = undefined;
 
-    if (prevColumns.length == this.maxColumnSort) {
-      prevColumns.shift();
+      prevColumns = this.orderByCollection.map((collection) => {
+        if (collection.sortOrder) {
+          collection.sortOrder -= 1;
+        } else if (collection.orderBy === orderBy && orderDirection) {
+          collection.sortOrder = sortColumns.length;
+          collection.orderDirection = orderDirection;
+        }
+
+        return collection;
+      });
+    } else {
+      prevColumns = this.orderByCollection.map((collection) => {
+        if (collection.orderBy === orderBy && orderDirection) {
+          collection.orderDirection = orderDirection;
+          collection.sortOrder = sortOrder || sortColumns.length + 1;
+        } else if (!orderDirection && collection.orderBy === orderBy) {
+          collection.orderDirection = orderDirection;
+          collection.sortOrder = undefined;
+        } else if (!orderDirection && sortOrder < collection.sortOrder) {
+          collection.sortOrder -= 1;
+        }
+        return collection;
+      });
     }
 
-    if (orderDirection !== '') {
-      prevColumns.push({ orderBy, orderDirection, columnIndex });
-    }
+    prevColumns = this.sortOrderCollection(prevColumns);
     this.orderByCollection = [...prevColumns];
 
     this.currentPage = 0;

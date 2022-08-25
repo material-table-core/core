@@ -127,6 +127,7 @@ export default class MaterialTable extends React.Component {
 
     const { grouping, maxColumnSort } = props.options;
     this.dataManager.setMaxColumnSort(grouping ? 1 : maxColumnSort);
+    this.dataManager.setOrderByCollection();
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -170,13 +171,8 @@ export default class MaterialTable extends React.Component {
         defaultSort !== currentSort);
 
     if (shouldReorder) {
-      defaultCollectionSort.forEach(
-        ({ orderBy, orderDirection, columnIndex }) =>
-          this.dataManager.changeColumnOrder(
-            orderBy,
-            orderDirection,
-            columnIndex
-          )
+      defaultCollectionSort.forEach(({ orderBy, orderDirection, sortOrder }) =>
+        this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder)
       );
     }
 
@@ -456,14 +452,14 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  onChangeOrder = (orderBy, orderDirection, columnIndex) => {
-    this.dataManager.changeColumnOrder(orderBy, orderDirection, columnIndex);
+  onChangeOrder = (orderBy, orderDirection, sortOrder) => {
+    this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
       query.orderBy = this.state.columns.find(
-        (a) => a.tableData.id === newOrderBy
+        (a) => a.tableData.id === orderBy
       );
       query.orderDirection = orderDirection;
       console.warn(
@@ -472,7 +468,7 @@ export default class MaterialTable extends React.Component {
       query.orderByCollection = this.dataManager.orderByCollection;
       this.onQueryChange(query, () => {
         this.props.onOrderChange &&
-          this.props.onOrderChange(newOrderBy, orderDirection);
+          this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
           this.props.onOrderCollectionChange(
             this.dataManager.orderByCollection
@@ -481,7 +477,7 @@ export default class MaterialTable extends React.Component {
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onOrderChange &&
-          this.props.onOrderChange(newOrderBy, orderDirection);
+          this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
           this.props.onOrderCollectionChange(
             this.dataManager.orderByCollection
@@ -1011,7 +1007,11 @@ export default class MaterialTable extends React.Component {
           }
           onAllSelected={this.onAllSelected}
           onOrderChange={this.onChangeOrder}
-          orderByCollection={this.state.orderByCollection}
+          orderByCollection={this.state.orderByCollection.slice(
+            0,
+            this.state.maxColumnSort
+          )}
+          showColumnSortOrder={this.props.showColumnSortOrder}
           isTreeData={this.props.parentChildData !== undefined}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           onColumnResized={this.onColumnResized}
@@ -1335,7 +1335,7 @@ function reduceByDefaultSort(list) {
       acc.push({
         orderBy: index,
         orderDirection: column.defaultSort,
-        columnIndex: index
+        sortOrder: index
       });
     }
     return acc;

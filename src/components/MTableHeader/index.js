@@ -245,8 +245,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                       icon={icons.SortArrow}
                       thirdSortClick={options.thirdSortClick}
                       onOrderChange={props.onOrderChange}
-                      columnIndex={index}
                       orderByCollection={props.orderByCollection}
+                      showColumnSortOrder={props.showColumnSortOrder}
                     >
                       {columnDef.title}
                     </RenderSortButton>
@@ -267,8 +267,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
               icon={icons.SortArrow}
               thirdSortClick={options.thirdSortClick}
               onOrderChange={props.onOrderChange}
-              columnIndex={index}
               orderByCollection={props.orderByCollection}
+              showColumnSortOrder={props.showColumnSortOrder}
             >
               {columnDef.title}
             </RenderSortButton>
@@ -431,8 +431,6 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
   );
 }
 
-// TODO: Case when returning back to prev clicker column and keepSortDirectionOnColumnSwitch, should start form where user left
-// Move this to a utils
 const computeNewOrderDirection = (
   orderBy,
   orderDirection,
@@ -467,12 +465,11 @@ function RenderSortButton({
   thirdSortClick,
   onOrderChange,
   children,
-  columnIndex,
   orderByCollection
 }) {
-  const activeColumn = orderByCollection.find(
-    ({ orderBy }) => orderBy === columnDef.tableData.id
-  );
+  const activeColumn = orderByCollection
+    .filter((collection) => collection.sortOrder)
+    .find(({ orderBy }) => orderBy === columnDef.tableData.id);
 
   // If current sorted column or prop asked to
   // maintain sort order when switching sorted column,
@@ -493,27 +490,34 @@ function RenderSortButton({
   const orderBy = activeColumn && activeColumn.orderBy;
 
   return (
-    <TableSortLabel
-      role=""
-      aria-sort={ariaSort}
-      aria-label={columnDef.ariaLabel}
-      IconComponent={icon}
-      active={!!activeColumn}
-      data-testid="mtableheader-sortlabel"
-      direction={direction}
-      onClick={() => {
-        const newOrderDirection = computeNewOrderDirection(
-          orderBy,
-          direction,
-          columnDef,
-          thirdSortClick,
-          keepSortDirectionOnColumnSwitch
-        );
-        onOrderChange(columnDef.tableData.id, newOrderDirection, columnIndex);
-      }}
-    >
-      {children}
-    </TableSortLabel>
+    <>
+      <TableSortLabel
+        role=""
+        aria-sort={ariaSort}
+        aria-label={columnDef.ariaLabel}
+        IconComponent={icon}
+        active={!!activeColumn}
+        data-testid="mtableheader-sortlabel"
+        direction={direction}
+        onClick={() => {
+          const newOrderDirection = computeNewOrderDirection(
+            orderBy,
+            direction,
+            columnDef,
+            thirdSortClick,
+            keepSortDirectionOnColumnSwitch
+          );
+          onOrderChange(
+            columnDef.tableData.id,
+            newOrderDirection,
+            activeColumn && activeColumn.sortOrder
+          );
+        }}
+      >
+        {children}
+      </TableSortLabel>
+      {activeColumn && activeColumn.sortOrder}
+    </>
   );
 }
 
@@ -532,6 +536,7 @@ MTableHeader.propTypes = {
   onOrderChange: PropTypes.func,
   showActionsColumn: PropTypes.bool,
   orderByCollection: PropTypes.array,
+  showColumnSortOrder: PropTypes.bool,
   tooltip: PropTypes.string
 };
 

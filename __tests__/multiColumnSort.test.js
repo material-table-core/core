@@ -75,12 +75,12 @@ describe('Multi Column Sort', () => {
       {
         orderBy: 1,
         orderDirection: 'asc',
-        columnIndex: 1
+        sortOrder: 1
       },
       {
         orderBy: 2,
         orderDirection: 'desc',
-        columnIndex: 2
+        sortOrder: 2
       }
     ];
   });
@@ -102,15 +102,15 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 0, orderBy: 0, orderDirection: 'asc' }
+      { sortOrder: 0, orderBy: 0, orderDirection: 'asc' }
     ]);
 
     const titleColumn = queryAllByTestId('mtableheader-sortlabel')[1];
     fireEvent.click(titleColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 0, orderBy: 0, orderDirection: 'asc' },
-      { columnIndex: 1, orderBy: 1, orderDirection: 'asc' }
+      { sortOrder: 0, orderBy: 0, orderDirection: 'asc' },
+      { sortOrder: 1, orderBy: 1, orderDirection: 'asc' }
     ]);
   });
 
@@ -131,7 +131,7 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 0, orderBy: 0, orderDirection: 'asc' }
+      { sortOrder: 0, orderBy: 0, orderDirection: 'asc' }
     ]);
 
     fireEvent.click(queryAllByTestId('mtableheader-sortlabel')[1]);
@@ -139,9 +139,9 @@ describe('Multi Column Sort', () => {
     fireEvent.click(queryAllByTestId('mtableheader-sortlabel')[3]);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 1, orderBy: 1, orderDirection: 'asc' },
-      { columnIndex: 2, orderBy: 2, orderDirection: 'asc' },
-      { columnIndex: 3, orderBy: 3, orderDirection: 'asc' }
+      { sortOrder: 1, orderBy: 1, orderDirection: 'asc' },
+      { sortOrder: 2, orderBy: 2, orderDirection: 'asc' },
+      { sortOrder: 3, orderBy: 3, orderDirection: 'asc' }
     ]);
   });
 
@@ -163,7 +163,7 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 0, orderBy: 0, orderDirection: 'desc' }
+      { sortOrder: 0, orderBy: 0, orderDirection: 'desc' }
     ]);
   });
 
@@ -185,9 +185,9 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { columnIndex: 1, orderBy: 1, orderDirection: 'asc' },
-      { columnIndex: 2, orderBy: 2, orderDirection: 'desc' },
-      { columnIndex: 0, orderBy: 0, orderDirection: 'asc' }
+      { sortOrder: 1, orderBy: 1, orderDirection: 'asc' },
+      { sortOrder: 2, orderBy: 2, orderDirection: 'desc' },
+      { sortOrder: 0, orderBy: 0, orderDirection: 'asc' }
     ]);
   });
 });

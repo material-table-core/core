@@ -1334,8 +1334,8 @@ export function TableMultiSorting(props) {
   ];
 
   const orderCollection = [
-    { orderBy: 1, orderDirection: 'asc', columnIndex: 1 },
-    { orderBy: 2, orderDirection: 'desc', columnIndex: 2 }
+    { orderBy: 1, orderDirection: 'asc', sortOrder: 1 },
+    { orderBy: 2, orderDirection: 'desc', sortOrder: 2 }
   ];
 
   const onOrderCollectionChange = (orderByCollection) => {
@@ -1349,7 +1349,6 @@ export function TableMultiSorting(props) {
       title="Multi Column Sort"
       options={{
         selection: false,
-        keepSortDirectionOnColumnSwitch: false,
         maxColumnSort: 3,
         defaultOrderByCollection: orderCollection
       }}

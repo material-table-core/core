@@ -45,6 +45,7 @@ export default {
   sorting: true,
   maxColumnSort: 1,
   defaultOrderByCollection: [],
+  showColumnSortOrder: false,
   keepSortDirectionOnColumnSwitch: true,
   toolbar: true,
   defaultExpanded: false,
