@@ -1349,8 +1349,9 @@ export function TableMultiSorting(props) {
       title="Multi Column Sort"
       options={{
         selection: false,
-        maxColumnSort: 3,
-        defaultOrderByCollection: orderCollection
+        maxColumnSort: 2,
+        defaultOrderByCollection: orderCollection,
+        showColumnSortOrder: true
       }}
       onOrderCollectionChange={onOrderCollectionChange}
     />

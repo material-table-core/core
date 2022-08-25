@@ -246,7 +246,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                       thirdSortClick={options.thirdSortClick}
                       onOrderChange={props.onOrderChange}
                       orderByCollection={props.orderByCollection}
-                      showColumnSortOrder={props.showColumnSortOrder}
+                      showColumnSortOrder={options.showColumnSortOrder}
+                      sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
                     >
                       {columnDef.title}
                     </RenderSortButton>
@@ -268,7 +269,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
               thirdSortClick={options.thirdSortClick}
               onOrderChange={props.onOrderChange}
               orderByCollection={props.orderByCollection}
-              showColumnSortOrder={props.showColumnSortOrder}
+              showColumnSortOrder={options.showColumnSortOrder}
+              sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
             >
               {columnDef.title}
             </RenderSortButton>
@@ -465,11 +467,13 @@ function RenderSortButton({
   thirdSortClick,
   onOrderChange,
   children,
-  orderByCollection
+  orderByCollection,
+  showColumnSortOrder,
+  sortOrderIndicatorStyle
 }) {
-  const activeColumn = orderByCollection
-    .filter((collection) => collection.sortOrder)
-    .find(({ orderBy }) => orderBy === columnDef.tableData.id);
+  const activeColumn = orderByCollection.find(
+    ({ orderBy }) => orderBy === columnDef.tableData.id
+  );
 
   // If current sorted column or prop asked to
   // maintain sort order when switching sorted column,
@@ -516,7 +520,14 @@ function RenderSortButton({
       >
         {children}
       </TableSortLabel>
-      {activeColumn && activeColumn.sortOrder}
+      {showColumnSortOrder && activeColumn && (
+        <span
+          style={sortOrderIndicatorStyle}
+          data-testid="material-table-column-sort-order-indicator"
+        >
+          {activeColumn.sortOrder}
+        </span>
+      )}
     </>
   );
 }

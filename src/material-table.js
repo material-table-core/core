@@ -465,13 +465,13 @@ export default class MaterialTable extends React.Component {
       console.warn(
         'Properties orderBy and orderDirection had been deprecated when remote data, please start using orderByCollection instead'
       );
-      query.orderByCollection = this.dataManager.orderByCollection;
+      query.orderByCollection = this.dataManager.getOrderByCollection();
       this.onQueryChange(query, () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
           this.props.onOrderCollectionChange(
-            this.dataManager.orderByCollection
+            this.dataManager.getOrderByCollection()
           );
       });
     } else {
@@ -480,7 +480,7 @@ export default class MaterialTable extends React.Component {
           this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
           this.props.onOrderCollectionChange(
-            this.dataManager.orderByCollection
+            this.dataManager.getOrderByCollection()
           );
       });
     }
@@ -1007,11 +1007,7 @@ export default class MaterialTable extends React.Component {
           }
           onAllSelected={this.onAllSelected}
           onOrderChange={this.onChangeOrder}
-          orderByCollection={this.state.orderByCollection.slice(
-            0,
-            this.state.maxColumnSort
-          )}
-          showColumnSortOrder={this.props.showColumnSortOrder}
+          orderByCollection={this.dataManager.getOrderByCollection()}
           isTreeData={this.props.parentChildData !== undefined}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           onColumnResized={this.onColumnResized}

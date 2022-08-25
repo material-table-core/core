@@ -396,6 +396,10 @@ export default class DataManager {
     setCheck([currentGroup]);
   };
 
+  getOrderByCollection = () => {
+    return this.orderByCollection.filter((collection) => collection.sortOrder);
+  };
+
   sortOrderCollection = (list) => {
     return list.sort((a, b) => {
       if (!a.sortOrder) return 1;
@@ -406,10 +410,8 @@ export default class DataManager {
 
   changeColumnOrder(orderBy, orderDirection, sortOrder) {
     let prevColumns = [];
+    const sortColumns = this.getOrderByCollection();
 
-    const sortColumns = this.orderByCollection.filter(
-      (collection) => collection.sortOrder
-    );
     if (sortColumns.length === this.maxColumnSort && !sortOrder) {
       this.orderByCollection[0].orderDirection = '';
       this.orderByCollection[0].sortOrder = undefined;
