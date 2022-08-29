@@ -170,7 +170,7 @@ export default class MaterialTable extends React.Component {
         // Default sorting differs from current sorting
         defaultSort !== currentSort);
 
-    if (shouldReorder) {
+    if (shouldReorder && defaultCollectionSort.length) {
       defaultCollectionSort.forEach(({ orderBy, orderDirection, sortOrder }) =>
         this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder)
       );

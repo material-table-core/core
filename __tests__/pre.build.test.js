@@ -39,6 +39,7 @@ describe('Render Table : Pre Build', () => {
       expect(screen.getAllByRole('table')).toHaveLength(2);
     });
   });
+
   // Render table with data
   describe('when attempting to render a table with data', () => {
     it('renders without crashing', () => {
@@ -78,6 +79,7 @@ describe('Render Table : Pre Build', () => {
         name: /5 rows First Page Previous Page 1-5 of 99 Next Page Last Page/i
       });
     });
+
     it('navigates between the pages', () => {
       const data = makeData();
       render(<MaterialTable data={data} columns={columns} />);
@@ -125,6 +127,7 @@ describe('Render Table : Pre Build', () => {
       });
       expect(screen.getAllByRole('row')).toHaveLength(8);
     });
+
     it('filters data by search input', async () => {
       const data = makeData();
       render(<MaterialTable data={data} columns={columns} />);

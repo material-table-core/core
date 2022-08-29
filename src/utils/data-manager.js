@@ -1323,7 +1323,7 @@ export default class DataManager {
       this.sortedData = [...this.searchedData];
       if (
         this.maxColumnSort > 0 &&
-        this.orderByCollection.length &&
+        this.getOrderByCollection().length &&
         this.applySort
       ) {
         this.sortedData = this.sortList(this.sortedData);
