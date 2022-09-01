@@ -145,14 +145,17 @@ export default class MaterialTable extends React.Component {
     let prevCollectionSort = [];
 
     if (defaultOrderByCollection && defaultOrderByCollection.length) {
-      defaultCollectionSort = [...defaultOrderByCollection];
+      defaultCollectionSort = [...defaultOrderByCollection].slice(
+        0,
+        maxColumnSort
+      );
     } else {
       const defaultSorts = getDefaultCollectionSort(
         props.columns,
         prevColumns,
         this.dataManager.maxColumnSort
       );
-      defaultCollectionSort = [...defaultSorts[0]];
+      defaultCollectionSort = [...defaultSorts[0]].slice(0, maxColumnSort);
       prevCollectionSort = [...defaultSorts[1]];
     }
 
@@ -170,7 +173,11 @@ export default class MaterialTable extends React.Component {
         // Default sorting differs from current sorting
         defaultSort !== currentSort);
 
-    if (shouldReorder && defaultCollectionSort.length) {
+    if (
+      shouldReorder &&
+      defaultCollectionSort.length > 0 &&
+      maxColumnSort > 0
+    ) {
       defaultCollectionSort.forEach(({ orderBy, orderDirection, sortOrder }) =>
         this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder)
       );
@@ -1012,6 +1019,7 @@ export default class MaterialTable extends React.Component {
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           onColumnResized={this.onColumnResized}
           scrollWidth={this.state.width}
+          allowSorting={this.dataManager.maxColumnSort !== 0}
         />
       )}
       <props.components.Body

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { ALL_COLUMNS } from './utils/constants';
 
 const RefComponent = PropTypes.shape({ current: PropTypes.element });
 const StyledComponent = PropTypes.shape({
@@ -379,7 +380,20 @@ export const propTypes = {
         orderIndex: PropTypes.number
       })
     ),
-    maxColumnSort: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'many']),
+    maxColumnSort: PropTypes.oneOf([
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      ALL_COLUMNS
+    ]),
     showColumnSortOrder: PropTypes.bool,
     sortOrderIndicatorStyle: PropTypes.object,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,

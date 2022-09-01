@@ -2,8 +2,7 @@ import formatDate from 'date-fns/format';
 import uuid from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
-
-const MANY = 'many';
+import { ALL_COLUMNS } from './constants';
 
 export default class DataManager {
   checkForId = false;
@@ -186,19 +185,14 @@ export default class DataManager {
   }
 
   setMaxColumnSort(maxColumnSort) {
-    const notAvailableColumns = this.columns.filter(
-      (column) => column.sorting === false
-    );
-    const availableColumnsLength =
-      this.columns.length - notAvailableColumns.length;
+    const availableColumnsLength = this.columns.filter(
+      (column) => column.sorting !== false
+    ).length;
 
-    if (maxColumnSort === MANY) {
-      this.maxColumnSort = availableColumnsLength.length;
+    if (maxColumnSort === ALL_COLUMNS) {
+      this.maxColumnSort = availableColumnsLength;
     } else {
-      this.maxColumnSort =
-        maxColumnSort > availableColumnsLength
-          ? availableColumnsLength
-          : maxColumnSort;
+      this.maxColumnSort = Math.min(maxColumnSort, availableColumnsLength);
     }
   }
 
@@ -404,7 +398,7 @@ export default class DataManager {
     return list.sort((a, b) => {
       if (!a.sortOrder) return 1;
       if (!b.sortOrder) return -1;
-      return a.sortOrder < b.sortOrder ? -1 : a.sortOrder > b.sortOrder ? 1 : 0;
+      return a.sortOrder - b.sortOrder;
     });
   };
 
@@ -778,15 +772,27 @@ export default class DataManager {
     }
   }
 
-  sortBy(list, columnsDefs, orderCollection) {
+  sortList(list) {
+    const collectionIds = this.orderByCollection.map(
+      (collection) => collection.orderBy
+    );
+    const columnsDefs = new Map();
+    this.columns.forEach((column) => {
+      const columnId = column.tableData.id;
+      if (collectionIds.includes(columnId)) {
+        columnsDefs.set(columnId, column);
+      }
+    });
+
     const sort = this.sort;
     const getFieldValue = this.getFieldValue;
+    const orderByCollection = this.orderByCollection;
 
     return list.sort(function sortData(
       a,
       b,
       columns = columnsDefs,
-      collection = orderCollection
+      collection = orderByCollection
     ) {
       const { orderBy, orderDirection } = collection[0];
 
@@ -820,21 +826,6 @@ export default class DataManager {
         ? sortData(a, b, columns, collection.slice(1))
         : compareValue;
     });
-  }
-
-  sortList(list) {
-    const collectionIds = this.orderByCollection.map(
-      (collection) => collection.orderBy
-    );
-    const columnsDefs = new Map();
-    this.columns.forEach((column) => {
-      const columnId = column.tableData.id;
-      if (collectionIds.includes(columnId)) {
-        columnsDefs.set(columnId, column);
-      }
-    });
-
-    return this.sortBy(list, columnsDefs, this.orderByCollection);
   }
 
   getRenderState = () => {
@@ -1282,9 +1273,12 @@ export default class DataManager {
             element.groupsIndex = getGroupsIndex(element.groups);
             sortGroupData(element.groups, level + 1);
           } else {
-            if (this.maxColumnSort > 0 && this.orderByCollection.length) {
+            if (
+              this.maxColumnSort > 0 &&
+              this.getOrderByCollection().length > 0
+            ) {
               element.data = this.sortList(element.data);
-            } else if (!this.orderByCollection.length) {
+            } else if (this.maxColumnSort > 0) {
               element.data = element.data.sort((a, b) => {
                 return (
                   this.data.findIndex(
@@ -1303,7 +1297,7 @@ export default class DataManager {
       sortGroupData(this.sortedData, 1);
     } else if (this.isDataType('tree')) {
       this.sortedData = [...this.treefiedData];
-      if (this.maxColumnSort > 0 && this.orderByCollection.length) {
+      if (this.maxColumnSort > 0 && this.getOrderByCollection().length > 0) {
         this.sortedData = this.sortList(this.sortedData);
 
         const sortTree = (list) => {
@@ -1323,7 +1317,7 @@ export default class DataManager {
       this.sortedData = [...this.searchedData];
       if (
         this.maxColumnSort > 0 &&
-        this.getOrderByCollection().length &&
+        this.getOrderByCollection().length > 0 &&
         this.applySort
       ) {
         this.sortedData = this.sortList(this.sortedData);

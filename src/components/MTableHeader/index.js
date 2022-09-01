@@ -236,7 +236,9 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                         }
                   }
                 >
-                  {columnDef.sorting !== false && options.sorting ? (
+                  {columnDef.sorting !== false &&
+                  options.sorting &&
+                  props.allowSorting ? (
                     <RenderSortButton
                       columnDef={columnDef}
                       keepSortDirectionOnColumnSwitch={
@@ -258,7 +260,11 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
               )}
             </Draggable>
           );
-        } else if (columnDef.sorting !== false && options.sorting) {
+        } else if (
+          columnDef.sorting !== false &&
+          options.sorting &&
+          !props.allowSorting
+        ) {
           content = (
             <RenderSortButton
               columnDef={columnDef}
@@ -535,7 +541,8 @@ function RenderSortButton({
 MTableHeader.defaultProps = {
   dataCount: 0,
   selectedCount: 0,
-  orderByCollection: []
+  orderByCollection: [],
+  allowSorting: true
 };
 
 MTableHeader.propTypes = {
@@ -548,7 +555,8 @@ MTableHeader.propTypes = {
   showActionsColumn: PropTypes.bool,
   orderByCollection: PropTypes.array,
   showColumnSortOrder: PropTypes.bool,
-  tooltip: PropTypes.string
+  tooltip: PropTypes.string,
+  allowSorting: PropTypes.bool
 };
 
 export const styles = (theme) => ({
