@@ -987,6 +987,20 @@ export function DefaultOrderIssue(props) {
           birthYear: 2017,
           birthCity: 34,
           id: 1
+        },
+        {
+          name: 'Mehmet',
+          surname: 'Terot',
+          birthYear: 1997,
+          birthCity: 63,
+          id: 3
+        },
+        {
+          name: 'Mehmet',
+          surname: 'Terot',
+          birthYear: 2000,
+          birthCity: 34,
+          id: 4
         }
       ]}
       options={{
@@ -1250,6 +1264,96 @@ export function FixedColumnWithEdit() {
           });
         }
       }}
+    />
+  );
+}
+
+export function TableMultiSorting(props) {
+  const global_cols = [
+    {
+      title: 'Number',
+      field: 'number',
+      minWidth: 140,
+      maxWidth: 400
+    },
+    {
+      title: 'Title',
+      field: 'title',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true,
+      defaultSort: 'desc'
+    },
+    {
+      title: 'Name',
+      field: 'name',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true,
+      defaultSort: 'desc'
+    },
+    {
+      title: 'Last Name',
+      field: 'lastName',
+      minWidth: 140,
+      maxWidth: 400,
+      sorting: true,
+      defaultSort: 'asc'
+    }
+  ];
+
+  const global_data1 = [
+    {
+      number: 1,
+      title: 'Developer',
+      name: 'Mehmet',
+      lastName: 'Baran',
+      id: '1231'
+    },
+    {
+      number: 22,
+      title: 'Developer',
+      name: 'Pratik',
+      lastName: 'N',
+      id: '1234'
+    },
+    {
+      number: 25,
+      title: 'Human Resources',
+      name: 'Juan',
+      lastName: 'Lopez',
+      id: '1235'
+    },
+    {
+      number: 3,
+      title: 'Consultant',
+      name: 'Raul',
+      lastName: 'Barak',
+      id: '1236'
+    }
+  ];
+
+  const orderCollection = [
+    { orderBy: 1, orderDirection: 'asc', sortOrder: 1 },
+    { orderBy: 2, orderDirection: 'desc', sortOrder: 2 }
+  ];
+
+  const onOrderCollectionChange = (orderByCollection) => {
+    console.log('onOrderCollectionChange ===>', orderByCollection);
+  };
+
+  return (
+    <MaterialTable
+      data={global_data1}
+      columns={global_cols}
+      title="Multi Column Sort"
+      options={{
+        selection: false,
+        maxColumnSort: 2,
+        defaultOrderByCollection: orderCollection,
+        showColumnSortOrder: true
+      }}
+      onOrderCollectionChange={onOrderCollectionChange}
     />
   );
 }

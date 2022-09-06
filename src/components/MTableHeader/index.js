@@ -236,17 +236,20 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                         }
                   }
                 >
-                  {columnDef.sorting !== false && options.sorting ? (
+                  {columnDef.sorting !== false &&
+                  options.sorting &&
+                  props.allowSorting ? (
                     <RenderSortButton
                       columnDef={columnDef}
-                      orderBy={props.orderBy}
                       keepSortDirectionOnColumnSwitch={
                         options.keepSortDirectionOnColumnSwitch
                       }
-                      orderDirection={props.orderDirection}
                       icon={icons.SortArrow}
                       thirdSortClick={options.thirdSortClick}
                       onOrderChange={props.onOrderChange}
+                      orderByCollection={props.orderByCollection}
+                      showColumnSortOrder={options.showColumnSortOrder}
+                      sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
                     >
                       {columnDef.title}
                     </RenderSortButton>
@@ -257,18 +260,23 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
               )}
             </Draggable>
           );
-        } else if (columnDef.sorting !== false && options.sorting) {
+        } else if (
+          columnDef.sorting !== false &&
+          options.sorting &&
+          !props.allowSorting
+        ) {
           content = (
             <RenderSortButton
               columnDef={columnDef}
-              orderBy={props.orderBy}
               keepSortDirectionOnColumnSwitch={
                 options.keepSortDirectionOnColumnSwitch
               }
-              orderDirection={props.orderDirection}
               icon={icons.SortArrow}
               thirdSortClick={options.thirdSortClick}
               onOrderChange={props.onOrderChange}
+              orderByCollection={props.orderByCollection}
+              showColumnSortOrder={options.showColumnSortOrder}
+              sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
             >
               {columnDef.title}
             </RenderSortButton>
@@ -460,60 +468,81 @@ const computeNewOrderDirection = (
 
 function RenderSortButton({
   columnDef,
-  orderBy,
   keepSortDirectionOnColumnSwitch,
-  orderDirection,
   icon,
   thirdSortClick,
   onOrderChange,
-  children
+  children,
+  orderByCollection,
+  showColumnSortOrder,
+  sortOrderIndicatorStyle
 }) {
-  const active = orderBy === columnDef.tableData.id;
+  const activeColumn = orderByCollection.find(
+    ({ orderBy }) => orderBy === columnDef.tableData.id
+  );
+
   // If current sorted column or prop asked to
   // maintain sort order when switching sorted column,
   // follow computed order direction if defined
   // else default direction is asc
   const direction =
-    active || keepSortDirectionOnColumnSwitch ? orderDirection || 'asc' : 'asc';
-  let ariaSort = 'none';
+    activeColumn || keepSortDirectionOnColumnSwitch
+      ? (activeColumn && activeColumn.orderDirection) || 'asc'
+      : 'asc';
 
-  if (active && direction === 'asc') {
+  let ariaSort = 'none';
+  if (activeColumn && direction === 'asc') {
     ariaSort = columnDef.ariaSortAsc ? columnDef.ariaSortAsc : 'Ascendant';
-  }
-  if (active && direction === 'desc') {
+  } else if (activeColumn && direction === 'desc') {
     ariaSort = columnDef.ariaSortDesc ? columnDef.ariaSortDesc : 'Descendant';
   }
 
+  const orderBy = activeColumn && activeColumn.orderBy;
+
   return (
-    <TableSortLabel
-      role=""
-      aria-sort={ariaSort}
-      aria-label={columnDef.ariaLabel}
-      IconComponent={icon}
-      active={active}
-      data-testid="mtableheader-sortlabel"
-      direction={direction}
-      onClick={() => {
-        const newOrderDirection = computeNewOrderDirection(
-          orderBy,
-          orderDirection,
-          columnDef,
-          thirdSortClick,
-          keepSortDirectionOnColumnSwitch
-        );
-        onOrderChange(columnDef.tableData.id, newOrderDirection);
-      }}
-    >
-      {children}
-    </TableSortLabel>
+    <>
+      <TableSortLabel
+        role=""
+        aria-sort={ariaSort}
+        aria-label={columnDef.ariaLabel}
+        IconComponent={icon}
+        active={!!activeColumn}
+        data-testid="mtableheader-sortlabel"
+        direction={direction}
+        onClick={() => {
+          const newOrderDirection = computeNewOrderDirection(
+            orderBy,
+            direction,
+            columnDef,
+            thirdSortClick,
+            keepSortDirectionOnColumnSwitch
+          );
+          onOrderChange(
+            columnDef.tableData.id,
+            newOrderDirection,
+            activeColumn && activeColumn.sortOrder
+          );
+        }}
+      >
+        {children}
+      </TableSortLabel>
+      {showColumnSortOrder && activeColumn && (
+        <span
+          style={sortOrderIndicatorStyle}
+          data-testid="material-table-column-sort-order-indicator"
+        >
+          {activeColumn.sortOrder}
+        </span>
+      )}
+    </>
   );
 }
 
 MTableHeader.defaultProps = {
   dataCount: 0,
   selectedCount: 0,
-  orderBy: undefined,
-  orderDirection: 'asc'
+  orderByCollection: [],
+  allowSorting: true
 };
 
 MTableHeader.propTypes = {
@@ -523,10 +552,11 @@ MTableHeader.propTypes = {
   selectedCount: PropTypes.number,
   onAllSelected: PropTypes.func,
   onOrderChange: PropTypes.func,
-  orderBy: PropTypes.number,
-  orderDirection: PropTypes.string,
   showActionsColumn: PropTypes.bool,
-  tooltip: PropTypes.string
+  orderByCollection: PropTypes.array,
+  showColumnSortOrder: PropTypes.bool,
+  tooltip: PropTypes.string,
+  allowSorting: PropTypes.bool
 };
 
 export const styles = (theme) => ({
