@@ -1,3 +1,9 @@
+#### 5.1.1 (2022-09-07)
+
+##### Other Changes
+
+- correctly show select all box for tree ([d1cc3a74](https://github.com/material-table-core/core/commit/d1cc3a74d6db256b8ac1b08fdc0fa38a6bf522b2))
+
 ### 5.1.0 (2022-09-07)
 
 #### 5.0.5 (2022-08-14)
