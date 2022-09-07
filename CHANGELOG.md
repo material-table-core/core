@@ -6,6 +6,12 @@
 
 ### 5.1.0 (2022-09-07)
 
+This update brings in the multi sort feature.
+
+Many thanks to [Diiegoav](https://github.com/Diiegoav) for developing this feature!!
+
+A demo on the website will follow shortly.
+
 #### 5.0.5 (2022-08-14)
 
 #### 5.0.4 (2022-07-09)
