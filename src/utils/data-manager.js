@@ -1203,8 +1203,8 @@ export default class DataManager {
         if (item.tableData.markedForTreeRemove) rowDataArray.splice(i, 1);
       }
     };
-
     traverseTreeAndDeleteMarked(this.treefiedData);
+    this.treefiedDataLength = this.treefiedData.length;
     this.treefied = true;
   }
 
