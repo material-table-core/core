@@ -85,8 +85,8 @@ class MTableBody extends React.Component {
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
-              dateTimePickerLocalization:
-                this.props.localization.dateTimePickerLocalization
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization
             }}
             key={'row-' + data.tableData.uuid}
             mode={this.props.bulkEditOpen ? 'bulk' : data.tableData.editing}
@@ -119,8 +119,8 @@ class MTableBody extends React.Component {
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
-              dateTimePickerLocalization:
-                this.props.localization.dateTimePickerLocalization
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization
             }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
@@ -141,6 +141,8 @@ class MTableBody extends React.Component {
             onCellEditStarted={this.props.onCellEditStarted}
             onCellEditFinished={this.props.onCellEditFinished}
             scrollWidth={this.props.scrollWidth}
+            showExpandCollapseIcon={this.props.showExpandCollapseIcon}
+            onClickExpandCollapseIcon={this.props.onClickExpandCollapseIcon}
           />
         );
       }
@@ -166,8 +168,8 @@ class MTableBody extends React.Component {
         localization={{
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
-          dateTimePickerLocalization:
-            this.props.localization.dateTimePickerLocalization
+          dateTimePickerLocalization: this.props.localization
+            .dateTimePickerLocalization
         }}
         onBulkEditRowChanged={this.props.onBulkEditRowChanged}
         onCellEditFinished={this.props.onCellEditFinished}
@@ -206,8 +208,8 @@ class MTableBody extends React.Component {
           localization={{
             ...MTableBody.defaultProps.localization.editRow,
             ...this.props.localization.editRow,
-            dateTimePickerLocalization:
-              this.props.localization.dateTimePickerLocalization
+            dateTimePickerLocalization: this.props.localization
+              .dateTimePickerLocalization
           }}
           mode="add"
           onEditingApproved={this.props.onEditingApproved}
@@ -252,8 +254,8 @@ class MTableBody extends React.Component {
             localization={{
               ...MTableBody.defaultProps.localization.filterRow,
               ...this.props.localization.filterRow,
-              dateTimePickerLocalization:
-                this.props.localization.dateTimePickerLocalization
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization
             }}
             hasDetailPanel={!!this.props.detailPanel}
             detailPanelColumnAlignment={
@@ -297,7 +299,11 @@ MTableBody.defaultProps = {
   },
   pageSize: 5,
   renderData: [],
-  selection: false
+  selection: false,
+  showExpandCollapseIcon: (props) =>
+    props.data.tableData.childRows && props.data.tableData.childRows.length > 0,
+  onClickExpandCollapseIcon: (props) =>
+    props.onTreeExpandChanged(props.path, props.data)
 };
 
 MTableBody.propTypes = {
@@ -341,7 +347,9 @@ MTableBody.propTypes = {
   scrollWidth: PropTypes.number.isRequired,
   selection: PropTypes.bool.isRequired,
   showAddRow: PropTypes.bool,
-  treeDataMaxLevel: PropTypes.number
+  treeDataMaxLevel: PropTypes.number,
+  showExpandCollapseIcon: PropTypes.func,
+  onClickExpandCollapseIcon: PropTypes.func
 };
 
 export default React.forwardRef(function MTableBodyRef(props, ref) {

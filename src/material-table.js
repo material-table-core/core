@@ -1061,6 +1061,8 @@ export default class MaterialTable extends React.Component {
         onToggleDetailPanel={this.onToggleDetailPanel}
         onGroupExpandChanged={this.onGroupExpandChanged}
         onTreeExpandChanged={this.onTreeExpandChanged}
+        showExpandCollapseIcon={this.props.showExpandCollapseIcon}
+        onClickExpandCollapseIcon={this.props.onClickExpandCollapseIcon}
         onEditingCanceled={this.onEditingCanceled}
         onEditingApproved={this.onEditingApproved}
         localization={{

@@ -42,6 +42,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
     scrollWidth,
     onRowClick,
     onRowDoubleClick,
+    showExpandCollapseIcon,
+    onClickExpandCollapseIcon,
     ...rowProps
   } = props;
 
@@ -325,10 +327,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
 
   const renderTreeDataColumn = () => {
     const size = CommonValues.elementSize(props);
-    if (
-      props.data.tableData.childRows &&
-      props.data.tableData.childRows.length > 0
-    ) {
+    if (showExpandCollapseIcon(props)) {
       return (
         <TableCell
           size={size}
@@ -345,7 +344,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
               ...rotateIconStyle(props.data.tableData.isTreeExpanded)
             }}
             onClick={(event) => {
-              props.onTreeExpandChanged(props.path, props.data);
+              onClickExpandCollapseIcon(props);
               event.stopPropagation();
             }}
           >
@@ -530,6 +529,7 @@ MTableBodyRow.propTypes = {
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
+  showExpandCollapseIcon: PropTypes.func,
   hasAnyEditingRow: PropTypes.bool,
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
