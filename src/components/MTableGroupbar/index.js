@@ -4,7 +4,7 @@ import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { Droppable, Draggable } from '@@hello-pangea/dnd';
+import { Droppable, Draggable } from '@hello-pangea/dnd';
 import { useLocalizationStore, useIconStore } from '@store';
 /* eslint-enable no-unused-vars */
 

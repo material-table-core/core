@@ -10,10 +10,10 @@ import defaultComponents from '../defaults/props.components';
 
 const { Provider, useStore } = createContext();
 
-const createStore = () =>
+const createStore = (props) =>
   create((set) => ({
     // Localization
-    localization: defaultLocalization,
+    localization: deepmerge(defaultLocalization, props.localization),
     mergeLocalization: (nextLocalization) => {
       set(({ localization }) => {
         const mergedLocalization = deepmerge(localization, nextLocalization);
@@ -29,7 +29,7 @@ const createStore = () =>
       });
     },
     // Options
-    options: defaultOptions,
+    options: { ...defaultOptions, ...props.options },
     mergeOptions: (nextOptions) => {
       set(() => {
         const mergedOptions = { ...defaultOptions, ...nextOptions };
@@ -120,7 +120,7 @@ function useMergeProps(props) {
 function withContext(WrappedComponent) {
   return function Wrapped(props) {
     return (
-      <Provider createStore={createStore}>
+      <Provider createStore={() => createStore(props)}>
         <WrappedComponent {...props} />
       </Provider>
     );

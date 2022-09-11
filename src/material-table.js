@@ -7,7 +7,7 @@ import {
   TableRow,
   LinearProgress
 } from '@material-ui/core';
-import { DragDropContext, Droppable } from '@@hello-pangea/dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import DataManager from '@utils/data-manager';
 import * as CommonValues from '@utils/common-values';
 import {
@@ -717,6 +717,7 @@ export default class MaterialTable extends React.Component {
 
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query, error: this.state.errorState };
+
     this.setState({ isLoading: true, errorState: undefined }, () => {
       this.props
         .data(query)
