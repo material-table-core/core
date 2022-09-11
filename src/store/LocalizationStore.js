@@ -13,7 +13,7 @@ const { Provider, useStore } = createContext();
 const createStore = (props) =>
   create((set) => ({
     // Localization
-    localization: deepmerge(defaultLocalization, props.localization),
+    localization: deepmerge(props.localization, defaultLocalization),
     mergeLocalization: (nextLocalization) => {
       set(({ localization }) => {
         const mergedLocalization = deepmerge(localization, nextLocalization);
