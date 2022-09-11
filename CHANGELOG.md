@@ -1,3 +1,14 @@
+#### 5.1.2 (2022-09-11)
+
+##### Bug Fixes
+
+- [#614](https://github.com/material-table-core/core/pull/614) ([90b70c28](https://github.com/material-table-core/core/commit/90b70c28a823b5622bc59042909f277db5a2e987))
+
+##### Other Changes
+
+- add @hello-pangea/dnd ([c1a6c78f](https://github.com/material-table-core/core/commit/c1a6c78fc91ad7999718e23bd3242b4a88760b6f))
+- update changelog ([76ae15bd](https://github.com/material-table-core/core/commit/76ae15bd75536a4c4f253b1e254cec063084baae))
+
 #### 5.1.1 (2022-09-07)
 
 ##### Other Changes
