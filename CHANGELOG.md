@@ -1,3 +1,9 @@
+#### 5.1.3 (2022-09-11)
+
+##### Other Changes
+
+- local fix ([12515eea](https://github.com/material-table-core/core/commit/12515eeae14386d1ec6ba608929caee2020c1801))
+
 #### 5.1.2 (2022-09-11)
 
 ##### Bug Fixes
