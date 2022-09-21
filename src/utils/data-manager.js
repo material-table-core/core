@@ -15,6 +15,7 @@ export default class DataManager {
   lastEditingRow = undefined;
   maxColumnSort = 1;
   orderByCollection = [];
+  defaultOrderByCollection = [];
   pageSize = 5;
   paging = true;
   parentFunc = null;
@@ -169,7 +170,8 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -197,11 +199,34 @@ export default class DataManager {
   }
 
   setOrderByCollection() {
-    this.orderByCollection = this.columns.map((columnDef) => ({
-      orderBy: columnDef.tableData.id,
-      sortOrder: undefined,
-      orderDirection: ''
-    }));
+    const prevOrderByCollection = this.getOrderByCollection();
+    let prevColumns = this.columns.map((columnDef) => {
+      const { id } = columnDef.tableData;
+      const foundCollection = prevOrderByCollection.find(
+        (collection) => collection.orderBy === id
+      );
+
+      if (foundCollection) {
+        return { ...foundCollection };
+      } else {
+        return {
+          orderBy: columnDef.tableData.id,
+          sortOrder: undefined,
+          orderDirection: ''
+        };
+      }
+    });
+
+    prevColumns = this.sortOrderCollection(prevColumns);
+    this.orderByCollection = [...prevColumns];
+  }
+
+  setDefaultOrderByCollection(defaultOrderByCollection) {
+    this.defaultOrderByCollection = [...defaultOrderByCollection];
+  }
+
+  getDefaultOrderByCollection() {
+    return this.defaultOrderByCollection;
   }
 
   changeApplySearch(applySearch) {
@@ -877,7 +902,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 
