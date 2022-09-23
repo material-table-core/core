@@ -1,3 +1,13 @@
+#### 5.1.4 (2022-09-23)
+
+##### Chores
+
+- use @hello-pangea/dnd ([#608](https://github.com/material-table-core/core/pull/608)) ([e89f4bb8](https://github.com/material-table-core/core/commit/e89f4bb89e62c22cb72c1f20d4593ebede2d4662))
+
+##### New Features
+
+- be able to adjust pagination position using flex ([c262a95f](https://github.com/material-table-core/core/commit/c262a95f7bc5607038e85a1765d6c22cf028419a))
+
 #### 5.1.3 (2022-09-11)
 
 ##### Other Changes
