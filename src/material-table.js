@@ -406,8 +406,21 @@ export default class MaterialTable extends React.Component {
           }
         });
       }
-    }
 
+      // If only bulk update and add row are used, the columns do not align with the action column
+      if (
+        this.state?.showAddRow &&
+        calculatedProps.editable.onRowAdd &&
+        calculatedProps.actions.filter((action) => action.position === 'row')
+          .length === 0
+      ) {
+        calculatedProps.actions.push({
+          icon: 'div',
+          position: 'row',
+          onClick: () => {}
+        });
+      }
+    }
     return calculatedProps;
   }
 
