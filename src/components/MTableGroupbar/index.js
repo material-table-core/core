@@ -4,7 +4,7 @@ import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { Droppable, Draggable } from '@react-forked/dnd';
+import { Droppable, Draggable } from '@hello-pangea/dnd';
 /* eslint-enable no-unused-vars */
 
 function MTableGroupbar(props) {

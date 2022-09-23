@@ -3,7 +3,7 @@ import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
 import { Table, TableFooter, TableRow, LinearProgress } from '@mui/material';
-import { DragDropContext, Droppable } from '@react-forked/dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import DataManager from '@utils/data-manager';
 import {
   MTablePagination,
