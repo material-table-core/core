@@ -41,3 +41,5 @@ export {
   MTableSteppedPagination,
   MTableToolbar
 } from './components';
+
+export { ALL_COLUMNS } from './utils/constants';

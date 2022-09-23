@@ -45,7 +45,8 @@ import {
   TreeData,
   TableWithSummary,
   TableWithNumberOfPagesAround,
-  FixedColumnWithEdit
+  FixedColumnWithEdit,
+  TableMultiSorting
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
@@ -59,6 +60,9 @@ render(
   <div>
     <h1>DetailPanelRemounting</h1>
     <DetailPanelRemounting />
+
+    <h1>Multi Sorting</h1>
+    <TableMultiSorting />
 
     <h1>Switcher</h1>
     <DataSwitcher />
