@@ -1,3 +1,10 @@
+#### 0.2.36 (2022-09-23)
+
+##### Bug Fixes
+
+- column align for add and bulk edi only ([2636f865](https://github.com/material-table-core/core/commit/2636f865d68d4730a40f793efd64ad0dd46dafba))
+- column width calc when hide set to true ([#601](https://github.com/material-table-core/core/pull/601)) ([f8604b0d](https://github.com/material-table-core/core/commit/f8604b0dbf5d82ff3f3889d902764c4e0375b224))
+
 #### 0.2.35 (2022-07-01)
 
 #### 0.2.34 (2022-05-19)
