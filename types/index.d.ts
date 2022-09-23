@@ -1,11 +1,13 @@
 import React from 'react';
 import { IconProps } from '@mui/material/Icon';
+import { TableProps } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
 type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
+  sx?: TableProps['sx'];
   actions?: (
     | Action<RowData>
     | ((rowData: RowData) => Action<RowData>)

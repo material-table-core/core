@@ -969,6 +969,7 @@ export default class MaterialTable extends React.Component {
 
   renderTable = (props) => (
     <Table
+      sx={props.sx}
       style={{
         ...(props.options.tableWidth === 'variable' && {
           width: this.state.tableStyleWidth
