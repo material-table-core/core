@@ -74,6 +74,7 @@ function MTableGroupbar(props) {
         );
       }
     }
+    props.onGroupChange && props.onGroupChange(props.groupColumns);
   }, [props.groupColumns]);
 
   return (
@@ -163,7 +164,11 @@ MTableGroupbar.defaultProps = {};
 
 MTableGroupbar.propTypes = {
   forwardedRef: PropTypes.element,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onSortChanged: PropTypes.func,
+  onGroupRemoved: PropTypes.func,
+  onGroupChange: PropTypes.func,
+  persistentGroupingsId: PropTypes.string
 };
 
 export default React.forwardRef(function MTableGroupbarRef(props, ref) {

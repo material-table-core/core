@@ -61,7 +61,7 @@
 
 # Sponsoring
 
-We are now able to be sponsored via [Github Sponsors!](https://github.com/sponsors/material-table-core?o=esb)
+We are now able to be sponsored via [Github Sponsors](https://github.com/sponsors/material-table-core?o=esb) or [Open collective](https://opencollective.com/material-table-core)!
 So if you want to help us maintain this package, everything is appreciated.
 
 # Contributing

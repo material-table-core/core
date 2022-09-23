@@ -61,7 +61,8 @@ export interface MaterialTableProps<RowData extends object> {
     allColumns: ColumnSize[]
   ) => void;
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
-  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: number) => void;
+  onGroupChange?: (columns: Column<RowData>[]) => void;
   onRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
@@ -254,6 +255,7 @@ export interface Column<RowData extends object> {
     | 'time'
     | 'currency';
   width?: string | number;
+  minWidth?: number;
 }
 
 export interface Components {
@@ -376,9 +378,17 @@ export interface Options<RowData extends object> {
   paging?: boolean;
   grouping?: boolean;
   groupTitle?: (groupData: object) => React.ReactNode;
-  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
+  overflowY?:
+    | 'visible'
+    | 'hidden'
+    | 'scroll'
+    | 'auto'
+    | 'initial'
+    | 'inherit'
+    | 'overlay';
   pageSize?: number;
   pageSizeOptions?: number[];
+  paginationAlignment?: React.CSSProperties['justifyContent'];
   paginationType?: 'normal' | 'stepped';
   paginationPosition?: 'bottom' | 'top' | 'both';
   persistentGroupingsId?: string;
@@ -486,4 +496,10 @@ export type ColumnSize = {
 
 export default class MaterialTable<
   RowData extends object
-> extends React.Component<MaterialTableProps<RowData>> {}
+> extends React.Component<MaterialTableProps<RowData>> {
+  onQueryChange: (
+    query: Partial<Query<RowData>>,
+    callback?: () => void
+  ) => void;
+  clearCriteria: () => void;
+}
