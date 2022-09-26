@@ -65,9 +65,8 @@ function MTableGroupbar(props) {
           );
         }
       } else {
-        materialTableGroupings[
-          props.persistentGroupingsId
-        ] = persistentGroupings;
+        materialTableGroupings[props.persistentGroupingsId] =
+          persistentGroupings;
         localStorage.setItem(
           'material-table-groupings',
           JSON.stringify(materialTableGroupings)

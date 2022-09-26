@@ -237,7 +237,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                   }
                 >
                   {columnDef.sorting !== false &&
-                  options.sorting &&
+                  props.sorting &&
                   props.allowSorting ? (
                     <RenderSortButton
                       columnDef={columnDef}
@@ -262,8 +262,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
           );
         } else if (
           columnDef.sorting !== false &&
-          options.sorting &&
-          !props.allowSorting
+          props.sorting &&
+          props.allowSorting
         ) {
           content = (
             <RenderSortButton

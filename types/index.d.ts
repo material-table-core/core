@@ -6,6 +6,14 @@ import { OnHandlers } from './helper';
 
 type SvgIconComponent = typeof SvgIcon;
 
+export type ALL_COLUMNS = 'all_columns';
+
+export interface OrderByCollection {
+  orderBy: number;
+  oderDirection: string;
+  sortOrder: number;
+}
+
 export interface MaterialTableProps<RowData extends object> {
   actions?: (
     | Action<RowData>
@@ -60,7 +68,11 @@ export interface MaterialTableProps<RowData extends object> {
     changedColumns: ColumnSize[],
     allColumns: ColumnSize[]
   ) => void;
+  /**
+   * @deprecated this property is deprecated use onOrderCollectionChange instead.
+   */
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
+  onOrderCollectionChange?: (orderByCollection: OrderByCollection[]) => void;
   onGroupRemoved?: (column: Column<RowData>, index: number) => void;
   onGroupChange?: (columns: Column<RowData>[]) => void;
   onRowClick?: (
@@ -120,8 +132,15 @@ export interface Query<RowData extends object> {
   pageSize: number;
   totalCount: number;
   search: string;
+  /**
+   * @deprecated this property is deprecated use orderByCollection instead.
+   */
   orderBy: Column<RowData>;
+  /**
+   * @deprecated this property is deprecated use orderByCollection instead.
+   */
   orderDirection: 'asc' | 'desc';
+  orderByCollection: OrderByCollection[];
   error?: ErrorState;
 }
 
@@ -411,6 +430,9 @@ export interface Options<RowData extends object> {
   searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: CheckboxProps | ((data: RowData) => CheckboxProps);
+  /**
+   * @deprecated this property is deprecated use maxColumnSort instead.
+   */
   sorting?: boolean;
   keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
@@ -421,6 +443,10 @@ export interface Options<RowData extends object> {
   detailPanelColumnAlignment?: 'left' | 'right';
   detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
+  defaultOrderByCollection: OrderByCollection[];
+  maxColumnSort?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
+  showColumnSortOrder?: boolean;
+  sortOrderIndicatorStyle?: React.CSSProperties;
 }
 
 export interface Localization {

@@ -88,7 +88,7 @@ export default class MaterialTable extends React.Component {
          * THIS WILL NEED TO BE REMOVED EVENTUALLY.
          * Warn consumer of deprecated prop.
          */
-        if (this.props.sorting !== undefined) {
+        if (this.props.options.sorting !== undefined) {
           console.error(
             'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
           );
@@ -140,27 +140,39 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
+    const prevDefaultOrderByCollection =
+      this.dataManager.getDefaultOrderByCollection();
     const { defaultOrderByCollection } = props.options;
     let defaultCollectionSort = [];
-    let prevCollectionSort = [];
+    let defaultSort = '';
+    let prevSort = '';
 
-    if (defaultOrderByCollection && defaultOrderByCollection.length) {
+    if (defaultOrderByCollection && defaultOrderByCollection.length > 0) {
       defaultCollectionSort = [...defaultOrderByCollection].slice(
         0,
         maxColumnSort
       );
+      defaultCollectionSort = this.dataManager.sortOrderCollection(
+        defaultCollectionSort
+      );
+
+      defaultSort = JSON.stringify(defaultCollectionSort);
+      prevSort = JSON.stringify(prevDefaultOrderByCollection);
+
+      if (defaultSort !== prevSort) {
+        this.dataManager.setDefaultOrderByCollection(defaultCollectionSort);
+      }
     } else {
       const defaultSorts = getDefaultCollectionSort(
         props.columns,
         prevColumns,
         this.dataManager.maxColumnSort
       );
-      defaultCollectionSort = [...defaultSorts[0]].slice(0, maxColumnSort);
-      prevCollectionSort = [...defaultSorts[1]];
+      defaultCollectionSort = [...defaultSorts[0]];
+      defaultSort = JSON.stringify(defaultCollectionSort);
+      prevSort = JSON.stringify([...defaultSorts[1]]);
     }
 
-    const defaultSort = JSON.stringify(defaultCollectionSort);
-    const prevSort = JSON.stringify(prevCollectionSort);
     const currentSort = JSON.stringify(this.dataManager.orderByCollection);
     // If the default sorting changed and differs from the current default sorting, it will trigger a new sorting
     const shouldReorder =
@@ -247,12 +259,10 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions = functionlessColumns(
-            fixedPropsColumns
-          );
-          const prevColumnsWithoutFunctions = functionlessColumns(
-            fixedPrevColumns
-          );
+          const currentColumnsWithoutFunctions =
+            functionlessColumns(fixedPropsColumns);
+          const prevColumnsWithoutFunctions =
+            functionlessColumns(fixedPrevColumns);
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -479,6 +489,7 @@ export default class MaterialTable extends React.Component {
 
   onChangeOrder = (orderBy, orderDirection, sortOrder) => {
     this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder);
+    const orderByCollection = this.dataManager.getOrderByCollection();
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
@@ -490,23 +501,19 @@ export default class MaterialTable extends React.Component {
       console.warn(
         'Properties orderBy and orderDirection had been deprecated when remote data, please start using orderByCollection instead'
       );
-      query.orderByCollection = this.dataManager.getOrderByCollection();
+      query.orderByCollection = orderByCollection;
       this.onQueryChange(query, () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
-          this.props.onOrderCollectionChange(
-            this.dataManager.getOrderByCollection()
-          );
+          this.props.onOrderCollectionChange(orderByCollection);
       });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onOrderChange &&
           this.props.onOrderChange(orderBy, orderDirection);
         this.props.onOrderCollectionChange &&
-          this.props.onOrderCollectionChange(
-            this.dataManager.getOrderByCollection()
-          );
+          this.props.onOrderCollectionChange(orderByCollection);
       });
     }
   };
@@ -1036,12 +1043,15 @@ export default class MaterialTable extends React.Component {
           }
           onAllSelected={this.onAllSelected}
           onOrderChange={this.onChangeOrder}
-          orderByCollection={this.dataManager.getOrderByCollection()}
           isTreeData={this.props.parentChildData !== undefined}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           onColumnResized={this.onColumnResized}
           scrollWidth={this.state.width}
+          sorting={
+            props.options.sorting || this.dataManager.maxColumnSort !== 0
+          }
           allowSorting={this.dataManager.maxColumnSort !== 0}
+          orderByCollection={this.dataManager.getOrderByCollection()}
         />
       )}
       <props.components.Body
@@ -1116,9 +1126,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef = this.state.columns[
-        count >= 0 ? i : this.state.columns.length - 1 - i
-      ];
+      const colDef =
+        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
@@ -1343,28 +1352,25 @@ function getDefaultCollectionSort(currentColumns, prevColumns, maxColumnSort) {
   let prevCollectionSort = [];
 
   if (maxColumnSort > 0) {
-    defaultCollectionSort = reduceByDefaultSort(currentColumns);
+    defaultCollectionSort = reduceByDefaultSort(currentColumns, maxColumnSort);
   }
 
   if (prevColumns) {
-    prevCollectionSort = reduceByDefaultSort(prevColumns);
+    prevCollectionSort = reduceByDefaultSort(prevColumns, maxColumnSort);
   }
 
-  return [
-    defaultCollectionSort.slice(0, maxColumnSort),
-    prevCollectionSort.slice(0, maxColumnSort)
-  ];
+  return [defaultCollectionSort, prevCollectionSort];
 }
 
-function reduceByDefaultSort(list) {
-  return list.reduce((acc, column, index) => {
-    if (column.defaultSort && column.sorting !== false) {
-      acc.push({
-        orderBy: index,
-        orderDirection: column.defaultSort,
-        sortOrder: index
-      });
-    }
-    return acc;
-  }, []);
+function reduceByDefaultSort(list, maxColumnSort) {
+  let sortColumns = list.filter(
+    (column) => column.defaultSort && column.sorting !== false
+  );
+  return sortColumns.slice(0, maxColumnSort).map((column, index) => {
+    return {
+      orderBy: column.tableData.id,
+      orderDirection: column.defaultSort,
+      sortOrder: index + 1
+    };
+  });
 }
