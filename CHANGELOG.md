@@ -1,3 +1,10 @@
+#### 0.2.37 (2022-09-26)
+
+##### New Features
+
+- move to @hello-pangea/dnd ([9552a87b](https://github.com/material-table-core/core/commit/9552a87b8a2b498085eeea7541d49e084e54873a))
+- allow sx to be passed to the table ([141a3195](https://github.com/material-table-core/core/commit/141a3195acd8bc435ae84bd14d1c60d6eecb8cb2))
+
 #### 0.2.36 (2022-09-23)
 
 ##### Bug Fixes
