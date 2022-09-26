@@ -429,10 +429,28 @@ export default class MaterialTable extends React.Component {
           }
         });
       }
+      // If only bulk update and add row are used, the columns do not align with the action column, because no action column is present for the add
+      if (
+        this.state?.showAddRow &&
+        calculatedProps.editable.onRowAdd &&
+        calculatedProps.actions.filter((action) => action.position === 'row')
+          .length === 0
+      ) {
+        calculatedProps.actions.push({
+          icon: 'div',
+          position: 'row',
+          onClick: () => {}
+        });
+      }
     }
 
     return calculatedProps;
   }
+
+  clearCriteria = () => {
+    this.dataManager.clearCriteria();
+    this.setState(this.dataManager.getRenderState());
+  };
 
   isRemoteData = (props) => !Array.isArray((props || this.props).data);
 
@@ -926,14 +944,17 @@ export default class MaterialTable extends React.Component {
             <TableRow style={{ display: 'grid' }}>
               <this.props.components.Pagination
                 classes={{
-                  root: props.classes.paginationRoot,
                   toolbar: props.classes.paginationToolbar,
                   caption: props.classes.paginationCaption,
                   selectRoot: props.classes.paginationSelectRoot
                 }}
                 style={{
-                  float: props.theme.direction === 'rtl' ? '' : 'right',
-                  overflowX: 'auto'
+                  overflowX: 'auto',
+                  display: 'flex',
+                  direction: props.theme.direction,
+                  justifyContent: props.options.paginationAlignment
+                    ? props.options.paginationAlignment
+                    : 'flex-end'
                 }}
                 colSpan={3}
                 count={
@@ -1163,6 +1184,7 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              onGroupChange={this.props.onGroupChange}
               persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}

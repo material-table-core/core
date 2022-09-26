@@ -1154,8 +1154,7 @@ export default class DataManager {
         addRow(parent);
         rowData.tableData.path = [
           ...parent.tableData.path,
-          parent.tableData.childRows[parent.tableData.childRows.length - 1]
-            .tableData.uuid
+          rowData.tableData.uuid
         ];
         this.treeDataMaxLevel = Math.max(
           this.treeDataMaxLevel,
@@ -1369,4 +1368,14 @@ export default class DataManager {
 
     this.paged = true;
   }
+
+  clearCriteria = () => {
+    this.changeOrder(-1, '');
+    this.changeSearchText('');
+    for (const column of this.columns) {
+      this.changeFilterValue(column.tableData.id, '');
+    }
+    this.changeSearchText('');
+    this.changePaging(0);
+  };
 }
