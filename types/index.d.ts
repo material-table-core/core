@@ -9,7 +9,7 @@ export type ALL_COLUMNS = 'all_columns';
 
 export interface OrderByCollection {
   orderBy: number;
-  oderDirection: string;
+  orderDirection: string;
   sortOrder: number;
 }
 
