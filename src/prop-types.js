@@ -377,7 +377,7 @@ export const propTypes = {
     defaultOrderByCollection: PropTypes.arrayOf(
       PropTypes.shape({
         orderBy: PropTypes.number,
-        oderDirection: PropTypes.string,
+        orderDirection: PropTypes.string,
         orderIndex: PropTypes.number
       })
     ),
