@@ -42,7 +42,7 @@ export default {
   searchFieldVariant: 'standard',
   selection: false,
   selectionProps: {},
-  sorting: true,
+  // sorting: true,
   maxColumnSort: 1,
   defaultOrderByCollection: [],
   showColumnSortOrder: false,
