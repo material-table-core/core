@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -136,7 +136,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     [setResizing, resizing, lastX, onColumnResized]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
@@ -297,8 +297,8 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
           columnDef.resizable !== false &&
           !(options.tableWidth === 'full' && index === allCols.length - 1)
         ) {
-          const Resize = props.icons.Resize
-            ? props.icons.Resize
+          const Resize = icons.Resize
+            ? icons.Resize
             : (props) => <Box {...props} data-test-id="drag_handle" />;
           content = (
             <Box sx={styles.headerWrap(cellAlignment === 'right')}>
@@ -426,7 +426,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     });
   return (
     <TableHead ref={props.forwardedRef}>
-      <TableRow className={props.classes.headerRow}>{headers}</TableRow>
+      <TableRow sx={styles.headerRow}>{headers}</TableRow>
     </TableHead>
   );
 }
@@ -566,7 +566,7 @@ export const styles = {
     alignItems: 'center',
     position: 'relative',
     left: 4
-  },
+  }),
   headerWrapRight: (alignRight) => ({
     display: 'flex',
     alignItems: 'center',
@@ -575,12 +575,14 @@ export const styles = {
     left: 4,
     justifyContent: 'flex-end'
   }),
-  headerContent: {
+  headerContent: (alignRight) => ({
     minWidth: 0,
     display: 'flex',
     flex: '1 0 100%',
+    flexDirection: alignRight ? 'row-reverse' : undefined,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    width: '100%',
     position: 'relative'
   }),
   headerResize: (resize) => ({

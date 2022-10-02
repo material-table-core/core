@@ -70,7 +70,6 @@ function MTablePaginationInner(props) {
   }
 
   const {
-    classes,
     count,
     page,
     rowsPerPage,
@@ -104,14 +103,25 @@ function MTablePaginationInner(props) {
               size="large"
             >
               {theme.direction === 'rtl' ? (
-                <props.icons.LastPage />
+                <icons.LastPage />
               ) : (
-                <props.icons.FirstPage />
+                <icons.FirstPage />
               )}
             </IconButton>
           </span>
         </Tooltip>
       )}
+      <Tooltip title={localization.previousTooltip}>
+        <span>
+          <IconButton
+            onClick={handleBackButtonClick}
+            disabled={page === 0}
+            aria-label={localization.previousAriaLabel}
+          >
+            <icons.PreviousPage />
+          </IconButton>
+        </span>
+      </Tooltip>
       <Box sx={{ display: { xs: 'false', sm: 'false', md: 'block' } }}>
         {renderPagesButton(pageStart, pageEnd, maxPages, numberOfPagesAround)}
       </Box>
@@ -141,9 +151,9 @@ function MTablePaginationInner(props) {
               size="large"
             >
               {theme.direction === 'rtl' ? (
-                <props.icons.FirstPage />
+                <icons.FirstPage />
               ) : (
-                <props.icons.LastPage />
+                <icons.LastPage />
               )}
             </IconButton>
           </span>

@@ -9,7 +9,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { lighten, useTheme } from '@mui/material/styles';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
@@ -82,14 +81,14 @@ export function MTableToolbar(props) {
 
     return [columns, data];
   };
-
   function renderSearch() {
     if (options.search) {
       return (
         <TextField
           autoFocus={options.searchAutoFocus}
           sx={
-            props.searchFieldAlignment === 'left' && props.showTitle === false
+            options.searchFieldAlignment === 'left' &&
+            options.showTitle === false
               ? undefined
               : styles.searchField
           }
@@ -283,13 +282,13 @@ export function MTableToolbar(props) {
   }
 
   const title =
-    props.showTextRowsSelected &&
+    options.showTextRowsSelected &&
     props.selectedRows &&
     props.selectedRows.length > 0
       ? typeof localization.nRowsSelected === 'function'
         ? localization.nRowsSelected(props.selectedRows.length)
         : localization.nRowsSelected.replace('{0}', props.selectedRows.length)
-      : props.showTitle
+      : options.showTitle
       ? props.title
       : null;
   return (
@@ -298,7 +297,7 @@ export function MTableToolbar(props) {
       className={props.className}
       sx={{
         ...styles.root,
-        ...(props.showTextRowsSelected &&
+        ...(options.showTextRowsSelected &&
         props.selectedRows &&
         props.selectedRows.length > 0
           ? styles.highlight(theme)
@@ -306,11 +305,11 @@ export function MTableToolbar(props) {
       }}
     >
       {title && renderToolbarTitle(title)}
-      {props.searchFieldAlignment === 'left' && renderSearch()}
-      {props.toolbarButtonAlignment === 'left' && renderActions()}
+      {options.searchFieldAlignment === 'left' && renderSearch()}
+      {options.toolbarButtonAlignment === 'left' && renderActions()}
       <Box sx={styles.spacer} />
-      {props.searchFieldAlignment === 'right' && renderSearch()}
-      {props.toolbarButtonAlignment === 'right' && renderActions()}
+      {options.searchFieldAlignment === 'right' && renderSearch()}
+      {options.toolbarButtonAlignment === 'right' && renderActions()}
     </Toolbar>
   );
 }
@@ -336,10 +335,6 @@ MTableToolbar.propTypes = {
   onSearchChanged: PropTypes.func.isRequired,
   originalData: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  showTitle: PropTypes.bool.isRequired,
-  showTextRowsSelected: PropTypes.bool.isRequired,
-  toolbarButtonAlignment: PropTypes.string.isRequired,
-  searchFieldAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,

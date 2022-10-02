@@ -59,9 +59,9 @@ function MTablePagination(props) {
               size="large"
             >
               {theme.direction === 'rtl' ? (
-                <props.icons.LastPage />
+                <icons.LastPage />
               ) : (
-                <props.icons.FirstPage />
+                <icons.FirstPage />
               )}
             </IconButton>
           </span>

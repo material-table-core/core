@@ -85,7 +85,7 @@ export default class MaterialTable extends React.Component {
          */
         if (this.props.options.sorting !== undefined) {
           console.error(
-            'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
+            'Property `sorting` has been deprecated, please start using `maxColumnSort` instead. https://github.com/material-table-core/core/pull/619'
           );
         }
       }
@@ -135,8 +135,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
-    const prevDefaultOrderByCollection =
-      this.dataManager.getDefaultOrderByCollection();
+    const prevDefaultOrderByCollection = this.dataManager.getDefaultOrderByCollection();
     const { defaultOrderByCollection } = props.options;
     let defaultCollectionSort = [];
     let defaultSort = '';
@@ -254,10 +253,12 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions =
-            functionlessColumns(fixedPropsColumns);
-          const prevColumnsWithoutFunctions =
-            functionlessColumns(fixedPrevColumns);
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -984,7 +985,7 @@ export default class MaterialTable extends React.Component {
                     />
                   )
                 }
-                labelRowsPerPage={localization.labelRowsPerPage}
+                labelRowsPerPage={props.localization.labelRowsPerPage}
               />
             </TableRow>
           </TableFooter>
@@ -1112,8 +1113,9 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef =
-        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
