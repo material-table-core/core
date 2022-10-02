@@ -84,7 +84,7 @@ export default class MaterialTable extends React.Component {
          * Warn consumer of deprecated prop.
          */
         if (this.props.options.sorting !== undefined) {
-          console.error(
+          console.warn(
             'Property `sorting` has been deprecated, please start using `maxColumnSort` instead. https://github.com/material-table-core/core/pull/619'
           );
         }
