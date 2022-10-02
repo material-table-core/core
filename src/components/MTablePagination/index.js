@@ -45,7 +45,8 @@ function MTablePagination(props) {
       sx={{
         flexShrink: 0,
         color: 'text.secondary',
-        display: 'flex'
+        display: 'flex',
+        alignItems: 'center'
       }}
       ref={props.forwardedRef}
     >
