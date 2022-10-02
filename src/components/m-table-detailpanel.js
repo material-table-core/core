@@ -18,6 +18,12 @@ function MTableDetailPanel(props) {
 
   let renderFunction;
 
+  React.useEffect(() => {
+    if (renderFunction && isOpen) {
+      renderRef.current = renderFunction;
+    }
+  });
+
   // See issue #282 for more on why we have to check for the existence of props.detailPanel
   if (!props.detailPanel) {
     return <React.Fragment />;
@@ -39,12 +45,6 @@ function MTableDetailPanel(props) {
       renderFunction = renderFunction ? renderFunction.render : null;
     }
   }
-
-  React.useEffect(() => {
-    if (renderFunction && isOpen) {
-      renderRef.current = renderFunction;
-    }
-  });
 
   if (!renderRef.current && !props.data.tableData.showDetailPanel) {
     return null;

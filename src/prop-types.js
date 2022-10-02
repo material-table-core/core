@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { ALL_COLUMNS } from './utils/constants';
 
 const RefComponent = PropTypes.shape({ current: PropTypes.element });
 const StyledComponent = PropTypes.shape({
@@ -345,7 +346,8 @@ export const propTypes = {
       'scroll',
       'auto',
       'initial',
-      'inherit'
+      'inherit',
+      'overlay'
     ]),
     padding: PropTypes.oneOf(['normal', 'dense']),
     paging: PropTypes.bool,
@@ -371,7 +373,30 @@ export const propTypes = {
     showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
-    sorting: PropTypes.bool,
+    sorting: PropTypes.bool, // TODO: This will be removed eventually
+    defaultOrderByCollection: PropTypes.arrayOf(
+      PropTypes.shape({
+        orderBy: PropTypes.number,
+        oderDirection: PropTypes.string,
+        sortOrder: PropTypes.number
+      })
+    ),
+    maxColumnSort: PropTypes.oneOf([
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      ALL_COLUMNS
+    ]),
+    showColumnSortOrder: PropTypes.bool,
+    sortOrderIndicatorStyle: PropTypes.object,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
@@ -393,11 +418,13 @@ export const propTypes = {
   onColumnDragged: PropTypes.func,
   onColumnResized: PropTypes.func,
   onGroupRemoved: PropTypes.func,
+  onGroupChange: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
   onPageChange: PropTypes.func,
   onChangeColumnHidden: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onOrderCollectionChange: PropTypes.func,
   onRowClick: PropTypes.func,
   onRowDoubleClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,

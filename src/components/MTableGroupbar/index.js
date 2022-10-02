@@ -5,9 +5,12 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Droppable, Draggable } from '@hello-pangea/dnd';
+import { useLocalizationStore, useIconStore } from '@store';
 /* eslint-enable no-unused-vars */
 
 function MTableGroupbar(props) {
+  const localization = useLocalizationStore().grouping;
+  const icons = useIconStore();
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
@@ -71,6 +74,7 @@ function MTableGroupbar(props) {
         );
       }
     }
+    props.onGroupChange && props.onGroupChange(props.groupColumns);
   }, [props.groupColumns]);
 
   return (
@@ -91,7 +95,7 @@ function MTableGroupbar(props) {
           >
             {props.groupColumns.length > 0 && (
               <Typography variant="caption" style={{ padding: 8 }}>
-                {props.localization.groupedBy}
+                {localization.groupedBy}
               </Typography>
             )}
             {props.groupColumns.map((columnDef, index) => {
@@ -122,7 +126,7 @@ function MTableGroupbar(props) {
                               {columnDef.title}
                             </div>
                             {columnDef.tableData.groupSort && (
-                              <props.icons.SortArrow
+                              <icons.SortArrow
                                 style={{
                                   transition: '300ms ease all',
                                   transform:
@@ -145,7 +149,7 @@ function MTableGroupbar(props) {
             })}
             {props.groupColumns.length === 0 && (
               <Typography variant="caption" style={{ padding: 8 }}>
-                {props.localization.placeholder}
+                {localization.placeholder}
               </Typography>
             )}
             {provided.placeholder}
@@ -159,12 +163,12 @@ function MTableGroupbar(props) {
 MTableGroupbar.defaultProps = {};
 
 MTableGroupbar.propTypes = {
-  localization: PropTypes.shape({
-    groupedBy: PropTypes.string,
-    placeholder: PropTypes.string
-  }),
   forwardedRef: PropTypes.element,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onSortChanged: PropTypes.func,
+  onGroupRemoved: PropTypes.func,
+  onGroupChange: PropTypes.func,
+  persistentGroupingsId: PropTypes.string
 };
 
 export default React.forwardRef(function MTableGroupbarRef(props, ref) {

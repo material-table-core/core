@@ -41,7 +41,7 @@ export function getCurrencyValue(currencySetting, value) {
   }
 }
 
-export function getRenderValue(props) {
+export function getRenderValue(props, icons) {
   const dateLocale =
     props.columnDef.dateSetting && props.columnDef.dateSetting.locale
       ? props.columnDef.dateSetting.locale
@@ -61,9 +61,9 @@ export function getRenderValue(props) {
   } else if (props.columnDef.type === 'boolean') {
     const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
     if (props.value) {
-      return <props.icons.Check style={style} />;
+      return <icons.Check style={style} />;
     } else {
-      return <props.icons.ThirdStateCheck style={style} />;
+      return <icons.ThirdStateCheck style={style} />;
     }
   } else if (props.columnDef.type === 'date') {
     if (props.value instanceof Date) {

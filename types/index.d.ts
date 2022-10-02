@@ -1,13 +1,20 @@
 import React from 'react';
 import { IconProps } from '@mui/material/Icon';
-import { TableProps } from '@mui/material';
+import { CheckboxProps } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
 type SvgIconComponent = typeof SvgIcon;
 
+export type ALL_COLUMNS = 'all_columns';
+
+export interface OrderByCollection {
+  orderBy: number;
+  oderDirection: string;
+  sortOrder: number;
+}
+
 export interface MaterialTableProps<RowData extends object> {
-  sx?: TableProps['sx'];
   actions?: (
     | Action<RowData>
     | ((rowData: RowData) => Action<RowData>)
@@ -28,20 +35,17 @@ export interface MaterialTableProps<RowData extends object> {
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
     | (({ rowData }: { rowData: RowData }) => React.ReactNode)
-    | (
-        | DetailPanel<RowData>
-        | (({ rowData }: { rowData: RowData }) => DetailPanel<RowData>)
-      )[];
+    | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isBulkEditable?: () => boolean;
     isDeletable?: (rowData: RowData) => boolean;
     onBulkUpdate?: (
       changes: Record<number, { oldData: RowData; newData: RowData }>
-    ) => Promise<any>;
-    onRowAdd?: (newData: RowData) => Promise<any>;
-    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
-    onRowDelete?: (oldData: RowData) => Promise<any>;
+    ) => Promise<unknown>;
+    onRowAdd?: (newData: RowData) => Promise<unknown>;
+    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<unknown>;
+    onRowDelete?: (oldData: RowData) => Promise<unknown>;
     editTooltip?: (rowData: RowData) => string;
     deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
@@ -52,7 +56,7 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons<RowData>;
   initialFormData?: object;
   isLoading?: boolean;
-  title?: string | React.ReactElement<any>;
+  title?: React.ReactNode;
   options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
@@ -64,8 +68,13 @@ export interface MaterialTableProps<RowData extends object> {
     changedColumns: ColumnSize[],
     allColumns: ColumnSize[]
   ) => void;
+  /**
+   * @deprecated this property is deprecated use onOrderCollectionChange instead.
+   */
   onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
-  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
+  onOrderCollectionChange?: (orderByCollection: OrderByCollection[]) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: number) => void;
+  onGroupChange?: (columns: Column<RowData>[]) => void;
   onRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
@@ -123,8 +132,15 @@ export interface Query<RowData extends object> {
   pageSize: number;
   totalCount: number;
   search: string;
+  /**
+   * @deprecated this property is deprecated use orderByCollection instead.
+   */
   orderBy: Column<RowData>;
+  /**
+   * @deprecated this property is deprecated use orderByCollection instead.
+   */
   orderDirection: 'asc' | 'desc';
+  orderByCollection: OrderByCollection[];
   error?: ErrorState;
 }
 
@@ -144,7 +160,7 @@ export interface DetailPanel<RowData extends object> {
 
 export interface Action<RowData extends object> {
   disabled?: boolean;
-  icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
+  icon: string | (() => React.ReactNode) | SvgIconComponent;
   isFreeAction?: boolean;
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
@@ -191,6 +207,7 @@ export interface Column<RowData extends object> {
     rowData: RowData,
     columnDef: Column<RowData>
   ) => boolean;
+  draggable?: boolean;
   customSort?: (
     data1: RowData,
     data2: RowData,
@@ -206,13 +223,11 @@ export interface Column<RowData extends object> {
   defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
   disableClick?: boolean;
-  editComponent?: (
-    props: EditComponentProps<RowData>
-  ) => React.ReactElement<any>;
+  editComponent?: (props: EditComponentProps<RowData>) => React.ReactNode;
   emptyValue?:
     | string
-    | React.ReactElement<any>
-    | ((data: any) => React.ReactElement<any> | string);
+    | React.ReactNode
+    | ((data: any) => React.ReactNode | string);
   export?: boolean;
   field?: keyof RowData | string | Array<keyof RowData | string>;
   filtering?: boolean;
@@ -220,7 +235,7 @@ export interface Column<RowData extends object> {
     columnDef: Column<RowData>;
     // The columnId can be extracted from columnDef.tableData.id
     onFilterChanged: (columnId: string, value: any) => void;
-  }) => React.ReactElement<any>;
+  }) => React.ReactNode;
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
@@ -243,12 +258,12 @@ export interface Column<RowData extends object> {
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
-  render?: (data: RowData, type: 'row' | 'group') => any;
+  render?: (data: RowData, type: 'row' | 'group') => React.ReactNode;
   // A function to be called for each column during the csv export to manipulate the exported data
   exportTransformer?: (row: RowData) => unknown;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string | React.ReactElement<any>;
+  title?: React.ReactNode;
   tooltip?: string;
   type?:
     | 'string'
@@ -259,6 +274,7 @@ export interface Column<RowData extends object> {
     | 'time'
     | 'currency';
   width?: string | number;
+  minWidth?: number;
 }
 
 export interface Components {
@@ -280,22 +296,22 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
-export const MTableAction: (props: any) => React.ReactElement<any>;
-export const MTableActions: (props: any) => React.ReactElement<any>;
-export const MTableBody: (props: any) => React.ReactElement<any>;
-export const MTableBodyRow: (props: any) => React.ReactElement<any>;
-export const MTableCell: (props: any) => React.ReactElement<any>;
-export const MTableEditField: (props: any) => React.ReactElement<any>;
-export const MTableEditRow: (props: any) => React.ReactElement<any>;
-export const MTableFilterRow: (props: any) => React.ReactElement<any>;
-export const MTableGroupbar: (props: any) => React.ReactElement<any>;
-export const MTableGroupRow: (props: any) => React.ReactElement<any>;
-export const MTableHeader: (props: any) => React.ReactElement<any>;
-export const MTablePagination: (props: any) => React.ReactElement<any>;
-export const MTableToolbar: (props: any) => React.ReactElement<any>;
-export const MTable: (props: any) => React.ReactElement<any>;
+export const MTableAction: (props: any) => React.ReactElement;
+export const MTableActions: (props: any) => React.ReactElement;
+export const MTableBody: (props: any) => React.ReactElement;
+export const MTableBodyRow: (props: any) => React.ReactElement;
+export const MTableCell: (props: any) => React.ReactElement;
+export const MTableEditField: (props: any) => React.ReactElement;
+export const MTableEditRow: (props: any) => React.ReactElement;
+export const MTableFilterRow: (props: any) => React.ReactElement;
+export const MTableGroupbar: (props: any) => React.ReactElement;
+export const MTableGroupRow: (props: any) => React.ReactElement;
+export const MTableHeader: (props: any) => React.ReactElement;
+export const MTablePagination: (props: any) => React.ReactElement;
+export const MTableToolbar: (props: any) => React.ReactElement;
+export const MTable: (props: any) => React.ReactElement;
 
-export interface Icons<RowData = any> {
+export interface Icons<RowData extends object> {
   Add?: React.ForwardRefExoticComponent<any> &
     React.RefAttributes<SVGSVGElement>;
   Check?: React.ForwardRefExoticComponent<any> &
@@ -344,7 +360,7 @@ export interface Options<RowData extends object> {
   addRowPosition?: 'first' | 'last';
   columnsButton?: boolean;
   columnResizable?: boolean;
-  defaultExpanded?: boolean | ((rowData: any) => boolean);
+  defaultExpanded?: boolean | ((rowData: RowData) => boolean);
   debounceInterval?: number;
   detailPanelType?: 'single' | 'multiple';
   doubleHorizontalScroll?: boolean;
@@ -369,19 +385,26 @@ export interface Options<RowData extends object> {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
-  headerSelectionProps?: object;
+  headerSelectionProps?: CheckboxProps;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: 'overlay' | 'linear';
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
-  padding?: 'normal' | 'dense';
   numberOfPagesAround?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
-  groupTitle?: (groupData: any) => any;
-  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
+  groupTitle?: (groupData: object) => React.ReactNode;
+  overflowY?:
+    | 'visible'
+    | 'hidden'
+    | 'scroll'
+    | 'auto'
+    | 'initial'
+    | 'inherit'
+    | 'overlay';
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationAlignment?: React.CSSProperties['justifyContent'];
@@ -390,7 +413,7 @@ export interface Options<RowData extends object> {
   persistentGroupingsId?: string;
   rowStyle?:
     | React.CSSProperties
-    | ((data: any, index: number, level: number) => React.CSSProperties);
+    | ((data: RowData, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
@@ -406,7 +429,10 @@ export interface Options<RowData extends object> {
   searchFieldVariant?: 'standard' | 'filled' | 'outlined';
   searchAutoFocus?: boolean;
   selection?: boolean;
-  selectionProps?: any | ((data: any) => any);
+  selectionProps?: CheckboxProps | ((data: RowData) => CheckboxProps);
+  /**
+   * @deprecated this property is deprecated use maxColumnSort instead.
+   */
   sorting?: boolean;
   keepSortDirectionOnColumnSwitch?: boolean;
   tableLayout?: 'auto' | 'fixed';
@@ -417,6 +443,10 @@ export interface Options<RowData extends object> {
   detailPanelColumnAlignment?: 'left' | 'right';
   detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
+  defaultOrderByCollection: OrderByCollection[];
+  maxColumnSort?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
+  showColumnSortOrder?: boolean;
+  sortOrderIndicatorStyle?: React.CSSProperties;
 }
 
 export interface Localization {
@@ -492,4 +522,10 @@ export type ColumnSize = {
 
 export default class MaterialTable<
   RowData extends object
-> extends React.Component<MaterialTableProps<RowData>> {}
+> extends React.Component<MaterialTableProps<RowData>> {
+  onQueryChange: (
+    query: Partial<Query<RowData>>,
+    callback?: () => void
+  ) => void;
+  clearCriteria: () => void;
+}

@@ -1,17 +1,27 @@
-import './utils/polyfill';
 import React from 'react';
 import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
 import { useTheme } from '@mui/material/styles';
+import { useMergeProps, withContext } from './store/LocalizationStore';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
-export default function Table(props) {
+export default withContext((props) => {
   const theme = useTheme();
-  return <MaterialTable theme={theme} {...props} ref={props.tableRef} />;
-}
+  const { localization, options, components } = useMergeProps(props);
+  return (
+    <MaterialTable
+      {...props}
+      theme={theme}
+      options={options}
+      components={components}
+      localization={localization}
+      ref={props.tableRef}
+    />
+  );
+});
 
 export {
   MTableAction,
@@ -30,3 +40,5 @@ export {
   MTableSteppedPagination,
   MTableToolbar
 } from './components';
+
+export { ALL_COLUMNS } from './utils/constants';

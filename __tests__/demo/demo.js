@@ -48,9 +48,14 @@ import {
   TreeData,
   TableWithSummary,
   TableWithNumberOfPagesAround,
-  FixedColumnWithEdit
+  FixedColumnWithEdit,
+  TableMultiSorting
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
+import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
+import TableHead from '@material-ui/core/TableHead';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { MTableScrollbar } from '../../src/components';
 
 module.hot.accept();
 
@@ -62,8 +67,8 @@ render(
       {/* <h1>Switcher</h1>
       <DataSwitcher />
 
-      <h1>SelectionOnRowClick</h1>
-      <SelectionOnRowClick />
+    <h1>SelectionOnRowClick</h1>
+    <SelectionOnRowClick />
 
       <h1>EventTargetErrorOnRowClick</h1>
       <EventTargetErrorOnRowClick
@@ -80,9 +85,9 @@ render(
       <BasicRef />
 
       {/*
-     <h1>Export Data</h1>
-     <ExportData />
-     */}
+      <h1>Export Data</h1>
+      <ExportData />
+      */}
       {/*
      <h1>Custom Export </h1>
      <CustomExport />

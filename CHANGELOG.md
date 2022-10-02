@@ -1,3 +1,5 @@
+#### 4.3.45 (2022-10-02)
+
 #### 0.2.37 (2022-09-26)
 
 ##### New Features
@@ -15,6 +17,14 @@
 #### 0.2.35 (2022-07-01)
 
 #### 0.2.34 (2022-05-19)
+
+#### 5.1.5 (2022-09-26)
+
+#### 5.1.4 (2022-09-23)
+
+##### Chores
+
+- use @hello-pangea/dnd ([#608](https://github.com/material-table-core/core/pull/608)) ([e89f4bb8](https://github.com/material-table-core/core/commit/e89f4bb89e62c22cb72c1f20d4593ebede2d4662))
 
 ##### New Features
 
@@ -79,6 +89,67 @@
 - background shadow breaks for fixed columns ([#503](https://github.com/material-table-core/core/pull/503)) ([02543a52](https://github.com/material-table-core/core/commit/02543a521863c0f4f6305fe882fae5ac09078e53))
 
 #### 0.2.26 (2022-03-06)
+
+#### 5.1.3 (2022-09-11)
+
+##### Other Changes
+
+- local fix ([12515eea](https://github.com/material-table-core/core/commit/12515eeae14386d1ec6ba608929caee2020c1801))
+
+#### 5.1.2 (2022-09-11)
+
+##### Bug Fixes
+
+- [#614](https://github.com/material-table-core/core/pull/614) ([90b70c28](https://github.com/material-table-core/core/commit/90b70c28a823b5622bc59042909f277db5a2e987))
+
+##### Other Changes
+
+- add @hello-pangea/dnd ([c1a6c78f](https://github.com/material-table-core/core/commit/c1a6c78fc91ad7999718e23bd3242b4a88760b6f))
+- update changelog ([76ae15bd](https://github.com/material-table-core/core/commit/76ae15bd75536a4c4f253b1e254cec063084baae))
+
+#### 5.1.1 (2022-09-07)
+
+##### Other Changes
+
+- correctly show select all box for tree ([d1cc3a74](https://github.com/material-table-core/core/commit/d1cc3a74d6db256b8ac1b08fdc0fa38a6bf522b2))
+
+### 5.1.0 (2022-09-07)
+
+This update brings in the multi sort feature.
+
+Many thanks to [Diiegoav](https://github.com/Diiegoav) for developing this feature!!
+
+A demo on the website will follow shortly.
+
+#### 5.0.5 (2022-08-14)
+
+#### 5.0.4 (2022-07-09)
+
+##### Bug Fixes
+
+- pagesize not ignored ([eda9e430](https://github.com/material-table-core/core/commit/eda9e4305910dd480896c80634016c8b4f97213f))
+- correct merging in store ([13f1b7c7](https://github.com/material-table-core/core/commit/13f1b7c75f9a0f5cf466246e440ca661d26892d6))
+- export of component types ([b086c4e5](https://github.com/material-table-core/core/commit/b086c4e5be6e723965235e5bca028b26523fa259))
+
+#### 5.0.3 (2022-07-01)
+
+##### Bug Fixes
+
+- display export button for selected state ([cf6c06b3](https://github.com/material-table-core/core/commit/cf6c06b31f7b586399031c988ae8d22443115859))
+
+#### 5.0.2 (2022-06-06)
+
+#### 5.0.1 (2022-06-06)
+
+##### Bug Fixes
+
+- typo in ts file ([761f71d5](https://github.com/material-table-core/core/commit/761f71d537bfa8dbfe25d9e0b9b678897095062c))
+
+#### 5.0.1.0 (2022-06-06)
+
+##### Documentation Changes
+
+- impove ts types ([4e01730a](https://github.com/material-table-core/core/commit/4e01730aca5bc9df543be8c7fe001f6dc6cbb8a9))
 
 #### 4.3.44 (2022-05-19)
 

@@ -173,8 +173,6 @@ export default class MTableEditRow extends React.Component {
   }
 
   handleSave = () => {
-    const newData = this.state.data;
-    delete newData.tableData;
     this.props.onEditingApproved(
       this.props.mode,
       this.state.data,
