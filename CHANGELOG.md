@@ -1,3 +1,9 @@
+#### 0.2.42 (2022-10-03)
+
+##### New Features
+
+- improve showFirstLastPageButtons ([#634](https://github.com/material-table-core/core/pull/634)) ([8dc35d85](https://github.com/material-table-core/core/commit/8dc35d85df2f87a77d067cae1fa5713fbb465f82))
+
 #### 0.2.41 (2022-10-03)
 
 ##### Other Changes
