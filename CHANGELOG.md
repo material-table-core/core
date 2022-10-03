@@ -1,3 +1,9 @@
+#### 0.2.41 (2022-10-03)
+
+##### Other Changes
+
+- improve versions ([74841551](https://github.com/material-table-core/core/commit/748415511fb7879e30ddd4445e7bf67b90d852bb))
+
 #### 0.2.40 (2022-10-03)
 
 #### 0.2.39 (2022-10-02)
