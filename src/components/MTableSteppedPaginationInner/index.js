@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
+import * as CommonValues from '../../utils/common-values';
 import { useLocalizationStore, useIconStore } from '@store';
 
 function MTablePaginationInner(props) {
@@ -81,7 +82,10 @@ function MTablePaginationInner(props) {
 
   const pageStart = Math.max(page - 1, 0);
   const pageEnd = Math.min(maxPages, page + 1);
-
+  const { first, last } = CommonValues.parseFirstLastPageButtons(
+    showFirstLastPageButtons,
+    theme.direction === 'rtl'
+  );
   return (
     <Box
       sx={{
@@ -93,7 +97,7 @@ function MTablePaginationInner(props) {
       }}
       ref={props.forwardedRef}
     >
-      {showFirstLastPageButtons && (
+      {first && (
         <Tooltip title={localization.firstTooltip}>
           <span>
             <IconButton
@@ -141,7 +145,7 @@ function MTablePaginationInner(props) {
           </IconButton>
         </span>
       </Tooltip>
-      {showFirstLastPageButtons && (
+      {last && (
         <Tooltip title={localization.lastTooltip}>
           <span>
             <IconButton
@@ -172,7 +176,10 @@ MTablePaginationInner.propTypes = {
   numberOfPagesAround: PropTypes.number,
   classes: PropTypes.object,
   theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool
+  showFirstLastPageButtons: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool
+  ])
 };
 
 MTablePaginationInner.defaultProps = {

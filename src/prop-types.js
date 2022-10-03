@@ -368,7 +368,10 @@ export const propTypes = {
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
-    showFirstLastPageButtons: PropTypes.bool,
+    showFirstLastPageButtons: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.bool
+    ]),
     showSelectAllCheckbox: PropTypes.bool,
     showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,

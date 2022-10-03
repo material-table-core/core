@@ -28,3 +28,19 @@ export const widthToNumber = (width) => {
   if (!width || !width.match(/^\s*\d+(px)?\s*$/)) return NaN;
   return Number(width.replace(/px$/, ''));
 };
+
+export const parseFirstLastPageButtons = (showFirstLastPageButtons, isRTL) => {
+  let result = { first: true, last: true };
+  if (typeof showFirstLastPageButtons === 'boolean') {
+    result = {
+      first: showFirstLastPageButtons,
+      last: showFirstLastPageButtons
+    };
+  } else if (typeof showFirstLastPageButtons === 'object') {
+    result = { ...result, ...showFirstLastPageButtons };
+  }
+  if (isRTL) {
+    result = { first: result.last, last: result.first };
+  }
+  return result;
+};
