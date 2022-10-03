@@ -415,7 +415,9 @@ export interface Options<RowData extends object> {
     | React.CSSProperties
     | ((data: RowData, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
-  showFirstLastPageButtons?: boolean;
+  showFirstLastPageButtons?:
+    | boolean
+    | Partial<{ first: boolean; last: boolean }>;
   showSelectAllCheckbox?: boolean;
   showSelectGroupCheckbox?: boolean;
   showTitle?: boolean;

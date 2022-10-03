@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import * as CommonValues from '../../utils/common-values';
 import { useLocalizationStore, useIconStore } from '@store/LocalizationStore';
 /* eslint-enable no-unused-vars */
 
@@ -40,6 +41,11 @@ function MTablePagination(props) {
   };
 
   const { count, page, rowsPerPage, showFirstLastPageButtons } = props;
+
+  const { first, last } = CommonValues.parseFirstLastPageButtons(
+    showFirstLastPageButtons,
+    theme.direction === 'rtl'
+  );
   return (
     <Box
       sx={{
@@ -50,7 +56,7 @@ function MTablePagination(props) {
       }}
       ref={props.forwardedRef}
     >
-      {showFirstLastPageButtons && (
+      {first && (
         <Tooltip title={localization.firstTooltip}>
           <span>
             <IconButton
@@ -118,7 +124,7 @@ function MTablePagination(props) {
           </IconButton>
         </span>
       </Tooltip>
-      {showFirstLastPageButtons && (
+      {last && (
         <Tooltip title={localization.lastTooltip}>
           <span>
             <IconButton
@@ -147,7 +153,10 @@ MTablePagination.propTypes = {
   rowsPerPage: PropTypes.number,
   classes: PropTypes.object,
   localization: PropTypes.object,
-  showFirstLastPageButtons: PropTypes.bool,
+  showFirstLastPageButtons: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool
+  ]),
   forwardedRef: PropTypes.func
 };
 
