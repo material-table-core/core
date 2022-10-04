@@ -1,3 +1,9 @@
+#### 0.2.43 (2022-10-04)
+
+##### New Features
+
+- add showGroupingCount ([#637](https://github.com/material-table-core/core/pull/637)) ([f60cf603](https://github.com/material-table-core/core/commit/f60cf6036f96920bff048ba0cf1cbd0b9e636871))
+
 #### 0.2.42 (2022-10-03)
 
 ##### New Features
