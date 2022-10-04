@@ -13,195 +13,194 @@ function MTableGroupRow(props) {
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
-  function render() {
-    let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
-    options.selection && colSpan++;
-    props.detailPanel && colSpan++;
-    props.actions && props.actions.length > 0 && colSpan++;
-    const column = props.groups[props.level];
+  let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
+  options.selection && colSpan++;
+  props.detailPanel && colSpan++;
+  props.actions && props.actions.length > 0 && colSpan++;
+  const column = props.groups[props.level];
 
-    let detail;
-    if (props.groupData.isExpanded) {
-      if (props.groups.length > props.level + 1) {
-        // Is there another group
-        detail = props.groupData.groups.map((groupData, index) => (
-          <props.components.GroupRow
-            actions={props.actions}
-            key={groupData.value || '' + index}
-            columns={props.columns}
-            components={props.components}
-            detailPanel={props.detailPanel}
-            getFieldValue={props.getFieldValue}
-            groupData={groupData}
-            groups={props.groups}
-            level={props.level + 1}
-            path={[...props.path, index]}
-            onGroupExpandChanged={props.onGroupExpandChanged}
-            onGroupSelected={props.onGroupSelected}
-            onRowSelected={props.onRowSelected}
-            onRowClick={props.onRowClick}
-            onToggleDetailPanel={props.onToggleDetailPanel}
-            onTreeExpandChanged={props.onTreeExpandChanged}
-            onEditingCanceled={props.onEditingCanceled}
-            onEditingApproved={props.onEditingApproved}
-            hasAnyEditingRow={props.hasAnyEditingRow}
-            isTreeData={props.isTreeData}
-            cellEditable={props.cellEditable}
-            onCellEditStarted={props.onCellEditStarted}
-            onCellEditFinished={props.onCellEditFinished}
-            scrollWidth={props.scrollWidth}
-            treeDataMaxLevel={props.treeDataMaxLevel}
-          />
-        ));
+  let detail;
+  if (props.groupData.isExpanded) {
+    if (props.groups.length > props.level + 1) {
+      // Is there another group
+      detail = props.groupData.groups.map((groupData, index) => (
+        <props.components.GroupRow
+          actions={props.actions}
+          key={groupData.value || '' + index}
+          columns={props.columns}
+          components={props.components}
+          detailPanel={props.detailPanel}
+          getFieldValue={props.getFieldValue}
+          groupData={groupData}
+          groups={props.groups}
+          level={props.level + 1}
+          path={[...props.path, index]}
+          onGroupExpandChanged={props.onGroupExpandChanged}
+          onGroupSelected={props.onGroupSelected}
+          onRowSelected={props.onRowSelected}
+          onRowClick={props.onRowClick}
+          onToggleDetailPanel={props.onToggleDetailPanel}
+          onTreeExpandChanged={props.onTreeExpandChanged}
+          onEditingCanceled={props.onEditingCanceled}
+          onEditingApproved={props.onEditingApproved}
+          hasAnyEditingRow={props.hasAnyEditingRow}
+          isTreeData={props.isTreeData}
+          cellEditable={props.cellEditable}
+          onCellEditStarted={props.onCellEditStarted}
+          onCellEditFinished={props.onCellEditFinished}
+          scrollWidth={props.scrollWidth}
+          treeDataMaxLevel={props.treeDataMaxLevel}
+        />
+      ));
+    } else {
+      detail = props.groupData.data.map((rowData, index) => {
+        if (rowData.tableData.editing) {
+          return (
+            <props.components.EditRow
+              columns={props.columns}
+              components={props.components}
+              data={rowData}
+              icons={icons}
+              path={[...props.path, rowData.tableData.uuid]}
+              localization={props.localization}
+              key={index}
+              mode={rowData.tableData.editing}
+              isTreeData={props.isTreeData}
+              detailPanel={props.detailPanel}
+              onEditingCanceled={props.onEditingCanceled}
+              onEditingApproved={props.onEditingApproved}
+              getFieldValue={props.getFieldValue}
+              onBulkEditRowChanged={props.onBulkEditRowChanged}
+              scrollWidth={props.scrollWidth}
+            />
+          );
+        } else {
+          return (
+            <props.components.Row
+              actions={props.actions}
+              key={index}
+              columns={props.columns}
+              components={props.components}
+              data={rowData}
+              detailPanel={props.detailPanel}
+              level={(props.level || 0) + 1}
+              getFieldValue={props.getFieldValue}
+              path={[...props.path, rowData.tableData.uuid]}
+              onRowSelected={props.onRowSelected}
+              onRowClick={props.onRowClick}
+              onToggleDetailPanel={props.onToggleDetailPanel}
+              isTreeData={props.isTreeData}
+              onTreeExpandChanged={props.onTreeExpandChanged}
+              onEditingCanceled={props.onEditingCanceled}
+              onEditingApproved={props.onEditingApproved}
+              hasAnyEditingRow={props.hasAnyEditingRow}
+              cellEditable={props.cellEditable}
+              onCellEditStarted={props.onCellEditStarted}
+              onCellEditFinished={props.onCellEditFinished}
+              scrollWidth={props.scrollWidth}
+              treeDataMaxLevel={props.treeDataMaxLevel}
+            />
+          );
+        }
+      });
+    }
+  }
+
+  const freeCells = [];
+  for (let i = 0; i < props.level; i++) {
+    freeCells.push(<TableCell padding="checkbox" key={i} />);
+  }
+
+  let value = props.groupData.value;
+  if (column.lookup) {
+    value = column.lookup[value];
+  }
+
+  let title = column.title;
+  if (typeof options.groupTitle === 'function') {
+    title = options.groupTitle(props.groupData);
+  } else if (typeof title !== 'string') {
+    title = React.cloneElement(title);
+  }
+
+  const separator = options.groupRowSeparator || ': ';
+
+  const showSelectGroupCheckbox =
+    options.selection && options.showSelectGroupCheckbox;
+
+  const mapSelectedRows = (groupData) => {
+    let totalRows = 0;
+    let selectedRows = 0;
+
+    if (showSelectGroupCheckbox) {
+      if (groupData.data.length) {
+        totalRows += groupData.data.length;
+        groupData.data.forEach(
+          (row) => row.tableData.checked && selectedRows++
+        );
       } else {
-        detail = props.groupData.data.map((rowData, index) => {
-          if (rowData.tableData.editing) {
-            return (
-              <props.components.EditRow
-                columns={props.columns}
-                components={props.components}
-                data={rowData}
-                icons={icons}
-                path={[...props.path, rowData.tableData.uuid]}
-                localization={props.localization}
-                key={index}
-                mode={rowData.tableData.editing}
-                isTreeData={props.isTreeData}
-                detailPanel={props.detailPanel}
-                onEditingCanceled={props.onEditingCanceled}
-                onEditingApproved={props.onEditingApproved}
-                getFieldValue={props.getFieldValue}
-                onBulkEditRowChanged={props.onBulkEditRowChanged}
-                scrollWidth={props.scrollWidth}
-              />
-            );
-          } else {
-            return (
-              <props.components.Row
-                actions={props.actions}
-                key={index}
-                columns={props.columns}
-                components={props.components}
-                data={rowData}
-                detailPanel={props.detailPanel}
-                level={(props.level || 0) + 1}
-                getFieldValue={props.getFieldValue}
-                path={[...props.path, rowData.tableData.uuid]}
-                onRowSelected={props.onRowSelected}
-                onRowClick={props.onRowClick}
-                onToggleDetailPanel={props.onToggleDetailPanel}
-                isTreeData={props.isTreeData}
-                onTreeExpandChanged={props.onTreeExpandChanged}
-                onEditingCanceled={props.onEditingCanceled}
-                onEditingApproved={props.onEditingApproved}
-                hasAnyEditingRow={props.hasAnyEditingRow}
-                cellEditable={props.cellEditable}
-                onCellEditStarted={props.onCellEditStarted}
-                onCellEditFinished={props.onCellEditFinished}
-                scrollWidth={props.scrollWidth}
-                treeDataMaxLevel={props.treeDataMaxLevel}
-              />
-            );
-          }
+        groupData.groups.forEach((group) => {
+          const [groupTotalRows, groupSelectedRows] = mapSelectedRows(group);
+
+          totalRows += groupTotalRows;
+          selectedRows += groupSelectedRows;
         });
       }
     }
 
-    const freeCells = [];
-    for (let i = 0; i < props.level; i++) {
-      freeCells.push(<TableCell padding="checkbox" key={i} />);
-    }
+    return [totalRows, selectedRows];
+  };
 
-    let value = props.groupData.value;
-    if (column.lookup) {
-      value = column.lookup[value];
-    }
+  const [totalRows, selectedRows] = mapSelectedRows(props.groupData);
 
-    let title = column.title;
-    if (typeof options.groupTitle === 'function') {
-      title = options.groupTitle(props.groupData);
-    } else if (typeof title !== 'string') {
-      title = React.cloneElement(title);
-    }
-
-    const separator = options.groupRowSeparator || ': ';
-
-    const showSelectGroupCheckbox =
-      options.selection && options.showSelectGroupCheckbox;
-
-    const mapSelectedRows = (groupData) => {
-      let totalRows = 0;
-      let selectedRows = 0;
-
-      if (showSelectGroupCheckbox) {
-        if (groupData.data.length) {
-          totalRows += groupData.data.length;
-          groupData.data.forEach(
-            (row) => row.tableData.checked && selectedRows++
-          );
-        } else {
-          groupData.groups.forEach((group) => {
-            const [groupTotalRows, groupSelectedRows] = mapSelectedRows(group);
-
-            totalRows += groupTotalRows;
-            selectedRows += groupSelectedRows;
-          });
-        }
-      }
-
-      return [totalRows, selectedRows];
-    };
-
-    const [totalRows, selectedRows] = mapSelectedRows(props.groupData);
-
-    return (
-      <>
-        <TableRow ref={props.forwardedRef}>
-          {freeCells}
-          <props.components.Cell
-            colSpan={colSpan}
-            padding="none"
-            columnDef={column}
-            value={value}
-            icons={icons}
-          >
-            <>
-              <IconButton
-                style={{
-                  transition: 'all ease 200ms',
-                  ...rotateIconStyle(props.groupData.isExpanded)
-                }}
-                onClick={(event) => {
-                  props.onGroupExpandChanged(props.path);
-                }}
-                size="large"
-              >
-                <icons.DetailPanel row={props} level={props.path.length - 1} />
-              </IconButton>
-              {showSelectGroupCheckbox && (
-                <Checkbox
-                  indeterminate={selectedRows > 0 && totalRows !== selectedRows}
-                  checked={totalRows === selectedRows}
-                  onChange={(event, checked) =>
-                    props.onGroupSelected &&
-                    props.onGroupSelected(checked, props.groupData.path)
-                  }
-                  style={{ marginRight: 8 }}
-                />
-              )}
-              <b>
-                {title}
-                {separator}
-              </b>
-            </>
-          </props.components.Cell>
-        </TableRow>
-        {detail}
-      </>
-    );
+  if (options.showGroupingCount) {
+    value += ` (${props.groupData.data?.length ?? 0})`;
   }
-
-  return render();
+  return (
+    <>
+      <TableRow ref={props.forwardedRef}>
+        {freeCells}
+        <props.components.Cell
+          colSpan={colSpan}
+          padding="none"
+          columnDef={column}
+          value={value}
+          icons={icons}
+        >
+          <>
+            <IconButton
+              style={{
+                transition: 'all ease 200ms',
+                ...rotateIconStyle(props.groupData.isExpanded)
+              }}
+              onClick={(event) => {
+                props.onGroupExpandChanged(props.path);
+              }}
+              size="large"
+            >
+              <icons.DetailPanel row={props} level={props.path.length - 1} />
+            </IconButton>
+            {showSelectGroupCheckbox && (
+              <Checkbox
+                indeterminate={selectedRows > 0 && totalRows !== selectedRows}
+                checked={totalRows === selectedRows}
+                onChange={(event, checked) =>
+                  props.onGroupSelected &&
+                  props.onGroupSelected(checked, props.groupData.path)
+                }
+                style={{ marginRight: 8 }}
+              />
+            )}
+            <b>
+              {title}
+              {separator}
+            </b>
+          </>
+        </props.components.Cell>
+      </TableRow>
+      {detail}
+    </>
+  );
 }
 
 MTableGroupRow.defaultProps = {

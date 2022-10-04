@@ -10,7 +10,13 @@ import { Box, Tooltip } from '@mui/material';
 import * as CommonValues from '../../utils/common-values';
 import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
 
-export function MTableHeader({ onColumnResized, columns, ...props }) {
+export function MTableHeader({
+  onColumnResized,
+  classes,
+  sx,
+  columns,
+  ...props
+}) {
   const localization = useLocalizationStore().header;
   const options = useOptionStore();
   const icons = useIconStore();
@@ -425,7 +431,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
       );
     });
   return (
-    <TableHead ref={props.forwardedRef}>
+    <TableHead ref={props.forwardedRef} classes={classes} sx={sx}>
       <TableRow sx={styles.headerRow}>{headers}</TableRow>
     </TableHead>
   );
@@ -539,6 +545,8 @@ MTableHeader.defaultProps = {
 
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
+  classes: PropTypes.object,
+  sx: PropTypes.object,
   dataCount: PropTypes.number,
   hasDetailPanel: PropTypes.bool.isRequired,
   selectedCount: PropTypes.number,

@@ -396,6 +396,8 @@ export interface Options<RowData extends object> {
   padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
+  // Show the sub rows of a group in brackets Name: Dominik (20)
+  showGroupingCount?: boolean;
   groupTitle?: (groupData: object) => React.ReactNode;
   overflowY?:
     | 'visible'
