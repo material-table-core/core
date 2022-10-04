@@ -234,7 +234,7 @@ export interface Column<RowData extends object> {
   filterComponent?: (props: {
     columnDef: Column<RowData>;
     // The columnId can be extracted from columnDef.tableData.id
-    onFilterChanged: (columnId: string, value: any) => void;
+    onFilterChanged: (columnId: number, value: any) => void;
   }) => React.ReactElement<any>;
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
