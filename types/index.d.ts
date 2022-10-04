@@ -447,7 +447,7 @@ export interface Options<RowData extends object> {
   detailPanelColumnAlignment?: 'left' | 'right';
   detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
-  defaultOrderByCollection: OrderByCollection[];
+  defaultOrderByCollection?: OrderByCollection[];
   maxColumnSort?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
   showColumnSortOrder?: boolean;
   sortOrderIndicatorStyle?: React.CSSProperties;
