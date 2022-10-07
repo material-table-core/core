@@ -1,3 +1,18 @@
+#### 0.2.45 (2022-10-07)
+
+##### New Features
+
+- add possiblity to add chip props ([ba1a40c9](https://github.com/material-table-core/core/commit/ba1a40c9acef6bd30ca440ecb43ab4e706fbacfa))
+- improve action spreading ([2c69abca](https://github.com/material-table-core/core/commit/2c69abca3b9a04f7fdfa4f0269e611a2d01672be))
+
+##### Bug Fixes
+
+- correct typing for filterComponent ([#641](https://github.com/material-table-core/core/pull/641)) ([faf48610](https://github.com/material-table-core/core/commit/faf4861041d18bb43dc086bc293711e349529f55))
+
+##### Other Changes
+
+- material-table-core/core into next ([a14d92b3](https://github.com/material-table-core/core/commit/a14d92b39d5296b63b4a78def525565815454efb))
+
 #### 0.2.44 (2022-10-04)
 
 #### 0.2.43 (2022-10-04)
