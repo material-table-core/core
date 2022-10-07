@@ -97,7 +97,7 @@ function MTableGroupbar(props) {
             sx={getListStyle(snapshot.isDraggingOver)}
           >
             {props.groupColumns.length > 0 && (
-              <Typography variant="caption" style={{ padding: 8 }}>
+              <Typography variant="caption" sx={{ padding: 1 }}>
                 {localization.groupedBy}
               </Typography>
             )}
@@ -139,7 +139,11 @@ function MTableGroupbar(props) {
                             )}
                           </Box>
                         }
-                        sx={{ boxShadow: 'none', textTransform: 'none' }}
+                        sx={{
+                          boxShadow: 'none',
+                          textTransform: 'none',
+                          ...(options.groupChipProps ?? {})
+                        }}
                         onDelete={() => props.onGroupRemoved(columnDef, index)}
                       />
                     </Box>
@@ -148,7 +152,7 @@ function MTableGroupbar(props) {
               );
             })}
             {props.groupColumns.length === 0 && (
-              <Typography variant="caption" style={{ padding: 8 }}>
+              <Typography variant="caption" sx={{ padding: 1 }}>
                 {localization.placeholder}
               </Typography>
             )}

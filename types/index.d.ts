@@ -240,7 +240,6 @@ export interface Column<RowData extends object> {
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   groupTitle?: string | ((groupData: any) => any) | React.ReactNode;
-  groupChipProps?: ChipProps;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hiddenByColumnsButton?: boolean;
@@ -397,6 +396,8 @@ export interface Options<RowData extends object> {
   padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
+  // Allows to override the grouping chip props
+  groupChipProps?: ChipProps;
   // Show the sub rows of a group in brackets Name: Dominik (20)
   showGroupingCount?: boolean;
   groupTitle?: (groupData: object) => React.ReactNode;
