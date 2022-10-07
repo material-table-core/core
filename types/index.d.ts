@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconProps } from '@mui/material/Icon';
-import { CheckboxProps } from '@mui/material';
+import { CheckboxProps, ChipProps } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
@@ -240,6 +240,7 @@ export interface Column<RowData extends object> {
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   groupTitle?: string | ((groupData: any) => any) | React.ReactNode;
+  groupChipProps?: ChipProps;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hiddenByColumnsButton?: boolean;

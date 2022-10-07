@@ -6,11 +6,14 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import { useLocalizationStore, useIconStore } from '@store';
+import { Box } from '@mui/material';
+import { useOptionStore } from '../../store/LocalizationStore';
 /* eslint-enable no-unused-vars */
 
 function MTableGroupbar(props) {
   const localization = useLocalizationStore().grouping;
   const icons = useIconStore();
+  const options = useOptionStore();
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
@@ -80,7 +83,7 @@ function MTableGroupbar(props) {
   return (
     <Toolbar
       className={props.className}
-      style={{ padding: 0, minHeight: 'unset' }}
+      sx={{ padding: 0, minHeight: 'unset' }}
       ref={props.forwardedRef}
     >
       <Droppable
@@ -89,9 +92,9 @@ function MTableGroupbar(props) {
         placeholder="Deneme"
       >
         {(provided, snapshot) => (
-          <div
+          <Box
             ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
+            sx={getListStyle(snapshot.isDraggingOver)}
           >
             {props.groupColumns.length > 0 && (
               <Typography variant="caption" style={{ padding: 8 }}>
@@ -106,28 +109,25 @@ function MTableGroupbar(props) {
                   index={index}
                 >
                   {(provided, snapshot) => (
-                    <div
+                    <Box
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
+                      sx={getItemStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
                       )}
                     >
                       <Chip
                         {...provided.dragHandleProps}
+                        {...options.groupChipProps}
                         onClick={() => props.onSortChanged(columnDef)}
                         label={
-                          <div
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
-                            <div style={{ float: 'left' }}>
-                              {columnDef.title}
-                            </div>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ float: 'left' }}>{columnDef.title}</Box>
                             {columnDef.tableData.groupSort && (
                               <icons.SortArrow
-                                style={{
+                                sx={{
                                   transition: '300ms ease all',
                                   transform:
                                     columnDef.tableData.groupSort === 'asc'
@@ -137,12 +137,12 @@ function MTableGroupbar(props) {
                                 }}
                               />
                             )}
-                          </div>
+                          </Box>
                         }
-                        style={{ boxShadow: 'none', textTransform: 'none' }}
+                        sx={{ boxShadow: 'none', textTransform: 'none' }}
                         onDelete={() => props.onGroupRemoved(columnDef, index)}
                       />
-                    </div>
+                    </Box>
                   )}
                 </Draggable>
               );
@@ -153,7 +153,7 @@ function MTableGroupbar(props) {
               </Typography>
             )}
             {provided.placeholder}
-          </div>
+          </Box>
         )}
       </Droppable>
     </Toolbar>
