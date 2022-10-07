@@ -32,7 +32,7 @@ function MTableGroupbar(props) {
     background: '#0000000a',
     display: 'flex',
     width: '100%',
-    padding: 8,
+    padding: 1,
     overflow: 'auto',
     border: '1px solid #ccc',
     borderStyle: 'dashed'
@@ -83,7 +83,7 @@ function MTableGroupbar(props) {
   return (
     <Toolbar
       className={props.className}
-      sx={{ padding: 0, minHeight: 'unset' }}
+      disableGutters={true}
       ref={props.forwardedRef}
     >
       <Droppable
