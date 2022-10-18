@@ -57,7 +57,14 @@ export function MTableToolbar(props) {
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
-    const data = props.data().map((rowData) =>
+
+    let extractedData = props.data();
+    // If the data is grouped, it will have an array at the data key
+    if (Array.isArray(extractedData?.[0]?.data)) {
+      // Extract each row of the grouped data
+      extractedData = extractedData.map((row) => row.data).flat();
+    }
+    const data = extractedData.map((rowData) =>
       columns.reduce((agg, columnDef) => {
         let value;
         /*
@@ -79,6 +86,7 @@ export function MTableToolbar(props) {
       }, {})
     );
 
+    console.log(props, props.data(), data);
     return [columns, data];
   };
   function renderSearch() {
