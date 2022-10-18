@@ -2,7 +2,13 @@ import React from 'react';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal/react';
 import * as CommonValues from './utils/common-values';
-import { Table, TableFooter, TableRow, LinearProgress } from '@mui/material';
+import {
+  Table,
+  TableFooter,
+  TableRow,
+  LinearProgress,
+  Box
+} from '@mui/material';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import DataManager from '@utils/data-manager';
 import {
@@ -956,12 +962,12 @@ export default class MaterialTable extends React.Component {
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
                   renderValue: (value) => (
-                    <div style={{ padding: '0px 5px' }}>
+                    <Box sx={{ padding: '0px 5px' }}>
                       {value +
                         ' ' +
                         props.localization.pagination.labelRowsSelect +
                         ' '}
-                    </div>
+                    </Box>
                   )
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}

@@ -14,11 +14,17 @@ function MTablePagination(props) {
   const theme = useTheme();
   const icons = useIconStore();
   const localization = useLocalizationStore().pagination;
+
   if (process.env.NODE_ENV === 'development' && !props.onPageChange) {
     console.error(
       'The prop `onPageChange` in pagination is undefined and paging does not work. ' +
         'This is most likely caused by an old material-ui version <= 4.11.X.' +
         'To fix this, install either material-ui >=4.12 or downgrade material-table-core to <=3.0.15.'
+    );
+  }
+  if (process.env.NODE_ENV === 'development' && localization.labelRowsSelect) {
+    console.warning(
+      'The prop was renamed to labelDisplayedRows. Please rename the prop accordingly: https://mui.com/material-ui/api/table-pagination/#main-content.'
     );
   }
   const handleFirstPageButtonClick = (event) => {
