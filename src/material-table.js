@@ -1,6 +1,6 @@
 import React from 'react';
 import { debounce } from 'debounce';
-import equal from 'fast-deep-equal/react';
+import deepEql from 'deep-eql';
 import * as CommonValues from './utils/common-values';
 import {
   Table,
@@ -224,11 +224,11 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
+    const columnPropsChanged = !deepEql(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
-      columnPropsChanged || !equal(prevProps.options, this.props.options);
+      columnPropsChanged || !deepEql(prevProps.options, this.props.options);
     if (!this.isRemoteData()) {
-      propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+      propsChanged = propsChanged || !deepEql(prevProps.data, this.props.data);
     }
 
     if (prevProps.options.pageSize !== this.props.options.pageSize) {
@@ -265,7 +265,7 @@ export default class MaterialTable extends React.Component {
           const prevColumnsWithoutFunctions = functionlessColumns(
             fixedPrevColumns
           );
-          const columnsEqual = equal(
+          const columnsEqual = deepEql(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
           );
