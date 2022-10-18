@@ -1,3 +1,9 @@
+#### 5.1.7 (2022-10-18)
+
+##### Bug Fixes
+
+- correct typing for filterComponent ([#642](https://github.com/material-table-core/core/pull/642)) ([e334e394](https://github.com/material-table-core/core/commit/e334e394080f3f826f56bf127427d0137bedfdb0))
+
 #### 5.1.6 (2022-10-01)
 
 #### 5.1.6 (2022-10-01)
