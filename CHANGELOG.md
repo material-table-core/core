@@ -1,3 +1,14 @@
+#### 0.2.49 (2022-10-18)
+
+##### New Features
+
+- extract grouped export data ([c4fff6cf](https://github.com/material-table-core/core/commit/c4fff6cf442e873a5be6caf4a8129c1b9154e3eb))
+
+##### Other Changes
+
+- change to deepEql ([3affdaed](https://github.com/material-table-core/core/commit/3affdaed90ccd1c11dfd39114c62df0ffcb0db9a))
+- add warning for old pagination naming ([7d1f997b](https://github.com/material-table-core/core/commit/7d1f997b5834232002e10817e9dc9e290191ff63))
+
 #### 0.2.48 (2022-10-08)
 
 #### 0.2.47 (2022-10-07)
