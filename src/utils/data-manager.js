@@ -1046,6 +1046,7 @@ export default class DataManager {
                   .includes(trimmedSearchText.toUpperCase());
               }
             }
+            return false;
           });
       });
     }

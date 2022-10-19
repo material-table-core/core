@@ -23,7 +23,7 @@ function MTablePagination(props) {
     );
   }
   if (process.env.NODE_ENV === 'development' && localization.labelRowsSelect) {
-    console.warning(
+    console.warn(
       'The prop was renamed to labelDisplayedRows. Please rename the prop accordingly: https://mui.com/material-ui/api/table-pagination/#main-content.'
     );
   }
