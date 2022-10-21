@@ -991,7 +991,9 @@ export default class MaterialTable extends React.Component {
                     />
                   )
                 }
-                labelRowsPerPage={props.localization.labelRowsPerPage}
+                labelRowsPerPage={
+                  props.localization.pagination.labelRowsPerPage
+                }
               />
             </TableRow>
           </TableFooter>
