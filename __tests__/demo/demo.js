@@ -48,7 +48,7 @@ import {
   FixedColumnWithEdit,
   TableMultiSorting
 } from './demo-components';
-import { I1353, I1941, I122 } from './demo-components/RemoteData';
+import { I1353, I1941, I122, RtkQueryDemo } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
 import TableHead from '@material-ui/core/TableHead';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
@@ -163,6 +163,14 @@ render(
           </a>
         </h3>
         <I122 />
+      </li>
+      <li>
+        <h3>
+          <a href="https://github.com/material-table-core/core/issues/457">
+            #457
+          </a>
+        </h3>
+        <RtkQueryDemo />
       </li>
     </ol>
     <h1>

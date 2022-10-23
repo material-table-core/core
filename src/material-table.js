@@ -137,11 +137,13 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
       this.dataManager.changeApplySort(true);
+    }
+
+    if (typeof props.data !== 'function') {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
-    const prevDefaultOrderByCollection =
-      this.dataManager.getDefaultOrderByCollection();
+    const prevDefaultOrderByCollection = this.dataManager.getDefaultOrderByCollection();
     const { defaultOrderByCollection } = props.options;
     let defaultCollectionSort = [];
     let defaultSort = '';
@@ -194,19 +196,16 @@ export default class MaterialTable extends React.Component {
         this.dataManager.changeColumnOrder(orderBy, orderDirection, sortOrder)
       );
     }
-
-    isInit && this.dataManager.changeSearchText(props.options.searchText || '');
-    isInit &&
-      this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
-    isInit &&
-      this.dataManager.changeCurrentPage(
-        props.options.initialPage ? props.options.initialPage : 0
-      );
-    isInit && this.dataManager.changePageSize(props.options.pageSize);
+    this.dataManager.changeSearchText(props.options.searchText || '');
+    this.dataManager.changeSearchDebounce(props.options.searchDebounceDelay);
+    this.dataManager.changeCurrentPage(
+      isInit ? props.options.initialPage : props.page
+    );
+    this.dataManager.changePageSize(props.options.pageSize);
     this.dataManager.changePaging(
       this.isRemoteData() ? false : props.options.paging
     );
-    isInit && this.dataManager.changeParentFunc(props.parentChildData);
+    this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
@@ -227,9 +226,14 @@ export default class MaterialTable extends React.Component {
     const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
       columnPropsChanged || !equal(prevProps.options, this.props.options);
-    if (!this.isRemoteData()) {
+    if (typeof this.props.data !== 'function') {
       propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
     }
+    propsChanged = propsChanged || !equal(prevProps.page, this.props.page);
+    propsChanged =
+      propsChanged || !equal(prevProps.pageSize, this.props.pageSize);
+    propsChanged =
+      propsChanged || !equal(prevProps.totalCount, this.props.totalCount);
 
     if (prevProps.options.pageSize !== this.props.options.pageSize) {
       this.dataManager.changePageSize(this.props.options.pageSize);
@@ -238,8 +242,17 @@ export default class MaterialTable extends React.Component {
     if (propsChanged) {
       const props = this.getProps(this.props);
       this.setDataManagerFields(props, false, prevProps.columns);
+
+      const dataManagerState = this.dataManager.getRenderState();
+
       this.setState({
-        ...this.dataManager.getRenderState(),
+        ...dataManagerState,
+        query: {
+          ...this.state.query,
+          page: dataManagerState.currentPage,
+          pageSize: dataManagerState.pageSize,
+          totalCount: props.totalCount
+        },
         actions: props.actions
       });
       if (
@@ -259,10 +272,12 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions =
-            functionlessColumns(fixedPropsColumns);
-          const prevColumnsWithoutFunctions =
-            functionlessColumns(fixedPrevColumns);
+          const currentColumnsWithoutFunctions = functionlessColumns(
+            fixedPropsColumns
+          );
+          const prevColumnsWithoutFunctions = functionlessColumns(
+            fixedPrevColumns
+          );
           const columnsEqual = equal(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -452,7 +467,14 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  isRemoteData = (props) => !Array.isArray((props || this.props).data);
+  isRemoteData = (props) => {
+    if ((props || this.props).isRemoteData) {
+      return true;
+    } else {
+      // Determine from props.data
+      return !Array.isArray((props || this.props).data);
+    }
+  };
 
   isOutsidePageNumbers = (props) =>
     props.page !== undefined && props.totalCount !== undefined;
@@ -742,48 +764,57 @@ export default class MaterialTable extends React.Component {
 
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query, error: this.state.errorState };
-
-    this.setState({ isLoading: true, errorState: undefined }, () => {
-      this.props
-        .data(query)
-        .then((result) => {
-          query.totalCount = result.totalCount;
-          query.page = result.page;
-          const nextQuery = {
-            ...query,
-            totalCount: result.totalCount,
-            page: result.page
-          };
-          this.dataManager.setData(result.data, this.props.options.idSynonym);
-          this.setState(
-            {
+    if (typeof this.props.data === 'function') {
+      this.setState({ isLoading: true, errorState: undefined }, () => {
+        this.props
+          .data(query)
+          .then((result) => {
+            const nextQuery = {
+              ...query,
+              totalCount: result.totalCount,
+              page: result.page
+            };
+            this.dataManager.setData(result.data, this.props.options.idSynonym);
+            this.setState(
+              {
+                isLoading: false,
+                errorState: false,
+                ...this.dataManager.getRenderState(),
+                query: nextQuery
+              },
+              () => {
+                callback && callback();
+              }
+            );
+          })
+          .catch((error) => {
+            const errorState = {
+              message:
+                typeof error === 'object'
+                  ? error.message
+                  : error !== undefined
+                  ? error
+                  : this.props.localization.error,
+              errorCause: 'query'
+            };
+            this.setState({
               isLoading: false,
-              errorState: false,
-              ...this.dataManager.getRenderState(),
-              query: nextQuery
-            },
-            () => {
-              callback && callback();
-            }
-          );
-        })
-        .catch((error) => {
-          const errorState = {
-            message:
-              typeof error === 'object'
-                ? error.message
-                : error !== undefined
-                ? error
-                : this.props.localization.error,
-            errorCause: 'query'
-          };
-          this.setState({
-            isLoading: false,
-            errorState,
-            ...this.dataManager.getRenderState()
+              errorState,
+              ...this.dataManager.getRenderState()
+            });
           });
-        });
-    });
+      });
+    } else {
+      this.props.onQueryChange && this.props.onQueryChange(query);
+      this.setState(
+        {
+          query
+        },
+        () => {
+          callback && callback();
+        }
+      );
+    }
   };
 
   onRowSelected = (event, path, dataClicked) => {
@@ -927,14 +958,19 @@ export default class MaterialTable extends React.Component {
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
+      const isRemoteData = this.isRemoteData(props);
       const isOutsidePageNumbers = this.isOutsidePageNumbers(props);
-      const currentPage = isOutsidePageNumbers
+      const currentPage = isRemoteData
+        ? this.state.query.page
+        : isOutsidePageNumbers
         ? Math.min(
             props.page,
             Math.floor(props.totalCount / this.state.pageSize)
           )
         : this.state.currentPage;
-      const totalCount = isOutsidePageNumbers
+      const totalCount = isRemoteData
+        ? this.state.query.totalCount
+        : isOutsidePageNumbers
         ? props.totalCount
         : this.state.data.length;
 
@@ -957,9 +993,7 @@ export default class MaterialTable extends React.Component {
                     : 'flex-end'
                 }}
                 colSpan={3}
-                count={
-                  this.isRemoteData() ? this.state.query.totalCount : totalCount
-                }
+                count={totalCount}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
@@ -972,7 +1006,7 @@ export default class MaterialTable extends React.Component {
                     </div>
                   )
                 }}
-                page={this.isRemoteData() ? this.state.query.page : currentPage}
+                page={currentPage}
                 onPageChange={this.onPageChange}
                 onRowsPerPageChange={this.onRowsPerPageChange}
                 ActionsComponent={(subProps) =>
@@ -1126,8 +1160,9 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef =
-        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
+      const colDef = this.state.columns[
+        count >= 0 ? i : this.state.columns.length - 1 - i
+      ];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');

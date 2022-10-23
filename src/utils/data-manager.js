@@ -170,8 +170,7 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width =
-        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -245,18 +244,25 @@ export default class DataManager {
   }
 
   changePaging(paging) {
-    this.paging = paging;
-    this.paged = false;
+    if (this.paging !== paging) {
+      this.paging = paging;
+      this.paged = false;
+    }
   }
 
   changeCurrentPage(currentPage) {
-    this.currentPage = currentPage;
-    this.paged = false;
+    currentPage = currentPage || 0;
+    if (this.currentPage !== currentPage) {
+      this.currentPage = currentPage;
+      this.paged = false;
+    }
   }
 
   changePageSize(pageSize) {
-    this.pageSize = pageSize;
-    this.paged = false;
+    if (this.pageSize !== pageSize) {
+      this.pageSize = pageSize;
+      this.paged = false;
+    }
   }
 
   changeParentFunc(parentFunc) {
@@ -320,9 +326,11 @@ export default class DataManager {
   }
 
   changeSearchText(searchText) {
-    this.searchText = searchText;
-    this.searched = false;
-    this.currentPage = 0;
+    if (this.searchText !== searchText) {
+      this.searchText = searchText;
+      this.searched = false;
+      this.currentPage = 0;
+    }
   }
 
   changeSearchDebounce(searchDebounceDelay) {
@@ -902,12 +910,7 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched =
-      this.grouped =
-      this.treefied =
-      this.sorted =
-      this.paged =
-        false;
+    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
 
