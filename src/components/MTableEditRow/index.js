@@ -12,7 +12,7 @@ function MTableEditRow(props) {
   const options = useOptionStore();
   const [state, setState] = useState(() => {
     let data = props.data
-      ? props.data
+      ? JSON.parse(JSON.stringify(props.data))
       : props.columns
           .filter((column) => 'initialEditValue' in column && column.field)
           .reduce((prev, column) => {

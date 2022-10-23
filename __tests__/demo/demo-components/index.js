@@ -147,13 +147,28 @@ export const DetailPanelIssuesProgrammaticallyHidingWhenOpen = () => {
 
 export function BulkEdit() {
   const [data, setData] = useState([
-    { name: 'joe', id: 1, age: 0, x: 'y', id: 0 },
-    { name: 'nancy', id: 2, age: 1, x: 'b', id: 1 }
+    {
+      name: 'joe',
+      id: 1,
+      age: 0,
+      x: 'y',
+      y: Object.freeze({ value: 1 }),
+      id: 0
+    },
+    {
+      name: 'nancy',
+      id: 2,
+      age: 1,
+      x: 'b',
+      y: Object.freeze({ value: 2 }),
+      id: 1
+    }
   ]);
 
   const [columns] = useState([
     { title: 'Name', field: 'name' },
     { title: 'X', field: 'x' },
+    { title: 'Y', field: 'y.value' },
     { title: 'Age', field: 'age' },
     {
       title: 'Identifier',
@@ -171,6 +186,11 @@ export function BulkEdit() {
           onBulkUpdate: (changes) =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
+                const newData = [...data];
+                Object.entries(changes).forEach(([key, value]) => {
+                  newData[key] = value.newData;
+                });
+                setData(newData);
                 resolve();
               }, 1000);
             }),
