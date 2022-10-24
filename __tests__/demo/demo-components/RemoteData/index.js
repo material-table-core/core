@@ -235,7 +235,7 @@ const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://reqres.in/api/' }),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query({
+    getUser: builder.query({
       query: (query) => {
         let url = 'users?';
         url += 'per_page=' + query.pageSize;
@@ -267,40 +267,36 @@ function RtkQueryDemoInner() {
     page: 0,
     pageSize: 5
   });
-  const { isFetching, data } = userApi.useGetPokemonByNameQuery(query);
 
-  console.log(data?.data);
+  const { isFetching, data } = userApi.useGetUserQuery(query);
 
   return (
     <MaterialTable
       isRemoteData
       isLoading={isFetching}
       title="Remote data with RTK Query"
-      columns={useMemo(
-        () => [
-          {
-            title: 'Avatar',
-            field: 'avatar',
-            render: (rowData) => (
-              <img
-                style={{ height: 36, borderRadius: '50%' }}
-                src={rowData.avatar}
-              />
-            )
-          },
-          { title: 'Id', field: 'id' },
-          { title: 'First Name', field: 'first_name' },
-          { title: 'Last Name', field: 'last_name' }
-        ],
-        []
-      )}
+      columns={[
+        {
+          title: 'Avatar',
+          field: 'avatar',
+          render: (rowData) => (
+            <img
+              style={{ height: 36, borderRadius: '50%' }}
+              src={rowData.avatar}
+            />
+          )
+        },
+        { title: 'Id', field: 'id' },
+        { title: 'First Name', field: 'first_name' },
+        { title: 'Last Name', field: 'last_name' }
+      ]}
       data={data?.data ?? []}
       onQueryChange={(query) => setQuery(query)}
       options={{
         pageSize: query.pageSize
       }}
       page={query.page}
-      totalCount={12}
+      totalCount={data?.total}
     />
   );
 }
