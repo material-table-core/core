@@ -85,8 +85,6 @@ export function MTableToolbar(props) {
         return agg;
       }, {})
     );
-
-    console.log(props, props.data(), data);
     return [columns, data];
   };
   function renderSearch() {
