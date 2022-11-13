@@ -290,12 +290,10 @@ export function MTableToolbar(props) {
   }
 
   const title =
-    options.showTextRowsSelected &&
-    props.selectedRows &&
-    props.selectedRows.length > 0
+    options.showTextRowsSelected && selectedRows.length > 0
       ? typeof localization.nRowsSelected === 'function'
-        ? localization.nRowsSelected(props.selectedRows.length)
-        : localization.nRowsSelected.replace('{0}', props.selectedRows.length)
+        ? localization.nRowsSelected(selectedRows.length)
+        : localization.nRowsSelected.replace('{0}', selectedRows.length)
       : options.showTitle
       ? props.title
       : null;
@@ -305,9 +303,7 @@ export function MTableToolbar(props) {
       className={props.className}
       sx={{
         ...styles.root,
-        ...(options.showTextRowsSelected &&
-        props.selectedRows &&
-        props.selectedRows.length > 0
+        ...(options.showTextRowsSelected && selectedRows.length > 0
           ? styles.highlight(theme)
           : {})
       }}

@@ -491,7 +491,7 @@ export interface Localization {
     labelRowsPerPage?: React.ReactNode;
     lastTooltip?: React.ReactNode;
     lastAriaLabel?: string;
-    labelRowsSelect?: React.ReactNode;
+    labelRows?: React.ReactNode;
   };
   toolbar?: {
     addRemoveColumns?: React.ReactNode;

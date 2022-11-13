@@ -29,13 +29,13 @@ describe('Localization', () => {
           pagination: {
             labelDisplayedRows: 'Test_labelDisplayedRows',
             labelRowsPerPage: 'Test_labelRowsPerPage',
-            labelRowsSelect: 'Test_labelRowsSelect'
+            labelRows: 'Test_labelRows'
           }
         }}
       />
     );
     screen.getByText(/test_labeldisplayedrows/i);
     screen.getByText(/test_labelrowsperpage/i);
-    screen.getByText(/5 test_labelrowsselect/i);
+    screen.getByText(/5 labelRows/i);
   });
 });

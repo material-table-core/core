@@ -965,7 +965,7 @@ export default class MaterialTable extends React.Component {
                     <Box sx={{ padding: '0px 5px' }}>
                       {value +
                         ' ' +
-                        props.localization.pagination.labelRowsSelect +
+                        props.localization.pagination.labelRows +
                         ' '}
                     </Box>
                   )
@@ -1159,6 +1159,7 @@ export default class MaterialTable extends React.Component {
               components={this.props.components}
               originalData={this.state.originalData}
               columns={this.state.columns}
+              selectedCount={this.state.selectedCount}
               getFieldValue={this.dataManager.getFieldValue}
               data={this.getRenderData}
               title={props.title}
