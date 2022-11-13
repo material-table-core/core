@@ -1,3 +1,13 @@
+#### 0.2.53 (2022-11-13)
+
+##### Bug Fixes
+
+- remove console.log ([#657](https://github.com/material-table-core/core/pull/657)) ([6e1a27ac](https://github.com/material-table-core/core/commit/6e1a27acd3a4b4c16ee82a88c4df2ce3775e396b))
+
+##### Other Changes
+
+- material-table-core/core into next ([a3a290d7](https://github.com/material-table-core/core/commit/a3a290d7bba3f23ff94e613b60e020d6bd36cf1a))
+
 #### 0.2.52 (2022-10-21)
 
 #### 0.2.51 (2022-10-19)
