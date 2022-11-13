@@ -212,7 +212,7 @@ function MTableBody(props) {
       : undefined
   ).current;
   return (
-    <TableBody>
+    <TableBody ref={props.forwardedRef}>
       {options.filtering && (
         <props.components.FilterRow
           columns={columns}
@@ -267,6 +267,7 @@ MTableBody.propTypes = {
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  forwardedRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
   hasDetailPanel: PropTypes.bool.isRequired,
