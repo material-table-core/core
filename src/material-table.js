@@ -76,7 +76,7 @@ export default class MaterialTable extends React.Component {
          * Warn consumer of renamed prop.
          */
         if (this.props.onDoubleRowClick !== undefined) {
-          console.error(
+          console.warn(
             'Property `onDoubleRowClick` has been renamed to `onRowDoubleClick`'
           );
         }
@@ -85,7 +85,7 @@ export default class MaterialTable extends React.Component {
          * Warn consumer of deprecated prop.
          */
         if (this.props.options.sorting !== undefined) {
-          console.error(
+          console.warn(
             'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
           );
         }
