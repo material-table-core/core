@@ -22,7 +22,6 @@ const MenuProps = {
     }
   },
   variant: 'menu',
-  getContentAnchorEl: null
 };
 
 function LookupFilter({
