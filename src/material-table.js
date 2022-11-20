@@ -440,9 +440,10 @@ export default class MaterialTable extends React.Component {
           .length === 0
       ) {
         calculatedProps.actions.push({
-          icon: 'div',
+          icon: null,
           position: 'row',
-          onClick: () => {}
+          onClick: () => {},
+          disabled: true
         });
       }
     }
