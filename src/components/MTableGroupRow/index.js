@@ -60,7 +60,6 @@ function MTableGroupRow(props) {
               columns={props.columns}
               components={props.components}
               data={rowData}
-              icons={icons}
               path={[...props.path, rowData.tableData.uuid]}
               localization={props.localization}
               key={index}
