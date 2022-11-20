@@ -1302,6 +1302,20 @@ export function TableMultiSorting(props) {
 
   const global_data1 = [
     {
+      number: undefined,
+      title: null,
+      name: 'Mehmet',
+      lastName: 'Baran',
+      id: '1231'
+    },
+    {
+      number: undefined,
+      title: null,
+      name: 'Mehmet',
+      lastName: 'Baran',
+      id: '1231'
+    },
+    {
       number: 1,
       title: 'Developer',
       name: 'Mehmet',
