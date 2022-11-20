@@ -170,8 +170,7 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width =
-        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -784,16 +783,22 @@ export default class DataManager {
     return type === dataType;
   }
 
-  sort(a, b, type) {
+  sort(a, b, type, orderDirection) {
     if (type === 'numeric') {
       return a - b;
     } else {
-      if (a !== b) {
-        // to find nulls
-        if (!a) return -1;
-        if (!b) return 1;
+      if (a === b) {
+        return 0;
       }
-      return a < b ? -1 : a > b ? 1 : 0;
+
+      if (!a) return 1;
+      if (!b) return -1;
+
+      if (orderDirection === 'asc') {
+        return a < b ? -1 : 1;
+      }
+
+      return a < b ? 1 : -1;
     }
   }
 
@@ -822,7 +827,6 @@ export default class DataManager {
       const { orderBy, orderDirection } = collection[0];
 
       const columnDef = columns.get(orderBy);
-
       let compareValue = 0;
       if (columnDef.customSort) {
         if (orderDirection === 'desc') {
@@ -835,15 +839,10 @@ export default class DataManager {
         compareValue = sort(
           getFieldValue(a, columnDef),
           getFieldValue(b, columnDef),
-          columnDef.type
+          columnDef.type,
+          orderDirection.toLowerCase()
         );
-
-        compareValue =
-          orderDirection.toLowerCase() === 'desc'
-            ? compareValue * -1
-            : compareValue;
       }
-
       // See if the next key needs to be considered
       const checkNextKey = compareValue === 0 && collection.length !== 1;
 
@@ -902,12 +901,7 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched =
-      this.grouped =
-      this.treefied =
-      this.sorted =
-      this.paged =
-        false;
+    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
 

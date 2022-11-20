@@ -12,6 +12,8 @@
 
 #### 5.1.4 (2022-09-23)
 
+#### 4.3.45 (2022-11-13)
+
 ##### Chores
 
 - use @hello-pangea/dnd ([#608](https://github.com/material-table-core/core/pull/608)) ([e89f4bb8](https://github.com/material-table-core/core/commit/e89f4bb89e62c22cb72c1f20d4593ebede2d4662))

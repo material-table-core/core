@@ -378,7 +378,8 @@ export const propTypes = {
       PropTypes.shape({
         orderBy: PropTypes.number,
         orderDirection: PropTypes.string,
-        sortOrder: PropTypes.number
+        sortOrder: PropTypes.number,
+        orderIndex: PropTypes.number
       })
     ),
     maxColumnSort: PropTypes.oneOf([
