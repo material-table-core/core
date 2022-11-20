@@ -108,7 +108,6 @@ function MTableBody(props) {
             onRowSelected={props.onRowSelected}
             actions={props.actions}
             columns={props.columns}
-            options={props.options}
             getFieldValue={props.getFieldValue}
             detailPanel={props.detailPanel}
             path={path}
@@ -160,7 +159,6 @@ function MTableBody(props) {
         onToggleDetailPanel={props.onToggleDetailPanel}
         onTreeExpandChanged={props.onTreeExpandChanged}
         path={[index + props.pageSize * props.currentPage]}
-        options={props.options}
         scrollWidth={props.scrollWidth}
         treeDataMaxLevel={props.treeDataMaxLevel}
       />

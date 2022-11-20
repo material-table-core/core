@@ -206,8 +206,7 @@ function MTableGroupRow(props) {
 MTableGroupRow.defaultProps = {
   columns: [],
   groups: [],
-  level: 0,
-  options: {}
+  level: 0
 };
 
 MTableGroupRow.propTypes = {
@@ -239,7 +238,6 @@ MTableGroupRow.propTypes = {
   onRowSelected: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
-  options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
   scrollWidth: PropTypes.number.isRequired,
   treeDataMaxLevel: PropTypes.number

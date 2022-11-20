@@ -43,9 +43,10 @@ function MTableBodyRow({ forwardedRef, ...props }) {
     scrollWidth,
     onRowClick,
     onRowDoubleClick,
+    columns: propColumns,
     ...rowProps
   } = props;
-  const columns = props.columns.filter((columnDef) => !columnDef.hidden);
+  const columns = propColumns.filter((columnDef) => !columnDef.hidden);
 
   const onClick = (event, callback) =>
     callback(event, data, (panelIndex) => {
@@ -509,6 +510,7 @@ MTableBodyRow.defaultProps = {
 };
 
 MTableBodyRow.propTypes = {
+  forwardedRef: PropTypes.element,
   actions: PropTypes.array,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
