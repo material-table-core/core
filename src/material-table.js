@@ -922,12 +922,6 @@ export default class MaterialTable extends React.Component {
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
-      const isOutsidePageNumbers = this.isOutsidePageNumbers(props);
-      const localization = {
-        ...MaterialTable.defaultProps.localization.pagination,
-        ...this.props.localization.pagination
-      };
-
       const currentPage = this.isRemoteData()
         ? Math.min(
             props.page,
