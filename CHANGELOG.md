@@ -1,3 +1,9 @@
+#### 5.1.8 (2022-11-20)
+
+##### Other Changes
+
+- material-table-core/core into experimental ([948bacea](https://github.com/material-table-core/core/commit/948baceaf6165ef7d53c3b693c4380f3e314bf24))
+
 #### 5.1.7 (2022-10-18)
 
 ##### Bug Fixes
