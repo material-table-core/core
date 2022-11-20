@@ -36,6 +36,6 @@ describe('Localization', () => {
     );
     screen.getByText(/test_labeldisplayedrows/i);
     screen.getByText(/test_labelrowsperpage/i);
-    screen.getByText(/5 labelRows/i);
+    screen.getByText(/5 Test_labelRows/i);
   });
 });

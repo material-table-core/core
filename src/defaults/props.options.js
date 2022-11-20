@@ -42,6 +42,7 @@ export default {
   searchFieldVariant: 'standard',
   selection: false,
   selectionProps: {},
+  // sorting: true,
   maxColumnSort: 1,
   groupChipProps: {},
   defaultOrderByCollection: [],

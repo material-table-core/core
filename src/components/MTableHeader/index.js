@@ -478,7 +478,6 @@ function RenderSortButton({
   const activeColumn = orderByCollection.find(
     ({ orderBy }) => orderBy === columnDef.tableData.id
   );
-
   // If current sorted column or prop asked to
   // maintain sort order when switching sorted column,
   // follow computed order direction if defined
@@ -504,7 +503,7 @@ function RenderSortButton({
         aria-sort={ariaSort}
         aria-label={columnDef.ariaLabel}
         IconComponent={icon}
-        active={!!activeColumn}
+        active={Boolean(activeColumn)}
         data-testid="mtableheader-sortlabel"
         direction={direction}
         onClick={() => {

@@ -380,8 +380,9 @@ export const propTypes = {
     defaultOrderByCollection: PropTypes.arrayOf(
       PropTypes.shape({
         orderBy: PropTypes.number,
-        oderDirection: PropTypes.string,
-        sortOrder: PropTypes.number
+        orderDirection: PropTypes.string,
+        sortOrder: PropTypes.number,
+        orderIndex: PropTypes.number
       })
     ),
     maxColumnSort: PropTypes.oneOf([
