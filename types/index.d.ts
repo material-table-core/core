@@ -450,7 +450,7 @@ export interface Options<RowData extends object> {
   detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
   defaultOrderByCollection?: OrderByCollection[];
-  maxColumnSort?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
+  maxColumnSort?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
   showColumnSortOrder?: boolean;
   sortOrderIndicatorStyle?: React.CSSProperties;
 }
