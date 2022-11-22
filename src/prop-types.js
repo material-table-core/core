@@ -50,8 +50,18 @@ export const propTypes = {
         maximumFractionDigits: PropTypes.number
       }),
       ariaLabel: PropTypes.string,
-      ariaSortAsc: PropTypes.string,
-      ariaSortDesc: PropTypes.string,
+      ariaSortAsc: PropTypes.oneOf([
+        'ascending',
+        'descending',
+        'none',
+        'other'
+      ]),
+      ariaSortDesc: PropTypes.oneOf([
+        'ascending',
+        'descending',
+        'none',
+        'other'
+      ]),
       draggable: PropTypes.bool,
       customFilterAndSearch: PropTypes.func,
       customSort: PropTypes.func,

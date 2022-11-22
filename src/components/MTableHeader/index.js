@@ -489,9 +489,9 @@ function RenderSortButton({
 
   let ariaSort = 'none';
   if (activeColumn && direction === 'asc') {
-    ariaSort = columnDef.ariaSortAsc ? columnDef.ariaSortAsc : 'Ascendant';
+    ariaSort = columnDef.ariaSortAsc || 'ascending';
   } else if (activeColumn && direction === 'desc') {
-    ariaSort = columnDef.ariaSortDesc ? columnDef.ariaSortDesc : 'Descendant';
+    ariaSort = columnDef.ariaSortDesc || 'descending';
   }
 
   const orderBy = activeColumn && activeColumn.orderBy;
