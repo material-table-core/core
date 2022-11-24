@@ -782,22 +782,16 @@ export default class DataManager {
     return type === dataType;
   }
 
-  sort(a, b, type, orderDirection) {
+  sort(a, b, type) {
     if (type === 'numeric') {
       return a - b;
     } else {
-      if (a === b) {
-        return 0;
+      if (a !== b) {
+        // to find nulls
+        if (!a) return -1;
+        if (!b) return 1;
       }
-
-      if (!a) return 1;
-      if (!b) return -1;
-
-      if (orderDirection === 'asc') {
-        return a < b ? -1 : 1;
-      }
-
-      return a < b ? 1 : -1;
+      return a < b ? -1 : a > b ? 1 : 0;
     }
   }
 
@@ -838,10 +832,15 @@ export default class DataManager {
         compareValue = sort(
           getFieldValue(a, columnDef),
           getFieldValue(b, columnDef),
-          columnDef.type,
-          orderDirection.toLowerCase()
+          columnDef.type
         );
+
+        compareValue =
+          orderDirection.toLowerCase() === 'desc'
+            ? compareValue * -1
+            : compareValue;
       }
+
       // See if the next key needs to be considered
       const checkNextKey = compareValue === 0 && collection.length !== 1;
 
