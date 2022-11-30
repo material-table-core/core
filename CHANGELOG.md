@@ -1,3 +1,9 @@
+#### 0.2.56 (2022-11-30)
+
+##### Other Changes
+
+- material-table-core/core into next ([b32d5dd4](https://github.com/material-table-core/core/commit/b32d5dd4b020e1ea3a86bf82e9310cdc1756c634))
+
 #### 0.2.55 (2022-11-30)
 
 #### 0.2.54 (2022-11-20)
