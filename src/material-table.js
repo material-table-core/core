@@ -439,7 +439,7 @@ export default class MaterialTable extends React.Component {
           .length === 0
       ) {
         calculatedProps.actions.push({
-          icon: null,
+          icon: undefined,
           position: 'row',
           onClick: () => {},
           disabled: true

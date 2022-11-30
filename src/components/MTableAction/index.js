@@ -35,7 +35,7 @@ function MTableAction(props) {
     }
   };
 
-  // You may provide events via the "action.handers" prop. It is an object.
+  // You may provide events via the "action.handlers" prop. It is an object.
   // The event name is the key, and the value is the handler func.
   const handlers = action.handlers || {};
   const eventHandlers = Object.entries(handlers).reduce((o, [k, v]) => {
@@ -43,14 +43,20 @@ function MTableAction(props) {
     return o;
   }, {});
 
-  const icon =
-    typeof action.icon === 'string' ? (
-      <Icon {...action.iconProps}>{action.icon}</Icon>
-    ) : typeof action.icon === 'function' ? (
-      action.icon({ ...action.iconProps, disabled: disabled })
-    ) : (
-      <action.icon {...action.iconProps} />
-    );
+  let icon = null;
+  switch (typeof action.icon) {
+    case 'string':
+      icon = <Icon {...action.iconProps}>{action.icon}</Icon>;
+      break;
+    case 'function':
+      icon = action.icon({ ...action.iconProps, disabled: disabled });
+      break;
+    case 'undefined':
+      icon = null;
+      break;
+    default:
+      icon = <action.icon {...action.iconProps} />;
+  }
 
   const button = (
     <IconButton
