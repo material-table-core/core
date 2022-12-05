@@ -225,6 +225,7 @@ function MTableBody(props) {
           hasDetailPanel={!!props.detailPanel}
           isTreeData={props.isTreeData}
           scrollWidth={props.scrollWidth}
+          hideFilterIcons={props.options.hideFilterIcons}
         />
       )}
       {options.addRowPosition === 'first' && renderAddRow()}
