@@ -1,6 +1,6 @@
 import React from 'react';
 import { debounce } from 'debounce';
-import equal from 'fast-deep-equal/react';
+import deepEql from 'deep-eql';
 import {
   Table,
   TableFooter,
@@ -79,17 +79,16 @@ export default class MaterialTable extends React.Component {
          * Warn consumer of renamed prop.
          */
         if (this.props.onDoubleRowClick !== undefined) {
-          console.error(
+          console.warn(
             'Property `onDoubleRowClick` has been renamed to `onRowDoubleClick`'
           );
         }
-
         /**
          * THIS WILL NEED TO BE REMOVED EVENTUALLY.
          * Warn consumer of deprecated prop.
          */
         if (this.props.options.sorting !== undefined) {
-          console.error(
+          console.warn(
             'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
           );
         }
@@ -223,17 +222,17 @@ export default class MaterialTable extends React.Component {
     const fixedPrevColumns = this.cleanColumns(prevProps.columns);
     const fixedPropsColumns = this.cleanColumns(this.props.columns);
 
-    const columnPropsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
+    const columnPropsChanged = !deepEql(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
-      columnPropsChanged || !equal(prevProps.options, this.props.options);
+      columnPropsChanged || !deepEql(prevProps.options, this.props.options);
     if (typeof this.props.data !== 'function') {
-      propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+      propsChanged = propsChanged || !deepEql(prevProps.data, this.props.data);
     }
-    propsChanged = propsChanged || !equal(prevProps.page, this.props.page);
+    propsChanged = propsChanged || !deepEql(prevProps.page, this.props.page);
     propsChanged =
-      propsChanged || !equal(prevProps.pageSize, this.props.pageSize);
+      propsChanged || !deepEql(prevProps.pageSize, this.props.pageSize);
     propsChanged =
-      propsChanged || !equal(prevProps.totalCount, this.props.totalCount);
+      propsChanged || !deepEql(prevProps.totalCount, this.props.totalCount);
 
     if (prevProps.options.pageSize !== this.props.options.pageSize) {
       this.dataManager.changePageSize(this.props.options.pageSize);
@@ -278,7 +277,7 @@ export default class MaterialTable extends React.Component {
           const prevColumnsWithoutFunctions = functionlessColumns(
             fixedPrevColumns
           );
-          const columnsEqual = equal(
+          const columnsEqual = deepEql(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
           );
@@ -476,9 +475,6 @@ export default class MaterialTable extends React.Component {
     }
   };
 
-  isOutsidePageNumbers = (props) =>
-    props.page !== undefined && props.totalCount !== undefined;
-
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(
       checked,
@@ -549,9 +545,7 @@ export default class MaterialTable extends React.Component {
           this.props.onPageChange(page, query.pageSize);
       });
     } else {
-      if (!this.isOutsidePageNumbers(this.props)) {
-        this.dataManager.changeCurrentPage(page);
-      }
+      this.dataManager.changeCurrentPage(page);
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onPageChange &&
           this.props.onPageChange(page, this.state.pageSize);
@@ -959,19 +953,11 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
     if (props.options.paging) {
       const isRemoteData = this.isRemoteData(props);
-      const isOutsidePageNumbers = this.isOutsidePageNumbers(props);
       const currentPage = isRemoteData
         ? this.state.query.page
-        : isOutsidePageNumbers
-        ? Math.min(
-            props.page,
-            Math.floor(props.totalCount / this.state.pageSize)
-          )
         : this.state.currentPage;
       const totalCount = isRemoteData
         ? this.state.query.totalCount
-        : isOutsidePageNumbers
-        ? props.totalCount
         : this.state.data.length;
 
       return (
@@ -1086,6 +1072,7 @@ export default class MaterialTable extends React.Component {
           }
           allowSorting={this.dataManager.maxColumnSort !== 0}
           orderByCollection={this.dataManager.getOrderByCollection()}
+          tableWidth={props.options.tableWidth ?? 'full'}
         />
       )}
       <props.components.Body
