@@ -5,6 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useOptionStore, useIconStore } from '@store';
+import ComponentOverride from '../ComponentOverride';
 
 function MTableGroupRow(props) {
   const options = useOptionStore();
@@ -25,7 +26,8 @@ function MTableGroupRow(props) {
       if (props.groups.length > props.level + 1) {
         // Is there another group
         detail = props.groupData.groups.map((groupData, index) => (
-          <props.components.GroupRow
+          <ComponentOverride
+            targetComponent={props.components.GroupRow}
             actions={props.actions}
             key={groupData.value || '' + index}
             columns={props.columns}
@@ -57,7 +59,8 @@ function MTableGroupRow(props) {
         detail = props.groupData.data.map((rowData, index) => {
           if (rowData.tableData.editing) {
             return (
-              <props.components.EditRow
+              <ComponentOverride
+                targetComponent={props.components.EditRow}
                 columns={props.columns}
                 components={props.components}
                 data={rowData}
@@ -77,7 +80,8 @@ function MTableGroupRow(props) {
             );
           } else {
             return (
-              <props.components.Row
+              <ComponentOverride
+                targetComponent={props.components.Row}
                 actions={props.actions}
                 key={index}
                 columns={props.columns}
@@ -158,7 +162,8 @@ function MTableGroupRow(props) {
       <>
         <TableRow ref={props.forwardedRef}>
           {freeCells}
-          <props.components.Cell
+          <ComponentOverride
+            targetComponent={props.components.Cell}
             colSpan={colSpan}
             padding="none"
             columnDef={column}
@@ -193,7 +198,7 @@ function MTableGroupRow(props) {
                 {separator}
               </b>
             </>
-          </props.components.Cell>
+          </ComponentOverride>
         </TableRow>
         {detail}
       </>

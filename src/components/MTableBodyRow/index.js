@@ -14,6 +14,7 @@ import * as CommonValues from '@utils/common-values';
 import { useDoubleClick } from '@utils/hooks/useDoubleClick';
 import { MTableCustomIcon } from '@components';
 import { useLocalizationStore, useOptionStore, useIconStore } from '@store';
+import ComponentOverride from '../ComponentOverride';
 
 function MTableBodyRow({ forwardedRef, ...props }) {
   const localization = useLocalizationStore().body;
@@ -79,7 +80,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
           )
         ) {
           return (
-            <props.components.EditCell
+            <ComponentOverride
+              targetComponent={props.components.EditCell}
               getFieldValue={props.getFieldValue}
               components={props.components}
               icons={icons}
@@ -108,7 +110,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
           const key = `cell-${props.data.tableData.id}-${columnDef.tableData.id}`;
 
           return (
-            <props.components.Cell
+            <ComponentOverride
+              targetComponent={props.components.Cell}
               size={size}
               errorState={props.errorState}
               columnDef={{
@@ -143,7 +146,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
           ...options.actionsCellStyle
         }}
       >
-        <props.components.Actions
+        <ComponentOverride
+          targetComponent={props.components.Actions}
           data={props.data}
           actions={actions}
           components={props.components}
@@ -459,7 +463,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
         props.data.tableData.childRows.map((data, index) => {
           if (data.tableData.editing) {
             return (
-              <props.components.EditRow
+              <ComponentOverride
+                targetComponent={props.components.EditRow}
                 columns={columns}
                 components={props.components}
                 data={data}
@@ -477,7 +482,8 @@ function MTableBodyRow({ forwardedRef, ...props }) {
             );
           } else {
             return (
-              <props.components.Row
+              <ComponentOverride
+                targetComponent={props.components.Row}
                 {...props}
                 data={data}
                 index={index}

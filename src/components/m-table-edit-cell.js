@@ -4,6 +4,7 @@ import TableCell from '@material-ui/core/TableCell';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withTheme } from '@material-ui/core/styles';
 import { validateInput } from '../utils/validate';
+import ComponentOverride from './ComponentOverride';
 class MTableEditCell extends React.Component {
   constructor(props) {
     super(props);
@@ -123,7 +124,8 @@ class MTableEditCell extends React.Component {
     ];
 
     return (
-      <this.props.components.Actions
+      <ComponentOverride
+        targetComponent={this.props.components.Actions}
         actions={actions}
         components={this.props.components}
         size="small"
@@ -141,7 +143,8 @@ class MTableEditCell extends React.Component {
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1, marginRight: 4 }}>
-            <this.props.components.EditField
+            <ComponentOverride
+              targetComponent={this.props.components.EditField}
               columnDef={this.props.columnDef}
               value={this.state.value}
               error={!this.state.errorState.isValid}

@@ -33,6 +33,7 @@ import React from 'react';
 import { selectFromObject, setObjectByKey } from '../../utils';
 import * as CommonValues from '../../utils/common-values';
 import { validateInput } from '../../utils/validate';
+import ComponentOverride from '../ComponentOverride';
 /* eslint-enable no-unused-vars */
 
 export default class MTableEditRow extends React.Component {
@@ -115,7 +116,8 @@ export default class MTableEditRow extends React.Component {
             columnDef
           );
           return (
-            <this.props.components.Cell
+            <ComponentOverride
+              targetComponent={this.props.components.Cell}
               size={size}
               icons={this.props.icons}
               columnDef={columnDef}
@@ -220,7 +222,8 @@ export default class MTableEditRow extends React.Component {
           ...this.props.options.editCellStyle
         }}
       >
-        <this.props.components.Actions
+        <ComponentOverride
+          targetComponent={this.props.components.Actions}
           data={this.props.data}
           actions={actions}
           components={this.props.components}

@@ -15,6 +15,7 @@ import {
   MTableSteppedPagination,
   MTableScrollbar
 } from '@components';
+import ComponentOverride from './components/ComponentOverride';
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -936,7 +937,8 @@ export default class MaterialTable extends React.Component {
         <Table>
           <TableFooter style={{ display: 'grid' }}>
             <TableRow style={{ display: 'grid' }}>
-              <this.props.components.Pagination
+              <ComponentOverride
+                targetComponent={this.props.components.Pagination}
                 classes={{
                   toolbar: props.classes.paginationToolbar,
                   caption: props.classes.paginationCaption,
@@ -1016,7 +1018,8 @@ export default class MaterialTable extends React.Component {
       }}
     >
       {props.options.header && (
-        <props.components.Header
+        <ComponentOverride
+          targetComponent={props.components.Header}
           actions={this.state.actions}
           columns={this.state.columns}
           selectedCount={this.state.selectedCount}
@@ -1049,7 +1052,8 @@ export default class MaterialTable extends React.Component {
           tableWidth={props.options.tableWidth ?? 'full'}
         />
       )}
-      <props.components.Body
+      <ComponentOverride
+        targetComponent={props.components.Body}
         actions={this.state.actions}
         components={this.props.components}
         renderData={this.state.renderData}
@@ -1146,7 +1150,8 @@ export default class MaterialTable extends React.Component {
         onDragEnd={this.onDragEnd}
         nonce={props.options.cspNonce}
       >
-        <this.props.components.Container
+        <ComponentOverride
+          targetComponent={this.props.components.Container}
           style={{ position: 'relative', ...props.style }}
         >
           {props.options.paginationPosition === 'top' ||
@@ -1154,7 +1159,8 @@ export default class MaterialTable extends React.Component {
             ? this.renderFooter()
             : null}
           {props.options.toolbar && (
-            <this.props.components.Toolbar
+            <ComponentOverride
+              targetComponent={this.props.components.Toolbar}
               actions={this.state.actions}
               components={this.props.components}
               originalData={this.state.originalData}
@@ -1171,7 +1177,8 @@ export default class MaterialTable extends React.Component {
             />
           )}
           {props.options.grouping && (
-            <this.props.components.Groupbar
+            <ComponentOverride
+              targetComponent={this.props.components.Groupbar}
               groupColumns={this.state.columns
                 .filter((col) => col.tableData.groupOrder > -1)
                 .sort(
@@ -1304,7 +1311,10 @@ export default class MaterialTable extends React.Component {
                   zIndex: 11
                 }}
               >
-                <this.props.components.OverlayLoading theme={props.theme} />
+                <ComponentOverride
+                  targetComponent={this.props.components.OverlayLoading}
+                  theme={props.theme}
+                />
               </div>
             )}
           {this.state.errorState &&
@@ -1319,14 +1329,15 @@ export default class MaterialTable extends React.Component {
                   zIndex: 11
                 }}
               >
-                <this.props.components.OverlayError
+                <ComponentOverride
+                  targetComponent={this.props.components.OverlayError}
                   error={this.state.errorState}
                   retry={this.retry}
                   theme={props.theme}
                 />
               </div>
             )}
-        </this.props.components.Container>
+        </ComponentOverride>
       </DragDropContext>
     );
   }

@@ -15,6 +15,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, CircularProgress } from '@material-ui/core';
 import { withTheme } from '@material-ui/core/styles';
+import ComponentOverride from '../ComponentOverride';
 
 function MTableEditCell(props) {
   const [state, setState] = useState(() => ({
@@ -117,7 +118,8 @@ function MTableEditCell(props) {
     ];
 
     return (
-      <props.components.Actions
+      <ComponentOverride
+        targetComponent={props.components.Actions}
         actions={actions}
         components={props.components}
         size="small"
@@ -134,7 +136,8 @@ function MTableEditCell(props) {
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ flex: 1, marginRight: 4 }}>
-          <props.components.EditField
+          <ComponentOverride
+            targetComponent={props.components.EditField}
             columnDef={props.columnDef}
             value={state.value}
             onChange={(prevState, value) => setState({ ...prevState, value })}

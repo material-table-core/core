@@ -12,6 +12,7 @@ import { lighten, withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
+import ComponentOverride from '../ComponentOverride';
 
 let searchTimer;
 
@@ -240,7 +241,8 @@ export function MTableToolbar(props) {
           </span>
         )}
         <span>
-          <props.components.Actions
+          <ComponentOverride
+            targetComponent={props.components.Actions}
             actions={
               props.actions &&
               props.actions.filter((a) => a.position === diplayedActions)

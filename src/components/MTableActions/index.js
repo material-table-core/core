@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ComponentOverride from '../ComponentOverride';
 
 function MTableActions({
   actions,
@@ -15,7 +16,8 @@ function MTableActions({
   return (
     <div style={{ display: 'flex' }} ref={forwardedRef}>
       {actions.map((action, index) => (
-        <components.Action
+        <ComponentOverride
+          targetComponent={components.Action}
           action={action}
           key={'action-' + index}
           data={data}

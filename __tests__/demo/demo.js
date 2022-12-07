@@ -46,7 +46,8 @@ import {
   TableWithSummary,
   TableWithNumberOfPagesAround,
   FixedColumnWithEdit,
-  TableMultiSorting
+  TableMultiSorting,
+  ComponentOverride
 } from './demo-components';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
 import { Table, TableCell, TableRow, Paper } from '@material-ui/core';
@@ -58,6 +59,9 @@ module.hot.accept();
 
 render(
   <div>
+    <h1>Render function for component overriding</h1>
+    <ComponentOverride />
+
     <h1>DetailPanelRemounting</h1>
     <DetailPanelRemounting />
 

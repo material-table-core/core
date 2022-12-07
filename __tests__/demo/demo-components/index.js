@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 // root of this project
 import MaterialTable, {
   MTableBodyRow,
   MTableEditRow,
-  MTableHeader
+  MTableHeader,
+  MTableToolbar
 } from '../../../src';
 import { makeStyles } from '@material-ui/core/styles';
+import { Box, Checkbox, FormControlLabel, Toolbar } from '@material-ui/core';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -1378,6 +1380,62 @@ export function TableMultiSorting(props) {
         draggable: true
       }}
       onOrderCollectionChange={onOrderCollectionChange}
+    />
+  );
+}
+
+export function ComponentOverride() {
+  const [mOptions, setMOptions] = useState({
+    filtering: false,
+    paging: false,
+    search: false
+  });
+
+  const updateMOptions = (field, value) => {
+    setMOptions((prevMOptions) => ({
+      ...prevMOptions,
+      [field]: value
+    }));
+  };
+
+  const mComponents = {
+    Toolbar: {
+      render: (props) => (
+        <Box>
+          <Toolbar>
+            <FormControlLabel
+              label={'filtering'}
+              value={mOptions.filtering}
+              onChange={(event, checked) =>
+                updateMOptions('filtering', checked)
+              }
+              control={<Checkbox />}
+            />
+            <FormControlLabel
+              label={'paging'}
+              value={mOptions.paging}
+              onChange={(event, checked) => updateMOptions('paging', checked)}
+              control={<Checkbox />}
+            />
+            <FormControlLabel
+              label={'search'}
+              value={mOptions.search}
+              onChange={(event, checked) => updateMOptions('search', checked)}
+              control={<Checkbox />}
+            />
+          </Toolbar>
+          <MTableToolbar {...props} />
+        </Box>
+      )
+    }
+  };
+
+  return (
+    <MaterialTable
+      data={global_data}
+      columns={global_cols}
+      components={mComponents}
+      options={mOptions}
     />
   );
 }

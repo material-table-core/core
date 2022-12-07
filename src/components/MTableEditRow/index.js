@@ -7,6 +7,7 @@ import { setObjectByKey } from '@utils';
 import { useOptionStore } from '@store/LocalizationStore';
 import * as CommonValues from '@utils/common-values';
 import { validateInput } from '@utils/validate';
+import ComponentOverride from '../ComponentOverride';
 
 function MTableEditRow(props) {
   const options = useOptionStore();
@@ -81,7 +82,8 @@ function MTableEditRow(props) {
         if (!columnDef.field || !allowEditing) {
           const readonlyValue = props.getFieldValue(state.data, columnDef);
           return (
-            <props.components.Cell
+            <ComponentOverride
+              targetComponent={props.components.Cell}
               size={size}
               icons={props.icons}
               columnDef={columnDef}
@@ -184,7 +186,8 @@ function MTableEditRow(props) {
           ...options.editCellStyle
         }}
       >
-        <props.components.Actions
+        <ComponentOverride
+          targetComponent={props.components.Actions}
           data={props.data}
           actions={actions}
           components={props.components}

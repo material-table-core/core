@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import { useLocalizationStore, useOptionStore, useIconStore } from '@store';
+import ComponentOverride from './ComponentOverride';
 
 function MTableBody(props) {
   const localization = useLocalizationStore().body;
@@ -73,7 +74,8 @@ function MTableBody(props) {
     return renderData.map((data, index) => {
       if (data.tableData.editing || props.bulkEditOpen) {
         return (
-          <props.components.EditRow
+          <ComponentOverride
+            targetComponent={props.components.EditRow}
             columns={columns}
             components={props.components}
             data={data}
@@ -98,7 +100,8 @@ function MTableBody(props) {
           ? [data.tableData.uuid]
           : [index + props.pageSize * props.currentPage];
         return (
-          <props.components.Row
+          <ComponentOverride
+            targetComponent={props.components.Row}
             components={props.components}
             data={data}
             index={index}
@@ -133,7 +136,8 @@ function MTableBody(props) {
 
   function renderGroupedRows(groups, renderData) {
     return renderData.map((groupData, index) => (
-      <props.components.GroupRow
+      <ComponentOverride
+        targetComponent={props.components.GroupRow}
         actions={props.actions}
         cellEditable={props.cellEditable}
         columns={props.columns}
@@ -170,7 +174,8 @@ function MTableBody(props) {
   function renderAddRow() {
     return (
       props.showAddRow && (
-        <props.components.EditRow
+        <ComponentOverride
+          targetComponent={props.components.EditRow}
           columns={columns}
           components={props.components}
           data={props.initialFormData}
@@ -214,7 +219,8 @@ function MTableBody(props) {
   return (
     <TableBody ref={props.forwardedRef}>
       {options.filtering && (
-        <props.components.FilterRow
+        <ComponentOverride
+          targetComponent={props.components.FilterRow}
           columns={columns}
           icons={icons}
           hasActions={props.actions.some(
@@ -234,7 +240,8 @@ function MTableBody(props) {
         : renderUngroupedRows(renderData)}
 
       {options.addRowPosition === 'last' && renderAddRow()}
-      <props.components.SummaryRow
+      <ComponentOverride
+        targetComponent={props.components.SummaryRow}
         columns={columns}
         renderSummaryRow={renderSummaryRow}
         rowProps={props}
