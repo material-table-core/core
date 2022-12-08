@@ -277,23 +277,29 @@ export interface Column<RowData extends object> {
   minWidth?: number;
 }
 
+export type OverridableComponentType<T> =
+  | React.ComponentType<T>
+  | {
+      render: (props: T) => React.ReactNode;
+    };
+
 export interface Components {
-  Action?: React.ComponentType<any>;
-  Actions?: React.ComponentType<any>;
-  Body?: React.ComponentType<any>;
-  Cell?: React.ComponentType<any>;
-  Container?: React.ComponentType<any>;
-  EditField?: React.ComponentType<any>;
-  EditRow?: React.ComponentType<any>;
-  FilterRow?: React.ComponentType<any>;
-  Groupbar?: React.ComponentType<any>;
-  GroupRow?: React.ComponentType<any>;
-  Header?: React.ComponentType<any>;
-  Pagination?: React.ComponentType<any>;
-  OverlayLoading?: React.ComponentType<any>;
-  OverlayError?: React.ComponentType<any>;
-  Row?: React.ComponentType<any>;
-  Toolbar?: React.ComponentType<any>;
+  Action?: OverridableComponentType<any>;
+  Actions?: OverridableComponentType<any>;
+  Body?: OverridableComponentType<any>;
+  Cell?: OverridableComponentType<any>;
+  Container?: OverridableComponentType<any>;
+  EditField?: OverridableComponentType<any>;
+  EditRow?: OverridableComponentType<any>;
+  FilterRow?: OverridableComponentType<any>;
+  Groupbar?: OverridableComponentType<any>;
+  GroupRow?: OverridableComponentType<any>;
+  Header?: OverridableComponentType<any>;
+  Pagination?: OverridableComponentType<any>;
+  OverlayLoading?: OverridableComponentType<any>;
+  OverlayError?: OverridableComponentType<any>;
+  Row?: OverridableComponentType<any>;
+  Toolbar?: OverridableComponentType<any>;
 }
 
 export const MTableAction: (props: any) => React.ReactElement;
