@@ -892,7 +892,8 @@ export default class DataManager {
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
       groupedDataLength: this.groupedDataLength,
-      tableStyleWidth: this.tableStyleWidth
+      tableStyleWidth: this.tableStyleWidth,
+      bulkEditOpen: this.bulkEditOpen
     };
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { debounce } from 'debounce';
 import deepEql from 'deep-eql';
 import * as CommonValues from './utils/common-values';
@@ -1136,6 +1136,7 @@ export default class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
+
     return (
       <DragDropContext
         onDragEnd={this.onDragEnd}
@@ -1150,7 +1151,7 @@ export default class MaterialTable extends React.Component {
             : null}
           {props.options.toolbar && (
             <this.props.components.Toolbar
-              actions={this.state.actions}
+              actions={props.actions}
               components={this.props.components}
               originalData={this.state.originalData}
               columns={this.state.columns}
