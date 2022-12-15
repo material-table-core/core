@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { debounce } from 'debounce';
 import deepEql from 'deep-eql';
 import * as CommonValues from './utils/common-values';
@@ -140,7 +140,8 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
-    const prevDefaultOrderByCollection = this.dataManager.getDefaultOrderByCollection();
+    const prevDefaultOrderByCollection =
+      this.dataManager.getDefaultOrderByCollection();
     const { defaultOrderByCollection } = props.options;
     let defaultCollectionSort = [];
     let defaultSort = '';
@@ -258,12 +259,10 @@ export default class MaterialTable extends React.Component {
           );
         if (bothContainFunctions) {
           this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions = functionlessColumns(
-            fixedPropsColumns
-          );
-          const prevColumnsWithoutFunctions = functionlessColumns(
-            fixedPrevColumns
-          );
+          const currentColumnsWithoutFunctions =
+            functionlessColumns(fixedPropsColumns);
+          const prevColumnsWithoutFunctions =
+            functionlessColumns(fixedPrevColumns);
           const columnsEqual = deepEql(
             currentColumnsWithoutFunctions,
             prevColumnsWithoutFunctions
@@ -1116,9 +1115,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef = this.state.columns[
-        count >= 0 ? i : this.state.columns.length - 1 - i
-      ];
+      const colDef =
+        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
@@ -1136,7 +1134,6 @@ export default class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
-
     return (
       <DragDropContext
         onDragEnd={this.onDragEnd}
