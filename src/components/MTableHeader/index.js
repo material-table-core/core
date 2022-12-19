@@ -412,7 +412,7 @@ export function MTableHeader({
         padding="none"
         key={'key-tree-data-header'}
         sx={styles.header}
-        style={props.headerStyle}
+        style={options.headerStyle}
       />
     );
   }
@@ -426,7 +426,7 @@ export function MTableHeader({
           padding="checkbox"
           key={'key-group-header' + columnDef.tableData.id}
           sx={styles.header}
-          style={props.headerStyle}
+          style={options.headerStyle}
         />
       );
     });
