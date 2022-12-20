@@ -170,7 +170,8 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -892,7 +893,8 @@ export default class DataManager {
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
       groupedDataLength: this.groupedDataLength,
-      tableStyleWidth: this.tableStyleWidth
+      tableStyleWidth: this.tableStyleWidth,
+      bulkEditOpen: this.bulkEditOpen
     };
   };
 
@@ -901,7 +903,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 
