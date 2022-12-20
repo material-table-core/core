@@ -63,6 +63,7 @@
     "@babel/preset-react": "^7.12.10",
     "@material-table/exporters": "^1.0.12",
     "@mui/styles": ">=5.0.0",
+    "@mui/system": ">=5.10.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^26.0.20",
@@ -129,6 +130,7 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "react-dom": ">=17.0.0"
+    "react-dom": ">=17.0.0",
+    "@mui/system": ">=5.10.7"
   }
 }
