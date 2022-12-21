@@ -1,7 +1,7 @@
 import create from 'zustand';
 import createContext from 'zustand/context';
 import React from 'react';
-import equal from 'fast-deep-equal';
+import deepEql from 'deep-eql';
 import defaultLocalization from '../defaults/props.localization';
 import defaultOptions from '../defaults/props.options';
 import defaultIcons from '../defaults/props.icons';
@@ -22,7 +22,7 @@ const createStore = (props) =>
           mergedLocalization.dateTimePickerLocalization;
         mergedLocalization.body.filterRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
-        if (!equal(mergedLocalization, nextLocalization)) {
+        if (!deepEql(mergedLocalization, nextLocalization)) {
           return { localization: mergedLocalization };
         } else {
           return { localization };
@@ -34,7 +34,7 @@ const createStore = (props) =>
     mergeOptions: (nextOptions) => {
       set(() => {
         const mergedOptions = { ...defaultOptions, ...nextOptions };
-        if (!equal(mergedOptions, nextOptions)) {
+        if (!deepEql(mergedOptions, nextOptions)) {
           return { options: mergedOptions };
         } else {
           return { options: defaultOptions };
