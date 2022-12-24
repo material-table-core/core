@@ -944,7 +944,7 @@ export default class MaterialTable extends React.Component {
                     ? props.options.paginationAlignment
                     : 'flex-end',
                   overflowX: 'auto',
-                  '& .MuiTablePagination-displayedRows': {
+                  '& .MuiTypography-caption': {
                     display: 'none'
                   }
                 }}
