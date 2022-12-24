@@ -63,38 +63,39 @@ export function MTableSummaryRow({ columns, rowProps, renderSummaryRow }) {
   if (rowProps.isTreeData) {
     placeholderLeftColumns.push(renderPlaceholderColumn(placeholderKey++));
   }
-
   return (
     <TableRow>
       {placeholderLeftColumns}
-      {columns.map((column, index) => {
-        const summaryColumn = renderSummaryRow({
-          index,
-          column,
-          columns
-        });
-        const cellAlignment =
-          column.align !== undefined
-            ? column.align
-            : ['numeric', 'currency'].indexOf(column.type) !== -1
-            ? 'right'
-            : 'left';
+      {[...columns]
+        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+        .map((column, index) => {
+          const summaryColumn = renderSummaryRow({
+            index: column.tableData.columnOrder,
+            column,
+            columns
+          });
+          const cellAlignment =
+            column.align !== undefined
+              ? column.align
+              : ['numeric', 'currency'].indexOf(column.type) !== -1
+              ? 'right'
+              : 'left';
 
-        let value = '';
-        let style = getStyle({ columnDef: column, scrollWidth: 0 });
+          let value = '';
+          let style = getStyle({ columnDef: column, scrollWidth: 0 });
 
-        if (typeof summaryColumn === 'object' && summaryColumn !== null) {
-          value = summaryColumn.value;
-          style = summaryColumn.style;
-        } else {
-          value = summaryColumn;
-        }
-        return (
-          <TableCell key={index} style={style} align={cellAlignment}>
-            {value}
-          </TableCell>
-        );
-      })}
+          if (typeof summaryColumn === 'object' && summaryColumn !== null) {
+            value = summaryColumn.value;
+            style = summaryColumn.style;
+          } else {
+            value = summaryColumn;
+          }
+          return (
+            <TableCell key={index} style={style} align={cellAlignment}>
+              {value}
+            </TableCell>
+          );
+        })}
       {placeholderRightColumns}
     </TableRow>
   );

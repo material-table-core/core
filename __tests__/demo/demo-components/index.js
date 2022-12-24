@@ -1177,8 +1177,8 @@ export function TableWithSummary() {
       title="Last row of the Table shows summary and is visible across all pages."
       columns={columns}
       data={rawData}
-      renderSummaryRow={({ data, index, columns }) => {
-        if (columns[index].field == 'identifier') {
+      renderSummaryRow={({ data, index, column, columns }) => {
+        if (column.field == 'identifier') {
           const total = data
             .map((row) => row.identifier)
             .reduce((a, b) => a + b);
