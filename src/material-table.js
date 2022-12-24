@@ -1150,7 +1150,7 @@ export default class MaterialTable extends React.Component {
             : null}
           {props.options.toolbar && (
             <this.props.components.Toolbar
-              actions={this.state.actions}
+              actions={props.actions}
               components={this.props.components}
               originalData={this.state.originalData}
               columns={this.state.columns}
