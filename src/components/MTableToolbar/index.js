@@ -58,12 +58,9 @@ export function MTableToolbar(props) {
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
 
-    let extractedData = props.data();
     // If the data is grouped, it will have an array at the data key
-    if (Array.isArray(extractedData?.[0]?.data)) {
-      // Extract each row of the grouped data
-      extractedData = extractedData.map((row) => row.data).flat();
-    }
+    const extractedData = flatData(props.data());
+
     const data = extractedData.map((rowData) =>
       columns.reduce((agg, columnDef) => {
         let value;
@@ -390,5 +387,16 @@ const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
 ) {
   return <MTableToolbar {...props} forwardedRef={ref} />;
 });
+
+function flatData(data) {
+  let extractedData = data;
+  while (Array.isArray(extractedData?.[0]?.data)) {
+    // Extract each row of the grouped data
+    extractedData = extractedData
+      .map((row) => (row.groups.length !== 0 ? row.groups : row.data))
+      .flat();
+  }
+  return extractedData;
+}
 
 export default React.memo(MTableToolbarRef);
