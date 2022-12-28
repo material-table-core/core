@@ -50,8 +50,18 @@ export const propTypes = {
         maximumFractionDigits: PropTypes.number
       }),
       ariaLabel: PropTypes.string,
-      ariaSortAsc: PropTypes.string,
-      ariaSortDesc: PropTypes.string,
+      ariaSortAsc: PropTypes.oneOf([
+        'ascending',
+        'descending',
+        'none',
+        'other'
+      ]),
+      ariaSortDesc: PropTypes.oneOf([
+        'ascending',
+        'descending',
+        'none',
+        'other'
+      ]),
       draggable: PropTypes.bool,
       customFilterAndSearch: PropTypes.func,
       customSort: PropTypes.func,
@@ -349,7 +359,7 @@ export const propTypes = {
       'inherit',
       'overlay'
     ]),
-    padding: PropTypes.oneOf(['default', 'dense']),
+    padding: PropTypes.oneOf(['normal', 'dense']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
@@ -368,7 +378,10 @@ export const propTypes = {
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
-    showFirstLastPageButtons: PropTypes.bool,
+    showFirstLastPageButtons: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.bool
+    ]),
     showSelectAllCheckbox: PropTypes.bool,
     showSelectGroupCheckbox: PropTypes.bool,
     showTitle: PropTypes.bool,

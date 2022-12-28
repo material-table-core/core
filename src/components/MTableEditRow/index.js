@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { setObjectByKey } from '@utils';
-import { useOptionStore } from '@store/LocalizationStore';
+import { useOptionStore, useIconStore } from '@store';
 import * as CommonValues from '@utils/common-values';
 import { validateInput } from '@utils/validate';
 
 function MTableEditRow(props) {
+  const icons = useIconStore();
   const options = useOptionStore();
   const [state, setState] = useState(() => {
     let data = props.data
@@ -83,7 +84,7 @@ function MTableEditRow(props) {
           return (
             <props.components.Cell
               size={size}
-              icons={props.icons}
+              icons={icons}
               columnDef={columnDef}
               value={readonlyValue}
               key={columnDef.tableData.id}
@@ -160,13 +161,13 @@ function MTableEditRow(props) {
 
     const actions = [
       {
-        icon: props.icons.Check,
+        icon: icons.Check,
         tooltip: props.localization.saveTooltip,
         disabled: !isValid,
         onClick: handleSave
       },
       {
-        icon: props.icons.Clear,
+        icon: icons.Clear,
         tooltip: props.localization.cancelTooltip,
         onClick: () => {
           props.onEditingCanceled(props.mode, props.data);
@@ -304,7 +305,6 @@ function MTableEditRow(props) {
     onEditingCanceled,
     getFieldValue,
     components,
-    icons,
     columns: columnsProp, // renamed to not conflict with definition above
     errorState,
     onBulkEditRowChanged,
@@ -336,7 +336,6 @@ MTableEditRow.defaultProps = {
 
 MTableEditRow.propTypes = {
   actions: PropTypes.array,
-  icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object,
   detailPanel: PropTypes.oneOfType([

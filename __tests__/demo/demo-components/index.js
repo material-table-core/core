@@ -6,7 +6,6 @@ import MaterialTable, {
   MTableEditRow,
   MTableHeader
 } from '../../../src';
-import { makeStyles } from '@material-ui/core/styles';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
 
@@ -882,7 +881,7 @@ const resizeCols = [
   }
 ];
 
-const useHeaderStyles = makeStyles({
+const headerStyles = {
   header: {
     borderStyle: 'solid',
     borderWidth: '1px',
@@ -891,10 +890,15 @@ const useHeaderStyles = makeStyles({
     whiteSpace: 'nowrap',
     backgroundColor: 'lightblue'
   }
-});
+};
 
 const HeaderWithClassesChange = ({ classes, icons, ...other }) => (
-  <MTableHeader classes={{ classes, ...useHeaderStyles() }} {...other} />
+  <MTableHeader
+    classes={classes}
+    icons={{ ...icons, Resize: undefined }}
+    sx={headerStyles.header}
+    {...other}
+  />
 );
 
 export function ResizableTableWidthVariable() {
@@ -1173,8 +1177,8 @@ export function TableWithSummary() {
       title="Last row of the Table shows summary and is visible across all pages."
       columns={columns}
       data={rawData}
-      renderSummaryRow={({ data, index, columns }) => {
-        if (columns[index].field == 'identifier') {
+      renderSummaryRow={({ data, index, column, columns }) => {
+        if (column.field == 'identifier') {
           const total = data
             .map((row) => row.identifier)
             .reduce((a, b) => a + b);

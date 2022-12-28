@@ -1,5 +1,5 @@
 import formatDate from 'date-fns/format';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
 import { ALL_COLUMNS } from './constants';
@@ -79,7 +79,7 @@ export default class DataManager {
         id: row[idSynonym] || index,
         // `uuid` acts as our 'key' and is generated when new data
         // is passed into material-table externally.
-        uuid: row.uuid || uuid.v4(),
+        uuid: row.uuid || uuidv4(),
         ...prevTableData,
         ...row.tableData
       };
@@ -1046,6 +1046,7 @@ export default class DataManager {
                   .includes(trimmedSearchText.toUpperCase());
               }
             }
+            return false;
           });
       });
     }

@@ -5,7 +5,7 @@ import LookupFilter from './LookupFilter';
 import DefaultFilter from './DefaultFilter';
 import BooleanFilter from './BooleanFilter';
 import Filter from './Filter';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
 import { useOptionStore } from '@store/LocalizationStore';
 
 /**

@@ -1,16 +1,19 @@
 /* eslint-disable no-unused-vars */
-import Toolbar from '@material-ui/core/Toolbar';
-import Chip from '@material-ui/core/Chip';
-import Typography from '@material-ui/core/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import { useLocalizationStore, useIconStore } from '@store';
+import { Box } from '@mui/material';
+import { useOptionStore } from '../../store/LocalizationStore';
 /* eslint-enable no-unused-vars */
 
 function MTableGroupbar(props) {
   const localization = useLocalizationStore().grouping;
   const icons = useIconStore();
+  const options = useOptionStore();
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
@@ -29,7 +32,7 @@ function MTableGroupbar(props) {
     background: '#0000000a',
     display: 'flex',
     width: '100%',
-    padding: 8,
+    padding: 1,
     overflow: 'auto',
     border: '1px solid #ccc',
     borderStyle: 'dashed'
@@ -65,8 +68,9 @@ function MTableGroupbar(props) {
           );
         }
       } else {
-        materialTableGroupings[props.persistentGroupingsId] =
-          persistentGroupings;
+        materialTableGroupings[
+          props.persistentGroupingsId
+        ] = persistentGroupings;
         localStorage.setItem(
           'material-table-groupings',
           JSON.stringify(materialTableGroupings)
@@ -79,7 +83,7 @@ function MTableGroupbar(props) {
   return (
     <Toolbar
       className={props.className}
-      style={{ padding: 0, minHeight: 'unset' }}
+      disableGutters={true}
       ref={props.forwardedRef}
     >
       <Droppable
@@ -88,12 +92,12 @@ function MTableGroupbar(props) {
         placeholder="Deneme"
       >
         {(provided, snapshot) => (
-          <div
+          <Box
             ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
+            sx={getListStyle(snapshot.isDraggingOver)}
           >
             {props.groupColumns.length > 0 && (
-              <Typography variant="caption" style={{ padding: 8 }}>
+              <Typography variant="caption" sx={{ padding: 1 }}>
                 {localization.groupedBy}
               </Typography>
             )}
@@ -105,28 +109,25 @@ function MTableGroupbar(props) {
                   index={index}
                 >
                   {(provided, snapshot) => (
-                    <div
+                    <Box
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
+                      sx={getItemStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
                       )}
                     >
                       <Chip
                         {...provided.dragHandleProps}
+                        {...options.groupChipProps}
                         onClick={() => props.onSortChanged(columnDef)}
                         label={
-                          <div
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
-                            <div style={{ float: 'left' }}>
-                              {columnDef.title}
-                            </div>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ float: 'left' }}>{columnDef.title}</Box>
                             {columnDef.tableData.groupSort && (
                               <icons.SortArrow
-                                style={{
+                                sx={{
                                   transition: '300ms ease all',
                                   transform:
                                     columnDef.tableData.groupSort === 'asc'
@@ -136,23 +137,27 @@ function MTableGroupbar(props) {
                                 }}
                               />
                             )}
-                          </div>
+                          </Box>
                         }
-                        style={{ boxShadow: 'none', textTransform: 'none' }}
+                        sx={{
+                          boxShadow: 'none',
+                          textTransform: 'none',
+                          ...(options.groupChipProps ?? {})
+                        }}
                         onDelete={() => props.onGroupRemoved(columnDef, index)}
                       />
-                    </div>
+                    </Box>
                   )}
                 </Draggable>
               );
             })}
             {props.groupColumns.length === 0 && (
-              <Typography variant="caption" style={{ padding: 8 }}>
+              <Typography variant="caption" sx={{ padding: 1 }}>
                 {localization.placeholder}
               </Typography>
             )}
             {provided.placeholder}
-          </div>
+          </Box>
         )}
       </Droppable>
     </Toolbar>

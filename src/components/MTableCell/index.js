@@ -1,5 +1,5 @@
 import React from 'react';
-import TableCell from '@material-ui/core/TableCell';
+import TableCell from '@mui/material/TableCell';
 import PropTypes from 'prop-types';
 import { getRenderValue } from './cellUtils';
 import { getStyle } from '@utils';
@@ -80,7 +80,7 @@ MTableCell.propTypes = {
   value: PropTypes.any,
   rowData: PropTypes.object,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  forwardedRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  forwardedRef: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   size: PropTypes.string,
   colSpan: PropTypes.number,
   children: PropTypes.element,

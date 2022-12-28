@@ -2,38 +2,26 @@ import React from 'react';
 import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
-import { withStyles } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 import { useMergeProps, withContext } from './store/LocalizationStore';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
-const styles = (theme) => ({
-  paginationToolbar: {
-    padding: 0
-  },
-  paginationCaption: {
-    display: 'none'
-  },
-  paginationSelectRoot: {
-    margin: 0
-  }
+export default withContext((props) => {
+  const theme = useTheme();
+  const { localization, options, components } = useMergeProps(props);
+  return (
+    <MaterialTable
+      {...props}
+      theme={theme}
+      options={options}
+      components={components}
+      localization={localization}
+      ref={props.tableRef}
+    />
+  );
 });
-
-export default withContext(
-  withStyles(styles, { withTheme: true })((props) => {
-    const { localization, options, components } = useMergeProps(props);
-    return (
-      <MaterialTable
-        {...props}
-        options={options}
-        components={components}
-        localization={localization}
-        ref={props.tableRef}
-      />
-    );
-  })
-);
 
 export {
   MTableAction,

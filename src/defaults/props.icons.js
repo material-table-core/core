@@ -4,7 +4,7 @@
 
 /* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 import {
   AddBox,
   ArrowDownward,
@@ -22,7 +22,7 @@ import {
   Search,
   ViewColumn,
   Replay
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 export default {
   Add: forwardRef((props, ref) => (

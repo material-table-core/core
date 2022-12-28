@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconProps } from '@material-ui/core/Icon';
-import { CheckboxProps } from '@material-ui/core/Checkbox';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { IconProps } from '@mui/material/Icon';
+import { CheckboxProps, ChipProps } from '@mui/material';
+import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
 type SvgIconComponent = typeof SvgIcon;
@@ -396,6 +396,10 @@ export interface Options<RowData extends object> {
   padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
+  // Allows to override the grouping chip props
+  groupChipProps?: ChipProps;
+  // Show the sub rows of a group in brackets Name: Dominik (20)
+  showGroupingCount?: boolean;
   groupTitle?: (groupData: object) => React.ReactNode;
   overflowY?:
     | 'visible'
@@ -415,7 +419,9 @@ export interface Options<RowData extends object> {
     | React.CSSProperties
     | ((data: RowData, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
-  showFirstLastPageButtons?: boolean;
+  showFirstLastPageButtons?:
+    | boolean
+    | Partial<{ first: boolean; last: boolean }>;
   showSelectAllCheckbox?: boolean;
   showSelectGroupCheckbox?: boolean;
   showTitle?: boolean;
@@ -444,7 +450,7 @@ export interface Options<RowData extends object> {
   detailPanelOffset?: { left?: number; right?: number };
   cspNonce?: string;
   defaultOrderByCollection?: OrderByCollection[];
-  maxColumnSort?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
+  maxColumnSort?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
   showColumnSortOrder?: boolean;
   sortOrderIndicatorStyle?: React.CSSProperties;
 }
@@ -485,7 +491,7 @@ export interface Localization {
     labelRowsPerPage?: React.ReactNode;
     lastTooltip?: React.ReactNode;
     lastAriaLabel?: string;
-    labelRowsSelect?: React.ReactNode;
+    labelRows?: React.ReactNode;
   };
   toolbar?: {
     addRemoveColumns?: React.ReactNode;

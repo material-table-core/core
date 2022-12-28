@@ -1,15 +1,16 @@
 import React from 'react';
 import { debounce } from 'debounce';
 import deepEql from 'deep-eql';
+import * as CommonValues from './utils/common-values';
 import {
   Table,
   TableFooter,
   TableRow,
-  LinearProgress
-} from '@material-ui/core';
+  LinearProgress,
+  Box
+} from '@mui/material';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import DataManager from '@utils/data-manager';
-import * as CommonValues from '@utils/common-values';
 import {
   MTablePagination,
   MTableSteppedPagination,
@@ -89,7 +90,7 @@ export default class MaterialTable extends React.Component {
          */
         if (this.props.options.sorting !== undefined) {
           console.warn(
-            'Property `sorting` has been deprecated, please start using `maxColumnSort` instead'
+            'Property `sorting` has been deprecated, please start using `maxColumnSort` instead. https://github.com/material-table-core/core/pull/619'
           );
         }
       }
@@ -429,7 +430,8 @@ export default class MaterialTable extends React.Component {
           }
         });
       }
-      // If only bulk update and add row are used, the columns do not align with the action column, because no action column is present for the add
+
+      // If only bulk update and add row are used, the columns do not align with the action column
       if (
         this.state?.showAddRow &&
         calculatedProps.editable.onRowAdd &&
@@ -437,13 +439,13 @@ export default class MaterialTable extends React.Component {
           .length === 0
       ) {
         calculatedProps.actions.push({
-          icon: 'div',
+          icon: undefined,
           position: 'row',
-          onClick: () => {}
+          onClick: () => {},
+          disabled: true
         });
       }
     }
-
     return calculatedProps;
   }
 
@@ -931,24 +933,20 @@ export default class MaterialTable extends React.Component {
       const totalCount = this.isRemoteData()
         ? props.totalCount
         : this.state.data.length;
-
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
             <TableRow style={{ display: 'grid' }}>
-              <this.props.components.Pagination
-                classes={{
-                  toolbar: props.classes.paginationToolbar,
-                  caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot
-                }}
-                style={{
-                  overflowX: 'auto',
+              <props.components.Pagination
+                sx={{
                   display: 'flex',
-                  direction: props.theme.direction,
                   justifyContent: props.options.paginationAlignment
                     ? props.options.paginationAlignment
-                    : 'flex-end'
+                    : 'flex-end',
+                  overflowX: 'auto',
+                  '& .MuiTypography-caption': {
+                    display: 'none'
+                  }
                 }}
                 colSpan={3}
                 count={
@@ -958,12 +956,12 @@ export default class MaterialTable extends React.Component {
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
                   renderValue: (value) => (
-                    <div style={{ padding: '0px 5px' }}>
+                    <Box sx={{ padding: '0px 5px' }}>
                       {value +
                         ' ' +
-                        props.localization.pagination.labelRowsSelect +
+                        props.localization.pagination.labelRows +
                         ' '}
-                    </div>
+                    </Box>
                   )
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
@@ -987,13 +985,9 @@ export default class MaterialTable extends React.Component {
                     />
                   )
                 }
-                labelDisplayedRows={(row) =>
-                  props.localization.pagination.labelDisplayedRows
-                    .replace('{from}', row.from)
-                    .replace('{to}', row.to)
-                    .replace('{count}', row.count)
+                labelRowsPerPage={
+                  props.localization.pagination.labelRowsPerPage
                 }
-                labelRowsPerPage={props.localization.labelRowsPerPage}
               />
             </TableRow>
           </TableFooter>
@@ -1004,6 +998,7 @@ export default class MaterialTable extends React.Component {
 
   renderTable = (props) => (
     <Table
+      sx={props.sx}
       style={{
         ...(props.options.tableWidth === 'variable' && {
           width: this.state.tableStyleWidth
@@ -1137,7 +1132,7 @@ export default class MaterialTable extends React.Component {
   };
 
   getRenderData = () =>
-    this.props.options.exportAll ? this.state.data : this.state.renderData;
+    this.props.options.exportAllData ? this.state.data : this.state.renderData;
 
   render() {
     const props = this.getProps();
@@ -1155,10 +1150,11 @@ export default class MaterialTable extends React.Component {
             : null}
           {props.options.toolbar && (
             <this.props.components.Toolbar
-              actions={this.state.actions}
+              actions={props.actions}
               components={this.props.components}
               originalData={this.state.originalData}
               columns={this.state.columns}
+              selectedCount={this.state.selectedCount}
               getFieldValue={this.dataManager.getFieldValue}
               data={this.getRenderData}
               title={props.title}

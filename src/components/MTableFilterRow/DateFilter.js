@@ -1,12 +1,13 @@
 import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import TextField from '@mui/material/TextField';
 import { getLocalizedFilterPlaceHolder } from './utils';
 import {
   DatePicker,
   DateTimePicker,
-  MuiPickersUtilsProvider,
-  TimePicker
-} from '@material-ui/pickers';
+  TimePicker,
+  LocalizationProvider
+} from '@mui/x-date-pickers';
 
 function DateFilter({
   columnDef,
@@ -20,26 +21,43 @@ function DateFilter({
   const pickerProps = {
     value: columnDef.tableData.filterValue || null,
     onChange: onDateInputChange,
-    placeholder: getLocalizedFilterPlaceHolder(columnDef),
+    placeholder: getLocalizedFilterPlaceHolder(columnDef, localization),
     clearable: true
   };
-
   let dateInputElement = null;
   if (columnDef.type === 'date') {
-    dateInputElement = <DatePicker {...pickerProps} ref={forwardedRef} />;
+    dateInputElement = (
+      <DatePicker
+        {...pickerProps}
+        ref={forwardedRef}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    );
   } else if (columnDef.type === 'datetime') {
-    dateInputElement = <DateTimePicker {...pickerProps} ref={forwardedRef} />;
+    dateInputElement = (
+      <DateTimePicker
+        {...pickerProps}
+        ref={forwardedRef}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    );
   } else if (columnDef.type === 'time') {
-    dateInputElement = <TimePicker {...pickerProps} ref={forwardedRef} />;
+    dateInputElement = (
+      <TimePicker
+        {...pickerProps}
+        ref={forwardedRef}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    );
   }
 
   return (
-    <MuiPickersUtilsProvider
-      utils={DateFnsUtils}
+    <LocalizationProvider
+      dateAdapter={AdapterDateFns}
       locale={localization.dateTimePickerLocalization}
     >
       {dateInputElement}
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 }
 

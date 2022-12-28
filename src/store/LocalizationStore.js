@@ -1,27 +1,28 @@
 import create from 'zustand';
 import createContext from 'zustand/context';
 import React from 'react';
-import { deepmerge } from 'deepmerge-ts';
-import equal from 'fast-deep-equal';
+import deepEql from 'deep-eql';
 import defaultLocalization from '../defaults/props.localization';
 import defaultOptions from '../defaults/props.options';
 import defaultIcons from '../defaults/props.icons';
 import defaultComponents from '../defaults/props.components';
+
+const merge = require('deepmerge');
 
 const { Provider, useStore } = createContext();
 
 const createStore = (props) =>
   create((set) => ({
     // Localization
-    localization: deepmerge(props.localization, defaultLocalization),
+    localization: merge(defaultLocalization, props.localization ?? {}),
     mergeLocalization: (nextLocalization) => {
       set(({ localization }) => {
-        const mergedLocalization = deepmerge(localization, nextLocalization);
+        const mergedLocalization = merge(localization, nextLocalization ?? {});
         mergedLocalization.body.editRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
         mergedLocalization.body.filterRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
-        if (!equal(mergedLocalization, nextLocalization)) {
+        if (!deepEql(mergedLocalization, nextLocalization)) {
           return { localization: mergedLocalization };
         } else {
           return { localization };
@@ -33,7 +34,7 @@ const createStore = (props) =>
     mergeOptions: (nextOptions) => {
       set(() => {
         const mergedOptions = { ...defaultOptions, ...nextOptions };
-        if (!equal(mergedOptions, nextOptions)) {
+        if (!deepEql(mergedOptions, nextOptions)) {
           return { options: mergedOptions };
         } else {
           return { options: defaultOptions };

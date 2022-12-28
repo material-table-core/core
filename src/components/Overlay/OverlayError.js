@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
 import { useIconStore } from '@store';
 
 function OverlayError(props) {
   const icons = useIconStore();
+  const theme = useTheme();
   return (
     <div
       ref={props.forwardedRef}
@@ -11,7 +13,7 @@ function OverlayError(props) {
         display: 'table',
         width: '100%',
         height: '100%',
-        backgroundColor: props.theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
         opacity: 0.7
       }}
     >

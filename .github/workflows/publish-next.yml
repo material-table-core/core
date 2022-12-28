@@ -1,0 +1,56 @@
+name: Publish Next
+
+#
+#
+# ~ IMPORTANT ~
+# If your commit summary starts with `Release`
+#   - We will attempt to automatically publish your commit (although, your commit will not be automatically approved)
+#   - *NOTE*
+#     - We **DO NOT** increase the package.json version please do this yourself!!
+#   - We will attempt to create a new release using the commit description as release notes
+#
+#
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  publish:
+    if: startsWith(github.event.head_commit.message, 'Release ')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Publish
+        run: |
+          npm install
+          npm run build
+          npm config set @material-table:registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
+          npm publish --ignore-scripts --tag next
+  create-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set env
+        run: |
+          RV=$(echo $${{ github.event.head_commit.message }} | awk '{print $NF}')
+          echo "RELEASE_VERSION=$RV" >> $GITHUB_ENV
+          echo $RV
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          body: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: true
