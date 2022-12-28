@@ -523,14 +523,12 @@ function RenderSortButton({
       >
         {children}
       </TableSortLabel>
-      {showColumnSortOrder && activeColumn && (
-        <span
-          style={sortOrderIndicatorStyle}
-          data-testid="material-table-column-sort-order-indicator"
-        >
-          {activeColumn.sortOrder}
-        </span>
-      )}
+      <span
+        style={{ ...sortOrderIndicatorStyle, width: '1em' }}
+        data-testid="material-table-column-sort-order-indicator"
+      >
+        {showColumnSortOrder && activeColumn ? activeColumn.sortOrder : ''}
+      </span>
     </>
   );
 }
