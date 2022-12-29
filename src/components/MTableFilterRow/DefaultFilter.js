@@ -1,6 +1,6 @@
 import React from 'react';
 import { getLocalizedFilterPlaceHolder, getLocalizationData } from './utils';
-import { InputAdornment, TextField, Tooltip } from '@material-ui/core';
+import { InputAdornment, TextField, Tooltip } from '@mui/material';
 
 function DefaultFilter({
   columnDef,
@@ -23,7 +23,7 @@ function DefaultFilter({
       }
       type={columnDef.type === 'numeric' ? 'number' : 'search'}
       value={columnDef.tableData.filterValue || ''}
-      placeholder={getLocalizedFilterPlaceHolder(columnDef)}
+      placeholder={getLocalizedFilterPlaceHolder(columnDef, localization)}
       onChange={(event) => {
         onFilterChanged(columnDef.tableData.id, event.target.value);
       }}

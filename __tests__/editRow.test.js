@@ -326,3 +326,40 @@ describe('Edit Row Row Update', () => {
     ]);
   });
 });
+
+describe('Edit Validate', () => {
+  test('edit a row', async () => {
+    const editData = [{ id: 1, male: true, age: 20, day: new Date(0) }];
+    const editColumns = [
+      { title: 'Name', field: 'id', validate: (val) => val.length > 3 },
+      { title: 'Male', field: 'male', type: 'boolean' },
+      { title: 'Age', field: 'age', type: 'numeric' },
+      { title: 'Birthday', field: 'day', type: 'numeric' }
+    ];
+    const onRowUpdate = jest.fn(async () => {});
+    render(
+      <MaterialTable
+        data={data}
+        columns={columns}
+        editable={{
+          onRowUpdate
+        }}
+      />
+    );
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: /edit/i
+      })
+    );
+
+    const checkButton = screen.getByTestId('check');
+
+    expect(onRowUpdate.mock.calls.length).toBe(0);
+    fireEvent.change(
+      screen.getByRole('textbox', {
+        name: /name/i
+      }),
+      { target: { value: 'testName' } }
+    );
+  });
+});

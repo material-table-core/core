@@ -1,16 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { Draggable } from '@hello-pangea/dnd';
-import { Tooltip } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Box, Tooltip } from '@mui/material';
 import * as CommonValues from '../../utils/common-values';
+import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
 
-export function MTableHeader({ onColumnResized, columns, ...props }) {
+export function MTableHeader({
+  onColumnResized,
+  classes,
+  sx,
+  columns,
+  ...props
+}) {
+  const localization = useLocalizationStore().header;
+  const options = useOptionStore();
+  const icons = useIconStore();
   const defaultMinColumnWidth = 20;
   const defaultMaxColumnWidth = 10000;
 
@@ -29,7 +38,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     let initialColWidths = resizing?.initialColWidths;
     let nextWidth;
     let nextColIndex;
-    if (props.tableWidth === 'full') {
+    if (options.tableWidth === 'full') {
       const nextTh = th.nextSibling;
       nextWidth =
         nextTh &&
@@ -96,7 +105,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
       );
       offset = Math.round(offset);
       const widths = [resizing.lastColData.width + alreadyOffset];
-      if (props.tableWidth === 'full' && resizing.lastNextColData) {
+      if (options.tableWidth === 'full' && resizing.lastNextColData) {
         offset = -constrainedColumnResize(
           displayingColumns[resizing.nextColIndex],
           resizing.lastNextColData.width - alreadyOffset,
@@ -133,7 +142,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
     [setResizing, resizing, lastX, onColumnResized]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
@@ -143,19 +152,15 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
   }, [handleMouseMove, handleMouseUp]); // ONly reset the listeners if needed
 
   const renderActionsHeader = () => {
-    const localization = {
-      ...MTableHeader.defaultProps.localization,
-      ...props.localization
-    };
-    const width = CommonValues.actionsColumnWidth(props);
+    const width = CommonValues.actionsColumnWidth({ options, ...props });
     return (
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        className={props.classes.header}
+        sx={styles.header}
         style={{
           textAlign: 'center',
-          ...props.headerStyle,
+          ...options.headerStyle,
           width: width,
           boxSizing: 'border-box'
         }}
@@ -168,25 +173,25 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
   };
 
   const getCellStyle = (columnDef) => {
-    const width = props.options.columnResizable
+    const width = options.columnResizable
       ? CommonValues.reducePercentsInCalc(
           columnDef.tableData.width,
           props.scrollWidth
         )
       : columnDef.tableData.width;
     const style = {
-      ...props.headerStyle,
+      ...options.headerStyle,
       ...columnDef.headerStyle,
       boxSizing: 'border-box',
       width,
-      ...(props.tableWidth === 'full' &&
+      ...(options.tableWidth === 'full' &&
         columnDef.minWidth && { minWidth: columnDef.minWidth }),
-      ...(props.tableWidth === 'full' &&
+      ...(options.tableWidth === 'full' &&
         columnDef.maxWidth && { maxWidth: columnDef.maxWidth })
     };
     if (
-      props.options.tableLayout === 'fixed' &&
-      props.options.columnResizable &&
+      options.tableLayout === 'fixed' &&
+      options.columnResizable &&
       columnDef.resizable !== false
     ) {
       style.paddingLeft = 8;
@@ -197,15 +202,22 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
   };
 
   function RenderHeader() {
-    const size = props.options.padding === 'default' ? 'medium' : 'small';
+    const size = options.padding === 'default' ? 'medium' : 'small';
 
     return displayingColumns
       .filter((columnDef) => !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index, allCols) => {
+        const cellAlignment =
+          columnDef.align !== undefined
+            ? columnDef.align
+            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
+            ? 'right'
+            : 'left';
+
         let content = columnDef.title;
 
-        if (props.draggable && columnDef.draggable !== false) {
+        if (options.draggable && columnDef.draggable !== false) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
@@ -221,7 +233,15 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                   style={
                     snapshot.isDragging
                       ? provided.draggableProps.style
-                      : { position: 'relative', minWidth: 0, display: 'flex' }
+                      : {
+                          position: 'relative',
+                          minWidth: 0,
+                          display: 'flex',
+                          flexDirection:
+                            cellAlignment === 'right'
+                              ? 'row-reverse'
+                              : undefined
+                        }
                   }
                 >
                   {columnDef.sorting !== false &&
@@ -230,16 +250,14 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
                     <RenderSortButton
                       columnDef={columnDef}
                       keepSortDirectionOnColumnSwitch={
-                        props.keepSortDirectionOnColumnSwitch
+                        options.keepSortDirectionOnColumnSwitch
                       }
-                      icon={props.icons.SortArrow}
-                      thirdSortClick={props.thirdSortClick}
+                      icon={icons.SortArrow}
+                      thirdSortClick={options.thirdSortClick}
                       onOrderChange={props.onOrderChange}
                       orderByCollection={props.orderByCollection}
-                      showColumnSortOrder={props.options.showColumnSortOrder}
-                      sortOrderIndicatorStyle={
-                        props.options.sortOrderIndicatorStyle
-                      }
+                      showColumnSortOrder={options.showColumnSortOrder}
+                      sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
                     >
                       {columnDef.title}
                     </RenderSortButton>
@@ -259,14 +277,14 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
             <RenderSortButton
               columnDef={columnDef}
               keepSortDirectionOnColumnSwitch={
-                props.keepSortDirectionOnColumnSwitch
+                options.keepSortDirectionOnColumnSwitch
               }
-              icon={props.icons.SortArrow}
-              thirdSortClick={props.thirdSortClick}
+              icon={icons.SortArrow}
+              thirdSortClick={options.thirdSortClick}
               onOrderChange={props.onOrderChange}
               orderByCollection={props.orderByCollection}
-              showColumnSortOrder={props.options.showColumnSortOrder}
-              sortOrderIndicatorStyle={props.options.sortOrderIndicatorStyle}
+              showColumnSortOrder={options.showColumnSortOrder}
+              sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
             >
               {columnDef.title}
             </RenderSortButton>
@@ -280,45 +298,35 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
           );
         }
         if (
-          props.options.tableLayout === 'fixed' &&
-          props.options.columnResizable &&
+          options.tableLayout === 'fixed' &&
+          options.columnResizable &&
           columnDef.resizable !== false &&
-          !(props.options.tableWidth === 'full' && index === allCols.length - 1)
+          !(options.tableWidth === 'full' && index === allCols.length - 1)
         ) {
-          const Resize = props.icons.Resize
-            ? props.icons.Resize
-            : (props) => <div {...props} data-test-id="drag_handle" />;
+          const Resize = icons.Resize
+            ? icons.Resize
+            : (props) => <Box {...props} data-test-id="drag_handle" />;
           content = (
-            <div className={props.classes.headerWrap}>
-              <div className={props.classes.headerContent}>{content}</div>
+            <Box sx={styles.headerWrap(cellAlignment === 'right')}>
+              <Box sx={styles.headerContent(cellAlignment === 'right')}>
+                {content}
+              </Box>
               <div></div>
               <Resize
-                className={props.classes.headerResize}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color:
-                    resizing?.col &&
+                sx={styles.headerResize(
+                  resizing?.col &&
                     resizing.col.tableData.id === columnDef.tableData.id
-                      ? props.theme.palette.primary.main
-                      : 'inherit'
-                }}
+                )}
                 onMouseDown={(e) => handleMouseDown(e, columnDef, index)}
               />
-            </div>
+            </Box>
           );
         }
-        const cellAlignment =
-          columnDef.align !== undefined
-            ? columnDef.align
-            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
-            ? 'right'
-            : 'left';
         return (
           <TableCell
             key={columnDef.tableData.id}
             align={cellAlignment}
-            className={props.classes.header}
+            sx={styles.header}
             style={getCellStyle(columnDef)}
             size={size}
             aria-label={columnDef.ariaLabel}
@@ -331,17 +339,17 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
 
   function renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(
-      props,
+      { ...props, options },
       props.treeDataMaxLevel
     );
     return (
       <TableCell
         padding="none"
         key="key-selection-column"
-        className={props.classes.header}
-        style={{ ...props.headerStyle, width: selectionWidth }}
+        sx={styles.header}
+        style={{ ...options.headerStyle, width: selectionWidth }}
       >
-        {props.showSelectAllCheckbox && (
+        {options.showSelectAllCheckbox && (
           <Checkbox
             indeterminate={
               props.selectedCount > 0 && props.selectedCount < props.dataCount
@@ -352,7 +360,7 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
             onChange={(event, checked) =>
               props.onAllSelected && props.onAllSelected(checked)
             }
-            {...props.options.headerSelectionProps}
+            {...options.headerSelectionProps}
           />
         )}
       </TableCell>
@@ -364,73 +372,69 @@ export function MTableHeader({ onColumnResized, columns, ...props }) {
       <TableCell
         padding="none"
         key="key-detail-panel-column"
-        className={props.classes.header}
-        style={{ ...props.headerStyle }}
+        sx={styles.header}
+        style={options.headerStyle}
       />
     );
   }
 
-  function render() {
-    const headers = RenderHeader();
-    if (props.hasSelection) {
-      headers.splice(0, 0, renderSelectionHeader());
-    }
-    if (props.showActionsColumn) {
-      if (props.actionsHeaderIndex >= 0) {
-        let endPos = 0;
-        if (props.hasSelection) {
-          endPos = 1;
-        }
-        headers.splice(
-          props.actionsHeaderIndex + endPos,
-          0,
-          renderActionsHeader()
-        );
-      } else if (props.actionsHeaderIndex === -1) {
-        headers.push(renderActionsHeader());
+  const headers = RenderHeader();
+  if (options.selection) {
+    headers.splice(0, 0, renderSelectionHeader());
+  }
+  if (props.showActionsColumn) {
+    if (options.actionsColumnIndex >= 0) {
+      let endPos = 0;
+      if (options.selection) {
+        endPos = 1;
       }
+      headers.splice(
+        options.actionsColumnIndex + endPos,
+        0,
+        renderActionsHeader()
+      );
+    } else if (options.actionsColumnIndex === -1) {
+      headers.push(renderActionsHeader());
     }
-    if (props.hasDetailPanel && props.options.showDetailPanelIcon) {
-      if (props.detailPanelColumnAlignment === 'right') {
-        headers.push(renderDetailPanelColumnCell());
-      } else {
-        headers.splice(0, 0, renderDetailPanelColumnCell());
-      }
+  }
+  if (props.hasDetailPanel && options.showDetailPanelIcon) {
+    if (options.detailPanelColumnAlignment === 'right') {
+      headers.push(renderDetailPanelColumnCell());
+    } else {
+      headers.splice(0, 0, renderDetailPanelColumnCell());
     }
-    if (props.isTreeData > 0) {
+  }
+  if (props.isTreeData > 0) {
+    headers.splice(
+      0,
+      0,
+      <TableCell
+        padding="none"
+        key={'key-tree-data-header'}
+        sx={styles.header}
+        style={options.headerStyle}
+      />
+    );
+  }
+  displayingColumns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
       headers.splice(
         0,
         0,
         <TableCell
-          padding="none"
-          key={'key-tree-data-header'}
-          className={props.classes.header}
-          style={{ ...props.headerStyle }}
+          padding="checkbox"
+          key={'key-group-header' + columnDef.tableData.id}
+          sx={styles.header}
+          style={options.headerStyle}
         />
       );
-    }
-    displayingColumns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        headers.splice(
-          0,
-          0,
-          <TableCell
-            padding="checkbox"
-            key={'key-group-header' + columnDef.tableData.id}
-            className={props.classes.header}
-            style={{ ...props.headerStyle }}
-          />
-        );
-      });
-    return (
-      <TableHead ref={props.forwardedRef}>
-        <TableRow className={props.classes.headerRow}>{headers}</TableRow>
-      </TableHead>
-    );
-  }
-
-  return render();
+    });
+  return (
+    <TableHead ref={props.forwardedRef} classes={classes} sx={sx}>
+      <TableRow sx={styles.headerRow}>{headers}</TableRow>
+    </TableHead>
+  );
 }
 
 const computeNewOrderDirection = (
@@ -485,9 +489,9 @@ function RenderSortButton({
 
   let ariaSort = 'none';
   if (activeColumn && direction === 'asc') {
-    ariaSort = columnDef.ariaSortAsc ? columnDef.ariaSortAsc : 'Ascendant';
+    ariaSort = columnDef.ariaSortAsc || 'ascending';
   } else if (activeColumn && direction === 'desc') {
-    ariaSort = columnDef.ariaSortDesc ? columnDef.ariaSortDesc : 'Descendant';
+    ariaSort = columnDef.ariaSortDesc || 'descending';
   }
 
   const orderBy = activeColumn && activeColumn.orderBy;
@@ -531,47 +535,28 @@ function RenderSortButton({
 
 MTableHeader.defaultProps = {
   dataCount: 0,
-  hasSelection: false,
-  headerStyle: {},
   selectedCount: 0,
-  sorting: true,
-  keepSortDirectionOnColumnSwitch: true,
-  localization: {
-    actions: 'Actions'
-  },
-  actionsHeaderIndex: 0,
-  detailPanelColumnAlignment: 'left',
-  draggable: true,
-  thirdSortClick: true,
   orderByCollection: [],
   allowSorting: true
 };
 
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
+  classes: PropTypes.object,
+  sx: PropTypes.object,
   dataCount: PropTypes.number,
   hasDetailPanel: PropTypes.bool.isRequired,
-  detailPanelColumnAlignment: PropTypes.string,
-  hasSelection: PropTypes.bool,
-  headerStyle: PropTypes.object,
-  localization: PropTypes.object,
   selectedCount: PropTypes.number,
-  sorting: PropTypes.bool,
-  keepSortDirectionOnColumnSwitch: PropTypes.bool,
   onAllSelected: PropTypes.func,
   onOrderChange: PropTypes.func,
-  actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
-  showSelectAllCheckbox: PropTypes.bool,
-  draggable: PropTypes.bool,
-  thirdSortClick: PropTypes.bool,
-  tooltip: PropTypes.string,
   orderByCollection: PropTypes.array,
   showColumnSortOrder: PropTypes.bool,
+  tooltip: PropTypes.string,
   allowSorting: PropTypes.bool
 };
 
-export const styles = (theme) => ({
+export const styles = {
   headerRow: {
     zIndex: 10
   },
@@ -579,38 +564,48 @@ export const styles = (theme) => ({
     // display: 'inline-block',
     // position: 'sticky',
     top: 0,
-    backgroundColor: theme.palette.background.paper // Change according to theme,
+    backgroundColor: 'background.paper' // Change according to theme,
   },
-  headerWrap: {
+  headerWrap: (alignRight) => ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
     left: 4
-  },
-  headerContent: {
+  }),
+  headerWrapRight: (alignRight) => ({
+    display: 'flex',
+    alignItems: 'center',
+    pr: alignRight ? 1 : undefined,
+    position: 'relative',
+    left: 4,
+    justifyContent: 'flex-end'
+  }),
+  headerContent: (alignRight) => ({
     minWidth: 0,
     display: 'flex',
     flex: '1 0 100%',
+    flexDirection: alignRight ? 'row-reverse' : undefined,
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
     position: 'relative'
-  },
-  headerResize: {
+  }),
+  headerResize: (resize) => ({
+    color: resize ? 'primary.main' : 'inherit',
     flex: 1,
     cursor: 'col-resize',
     position: 'absolute', // allow div to straddle adjacent columns
     height: '100%',
     width: 16,
+    display: 'flex',
+    justifyContent: 'center',
     right: -8,
     zIndex: 20 // so half that overlaps next column can be used to resize
-  }
-});
+  })
+};
 
 const MTableHeaderRef = React.forwardRef(function MTableHeaderRef(props, ref) {
   return <MTableHeader {...props} forwardedRef={ref} />;
 });
 
-export default withStyles(styles, { name: 'MTableHeader', withTheme: true })(
-  MTableHeaderRef
-);
+export default React.memo(MTableHeaderRef);

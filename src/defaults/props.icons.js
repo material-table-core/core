@@ -4,7 +4,7 @@
 
 /* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 import {
   AddBox,
   ArrowDownward,
@@ -22,7 +22,7 @@ import {
   Search,
   ViewColumn,
   Replay
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 export default {
   Add: forwardRef((props, ref) => (
@@ -65,12 +65,7 @@ export default {
     <Clear {...props} ref={ref} data-testid="clear" />
   )),
   Resize: forwardRef((props, ref) => (
-    <Icon
-      {...props}
-      ref={ref}
-      style={{ ...props.style }}
-      data-testid="drag_handle"
-    >
+    <Icon {...props} ref={ref} data-testid="drag_handle">
       |
     </Icon>
   )),

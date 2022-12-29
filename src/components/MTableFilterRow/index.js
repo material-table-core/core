@@ -5,7 +5,8 @@ import LookupFilter from './LookupFilter';
 import DefaultFilter from './DefaultFilter';
 import BooleanFilter from './BooleanFilter';
 import Filter from './Filter';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
+import { useOptionStore } from '@store/LocalizationStore';
 
 /**
  * MTableFilterRow is the row that is shown when `MaterialTable.options.filtering` is true.
@@ -14,6 +15,7 @@ import { TableCell, TableRow } from '@material-ui/core';
  * THIS MUST BE EXPORTED (on top of the 'default' export)
  */
 export function MTableFilterRow(props) {
+  const options = useOptionStore();
   function getComponentForColumn(columnDef) {
     if (columnDef.filtering === false) {
       return null;
@@ -44,7 +46,7 @@ export function MTableFilterRow(props) {
         <TableCell
           key={columnDef.tableData.id}
           style={{
-            ...props.filterCellStyle,
+            ...options.filterCellStyle,
             ...columnDef.filterCellStyle
           }}
         >
@@ -52,7 +54,7 @@ export function MTableFilterRow(props) {
         </TableCell>
       ));
 
-    if (props.selection) {
+    if (options.selection) {
       columns.splice(
         0,
         0,
@@ -61,7 +63,7 @@ export function MTableFilterRow(props) {
     }
 
     if (props.hasActions) {
-      if (props.actionsColumnIndex === -1) {
+      if (options.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
       } else {
         let endPos = 0;
@@ -69,16 +71,16 @@ export function MTableFilterRow(props) {
           endPos = 1;
         }
         columns.splice(
-          props.actionsColumnIndex + endPos,
+          options.actionsColumnIndex + endPos,
           0,
           <TableCell key="key-action-column" />
         );
       }
     }
 
-    if (props.hasDetailPanel && props.showDetailPanelIcon) {
-      const alignment = props.detailPanelColumnAlignment;
-      const index = alignment === 'left' ? 0 : columns.length;
+    if (props.hasDetailPanel && options.showDetailPanelIcon) {
+      const index =
+        options.detailPanelColumnAlignment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
         0,
@@ -111,7 +113,7 @@ export function MTableFilterRow(props) {
       <TableRow
         id="m--table--filter--row"
         ref={props.forwardedRef}
-        style={{ height: 10, ...props.filterRowStyle }}
+        style={{ height: 10, ...options.filterRowStyle }}
       >
         {columns}
       </TableRow>
@@ -123,29 +125,19 @@ export function MTableFilterRow(props) {
 
 MTableFilterRow.defaultProps = {
   columns: [],
-  detailPanelColumnAlignment: 'left',
-  selection: false,
   hasActions: false,
   localization: {
     filterTooltip: 'Filter'
-  },
-  hideFilterIcons: false
+  }
 };
 
 MTableFilterRow.propTypes = {
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
-  detailPanelColumnAlignment: PropTypes.string,
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
-  filterCellStyle: PropTypes.object,
-  filterRowStyle: PropTypes.object,
-  showDetailPanelIcon: PropTypes.bool,
-  selection: PropTypes.bool.isRequired,
-  actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
-  localization: PropTypes.object,
-  hideFilterIcons: PropTypes.bool
+  localization: PropTypes.object
 };
 
 export default React.forwardRef(function MTableFilterRowRef(props, ref) {

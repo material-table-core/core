@@ -1,5 +1,5 @@
 import formatDate from 'date-fns/format';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
 import { ALL_COLUMNS } from './constants';
@@ -79,7 +79,7 @@ export default class DataManager {
         id: row[idSynonym] || index,
         // `uuid` acts as our 'key' and is generated when new data
         // is passed into material-table externally.
-        uuid: row.uuid || uuid.v4(),
+        uuid: row.uuid || uuidv4(),
         ...prevTableData,
         ...row.tableData
       };
@@ -354,9 +354,10 @@ export default class DataManager {
   changeAllSelected(checked, selectionProps) {
     let selectedCount = 0;
     const isChecked = (row) => {
-      const selectionResult = selectionProps
-        ? selectionProps(row)
-        : { disabled: false };
+      const selectionResult =
+        selectionProps instanceof Function
+          ? selectionProps(row)
+          : { disabled: false };
       return row.tableData.disabled || selectionResult.disabled
         ? false
         : checked;
@@ -882,7 +883,7 @@ export default class DataManager {
       lastEditingRow: this.lastEditingRow,
       orderByCollection: this.orderByCollection,
       maxColumnSort: this.maxColumnSort,
-      originalData: this.data,
+      originalData: [...this.data],
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,
@@ -1044,6 +1045,7 @@ export default class DataManager {
                   .includes(trimmedSearchText.toUpperCase());
               }
             }
+            return false;
           });
       });
     }
@@ -1224,8 +1226,8 @@ export default class DataManager {
         if (item.tableData.markedForTreeRemove) rowDataArray.splice(i, 1);
       }
     };
-
     traverseTreeAndDeleteMarked(this.treefiedData);
+    this.treefiedDataLength = this.treefiedData.length;
     this.treefied = true;
   }
 

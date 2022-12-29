@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableCell, Collapse, TableRow } from '@material-ui/core';
+import { TableCell, Collapse, TableRow } from '@mui/material';
 
 function MTableDetailPanel(props) {
   const shouldOpen = Boolean(
@@ -17,6 +17,12 @@ function MTableDetailPanel(props) {
   }, [shouldOpen]);
 
   let renderFunction;
+
+  React.useEffect(() => {
+    if (renderFunction && isOpen) {
+      renderRef.current = renderFunction;
+    }
+  });
 
   // See issue #282 for more on why we have to check for the existence of props.detailPanel
   if (!props.detailPanel) {
@@ -39,12 +45,6 @@ function MTableDetailPanel(props) {
       renderFunction = renderFunction ? renderFunction.render : null;
     }
   }
-
-  React.useEffect(() => {
-    if (renderFunction && isOpen) {
-      renderRef.current = renderFunction;
-    }
-  });
 
   if (!renderRef.current && !props.data.tableData.showDetailPanel) {
     return null;

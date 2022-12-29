@@ -9,7 +9,7 @@ import {
   ListItemText,
   MenuItem,
   Select
-} from '@material-ui/core';
+} from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,11 +21,15 @@ const MenuProps = {
       width: 250
     }
   },
-  variant: 'menu',
-  getContentAnchorEl: null
+  variant: 'menu'
 };
 
-function LookupFilter({ columnDef, onFilterChanged, forwardedRef }) {
+function LookupFilter({
+  columnDef,
+  onFilterChanged,
+  localization,
+  forwardedRef
+}) {
   const [selectedFilter, setSelectedFilter] = useState(
     columnDef.tableData.filterValue || []
   );
@@ -40,7 +44,7 @@ function LookupFilter({ columnDef, onFilterChanged, forwardedRef }) {
         htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
         style={{ marginTop: -16 }}
       >
-        {getLocalizedFilterPlaceHolder(columnDef)}
+        {getLocalizedFilterPlaceHolder(columnDef, localization)}
       </InputLabel>
       <Select
         multiple
@@ -56,9 +60,7 @@ function LookupFilter({ columnDef, onFilterChanged, forwardedRef }) {
             onFilterChanged(columnDef.tableData.id, event.target.value);
           }
         }}
-        input={
-          <Input id={'select-multiple-checkbox' + columnDef.tableData.id} />
-        }
+        labelId={'select-multiple-checkbox' + columnDef.tableData.id}
         renderValue={(selectedArr) =>
           selectedArr.map((selected) => columnDef.lookup[selected]).join(', ')
         }

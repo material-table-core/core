@@ -19,7 +19,7 @@ export default {
   headerSelectionProps: {},
   hideFilterIcons: false,
   loadingType: 'overlay',
-  padding: 'default',
+  padding: 'normal',
   searchAutoFocus: false,
   paging: true,
   pageSize: 5,
@@ -44,6 +44,7 @@ export default {
   selectionProps: {},
   // sorting: true,
   maxColumnSort: 1,
+  groupChipProps: {},
   defaultOrderByCollection: [],
   showColumnSortOrder: false,
   keepSortDirectionOnColumnSwitch: true,
@@ -53,5 +54,7 @@ export default {
   detailPanelOffset: { left: 0, right: 0 },
   thirdSortClick: true,
   overflowY: 'auto',
-  numberOfPagesAround: 1
+  numberOfPagesAround: 1,
+  actionsHeaderIndex: 0,
+  draggable: true
 };
