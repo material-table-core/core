@@ -56,3 +56,4 @@ jobs:
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
+          generate_release_notes: true
