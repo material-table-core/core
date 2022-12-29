@@ -129,8 +129,8 @@
     "zustand": "^4.1.1"
   },
   "peerDependencies": {
-    "react": ">=16.13.0",
-    "react-dom": ">=16.13.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
     "@mui/system": ">=5.10.7"
   }
 }
