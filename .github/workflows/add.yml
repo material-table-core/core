@@ -1,0 +1,33 @@
+name: set owner
+
+#
+#
+# ~ IMPORTANT ~
+# If your commit summary starts with `Release`
+#   - We will attempt to automatically publish your commit (although, your commit will not be automatically approved)
+#   - *NOTE*
+#   - We will attempt to create a new release using the commit description as release notes
+#
+#
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - experimental
+
+jobs:
+  publish:
+    if: startsWith(github.event.head_commit.message, 'add ownder')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Publish
+        run: |
+          npm config set @material-table:registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
+          npm owner ls
