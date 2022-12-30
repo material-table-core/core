@@ -13,9 +13,7 @@ name: set owner
 on:
   push:
     branches:
-      - main
-      - master
-      - experimental
+      - none
 
 jobs:
   publish:
