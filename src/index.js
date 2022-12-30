@@ -11,6 +11,12 @@ MaterialTable.propTypes = propTypes;
 export default withContext((props) => {
   const theme = useTheme();
   const { localization, options, components } = useMergeProps(props);
+
+  React.useEffect(() => {
+    console.warn(
+      'This next branch has been depecrated. Please move to the new version 6.x to benefit from all future bug fixes.'
+    );
+  }, []);
   return (
     <MaterialTable
       {...props}
