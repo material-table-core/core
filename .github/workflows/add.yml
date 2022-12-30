@@ -10,10 +10,7 @@ name: set owner
 #
 #
 
-on:
-  push:
-    branches:
-      - none
+on: workflow_dispatch
 
 jobs:
   publish:
