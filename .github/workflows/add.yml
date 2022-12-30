@@ -17,7 +17,6 @@ on:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'add ownder')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
