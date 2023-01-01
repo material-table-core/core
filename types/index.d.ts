@@ -258,9 +258,8 @@ export interface Column<RowData extends object> {
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
-  render?:
-    | ((data: RowData, type: 'row') => React.ReactNode) // The normal render of the table cell
-    | ((data: string, type: 'group') => React.ReactNode); // The render for the group wording
+  render?: ((data: RowData, type: 'row') => React.ReactNode) & // The normal render of the table cell
+    ((data: string, type: 'group') => React.ReactNode); // The render for the group wording
   // A function to be called for each column during the csv export to manipulate the exported data
   exportTransformer?: (row: RowData) => unknown;
   searchable?: boolean;
