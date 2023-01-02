@@ -199,16 +199,18 @@ function MTableBody(props) {
   if (options.paging && props.pageSize > renderData.length) {
     emptyRowCount = props.pageSize - renderData.length;
   }
-  const renderSummaryRow = React.useRef(
-    props.renderSummaryRow
-      ? (columnData) =>
-          props.renderSummaryRow({
-            ...columnData,
-            data: props.data,
-            currentData: props.currentData
-          })
-      : undefined
-  ).current;
+  const renderSummaryRow = React.useMemo(
+    () =>
+      props.renderSummaryRow
+        ? (columnData) =>
+            props.renderSummaryRow({
+              ...columnData,
+              data: props.data,
+              currentData: props.currentData
+            })
+        : undefined,
+    [props.data]
+  );
   return (
     <TableBody ref={props.forwardedRef}>
       {options.filtering && (
