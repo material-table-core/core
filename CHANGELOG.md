@@ -1,3 +1,9 @@
+### 6.1.0 (2023-01-05)
+
+##### New Features
+
+- split render and group render for clearer intent ([7e1072fb](https://github.com/material-table-core/core/commit/7e1072fb1c1fb529a7bc2587bd6e6453df7ed73c))
+
 #### 6.0.3 (2023-01-02)
 
 #### 6.0.2 (2022-12-30)
