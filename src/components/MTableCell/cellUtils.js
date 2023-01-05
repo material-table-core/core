@@ -41,7 +41,7 @@ export function getCurrencyValue(currencySetting, value) {
   }
 }
 
-export function getRenderValue(props, icons) {
+export function getRenderValue(props, icons, type) {
   const dateLocale =
     props.columnDef.dateSetting && props.columnDef.dateSetting.locale
       ? props.columnDef.dateSetting.locale
@@ -52,20 +52,14 @@ export function getRenderValue(props, icons) {
   ) {
     return getEmptyValue(props.columnDef.emptyValue, props);
   }
-  if (props.render && props.rowData) {
-    return props.columnDef.render(props.rowData);
-  } else if (
-    (props.columnDef.groupRender || props.columnDef.render) &&
-    props.value
+  if (
+    props.rowData === undefined &&
+    props.value &&
+    props.columnDef.groupRender
   ) {
-    let renderValue = props.columnDef.groupRender(props.value);
-    if (process.env.NODE_ENV === 'development' && renderValue === undefined) {
-      renderValue = props.columnDef.render(props.value, 'group');
-      console.warn(
-        'The group value function returned undefined. This will be deprecated in the future for the new column.groupRender to improve the parsing between cell and group rendering.'
-      );
-    }
-    return renderValue;
+    return props.columnDef.groupRender(props.value);
+  } else if (props.render && props.rowData) {
+    return props.columnDef.render(props.rowData);
   } else if (props.columnDef.type === 'boolean') {
     const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
     if (props.value) {
