@@ -57,7 +57,7 @@ export function getRenderValue(props, icons) {
   } else if ((props.groupRender || props.render) && props.value) {
     let renderValue = props.columnDef.groupRender(props.value);
     if (process.env.NODE_ENV === 'development' && renderValue === undefined) {
-      renderValue = props.columnDef.render(props.rowData, 'group');
+      renderValue = props.columnDef.render(props.value, 'group');
       console.warn(
         'The group value function returned undefined. This will be deprecated in the future for the new column.groupRender to improve the parsing between cell and group rendering.'
       );
