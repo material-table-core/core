@@ -54,7 +54,10 @@ export function getRenderValue(props, icons) {
   }
   if (props.render && props.rowData) {
     return props.columnDef.render(props.rowData);
-  } else if ((props.groupRender || props.render) && props.value) {
+  } else if (
+    (props.columnDef.groupRender || props.columnDef.render) &&
+    props.value
+  ) {
     let renderValue = props.columnDef.groupRender(props.value);
     if (process.env.NODE_ENV === 'development' && renderValue === undefined) {
       renderValue = props.columnDef.render(props.value, 'group');

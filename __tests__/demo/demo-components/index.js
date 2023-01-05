@@ -975,7 +975,12 @@ export function DefaultOrderIssue(props) {
     <MaterialTable
       title="Default Grouped Field Preview"
       columns={[
-        { title: 'Name', field: 'name', defaultGroupOrder: 0 },
+        {
+          title: 'Name',
+          field: 'name',
+          defaultGroupOrder: 0,
+          groupRender: () => 'test'
+        },
         { title: 'Surname', field: 'surname' },
         { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
         {
