@@ -52,12 +52,17 @@ export function getRenderValue(props, icons) {
   ) {
     return getEmptyValue(props.columnDef.emptyValue, props);
   }
-  if (props.columnDef.render) {
-    if (props.rowData) {
-      return props.columnDef.render(props.rowData, 'row');
-    } else if (props.value) {
-      return props.columnDef.render(props.value, 'group');
+  if (props.render && props.rowData) {
+    return props.columnDef.render(props.rowData);
+  } else if ((props.groupRender || props.render) && props.value) {
+    let renderValue = props.columnDef.groupRender(props.value);
+    if (process.env.NODE_ENV === 'development' && renderValue === undefined) {
+      renderValue = props.columnDef.render(props.rowData, 'group');
+      console.warn(
+        'The group value function returned undefined. This will be deprecated in the future for the new column.groupRender to improve the parsing between cell and group rendering.'
+      );
     }
+    return renderValue;
   } else if (props.columnDef.type === 'boolean') {
     const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
     if (props.value) {

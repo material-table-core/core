@@ -258,9 +258,18 @@ export interface Column<RowData extends object> {
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
-  render?:
-    | ((data: RowData, type: 'row') => React.ReactNode) // The normal render of the table cell
-    | ((data: string, type: 'group') => React.ReactNode); // The render for the group wording
+  /**
+   * Overrides the display of the cell for the column. It passes the rowData and expects a react node to render
+   *
+   * @memberof Column
+   */
+  render?: (data: RowData) => React.ReactNode;
+  /**
+   * Overrides the display of the group title for the column. It passes the grouped key as string and expects a react node to render
+   *
+   * @memberof Column
+   */
+  groupRender?: (groupKey: string) => React.ReactNode;
   // A function to be called for each column during the csv export to manipulate the exported data
   exportTransformer?: (row: RowData) => unknown;
   searchable?: boolean;
