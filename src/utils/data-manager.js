@@ -843,8 +843,9 @@ export default class DataManager {
       }
 
       // See if the next key needs to be considered
-      const checkNextKey = compareValue === 0 && collection.length !== 1;
-
+      const checkNextKey =
+        compareValue === 0 &&
+        collection.filter((col) => col.sortOrder !== undefined).length !== 1;
       return checkNextKey
         ? sortData(a, b, columns, collection.slice(1))
         : compareValue;
