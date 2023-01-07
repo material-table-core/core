@@ -210,4 +210,32 @@ describe('Render Table : Pre Build', () => {
       ).toBeDisabled();
     });
   });
+  // Render table with column render function
+  it('enders the render function in column', () => {
+    const data = makeData();
+    render(
+      <MaterialTable
+        data={data}
+        columns={columns.map((col) => ({
+          ...col,
+          field: '', // Removes the field to force the render to show
+          render: (val) => val[col.field]
+        }))}
+      />
+    );
+
+    screen.getByRole('row', {
+      name: /oliver smith 0/i
+    });
+    screen.getByRole('row', {
+      name: /elijah johnson 1/i
+    });
+    screen.getByRole('row', {
+      name: /william williams 2/i
+    });
+    screen.getByRole('row', {
+      name: /james brown 3/i
+    });
+    screen.getByText(/1-5 of 99/i);
+  });
 });

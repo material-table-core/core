@@ -58,7 +58,7 @@ export function getRenderValue(props, icons, type) {
     props.columnDef.groupRender
   ) {
     return props.columnDef.groupRender(props.value);
-  } else if (props.render && props.rowData) {
+  } else if (props.columnDef.render && props.rowData) {
     return props.columnDef.render(props.rowData);
   } else if (props.columnDef.type === 'boolean') {
     const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
