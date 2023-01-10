@@ -378,8 +378,16 @@ export default class DataManager {
 
       setCheck(this.groupedData);
     } else {
+      const checkChild = (row) => {
+        row.tableData.childRows &&
+          row.tableData.childRows.forEach((child) => {
+            child.tableData.checked = isChecked(row);
+            checkChild(child);
+          });
+      };
       this.searchedData.forEach((row) => {
         row.tableData.checked = isChecked(row);
+        checkChild(row);
       });
       selectedCount = this.searchedData.length;
     }

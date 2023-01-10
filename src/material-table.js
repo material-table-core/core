@@ -1017,7 +1017,7 @@ export default class MaterialTable extends React.Component {
           selectedCount={this.state.selectedCount}
           dataCount={
             props.parentChildData
-              ? this.state.originalData.length
+              ? this.state.treefiedDataLength
               : this.state.columns.some((col) => col.tableData.groupOrder > -1)
               ? this.state.groupedDataLength
               : this.state.data.length
@@ -1184,6 +1184,7 @@ export default class MaterialTable extends React.Component {
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
+                console.log('state', this.state);
                 return (
                   <div ref={provided.innerRef}>
                     <div

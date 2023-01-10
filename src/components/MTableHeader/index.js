@@ -355,7 +355,7 @@ export function MTableHeader({
               props.selectedCount > 0 && props.selectedCount < props.dataCount
             }
             checked={
-              props.dataCount > 0 && props.selectedCount === props.dataCount
+              props.dataCount > 0 && props.selectedCount >= props.dataCount
             }
             onChange={(event, checked) =>
               props.onAllSelected && props.onAllSelected(checked)
