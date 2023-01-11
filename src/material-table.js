@@ -538,23 +538,20 @@ export default class MaterialTable extends React.Component {
     const pageSize = event.target.value;
 
     this.dataManager.changePageSize(pageSize);
-
-    this.props.onPageChange && this.props.onPageChange(0, pageSize);
+    const callback = () => {
+      this.props.onPageChange && this.props.onPageChange(0, pageSize);
+      this.props.onRowsPerPageChange &&
+        this.props.onRowsPerPageChange(pageSize);
+    };
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.pageSize = event.target.value;
       query.page = 0;
-      this.onQueryChange(query, () => {
-        this.props.onRowsPerPageChange &&
-          this.props.onRowsPerPageChange(pageSize);
-      });
+      this.onQueryChange(query, callback);
     } else {
       this.dataManager.changeCurrentPage(0);
-      this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onRowsPerPageChange &&
-          this.props.onRowsPerPageChange(pageSize);
-      });
+      this.setState(this.dataManager.getRenderState(), callback);
     }
   };
 
@@ -1184,7 +1181,6 @@ export default class MaterialTable extends React.Component {
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
-                console.log('state', this.state);
                 return (
                   <div ref={provided.innerRef}>
                     <div

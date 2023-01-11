@@ -3,7 +3,8 @@ import {
   render,
   screen,
   fireEvent,
-  waitForElementToBeRemoved
+  waitForElementToBeRemoved,
+  within
 } from '@testing-library/react';
 
 import MaterialTable from '../src';
@@ -237,5 +238,63 @@ describe('Render Table : Pre Build', () => {
       name: /james brown 3/i
     });
     screen.getByText(/1-5 of 99/i);
+  });
+});
+
+describe('Test event loop and flows', () => {
+  it('calls onRowChange and onPageSizeChange during the same event loop', async () => {
+    const apiCall = jest.fn(() => null);
+    const data = makeData();
+    const Component = () => {
+      const [{ page, pageSize }, setPage] = React.useState({
+        page: 0,
+        pageSize: 5
+      });
+
+      React.useEffect(() => {
+        apiCall(page, pageSize);
+      }, [page, pageSize]);
+
+      return (
+        <MaterialTable
+          data={data}
+          columns={columns}
+          onRowsPerPageChange={(size) => {
+            setPage((prev) => ({ ...prev, pageSize: size }));
+          }}
+          onPageChange={(page) => {
+            setPage((prev) => ({ ...prev, page }));
+          }}
+        />
+      );
+    };
+    render(<Component />);
+    expect(apiCall.mock.calls).toHaveLength(1);
+    expect(apiCall.mock.calls[0]).toEqual([0, 5]);
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: /next page/i
+      })
+    );
+
+    expect(apiCall.mock.calls).toHaveLength(2);
+    expect(apiCall.mock.calls[1]).toEqual([1, 5]);
+    fireEvent.mouseDown(
+      screen.getByRole('button', {
+        name: 'Rows per page: 5 rows'
+      })
+    );
+    const listbox = within(screen.getByRole('presentation')).getByRole(
+      'listbox'
+    );
+    const options = within(listbox).getAllByRole('option');
+    const optionValues = options.map((li) => li.getAttribute('data-value'));
+
+    expect(optionValues).toEqual(['5', '10', '20']);
+
+    fireEvent.click(options[1]);
+
+    expect(apiCall.mock.calls).toHaveLength(3);
+    expect(apiCall.mock.calls[2]).toEqual([0, 10]);
   });
 });
