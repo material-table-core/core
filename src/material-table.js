@@ -534,12 +534,32 @@ export default class MaterialTable extends React.Component {
     }
   };
 
+  isPageReset = () => {
+    const totalCount = this.isRemoteData()
+      ? this.state.query.totalCount
+      : this.state.data.length;
+    const pageSize = this.isRemoteData()
+      ? this.state.query.pageSize
+      : this.state.pageSize;
+    const currentPage = this.isRemoteData()
+      ? this.state.query.page
+      : this.state.currentPage;
+
+    if (!totalCount || !pageSize || !currentPage) return 0;
+
+    const totalPages = Math.floor(totalCount / pageSize);
+
+    return !(totalPages >= currentPage);
+  };
+
   onRowsPerPageChange = (event) => {
     const pageSize = event.target.value;
 
     this.dataManager.changePageSize(pageSize);
 
-    this.props.onPageChange && this.props.onPageChange(0, pageSize);
+    this.props.onPageChange &&
+      this.isPageReset() &&
+      this.props.onPageChange(0, pageSize);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
