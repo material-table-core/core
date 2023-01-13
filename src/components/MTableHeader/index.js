@@ -342,7 +342,6 @@ export function MTableHeader({
       { ...props, options },
       props.treeDataMaxLevel
     );
-    console.log(props);
     return (
       <TableCell
         padding="none"
