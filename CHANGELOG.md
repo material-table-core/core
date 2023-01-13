@@ -1,3 +1,9 @@
+#### 6.1.10 (2023-01-13)
+
+##### Bug Fixes
+
+- selection with tree data ([5590bad2](https://github.com/material-table-core/core/commit/5590bad284d5f5bb77073c3aaa5f8dd55173429f))
+
 #### 6.1.9 (2023-01-13)
 
 ##### Other Changes
