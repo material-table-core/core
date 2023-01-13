@@ -52,8 +52,6 @@ export default class DataManager {
 
   rootGroupsIndex = {};
 
-  constructor() {}
-
   setData(data, idSynonym) {
     this.selectedCount = 0;
     let prevDataObject = {};
@@ -113,7 +111,7 @@ export default class DataManager {
 
   setColumns(columns, prevColumns = [], savedColumns = {}) {
     let usedWidthPx = 0;
-    let usedWidthNotPx = [];
+    const usedWidthNotPx = [];
 
     this.columns = columns.map((columnDef, index) => {
       const widthPx = widthToNumber(columnDef.width);
@@ -123,11 +121,11 @@ export default class DataManager {
           : columnDef.width;
 
       if (
-        width //&&
-        //columnDef.tableData // &&
+        width // &&
+        // columnDef.tableData // &&
         // columnDef.tableData.width !== undefined
       ) {
-        if (widthPx !== NaN) {
+        if (!isNaN(widthPx)) {
           usedWidthPx += widthPx;
         } else {
           usedWidthNotPx.push(width);
@@ -142,7 +140,7 @@ export default class DataManager {
         groupSort: columnDef.defaultGroupSort || 'asc',
         width,
         initialWidth: width,
-        widthPx: widthPx === NaN ? undefined : widthPx,
+        widthPx: isNaN(widthPx) ? undefined : widthPx,
         additionalWidth: 0,
         ...savedColumnTableData,
         ...(prevColumn ? prevColumn.tableData : {}),
@@ -332,7 +330,7 @@ export default class DataManager {
     if (rowData) {
       rowData.tableData.editing = mode;
 
-      if (this.lastEditingRow && this.lastEditingRow != rowData) {
+      if (this.lastEditingRow && this.lastEditingRow !== rowData) {
         this.lastEditingRow.tableData.editing = undefined;
       }
 
@@ -400,7 +398,7 @@ export default class DataManager {
     let currentGroupArray = this.groupedData;
 
     path.forEach((value) => {
-      currentGroup = currentGroupArray.find((group) => group.value == value);
+      currentGroup = currentGroupArray.find((group) => group.value === value);
       currentGroupArray = currentGroup.groups;
     });
 
@@ -410,7 +408,7 @@ export default class DataManager {
           setCheck(element.groups);
         } else {
           element.data.forEach((d) => {
-            if (d.tableData.checked != checked) {
+            if (d.tableData.checked !== checked) {
               d.tableData.checked = d.tableData.disabled ? false : checked;
               this.selectedCount = this.selectedCount + (checked ? 1 : -1);
             }
@@ -535,7 +533,7 @@ export default class DataManager {
       result.source.droppableId === 'headers'
     ) {
       const newGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c.tableData.id === result.draggableId
       );
 
       if (newGroup.grouping === false || !newGroup.field) {
@@ -548,7 +546,7 @@ export default class DataManager {
       result.source.droppableId === 'groups'
     ) {
       const removeGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c.tableData.id === result.draggableId
       );
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);

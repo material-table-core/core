@@ -241,40 +241,6 @@ export default class MaterialTable extends React.Component {
         ...this.dataManager.getRenderState(),
         actions: props.actions
       });
-      if (
-        process.env.NODE_ENV === 'development' &&
-        columnPropsChanged &&
-        !this.checkedForFunctions &&
-        prevProps.columns.length !== 0 &&
-        props.data[0] &&
-        props.data[0].id !== undefined
-      ) {
-        const bothContainFunctions =
-          fixedPropsColumns.some((column) =>
-            Object.values(column).some((val) => typeof val === 'function')
-          ) &&
-          fixedPrevColumns.some((column) =>
-            Object.values(column).some((val) => typeof val === 'function')
-          );
-        if (bothContainFunctions) {
-          this.checkedForFunctions = true;
-          const currentColumnsWithoutFunctions = functionlessColumns(
-            fixedPropsColumns
-          );
-          const prevColumnsWithoutFunctions = functionlessColumns(
-            fixedPrevColumns
-          );
-          const columnsEqual = deepEql(
-            currentColumnsWithoutFunctions,
-            prevColumnsWithoutFunctions
-          );
-          if (columnsEqual) {
-            console.warn(
-              'The columns provided to material table are static, but contain functions which update on every render, resetting the table state. Provide a stable function or column reference or an row id to prevent state loss.'
-            );
-          }
-        }
-      }
     }
     const count = this.isRemoteData()
       ? this.state.query.totalCount
@@ -1325,17 +1291,6 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-function functionlessColumns(columns) {
-  return columns.map((col) =>
-    Object.entries(col).reduce((obj, [key, val]) => {
-      if (typeof val !== 'function') {
-        obj[key] = val;
-      }
-      return obj;
-    }, {})
-  );
-}
-
 function getDefaultCollectionSort(currentColumns, prevColumns, maxColumnSort) {
   let defaultCollectionSort = [];
   let prevCollectionSort = [];
@@ -1352,7 +1307,7 @@ function getDefaultCollectionSort(currentColumns, prevColumns, maxColumnSort) {
 }
 
 function reduceByDefaultSort(list, maxColumnSort) {
-  let sortColumns = list.filter(
+  const sortColumns = list.filter(
     (column) => column.defaultSort && column.sorting !== false
   );
   return sortColumns.slice(0, maxColumnSort).map((column, index) => {

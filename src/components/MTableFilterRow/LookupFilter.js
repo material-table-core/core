@@ -4,7 +4,6 @@ import { getLocalizedFilterPlaceHolder } from './utils';
 import {
   Checkbox,
   FormControl,
-  Input,
   InputLabel,
   ListItemText,
   MenuItem,

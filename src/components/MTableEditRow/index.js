@@ -148,7 +148,6 @@ function MTableEditRow(props) {
     if (!isValid) {
       return;
     }
-    const newData = state.data;
     props.onEditingApproved(props.mode, state.data, props.data);
   };
 

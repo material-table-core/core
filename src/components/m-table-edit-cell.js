@@ -88,6 +88,7 @@ class MTableEditCell extends React.Component {
           );
         })
         .catch((error) => {
+          if (process.env.NODE_ENV === 'development') console.log(error);
           this.setState({ isLoading: false });
         });
     });
