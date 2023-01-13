@@ -1,3 +1,9 @@
+#### 6.1.9 (2023-01-13)
+
+##### Other Changes
+
+- small linter fixes, update packages ([66b73bb2](https://github.com/material-table-core/core/commit/66b73bb202ad8aab8766b1e978bf963d0cd9ebeb))
+
 #### 6.1.8 (2023-01-11)
 
 #### 6.1.7 (2023-01-10)
