@@ -501,7 +501,7 @@ function RenderSortButton({
   return (
     <>
       <TableSortLabel
-        role=""
+        role="columnheader"
         aria-sort={ariaSort}
         aria-label={columnDef.ariaLabel}
         IconComponent={icon}
