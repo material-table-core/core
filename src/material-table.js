@@ -980,7 +980,7 @@ export default class MaterialTable extends React.Component {
           selectedCount={this.state.selectedCount}
           dataCount={
             props.parentChildData
-              ? this.state.treefiedDataLength
+              ? this.dataManager.searchedData.length
               : this.state.columns.some((col) => col.tableData.groupOrder > -1)
               ? this.state.groupedDataLength
               : this.state.data.length

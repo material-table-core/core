@@ -1154,25 +1154,30 @@ const TREE_COLUMNS = [
   }
 ];
 export function TreeData() {
-  const [path, setPath] = useState();
-  const myTableRef = useRef(null);
+  const words = ['Paper', 'Rock', 'Scissors'];
+
+  const rawData = [];
+  for (let i = 0; i < 10; i++) {
+    rawData.push({ id: i, word: words[i % words.length] });
+  }
+
+  const columns = [
+    { title: 'Id', field: 'id' },
+    { title: 'Word', field: 'word' }
+  ];
   return (
-    <React.Fragment>
-      <MaterialTable
-        tableRef={myTableRef}
-        data={TREE_DATA}
-        columns={TREE_COLUMNS}
-        parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
-        onRowClick={(e, rowData) => {
-          setPath(rowData.tableData.path);
-          myTableRef.current.onTreeExpandChanged(
-            rowData.tableData.path,
-            rowData
-          );
-        }}
-      />
-      <pre>{JSON.stringify(path)}</pre>
-    </React.Fragment>
+    <MaterialTable
+      parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
+      data={[
+        ...rawData,
+        { id: 11, word: 'test', parentId: 0 },
+        { id: 12, word: 'test', parentId: 1 }
+      ]}
+      columns={columns}
+      options={{
+        selection: true
+      }}
+    />
   );
 }
 
