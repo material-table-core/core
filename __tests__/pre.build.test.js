@@ -46,9 +46,9 @@ describe('Render Table : Pre Build', () => {
       const data = makeData();
       render(<MaterialTable data={data} columns={columns} />);
 
-      screen.getByRole('columnheader', { name: /first name/i });
-      screen.getByRole('columnheader', { name: /last name/i });
-      screen.getByRole('columnheader', { name: /age/i });
+      screen.getAllByRole('columnheader', { name: /first name/i });
+      screen.getAllByRole('columnheader', { name: /last name/i });
+      screen.getAllByRole('columnheader', { name: /age/i });
       expect(
         screen.getAllByRole('button', { name: /first name/i })
       ).toHaveLength(1);
