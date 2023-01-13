@@ -1,3 +1,9 @@
+#### 5.1.11 (2023-01-13)
+
+##### Other Changes
+
+- Fix column test ([27ce1369](https://github.com/material-table-core/core/commit/27ce1369af863a99fbbef3043830b22fc64f7270))
+
 #### 5.1.10 (2023-01-13)
 
 ##### New Features
