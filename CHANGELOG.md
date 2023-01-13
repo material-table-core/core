@@ -1,3 +1,14 @@
+#### 5.1.10 (2023-01-13)
+
+##### New Features
+
+- Improve feature sorting ([bda86c80](https://github.com/material-table-core/core/commit/bda86c801a4c5e0b7b4c9256e857e1d8b5c4101a))
+
+##### Bug Fixes
+
+- move onPageChange and onRowsPerPageChange into same event loop ([7ecb06b9](https://github.com/material-table-core/core/commit/7ecb06b9e934754e3a28c26a9e2e274eab4d6ca2))
+- add columnheader label to TableSortLabel ([d8ee7bf3](https://github.com/material-table-core/core/commit/d8ee7bf3d60daa65995cb3949365653b66a9006c))
+
 #### 5.1.9 (2022-12-19)
 
 #### 5.1.8 (2022-11-20)
