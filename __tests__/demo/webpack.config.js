@@ -27,9 +27,12 @@ module.exports = {
     // new BundleAnalyzerPlugin()
   ],
   devServer: {
-    contentBase: '__tests__/demo',
+    static: {
+      directory: '__tests__/demo',
+      serveIndex: true
+    },
     hot: true,
-    disableHostCheck: true,
+    allowedHosts: 'all',
     port: 8080,
     open: true
   }
