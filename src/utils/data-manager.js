@@ -536,7 +536,7 @@ export default class DataManager {
         (c) => c.tableData.id === result.draggableId
       );
 
-      if (newGroup.grouping === false || !newGroup.field) {
+      if (!newGroup || newGroup.grouping === false || !newGroup.field) {
         return;
       }
 
