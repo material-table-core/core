@@ -138,9 +138,9 @@ function MTablePaginationInner(props) {
             size="large"
           >
             {theme.direction === 'rtl' ? (
-              <icons.FirstPage />
+              <icons.PreviousPage />
             ) : (
-              <icons.LastPage />
+              <icons.NextPage />
             )}
           </IconButton>
         </span>
