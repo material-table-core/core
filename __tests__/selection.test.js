@@ -89,9 +89,8 @@ describe('Selection tests', () => {
     screen
       .getAllByRole('checkbox')
       .forEach((box) => expect(box).not.toBeChecked());
-    const [all, first, second, third, fourth, fifth] = screen.getAllByRole(
-      'checkbox'
-    );
+    const [all, first, second, third, fourth, fifth] =
+      screen.getAllByRole('checkbox');
 
     fireEvent.click(first);
     screen.getByRole('heading', {
@@ -183,6 +182,5 @@ describe('Selection tests', () => {
     fireEvent.click(third);
     fireEvent.click(fifth);
     expect(all).not.toBeChecked();
-    screen.logTestingPlaygroundURL();
   });
 });
