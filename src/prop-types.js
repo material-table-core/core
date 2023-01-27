@@ -162,6 +162,11 @@ export const propTypes = {
       PropTypes.func,
       StyledComponent
     ]),
+    TableWrapper: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.func,
+      StyledComponent
+    ]),
     OverlayLoading: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,

@@ -38,6 +38,7 @@ export { default as MTableSteppedPagination } from './MTableSteppedPaginationInn
 export { default as MTablePagination } from './MTablePagination';
 export { default as MTableSummaryRow } from './MTableSummaryRow';
 export { default as MTableToolbar } from './MTableToolbar';
+export { default as MTableWrapper } from './MTableWrapper';
 /** THESE REFACTORS ARE HAVING ISSUES */
 // export { default as MTableEditCell } from './MTableEditCell';
 // export { default as MTableEditField } from './MTableEditField';

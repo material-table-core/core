@@ -14,7 +14,8 @@ import DataManager from '@utils/data-manager';
 import {
   MTablePagination,
   MTableSteppedPagination,
-  MTableScrollbar
+  MTableScrollbar,
+  MTableWrapper
 } from '@components';
 
 export default class MaterialTable extends React.Component {
@@ -140,7 +141,8 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data, props.options.idSynonym);
     }
 
-    const prevDefaultOrderByCollection = this.dataManager.getDefaultOrderByCollection();
+    const prevDefaultOrderByCollection =
+      this.dataManager.getDefaultOrderByCollection();
     const { defaultOrderByCollection } = props.options;
     let defaultCollectionSort = [];
     let defaultSort = '';
@@ -1079,9 +1081,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < this.state.columns.length; i++) {
-      const colDef = this.state.columns[
-        count >= 0 ? i : this.state.columns.length - 1 - i
-      ];
+      const colDef =
+        this.state.columns[count >= 0 ? i : this.state.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === 'number') {
           result.push(colDef.tableData.width + 'px');
@@ -1189,7 +1190,7 @@ export default class MaterialTable extends React.Component {
                         </div>
                       ) : null}
 
-                      <div>{table}</div>
+                      <MTableWrapper>{table}</MTableWrapper>
 
                       {this.state.width &&
                       props.options.fixedColumns &&

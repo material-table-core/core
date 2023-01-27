@@ -38,7 +38,8 @@ export {
   MTableHeader,
   MTablePagination,
   MTableSteppedPagination,
-  MTableToolbar
+  MTableToolbar,
+  MTableWrapper
 } from './components';
 
 export { ALL_COLUMNS } from './utils/constants';
