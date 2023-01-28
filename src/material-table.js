@@ -1361,7 +1361,9 @@ function reduceByDefaultSort(list, maxColumnSort) {
   );
   return sortColumns.slice(0, maxColumnSort).map((column, index) => {
     return {
-      orderBy: column.tableData.id,
+      orderBy: column.tableData
+        ? column.tableData.id
+        : list.findIndex((val) => val.field === column.field),
       orderDirection: column.defaultSort,
       sortOrder: index + 1
     };
