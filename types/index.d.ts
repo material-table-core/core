@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconProps } from '@mui/material/Icon';
-import { CheckboxProps, ChipProps } from '@mui/material';
+import { CheckboxProps, ChipProps, SxProps } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { OnHandlers } from './helper';
 
@@ -15,6 +15,7 @@ export interface OrderByCollection {
 }
 
 export interface MaterialTableProps<RowData extends object> {
+  sx?: SxProps;
   actions?: (
     | Action<RowData>
     | ((rowData: RowData) => Action<RowData>)

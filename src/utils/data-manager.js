@@ -168,7 +168,8 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -533,9 +534,15 @@ export default class DataManager {
       result.source.droppableId === 'headers'
     ) {
       const newGroup = this.columns.find(
-        (c) => c.tableData.id === result.draggableId
+        (c) => c.tableData.id.toString() === result.draggableId.toString()
       );
-
+      console.log(
+        result,
+        this.columns,
+        newGroup,
+        newGroup?.grouping === false,
+        newGroup?.field
+      );
       if (!newGroup || newGroup.grouping === false || !newGroup.field) {
         return;
       }
@@ -546,7 +553,7 @@ export default class DataManager {
       result.source.droppableId === 'groups'
     ) {
       const removeGroup = this.columns.find(
-        (c) => c.tableData.id === result.draggableId
+        (c) => c.tableData.id.toString() === result.draggableId.toString()
       );
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
@@ -627,7 +634,7 @@ export default class DataManager {
   finishCellEditable = (rowData, columnDef) => {
     if (rowData.tableData.editCellList) {
       const index = rowData.tableData.editCellList.findIndex(
-        (c) => c.tableData.id === columnDef.tableData.id
+        (c) => c.tableData.id.toString() === columnDef.tableData.id.toString()
       );
       if (index !== -1) {
         rowData.tableData.editCellList.splice(index, 1);
@@ -907,7 +914,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 

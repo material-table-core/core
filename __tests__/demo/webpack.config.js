@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: ['babel-polyfill', path.resolve(__dirname, './demo.js')],
@@ -27,12 +27,9 @@ module.exports = {
     // new BundleAnalyzerPlugin()
   ],
   devServer: {
-    static: {
-      directory: '__tests__/demo',
-      serveIndex: true
-    },
+    contentBase: '__tests__/demo',
     hot: true,
-    allowedHosts: 'all',
+    disableHostCheck: true,
     port: 8080,
     open: true
   }

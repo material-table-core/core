@@ -68,9 +68,8 @@ function MTableGroupbar(props) {
           );
         }
       } else {
-        materialTableGroupings[
-          props.persistentGroupingsId
-        ] = persistentGroupings;
+        materialTableGroupings[props.persistentGroupingsId] =
+          persistentGroupings;
         localStorage.setItem(
           'material-table-groupings',
           JSON.stringify(materialTableGroupings)
@@ -105,7 +104,7 @@ function MTableGroupbar(props) {
               return (
                 <Draggable
                   key={columnDef.tableData.id}
-                  draggableId={columnDef.tableData.id.toString()}
+                  draggableId={columnDef.tableData.id}
                   index={index}
                 >
                   {(provided, snapshot) => (

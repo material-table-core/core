@@ -4,7 +4,7 @@
     "access": "public"
   },
   "url": "https://github.com/material-table-core/core",
-  "version": "6.1.11",
+  "version": "6.1.10",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -26,7 +26,7 @@
     "test": "npx jest && check-dts **/*.ts",
     "test:build": "npx jest __tests__/post.build.test.js",
     "prerelease": "npm run t",
-    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major -m 'Release v%s' && npm run git:push:tags",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md'",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor -m 'Release v%s' && npm run git:push:tags",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch -m 'Release v%s' && npm run git:push:tags",
     "git:push:tags": "git push origin && git push origin --tags"
