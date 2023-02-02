@@ -205,7 +205,10 @@ export function MTableHeader({
     const size = options.padding === 'default' ? 'medium' : 'small';
 
     return displayingColumns
-      .filter((columnDef) => !(columnDef.tableData.groupOrder > -1))
+      .filter(
+        (columnDef) =>
+          !(columnDef.tableData.groupOrder > -1) && !columnDef.tableData.hiddden
+      )
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index, allCols) => {
         const cellAlignment =
@@ -222,7 +225,7 @@ export function MTableHeader({
             <Draggable
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
-              index={columnDef.tableData.id}
+              index={index}
               style={{ zIndex: 99 }}
             >
               {(provided, snapshot) => (
