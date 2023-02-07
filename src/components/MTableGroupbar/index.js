@@ -103,8 +103,8 @@ function MTableGroupbar(props) {
             {props.groupColumns.map((columnDef, index) => {
               return (
                 <Draggable
-                  key={columnDef.tableData.id}
-                  draggableId={columnDef.tableData.id}
+                  key={columnDef.tableData.id.toString()}
+                  draggableId={columnDef.tableData.id.toString()}
                   index={index}
                 >
                   {(provided, snapshot) => (
