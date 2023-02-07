@@ -536,13 +536,6 @@ export default class DataManager {
       const newGroup = this.columns.find(
         (c) => c.tableData.id.toString() === result.draggableId.toString()
       );
-      console.log(
-        result,
-        this.columns,
-        newGroup,
-        newGroup?.grouping === false,
-        newGroup?.field
-      );
       if (!newGroup || newGroup.grouping === false || !newGroup.field) {
         return;
       }
