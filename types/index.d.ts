@@ -57,6 +57,7 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons<RowData>;
   initialFormData?: object;
   isLoading?: boolean;
+  isRemoteData?: boolean;
   title?: React.ReactNode;
   options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;

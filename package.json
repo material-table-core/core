@@ -65,6 +65,7 @@
     "@material-table/exporters": "^1.0.12",
     "@mui/styles": ">=5.0.0",
     "@mui/system": ">=5.10.7",
+    "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^26.0.20",
@@ -130,8 +131,8 @@
     "zustand": "^4.3.0"
   },
   "peerDependencies": {
+    "@mui/system": ">=5.10.7",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "@mui/system": ">=5.10.7"
+    "react-dom": ">=16.8.0"
   }
 }

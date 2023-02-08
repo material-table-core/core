@@ -133,6 +133,9 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
       this.dataManager.changeApplySort(false);
+      if (typeof props.data != 'function') {
+        this.dataManager.setData(props.data, props.options.idSynonym);
+      }
     } else {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
@@ -244,10 +247,10 @@ export default class MaterialTable extends React.Component {
       });
     }
     const count = this.isRemoteData()
-      ? this.state.query.totalCount
+      ? this.props.totalCount ?? this.state.query.totalCount
       : this.state.data.length;
     const currentPage = this.isRemoteData()
-      ? this.state.query.page
+      ? this.props.page ?? this.state.query.page
       : this.state.currentPage;
     const pageSize = this.isRemoteData()
       ? this.state.query.pageSize
@@ -421,7 +424,10 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
-  isRemoteData = (props) => !Array.isArray((props || this.props).data);
+  isRemoteData = (props) => {
+    if (this.props.isRemoteData) return true;
+    return !Array.isArray((props || this.props).data);
+  };
 
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(
@@ -704,47 +710,50 @@ export default class MaterialTable extends React.Component {
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query, error: this.state.errorState };
 
-    this.setState({ isLoading: true, errorState: undefined }, () => {
-      this.props
-        .data(query)
-        .then((result) => {
-          query.totalCount = result.totalCount;
-          query.page = result.page;
-          const nextQuery = {
-            ...query,
-            totalCount: result.totalCount,
-            page: result.page
-          };
-          this.dataManager.setData(result.data, this.props.options.idSynonym);
-          this.setState(
-            {
+    if (typeof this.props.data == 'function') {
+      this.setState({ isLoading: true, errorState: undefined }, () => {
+        this.props
+          .data(query)
+          .then((result) => {
+            const nextQuery = {
+              ...query,
+              totalCount: result.totalCount,
+              page: result.page
+            };
+            this.dataManager.setData(result.data, this.props.options.idSynonym);
+            this.setState(
+              {
+                isLoading: false,
+                errorState: false,
+                ...this.dataManager.getRenderState(),
+                query: nextQuery
+              },
+              () => {
+                callback && callback();
+              }
+            );
+          })
+          .catch((error) => {
+            const errorState = {
+              message:
+                typeof error === 'object'
+                  ? error.message
+                  : error !== undefined
+                  ? error
+                  : this.props.localization.error,
+              errorCause: 'query'
+            };
+            this.setState({
               isLoading: false,
-              errorState: false,
-              ...this.dataManager.getRenderState(),
-              query: nextQuery
-            },
-            () => {
-              callback && callback();
-            }
-          );
-        })
-        .catch((error) => {
-          const errorState = {
-            message:
-              typeof error === 'object'
-                ? error.message
-                : error !== undefined
-                ? error
-                : this.props.localization.error,
-            errorCause: 'query'
-          };
-          this.setState({
-            isLoading: false,
-            errorState,
-            ...this.dataManager.getRenderState()
+              errorState,
+              ...this.dataManager.getRenderState()
+            });
           });
-        });
-    });
+      });
+    } else {
+      this.setState({ query });
+      this.props.onQueryChange && this.props.onQueryChange(query);
+    }
   };
 
   onRowSelected = (event, path, dataClicked) => {
@@ -888,15 +897,15 @@ export default class MaterialTable extends React.Component {
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
+      const totalCount = this.isRemoteData()
+        ? props.totalCount ?? this.state.query.totalCount
+        : this.state.data.length;
       const currentPage = this.isRemoteData()
         ? Math.min(
-            props.page,
-            Math.floor(props.totalCount / this.state.pageSize)
+            props.page ?? this.state.query.page,
+            Math.floor(totalCount / this.state.pageSize)
           )
         : this.state.currentPage;
-      const totalCount = this.isRemoteData()
-        ? props.totalCount
-        : this.state.data.length;
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
@@ -913,9 +922,7 @@ export default class MaterialTable extends React.Component {
                   }
                 }}
                 colSpan={3}
-                count={
-                  this.isRemoteData() ? this.state.query.totalCount : totalCount
-                }
+                count={totalCount}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
@@ -928,7 +935,7 @@ export default class MaterialTable extends React.Component {
                     </Box>
                   )
                 }}
-                page={this.isRemoteData() ? this.state.query.page : currentPage}
+                page={currentPage}
                 onPageChange={this.onPageChange}
                 onRowsPerPageChange={this.onRowsPerPageChange}
                 ActionsComponent={(subProps) =>

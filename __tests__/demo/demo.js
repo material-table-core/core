@@ -51,7 +51,7 @@ import {
   TableMultiSorting
 } from './demo-components';
 import { createRoot } from 'react-dom/client';
-import { I1353, I1941, I122 } from './demo-components/RemoteData';
+import { I1353, I1941, I122, RtkQueryDemo } from './demo-components/RemoteData';
 
 module.hot.accept();
 
@@ -157,6 +157,14 @@ root.render(
               </a>
             </h3>
             <I122 />
+          </li>
+          <li>
+            <h3>
+              <a href="https://github.com/material-table-core/core/issues/457">
+                #457
+              </a>
+            </h3>
+            <RtkQueryDemo />
           </li>
         </ol>
       </ThemeProvider>
