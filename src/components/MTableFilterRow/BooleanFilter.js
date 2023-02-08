@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from '@material-ui/core';
+import { Checkbox } from '@mui/material';
 
 function BooleanFilter({ forwardedRef, columnDef, onFilterChanged }) {
   return (

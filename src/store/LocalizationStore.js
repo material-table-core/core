@@ -1,27 +1,27 @@
-import create from 'zustand';
-import createContext from 'zustand/context';
+import { create, useStore } from 'zustand';
 import React from 'react';
-import { deepmerge } from 'deepmerge-ts';
-import equal from 'fast-deep-equal';
+import deepEql from 'deep-eql';
 import defaultLocalization from '../defaults/props.localization';
 import defaultOptions from '../defaults/props.options';
 import defaultIcons from '../defaults/props.icons';
 import defaultComponents from '../defaults/props.components';
 
-const { Provider, useStore } = createContext();
+const merge = require('deepmerge');
+
+const ZustandContext = React.createContext();
 
 const createStore = (props) =>
   create((set) => ({
     // Localization
-    localization: deepmerge(props.localization, defaultLocalization),
+    localization: merge(defaultLocalization, props.localization ?? {}),
     mergeLocalization: (nextLocalization) => {
       set(({ localization }) => {
-        const mergedLocalization = deepmerge(localization, nextLocalization);
+        const mergedLocalization = merge(localization, nextLocalization ?? {});
         mergedLocalization.body.editRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
         mergedLocalization.body.filterRow.dateTimePickerLocalization =
           mergedLocalization.dateTimePickerLocalization;
-        if (!equal(mergedLocalization, nextLocalization)) {
+        if (!deepEql(mergedLocalization, nextLocalization)) {
           return { localization: mergedLocalization };
         } else {
           return { localization };
@@ -33,7 +33,7 @@ const createStore = (props) =>
     mergeOptions: (nextOptions) => {
       set(() => {
         const mergedOptions = { ...defaultOptions, ...nextOptions };
-        if (!equal(mergedOptions, nextOptions)) {
+        if (!deepEql(mergedOptions, nextOptions)) {
           return { options: mergedOptions };
         } else {
           return { options: defaultOptions };
@@ -63,20 +63,24 @@ const createStore = (props) =>
   }));
 
 const useLocalizationStore = () => {
-  const localization = useStore((state) => state.localization);
+  const store = React.useContext(ZustandContext);
+  const localization = useStore(store, (state) => state.localization);
   return localization;
 };
 
 const useOptionStore = () => {
-  const options = useStore((state) => state.options);
+  const store = React.useContext(ZustandContext);
+  const options = useStore(store, (state) => state.options);
   return options;
 };
 const useIconStore = () => {
-  const icons = useStore((state) => state.icons);
+  const store = React.useContext(ZustandContext);
+  const icons = useStore(store, (state) => state.icons);
   return icons;
 };
 
 function useMergeProps(props) {
+  const store = React.useContext(ZustandContext);
   const {
     mergeLocalization,
     mergeOptions,
@@ -86,7 +90,7 @@ function useMergeProps(props) {
     options,
     icons,
     components
-  } = useStore();
+  } = useStore(store, (state) => state);
   React.useEffect(() => {
     if (props.localization) {
       mergeLocalization(props.localization);
@@ -119,10 +123,11 @@ function useMergeProps(props) {
 
 function withContext(WrappedComponent) {
   return function Wrapped(props) {
+    const store = React.useRef(createStore(props)).current;
     return (
-      <Provider createStore={() => createStore(props)}>
+      <ZustandContext.Provider value={store}>
         <WrappedComponent {...props} />
-      </Provider>
+      </ZustandContext.Provider>
     );
   };
 }

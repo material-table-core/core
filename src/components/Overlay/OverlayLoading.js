@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 function OverlayLoading(props) {
+  const theme = useTheme();
   return (
     <div
       ref={props.forwardedRef}
@@ -10,7 +12,7 @@ function OverlayLoading(props) {
         display: 'table',
         width: '100%',
         height: '100%',
-        backgroundColor: props.theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
         opacity: 0.7
       }}
     >

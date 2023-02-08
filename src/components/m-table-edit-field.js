@@ -1,19 +1,19 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import DateFnsUtils from '@date-io/date-fns';
+import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {
-  MuiPickersUtilsProvider,
+  LocalizationProvider,
   TimePicker,
   DatePicker,
   DateTimePicker
-} from '@material-ui/pickers';
+} from '@mui/x-date-pickers';
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
@@ -97,9 +97,13 @@ class MTableEditField extends React.Component {
         ? this.props.columnDef.dateSetting.format
         : 'dd.MM.yyyy';
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        locale={this.props.locale}
+      >
         <DatePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format={dateFormat}
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -114,15 +118,19 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
   renderTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        locale={this.props.locale}
+      >
         <TimePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format="HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -137,15 +145,19 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
   renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        locale={this.props.locale}
+      >
         <DateTimePicker
           {...this.getProps()}
+          renderInput={(props) => <TextField {...props} />}
           format="dd.MM.yyyy HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -160,7 +172,7 @@ class MTableEditField extends React.Component {
             'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   }
 
@@ -168,6 +180,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         fullWidth
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={
@@ -203,6 +216,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }

@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Checkbox,
   FormHelperText
-} from '@material-ui/core';
+} from '@mui/material';
 
 function BooleanField({ forwardedRef, ...props }) {
   return (

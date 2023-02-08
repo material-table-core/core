@@ -1,3 +1,81 @@
+#### 6.1.12 (2023-02-02)
+
+#### 6.1.11 (2023-02-02)
+
+#### 6.1.11 (2023-01-25)
+
+#### 6.1.10 (2023-01-13)
+
+##### Bug Fixes
+
+- selection with tree data ([5590bad2](https://github.com/material-table-core/core/commit/5590bad284d5f5bb77073c3aaa5f8dd55173429f))
+
+#### 6.1.9 (2023-01-13)
+
+##### Other Changes
+
+- small linter fixes, update packages ([66b73bb2](https://github.com/material-table-core/core/commit/66b73bb202ad8aab8766b1e978bf963d0cd9ebeb))
+
+#### 6.1.8 (2023-01-11)
+
+#### 6.1.7 (2023-01-10)
+
+##### Bug Fixes
+
+- Improve tree all selection ([ba0fda9b](https://github.com/material-table-core/core/commit/ba0fda9b920f08607783b1373d37f6c24928a5d4))
+
+#### 6.1.6 (2023-01-07)
+
+##### Other Changes
+
+- material-table-core/core ([d89adfdc](https://github.com/material-table-core/core/commit/d89adfdca7988ea82cab0895c9bc8328e4600bde))
+
+#### 6.1.5 (2023-01-07)
+
+#### 6.1.4 (2023-01-07)
+
+#### 6.1.3 (2023-01-06)
+
+##### Other Changes
+
+- material-table-core/core ([b3c6dd17](https://github.com/material-table-core/core/commit/b3c6dd1717db07423c293a9a8b4116af371ba146))
+
+#### 6.1.2 (2023-01-05)
+
+#### 6.1.1 (2023-01-05)
+
+### 6.1.0 (2023-01-05)
+
+##### New Features
+
+- split render and group render for clearer intent ([7e1072fb](https://github.com/material-table-core/core/commit/7e1072fb1c1fb529a7bc2587bd6e6453df7ed73c))
+
+#### 6.0.3 (2023-01-02)
+
+#### 6.0.2 (2022-12-30)
+
+##### Other Changes
+
+- material-table-core/core ([0e124658](https://github.com/material-table-core/core/commit/0e124658e8d6b703965dae5b76b28cc8083957c6))
+
+#### 6.0.1 (2022-12-30)
+
+##### Other Changes
+
+- material-table-core/core ([0e124658](https://github.com/material-table-core/core/commit/0e124658e8d6b703965dae5b76b28cc8083957c6))
+
+#### 6.0.1 (2022-12-30)
+
+##### Other Changes
+
+- material-table-core/core ([0e124658](https://github.com/material-table-core/core/commit/0e124658e8d6b703965dae5b76b28cc8083957c6))
+
+#### 6.0.1 (2022-12-30)
+
+## 6.0.0 (2022-12-29)
+
+#### 5.1.9 (2022-12-19)
+
 #### 5.1.8 (2022-11-20)
 
 ##### Other Changes
@@ -27,6 +105,66 @@
 ##### New Features
 
 - be able to adjust pagination position using flex ([c262a95f](https://github.com/material-table-core/core/commit/c262a95f7bc5607038e85a1765d6c22cf028419a))
+- move to @react-forked/dnd ([0d4b020f](https://github.com/material-table-core/core/commit/0d4b020fdc23727f380ce811ab99e6273af833aa))
+- move to @react-forked/dnd ([ff5818ea](https://github.com/material-table-core/core/commit/ff5818ea6d08bd8397718021fc4583edabc09b1a))
+
+##### Other Changes
+
+- check for localStorage for SSR ([ce738354](https://github.com/material-table-core/core/commit/ce738354563e3bbf9b5ba63c5adf60f28cf9801c))
+- //github.com/material-table-core/core ([b8023ead](https://github.com/material-table-core/core/commit/b8023ead8f63d8887bee31474a4845d7a2afd2c0))
+
+#### 0.2.33 (2022-04-25)
+
+##### New Features
+
+- update datepicker import ([34214cd3](https://github.com/material-table-core/core/commit/34214cd34fbdb15325bd6805766b35c943afec3b))
+
+##### Bug Fixes
+
+- adjust current page to display detailpanel for remote data ([bcbb53ba](https://github.com/material-table-core/core/commit/bcbb53ba3db386b6ec3c8182b27fa33f44df1686))
+
+##### Other Changes
+
+- do not fail on hidden columns dragging ([5966ee37](https://github.com/material-table-core/core/commit/5966ee373e88836e7f47f266af6da314f9ad88ad))
+
+#### 0.2.32 (2022-04-21)
+
+##### Bug Fixes
+
+- adjust current page to display detailpanel for remote data ([dfea2713](https://github.com/material-table-core/core/commit/dfea27133954dedbdd8a7018dea13b638a445257))
+
+#### 0.2.31 (2022-04-18)
+
+#### 0.2.30 (2022-04-18)
+
+##### Bug Fixes
+
+- hidden columns resizing now works for correct col ([080ce82d](https://github.com/material-table-core/core/commit/080ce82d00332da7bec55db35c13af9afaa992fa))
+- correct index for hidden column drag ([febedb34](https://github.com/material-table-core/core/commit/febedb347a84a43873d588ba5d68344ccc731f0f))
+
+#### 0.2.29 (2022-03-19)
+
+##### New Features
+
+- add index to tableData ([8187c0fd](https://github.com/material-table-core/core/commit/8187c0fd36c3aa2dd451ce36e23b84cff2988009))
+
+#### 0.2.28 (2022-03-19)
+
+##### New Features
+
+- add sortDirection to customSort ([23b02f1f](https://github.com/material-table-core/core/commit/23b02f1f7ab8bc47e56f50bb450799a485150422))
+
+##### Other Changes
+
+- numeric header align ([9ec8c0b6](https://github.com/material-table-core/core/commit/9ec8c0b601791eeb811600a9fbef2c3389f1a557))
+
+#### 0.2.27 (2022-03-08)
+
+##### Bug Fixes
+
+- background shadow breaks for fixed columns ([#503](https://github.com/material-table-core/core/pull/503)) ([02543a52](https://github.com/material-table-core/core/commit/02543a521863c0f4f6305fe882fae5ac09078e53))
+
+#### 0.2.26 (2022-03-06)
 
 #### 5.1.3 (2022-09-11)
 
@@ -152,11 +290,226 @@ A demo on the website will follow shortly.
 
 - keep detail panel open on rerender ([a881c1b8](https://github.com/material-table-core/core/commit/a881c1b8d9a3729d86e00643e3d513dc419ab47a))
 
-#### 4.3.33 (2022-03-06)
+#### 0.2.25 (2022-03-06)
 
 ##### Bug Fixes
 
 - edit mode with fixed columns breaks table layout ([#498](https://github.com/material-table-core/core/pull/498)) ([58cdfa45](https://github.com/material-table-core/core/commit/58cdfa45638b386b18aca8b4cffc8775900640d2))
+
+#### 0.2.24 (2022-02-26)
+
+##### New Features
+
+- Rows cannot be clicked while editing ([96afa7d2](https://github.com/material-table-core/core/commit/96afa7d2236fd00768b9037ad850f0d6a2f8ec44))
+
+##### Bug Fixes
+
+- show dragging header text on drag ([479b7532](https://github.com/material-table-core/core/commit/479b7532d263a2b9f2069dc7d449316e00970c86))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([c13b88a4](https://github.com/material-table-core/core/commit/c13b88a45aa7d6a33d275da2c869a76074aae8a0))
+
+#### 0.2.23 (2022-02-14)
+
+##### Other Changes
+
+- add missing idSynonym ([027becc8](https://github.com/material-table-core/core/commit/027becc8a56628697ca033ecee71269226adde16))
+
+#### 0.2.22 (2022-02-13)
+
+##### New Features
+
+- A key to override the default `id` tag to persist state between rerenders ([5a7d2b35](https://github.com/material-table-core/core/commit/5a7d2b3516c5347dcec1d389734a9ae33db47dca))
+
+#### 0.2.21 (2022-02-10)
+
+##### New Features
+
+- export additional data for export func ([abf09a4e](https://github.com/material-table-core/core/commit/abf09a4eaf50269230b3db7ae800908a430d2155))
+
+##### Bug Fixes
+
+- column sort works for hidden ([b32d3bd3](https://github.com/material-table-core/core/commit/b32d3bd37c9179df2390454fd5add358bc7010ed))
+- sorting of columns respect hidden cols ([38a71160](https://github.com/material-table-core/core/commit/38a71160b8903370a6e5fcc44ac27551e1194d8b))
+
+##### Other Changes
+
+- add mui as depencies ([97404999](https://github.com/material-table-core/core/commit/9740499991ba451565e2c180666142f726a1c4ce))
+- //github.com/material-table-core/core ([2d1da8d0](https://github.com/material-table-core/core/commit/2d1da8d01a86e6dbbc4fb5be100464097492f960))
+- improve exports to only export correct data ([a8644bc3](https://github.com/material-table-core/core/commit/a8644bc31acf3ff26af59d357bea1cddaa839ec8))
+
+#### 0.2.21 (2022-02-10)
+
+##### New Features
+
+- export additional data for export func ([abf09a4e](https://github.com/material-table-core/core/commit/abf09a4eaf50269230b3db7ae800908a430d2155))
+
+##### Bug Fixes
+
+- column sort works for hidden ([b32d3bd3](https://github.com/material-table-core/core/commit/b32d3bd37c9179df2390454fd5add358bc7010ed))
+- sorting of columns respect hidden cols ([38a71160](https://github.com/material-table-core/core/commit/38a71160b8903370a6e5fcc44ac27551e1194d8b))
+
+##### Other Changes
+
+- add mui as depencies ([97404999](https://github.com/material-table-core/core/commit/9740499991ba451565e2c180666142f726a1c4ce))
+- //github.com/material-table-core/core ([2d1da8d0](https://github.com/material-table-core/core/commit/2d1da8d01a86e6dbbc4fb5be100464097492f960))
+- improve exports to only export correct data ([a8644bc3](https://github.com/material-table-core/core/commit/a8644bc31acf3ff26af59d357bea1cddaa839ec8))
+
+#### 0.2.20 (2022-01-30)
+
+##### New Features
+
+- export filtred data for exportFunc ([052b7871](https://github.com/material-table-core/core/commit/052b78716addffa4c4fc9cc3caf5dae761008c04))
+
+##### Bug Fixes
+
+- dispaly header for sorting false and grouping true ([80cbd95b](https://github.com/material-table-core/core/commit/80cbd95bbbb9f56f84376c462dd0e97a64414d24))
+
+#### 0.2.19 (2022-01-29)
+
+##### New Features
+
+- Update prop types for table cell ref ([105a2dbd](https://github.com/material-table-core/core/commit/105a2dbd97e280995bf17677a8d2fd2363b75a10))
+
+##### Bug Fixes
+
+- RenderSortButton renders content correctly ([5faa47cb](https://github.com/material-table-core/core/commit/5faa47cb3562208e5cbf4d52a7ec3cbbebe876c6))
+- uneven icon margin ([6e1d8a7e](https://github.com/material-table-core/core/commit/6e1d8a7ee713b000d8e668b5967fb14b6355e546))
+- Check for null summary row value ([3e93e915](https://github.com/material-table-core/core/commit/3e93e9156fdd335da5ddd955c7ac459c42503341))
+- [#455](https://github.com/material-table-core/core/pull/455) Use proper detailPanel callback signature when detailPanel is an array of callbacks ([#468](https://github.com/material-table-core/core/pull/468)) ([b6ae7bc2](https://github.com/material-table-core/core/commit/b6ae7bc2ef0997c966c17119679f3024461779bc))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([33fffdf3](https://github.com/material-table-core/core/commit/33fffdf38e0e755f1ac59db63913a3c1dac40508))
+
+#### 0.2.18 (2022-01-27)
+
+##### New Features
+
+- Improve renderSummaryRow ([756d225f](https://github.com/material-table-core/core/commit/756d225f45bc763e3d2faee46ffb3ed8779f29cc))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([f017eeca](https://github.com/material-table-core/core/commit/f017eeca328f228454a90e81345d8ec00a20494d))
+
+#### 0.2.17 (2022-01-25)
+
+##### Bug Fixes
+
+- Add sorting icon for draggable false ([c7918619](https://github.com/material-table-core/core/commit/c791861932ac09fbcd8bb269019645c2cb5601cc))
+
+#### 0.2.16 (2022-01-22)
+
+##### Bug Fixes
+
+- extract the correct value for select edit cell ([3f681ba3](https://github.com/material-table-core/core/commit/3f681ba36d8daa36fbeaa5386a387787aff8afae))
+
+#### 0.2.15 (2022-01-22)
+
+##### Bug Fixes
+
+- autofocus of edit rows ([77107104](https://github.com/material-table-core/core/commit/771071044bd4ff38fa1a9e5b2b93f27dc33b9bd3))
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([1f5638f5](https://github.com/material-table-core/core/commit/1f5638f58f6f79234ead098ffb4313117c32b3d6))
+
+##### Refactors
+
+- omit one `Omit` ([#463](https://github.com/material-table-core/core/pull/463)) ([d99d551d](https://github.com/material-table-core/core/commit/d99d551dee04ceb0ebdc165c0b4aaad42b49e28c))
+
+#### 0.2.14 (2022-01-21)
+
+#### 0.2.13 (2022-01-16)
+
+##### Other Changes
+
+- new version for MTableHeader ([5b20fcb7](https://github.com/material-table-core/core/commit/5b20fcb75ab245ae5c0536011405f67e85afea6d))
+
+#### 0.2.12 (2022-01-09)
+
+#### 0.2.11 (2021-12-31)
+
+##### Chores
+
+- update to v5 stable ([ac8008e8](https://github.com/material-table-core/core/commit/ac8008e82cd3ea70e7307ab4475889c837c73824))
+- Update mui to RC ([dff1619d](https://github.com/material-table-core/core/commit/dff1619dcff6ed8aefdd8178d74fb1f306994fd2))
+- update to mui beta v2 ([7e89b840](https://github.com/material-table-core/core/commit/7e89b8405a97b630b9adb4ed3870aeb2c77e11a3))
+- add styles and lab to package json ([f4fb0706](https://github.com/material-table-core/core/commit/f4fb0706084e9d4ce6d92912b9f9a58c428a0279))
+- adjust useTheme ([2235d9d0](https://github.com/material-table-core/core/commit/2235d9d00ecff14827f1876c60ccd6b6daf57d6f))
+
+##### Continuous Integration
+
+- set prelease tag ([bb0d2f20](https://github.com/material-table-core/core/commit/bb0d2f2003db86e3ef91005327c0895f264caba2))
+- add next tag to version ([10b0fbf7](https://github.com/material-table-core/core/commit/10b0fbf7abed4c811a51da9a303124da1a4c24a9))
+- Set next version to 1 ([4d9ef814](https://github.com/material-table-core/core/commit/4d9ef8148ec44cba69c4bbaefacbce09286a1d88))
+- add next release ([11c29727](https://github.com/material-table-core/core/commit/11c297276af9bdbb129919e8de6ac731acd54252))
+
+##### Documentation Changes
+
+- create brach on rlease ([c3e46fc9](https://github.com/material-table-core/core/commit/c3e46fc9ea0c9c85521cb54b32894cf39703312a))
+
+##### Bug Fixes
+
+- datepicker filter fix ([7bb91696](https://github.com/material-table-core/core/commit/7bb916963906a0ce5cf08161d922eb20a0ae6018))
+- set correct background color for toolbar ([ff21b47e](https://github.com/material-table-core/core/commit/ff21b47e496fad1803093c4b3b3a962e98fef591))
+- set next to prerelease ([8999c4fa](https://github.com/material-table-core/core/commit/8999c4fa89a442f54e811948e5dc0c2c926814ca))
+
+##### Other Changes
+
+- MTableToolbar style ([#364](https://github.com/material-table-core/core/pull/364)) ([c7ce0677](https://github.com/material-table-core/core/commit/c7ce06770334f8024e8a97f35923da3ea54f2007))
+- adapt to mui beta ([7ff84645](https://github.com/material-table-core/core/commit/7ff84645cbf66cb7228760ab6e860ac2fea25455))
+- //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
+- //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
+
+#### 0.2.10 (2021-12-19)
+
+#### 0.2.9 (2021-11-20)
+
+##### Chores
+
+- update package.lock ([d724c7ef](https://github.com/material-table-core/core/commit/d724c7ef6f5daffa8bdbe94749a9215f1b4902b9))
+
+#### 0.2.8 (2021-11-16)
+
+##### Other Changes
+
+- //github.com/material-table-core/core ([9245d2ff](https://github.com/material-table-core/core/commit/9245d2ff602e4444ac4c4b842dcee525254c9ec4))
+
+#### 0.2.7 (2021-11-13)
+
+##### Chores
+
+- update to v5 stable ([ac8008e8](https://github.com/material-table-core/core/commit/ac8008e82cd3ea70e7307ab4475889c837c73824))
+- Update mui to RC ([dff1619d](https://github.com/material-table-core/core/commit/dff1619dcff6ed8aefdd8178d74fb1f306994fd2))
+- update to mui beta v2 ([7e89b840](https://github.com/material-table-core/core/commit/7e89b8405a97b630b9adb4ed3870aeb2c77e11a3))
+- add styles and lab to package json ([f4fb0706](https://github.com/material-table-core/core/commit/f4fb0706084e9d4ce6d92912b9f9a58c428a0279))
+- adjust useTheme ([2235d9d0](https://github.com/material-table-core/core/commit/2235d9d00ecff14827f1876c60ccd6b6daf57d6f))
+
+##### Continuous Integration
+
+- set prelease tag ([bb0d2f20](https://github.com/material-table-core/core/commit/bb0d2f2003db86e3ef91005327c0895f264caba2))
+- add next tag to version ([10b0fbf7](https://github.com/material-table-core/core/commit/10b0fbf7abed4c811a51da9a303124da1a4c24a9))
+- Set next version to 1 ([4d9ef814](https://github.com/material-table-core/core/commit/4d9ef8148ec44cba69c4bbaefacbce09286a1d88))
+- add next release ([11c29727](https://github.com/material-table-core/core/commit/11c297276af9bdbb129919e8de6ac731acd54252))
+
+##### Documentation Changes
+
+- create brach on rlease ([c3e46fc9](https://github.com/material-table-core/core/commit/c3e46fc9ea0c9c85521cb54b32894cf39703312a))
+
+##### Bug Fixes
+
+- datepicker filter fix ([7bb91696](https://github.com/material-table-core/core/commit/7bb916963906a0ce5cf08161d922eb20a0ae6018))
+- set correct background color for toolbar ([ff21b47e](https://github.com/material-table-core/core/commit/ff21b47e496fad1803093c4b3b3a962e98fef591))
+- set next to prerelease ([8999c4fa](https://github.com/material-table-core/core/commit/8999c4fa89a442f54e811948e5dc0c2c926814ca))
+
+##### Other Changes
+
+- MTableToolbar style ([#364](https://github.com/material-table-core/core/pull/364)) ([c7ce0677](https://github.com/material-table-core/core/commit/c7ce06770334f8024e8a97f35923da3ea54f2007))
+- adapt to mui beta ([7ff84645](https://github.com/material-table-core/core/commit/7ff84645cbf66cb7228760ab6e860ac2fea25455))
+- //github.com/material-table-core/core into next ([0658f8a3](https://github.com/material-table-core/core/commit/0658f8a3d7102ba1b53f083715ca3ee2e51d901b))
+- //github.com/villuv/material-table into villuv-feature/mui5 ([1a6d73ed](https://github.com/material-table-core/core/commit/1a6d73ed215a294f8dd66addf678a3267a70815a))
 
 #### 4.3.32 (2022-02-26)
 
@@ -677,6 +1030,7 @@ Fix issues with pagination/when we receive new data with the same ID. Our soluti
 ##### Other Changes
 
 - //github.com/material-table-core/core ([5e9ec31b](https://github.com/material-table-core/core/commit/5e9ec31ba826ef167602b2e2a3503ec8afddab85))
+  > > > > > > > master
 
 #### 3.0.2 (2021-06-03)
 

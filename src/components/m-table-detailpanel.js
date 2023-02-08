@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableCell, Collapse, TableRow } from '@material-ui/core';
+import { TableCell, Collapse, TableRow } from '@mui/material';
 
 function MTableDetailPanel(props) {
   const shouldOpen = Boolean(

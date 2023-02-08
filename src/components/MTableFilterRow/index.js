@@ -5,7 +5,7 @@ import LookupFilter from './LookupFilter';
 import DefaultFilter from './DefaultFilter';
 import BooleanFilter from './BooleanFilter';
 import Filter from './Filter';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
 import { useOptionStore } from '@store/LocalizationStore';
 
 /**
@@ -35,92 +35,87 @@ export function MTableFilterRow(props) {
     }
   }
 
-  function render() {
-    const columns = props.columns
-      .filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      )
-      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-      .map((columnDef) => (
-        <TableCell
-          key={columnDef.tableData.id}
-          style={{
-            ...options.filterCellStyle,
-            ...columnDef.filterCellStyle
-          }}
-        >
-          {getComponentForColumn(columnDef)}
-        </TableCell>
-      ));
-
-    if (options.selection) {
-      columns.splice(
-        0,
-        0,
-        <TableCell padding="none" key="key-selection-column" />
-      );
-    }
-
-    if (props.hasActions) {
-      if (options.actionsColumnIndex === -1) {
-        columns.push(<TableCell key="key-action-column" />);
-      } else {
-        let endPos = 0;
-        if (props.selection) {
-          endPos = 1;
-        }
-        columns.splice(
-          options.actionsColumnIndex + endPos,
-          0,
-          <TableCell key="key-action-column" />
-        );
-      }
-    }
-
-    if (props.hasDetailPanel && options.showDetailPanelIcon) {
-      const index =
-        options.detailPanelColumnAlignment === 'left' ? 0 : columns.length;
-      columns.splice(
-        index,
-        0,
-        <TableCell padding="none" key="key-detail-panel-column" />
-      );
-    }
-
-    if (props.isTreeData > 0) {
-      columns.splice(
-        0,
-        0,
-        <TableCell padding="none" key={'key-tree-data-filter'} />
-      );
-    }
-
-    props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
-      .forEach((columnDef) => {
-        columns.splice(
-          0,
-          0,
-          <TableCell
-            padding="checkbox"
-            key={'key-group-filter' + columnDef.tableData.id}
-          />
-        );
-      });
-
-    return (
-      <TableRow
-        id="m--table--filter--row"
-        ref={props.forwardedRef}
-        style={{ height: 10, ...options.filterRowStyle }}
+  const columns = props.columns
+    .filter(
+      (columnDef) => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+    )
+    .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+    .map((columnDef) => (
+      <TableCell
+        key={columnDef.tableData.id}
+        style={{
+          ...options.filterCellStyle,
+          ...columnDef.filterCellStyle
+        }}
       >
-        {columns}
-      </TableRow>
+        {getComponentForColumn(columnDef)}
+      </TableCell>
+    ));
+
+  if (options.selection) {
+    columns.splice(
+      0,
+      0,
+      <TableCell padding="none" key="key-selection-column" />
     );
   }
 
-  return render();
+  if (props.hasActions) {
+    if (options.actionsColumnIndex === -1) {
+      columns.push(<TableCell key="key-action-column" />);
+    } else {
+      let endPos = 0;
+      if (props.selection) {
+        endPos = 1;
+      }
+      columns.splice(
+        options.actionsColumnIndex + endPos,
+        0,
+        <TableCell key="key-action-column" />
+      );
+    }
+  }
+
+  if (props.hasDetailPanel && options.showDetailPanelIcon) {
+    const index =
+      options.detailPanelColumnAlignment === 'left' ? 0 : columns.length;
+    columns.splice(
+      index,
+      0,
+      <TableCell padding="none" key="key-detail-panel-column" />
+    );
+  }
+
+  if (props.isTreeData > 0) {
+    columns.splice(
+      0,
+      0,
+      <TableCell padding="none" key={'key-tree-data-filter'} />
+    );
+  }
+
+  props.columns
+    .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+    .forEach((columnDef) => {
+      columns.splice(
+        0,
+        0,
+        <TableCell
+          padding="checkbox"
+          key={'key-group-filter' + columnDef.tableData.id}
+        />
+      );
+    });
+
+  return (
+    <TableRow
+      id="m--table--filter--row"
+      ref={props.forwardedRef}
+      style={{ height: 10, ...options.filterRowStyle }}
+    >
+      {columns}
+    </TableRow>
+  );
 }
 
 MTableFilterRow.defaultProps = {

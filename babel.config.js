@@ -21,20 +21,20 @@ module.exports = {
     [
       'import',
       {
-        libraryName: '@material-ui/core',
+        camel2DashComponentName: false,
         libraryDirectory: '',
-        camel2DashComponentName: false
+        libraryName: '@mui/material'
       },
-      '@material-ui/core'
+      '@mui/material'
     ],
     [
       'import',
       {
-        libraryName: '@material-ui/icons',
+        camel2DashComponentName: false,
         libraryDirectory: '',
-        camel2DashComponentName: false
+        libraryName: '@mui/icons-material'
       },
-      '@material-ui/icons'
+      '@mui/icons-material'
     ]
   ]
 };

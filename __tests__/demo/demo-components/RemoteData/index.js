@@ -1,9 +1,8 @@
-import React, { useState, useRef, useMemo } from 'react';
-import MaterialTable from '../../../../src';
+import React, { useState, useRef, useMemo, Component } from 'react';
+import MaterialTable, { MTableBodyRow, MTableEditRow } from '../../../../src';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-
 // check if removing this.isRemoteData()@https://github.com/material-table-core/core/blob/0e953441fd9f9912d8cf97db103a8e0cb4f43912/src/material-table.js#L119-L120
 // is any good
 

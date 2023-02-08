@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableBody, TableCell, TableRow } from '@material-ui/core';
+import { TableBody, TableCell, TableRow } from '@mui/material';
 import { useLocalizationStore, useOptionStore, useIconStore } from '@store';
 
 function MTableBody(props) {
@@ -11,7 +11,7 @@ function MTableBody(props) {
   const columns = props.columns.filter((columnDef) => !columnDef.hidden);
 
   function renderEmpty(emptyRowCount, renderData) {
-    const rowHeight = options.padding === 'default' ? 49 : 36;
+    const rowHeight = options.padding === 'normal' ? 49 : 36;
     if (options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
       if (options.selection) {
@@ -108,7 +108,6 @@ function MTableBody(props) {
             onRowSelected={props.onRowSelected}
             actions={props.actions}
             columns={props.columns}
-            options={props.options}
             getFieldValue={props.getFieldValue}
             detailPanel={props.detailPanel}
             path={path}
@@ -160,7 +159,6 @@ function MTableBody(props) {
         onToggleDetailPanel={props.onToggleDetailPanel}
         onTreeExpandChanged={props.onTreeExpandChanged}
         path={[index + props.pageSize * props.currentPage]}
-        options={props.options}
         scrollWidth={props.scrollWidth}
         treeDataMaxLevel={props.treeDataMaxLevel}
       />
@@ -201,16 +199,18 @@ function MTableBody(props) {
   if (options.paging && props.pageSize > renderData.length) {
     emptyRowCount = props.pageSize - renderData.length;
   }
-  const renderSummaryRow = React.useRef(
-    props.renderSummaryRow
-      ? (columnData) =>
-          props.renderSummaryRow({
-            ...columnData,
-            data: props.data,
-            currentData: props.currentData
-          })
-      : undefined
-  ).current;
+  const renderSummaryRow = React.useMemo(
+    () =>
+      props.renderSummaryRow
+        ? (columnData) =>
+            props.renderSummaryRow({
+              ...columnData,
+              data: props.data,
+              currentData: props.currentData
+            })
+        : undefined,
+    [props.data]
+  );
   return (
     <TableBody ref={props.forwardedRef}>
       {options.filtering && (
@@ -225,6 +225,7 @@ function MTableBody(props) {
           hasDetailPanel={!!props.detailPanel}
           isTreeData={props.isTreeData}
           scrollWidth={props.scrollWidth}
+          hideFilterIcons={props.options.hideFilterIcons}
         />
       )}
       {options.addRowPosition === 'first' && renderAddRow()}

@@ -1,5 +1,5 @@
 import formatDate from 'date-fns/format';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
 import { ALL_COLUMNS } from './constants';
@@ -52,8 +52,6 @@ export default class DataManager {
 
   rootGroupsIndex = {};
 
-  constructor() {}
-
   setData(data, idSynonym) {
     this.selectedCount = 0;
     let prevDataObject = {};
@@ -79,7 +77,7 @@ export default class DataManager {
         id: row[idSynonym] || index,
         // `uuid` acts as our 'key' and is generated when new data
         // is passed into material-table externally.
-        uuid: row.uuid || uuid.v4(),
+        uuid: row.uuid || uuidv4(),
         ...prevTableData,
         ...row.tableData
       };
@@ -113,7 +111,7 @@ export default class DataManager {
 
   setColumns(columns, prevColumns = [], savedColumns = {}) {
     let usedWidthPx = 0;
-    let usedWidthNotPx = [];
+    const usedWidthNotPx = [];
 
     this.columns = columns.map((columnDef, index) => {
       const widthPx = widthToNumber(columnDef.width);
@@ -123,11 +121,11 @@ export default class DataManager {
           : columnDef.width;
 
       if (
-        width //&&
-        //columnDef.tableData // &&
+        width // &&
+        // columnDef.tableData // &&
         // columnDef.tableData.width !== undefined
       ) {
-        if (widthPx !== NaN) {
+        if (!isNaN(widthPx)) {
           usedWidthPx += widthPx;
         } else {
           usedWidthNotPx.push(width);
@@ -142,7 +140,7 @@ export default class DataManager {
         groupSort: columnDef.defaultGroupSort || 'asc',
         width,
         initialWidth: width,
-        widthPx: widthPx === NaN ? undefined : widthPx,
+        widthPx: isNaN(widthPx) ? undefined : widthPx,
         additionalWidth: 0,
         ...savedColumnTableData,
         ...(prevColumn ? prevColumn.tableData : {}),
@@ -170,7 +168,8 @@ export default class DataManager {
       (usedWidthPx !== 0 ? `${usedWidthPx}px` : '0px') +
       (usedWidthNotPx.length > 0 ? ' - ' + usedWidthNotPx.join(' - ') : '');
     undefWidthCols.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
+      columnDef.tableData.width =
+        columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefWidthCols.length})`;
     });
 
     this.tableStyleWidth =
@@ -341,7 +340,7 @@ export default class DataManager {
     if (rowData) {
       rowData.tableData.editing = mode;
 
-      if (this.lastEditingRow && this.lastEditingRow != rowData) {
+      if (this.lastEditingRow && this.lastEditingRow !== rowData) {
         this.lastEditingRow.tableData.editing = undefined;
       }
 
@@ -387,8 +386,16 @@ export default class DataManager {
 
       setCheck(this.groupedData);
     } else {
+      const checkChild = (row) => {
+        row.tableData.childRows &&
+          row.tableData.childRows.forEach((child) => {
+            child.tableData.checked = isChecked(row);
+            checkChild(child);
+          });
+      };
       this.searchedData.forEach((row) => {
         row.tableData.checked = isChecked(row);
+        checkChild(row);
       });
       selectedCount = this.searchedData.length;
     }
@@ -401,7 +408,7 @@ export default class DataManager {
     let currentGroupArray = this.groupedData;
 
     path.forEach((value) => {
-      currentGroup = currentGroupArray.find((group) => group.value == value);
+      currentGroup = currentGroupArray.find((group) => group.value === value);
       currentGroupArray = currentGroup.groups;
     });
 
@@ -411,7 +418,7 @@ export default class DataManager {
           setCheck(element.groups);
         } else {
           element.data.forEach((d) => {
-            if (d.tableData.checked != checked) {
+            if (d.tableData.checked !== checked) {
               d.tableData.checked = d.tableData.disabled ? false : checked;
               this.selectedCount = this.selectedCount + (checked ? 1 : -1);
             }
@@ -536,10 +543,9 @@ export default class DataManager {
       result.source.droppableId === 'headers'
     ) {
       const newGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c.tableData.id.toString() === result.draggableId.toString()
       );
-
-      if (newGroup.grouping === false || !newGroup.field) {
+      if (!newGroup || newGroup.grouping === false || !newGroup.field) {
         return;
       }
 
@@ -549,7 +555,7 @@ export default class DataManager {
       result.source.droppableId === 'groups'
     ) {
       const removeGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c.tableData.id.toString() === result.draggableId.toString()
       );
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
@@ -630,7 +636,7 @@ export default class DataManager {
   finishCellEditable = (rowData, columnDef) => {
     if (rowData.tableData.editCellList) {
       const index = rowData.tableData.editCellList.findIndex(
-        (c) => c.tableData.id === columnDef.tableData.id
+        (c) => c.tableData.id.toString() === columnDef.tableData.id.toString()
       );
       if (index !== -1) {
         rowData.tableData.editCellList.splice(index, 1);
@@ -792,22 +798,16 @@ export default class DataManager {
     return type === dataType;
   }
 
-  sort(a, b, type, orderDirection) {
+  sort(a, b, type) {
     if (type === 'numeric') {
       return a - b;
     } else {
-      if (a === b) {
-        return 0;
+      if (a !== b) {
+        // to find nulls
+        if (!a) return -1;
+        if (!b) return 1;
       }
-
-      if (!a) return 1;
-      if (!b) return -1;
-
-      if (orderDirection === 'asc') {
-        return a < b ? -1 : 1;
-      }
-
-      return a < b ? 1 : -1;
+      return a < b ? -1 : a > b ? 1 : 0;
     }
   }
 
@@ -848,13 +848,19 @@ export default class DataManager {
         compareValue = sort(
           getFieldValue(a, columnDef),
           getFieldValue(b, columnDef),
-          columnDef.type,
-          orderDirection.toLowerCase()
+          columnDef.type
         );
-      }
-      // See if the next key needs to be considered
-      const checkNextKey = compareValue === 0 && collection.length !== 1;
 
+        compareValue =
+          orderDirection.toLowerCase() === 'desc'
+            ? compareValue * -1
+            : compareValue;
+      }
+
+      // See if the next key needs to be considered
+      const checkNextKey =
+        compareValue === 0 &&
+        collection.filter((col) => col.sortOrder !== undefined).length !== 1;
       return checkNextKey
         ? sortData(a, b, columns, collection.slice(1))
         : compareValue;
@@ -910,7 +916,12 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
+    this.searched =
+      this.grouped =
+      this.treefied =
+      this.sorted =
+      this.paged =
+        false;
 
     this.filteredData = [...this.data];
 
@@ -1055,6 +1066,7 @@ export default class DataManager {
                   .includes(trimmedSearchText.toUpperCase());
               }
             }
+            return false;
           });
       });
     }

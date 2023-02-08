@@ -2,7 +2,8 @@ import React from 'react';
 import parseISO from 'date-fns/parseISO';
 
 /* eslint-disable no-useless-escape */
-export const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
+export const isoDateRegex =
+  /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
 /* eslint-enable no-useless-escape */
 
 export function getEmptyValue(emptyValue = '', props = {}) {
@@ -41,7 +42,7 @@ export function getCurrencyValue(currencySetting, value) {
   }
 }
 
-export function getRenderValue(props, icons) {
+export function getRenderValue(props, icons, type) {
   const dateLocale =
     props.columnDef.dateSetting && props.columnDef.dateSetting.locale
       ? props.columnDef.dateSetting.locale
@@ -52,12 +53,14 @@ export function getRenderValue(props, icons) {
   ) {
     return getEmptyValue(props.columnDef.emptyValue, props);
   }
-  if (props.columnDef.render) {
-    if (props.rowData) {
-      return props.columnDef.render(props.rowData, 'row');
-    } else if (props.value) {
-      return props.columnDef.render(props.value, 'group');
-    }
+  if (
+    props.rowData === undefined &&
+    props.value &&
+    props.columnDef.groupRender
+  ) {
+    return props.columnDef.groupRender(props.value);
+  } else if (props.columnDef.render && props.rowData) {
+    return props.columnDef.render(props.rowData);
   } else if (props.columnDef.type === 'boolean') {
     const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
     if (props.value) {

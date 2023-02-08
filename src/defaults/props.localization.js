@@ -11,7 +11,7 @@ export default {
   pagination: {
     labelDisplayedRows: '{from}-{to} of {count}',
     labelRowsPerPage: 'Rows per page:',
-    labelRowsSelect: 'rows',
+    labelRows: 'rows',
     firstAriaLabel: 'First Page',
     firstTooltip: 'First Page',
     previousAriaLabel: 'Previous Page',

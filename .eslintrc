@@ -1,7 +1,12 @@
 {
   "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
+  "env": {
+    "browser": true
+  },
   "rules": {
     "multiline-ternary": "off",
+    "react/prop-types": "off",
+    "indent": "off",
     "no-restricted-imports": [
       "error",
       {
@@ -9,9 +14,13 @@
       }
     ],
     "one-var": "off",
-    "semi": ["error", "always", {
-      "omitLastInOneLineBlock": true
-    }],
+    "semi": [
+      "error",
+      "always",
+      {
+        "omitLastInOneLineBlock": true
+      }
+    ],
     "space-before-function-paren": "off"
   },
   "parser": "babel-eslint",
@@ -21,7 +30,7 @@
      * Only warn for EVERYTHING (for now)
      *
      */
-    "only-warn" 
+    "only-warn"
   ],
   "settings": {
     "react": {

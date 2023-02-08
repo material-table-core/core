@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { withTheme } from '@material-ui/core/styles';
+import TableCell from '@mui/material/TableCell';
+import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from '../utils/validate';
 class MTableEditCell extends React.Component {
   constructor(props) {
@@ -68,8 +67,10 @@ class MTableEditCell extends React.Component {
   };
 
   onApprove = () => {
-    const isValid = validateInput(this.props.columnDef, this.state.value)
-      .isValid;
+    const isValid = validateInput(
+      this.props.columnDef,
+      this.state.value
+    ).isValid;
     if (!isValid) {
       return;
     }
@@ -89,6 +90,7 @@ class MTableEditCell extends React.Component {
           );
         })
         .catch((error) => {
+          if (process.env.NODE_ENV === 'development') console.log(error);
           this.setState({ isLoading: false });
         });
     });
@@ -181,4 +183,4 @@ MTableEditCell.propTypes = {
   getFieldValue: PropTypes.func.isRequired
 };
 
-export default withTheme(MTableEditCell);
+export default MTableEditCell;

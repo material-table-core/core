@@ -1,14 +1,14 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import classNames from 'classnames';
-import { lighten, withStyles } from '@material-ui/core/styles';
+import Checkbox from '@mui/material/Checkbox';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
+import { lighten, useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
@@ -16,6 +16,7 @@ import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
 let searchTimer;
 
 export function MTableToolbar(props) {
+  const theme = useTheme();
   const localization = useLocalizationStore().toolbar;
   const [searchText, setSearchText] = useState(props.searchText);
   const [exportButtonAnchorEl, setExportButtonAnchorEl] = useState(null);
@@ -56,16 +57,20 @@ export function MTableToolbar(props) {
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
-    const data = props.data().map((rowData) =>
+
+    // If the data is grouped, it will have an array at the data key
+    const extractedData = flatData(props.data());
+
+    const data = extractedData.map((rowData) =>
       columns.reduce((agg, columnDef) => {
         let value;
         /*
           About: column.customExport
           This bit of code checks if prop customExport in column is a function, and if it is then it
           uses that function to transform the data, this is useful in cases where a column contains
-          complex objects or array and it needs to be handled before it's passed to the exporter 
-          to avoid [object Object] output (e.g. to flatten data). 
-          Please note that it is also possible to transform data within under exportMenu 
+          complex objects or array and it needs to be handled before it's passed to the exporter
+          to avoid [object Object] output (e.g. to flatten data).
+          Please note that it is also possible to transform data within under exportMenu
           using a custom function (exportMenu.exportFunc) for each exporter.
           */
         if (typeof columnDef.customExport === 'function') {
@@ -77,20 +82,18 @@ export function MTableToolbar(props) {
         return agg;
       }, {})
     );
-
     return [columns, data];
   };
-
   function renderSearch() {
     if (options.search) {
       return (
         <TextField
           autoFocus={options.searchAutoFocus}
-          className={
+          sx={
             options.searchFieldAlignment === 'left' &&
             options.showTitle === false
-              ? null
-              : props.classes.searchField
+              ? undefined
+              : styles.searchField
           }
           value={searchText}
           onChange={(event) => onSearchChange(event.target.value)}
@@ -128,7 +131,6 @@ export function MTableToolbar(props) {
   }
 
   function renderDefaultActions(isSelectionActive) {
-    const { classes } = props;
     const diplayedActions = isSelectionActive ? 'toolbarOnSelect' : 'toolbar';
     return (
       <div style={{ display: 'flex' }}>
@@ -179,7 +181,7 @@ export function MTableToolbar(props) {
                 return (
                   <li key={col.tableData.id}>
                     <MenuItem
-                      className={classes.formControlLabel}
+                      sx={styles.formControlLabel}
                       component="label"
                       htmlFor={`column-toggle-${col.tableData.id}`}
                       disabled={col.removable === false}
@@ -254,17 +256,14 @@ export function MTableToolbar(props) {
   }
 
   function renderActions() {
-    const { classes } = props;
-
     return (
-      <div className={classes.actions}>
+      <Box sx={styles.actions}>
         <div>{renderDefaultActions(selectedRows.length > 0)}</div>
-      </div>
+      </Box>
     );
   }
 
   function renderToolbarTitle(title) {
-    const { classes } = props;
     const toolBarTitle =
       // eslint-disable-next-line multiline-ternary
       typeof title === 'string' ? (
@@ -282,10 +281,9 @@ export function MTableToolbar(props) {
         title
       );
 
-    return <div className={classes.title}>{toolBarTitle}</div>;
+    return <Box sx={styles.title}>{toolBarTitle}</Box>;
   }
 
-  const { classes } = props;
   const title =
     options.showTextRowsSelected && selectedRows.length > 0
       ? typeof localization.nRowsSelected === 'function'
@@ -294,19 +292,21 @@ export function MTableToolbar(props) {
       : options.showTitle
       ? props.title
       : null;
-
   return (
     <Toolbar
       ref={props.forwardedRef}
-      className={classNames(classes.root, {
-        [classes.highlight]:
-          options.showTextRowsSelected && selectedRows.length > 0
-      })}
+      className={props.className}
+      sx={{
+        ...styles.root,
+        ...(options.showTextRowsSelected && selectedRows.length > 0
+          ? styles.highlight(theme)
+          : {})
+      }}
     >
       {title && renderToolbarTitle(title)}
       {options.searchFieldAlignment === 'left' && renderSearch()}
       {options.toolbarButtonAlignment === 'left' && renderActions()}
-      <div className={classes.spacer} />
+      <Box sx={styles.spacer} />
       {options.searchFieldAlignment === 'right' && renderSearch()}
       {options.toolbarButtonAlignment === 'right' && renderActions()}
     </Toolbar>
@@ -324,6 +324,7 @@ MTableToolbar.defaultProps = {
 
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
+  className: PropTypes.string,
   columns: PropTypes.array,
   components: PropTypes.object.isRequired,
   getFieldValue: PropTypes.func.isRequired,
@@ -333,17 +334,26 @@ MTableToolbar.propTypes = {
   onSearchChanged: PropTypes.func.isRequired,
   originalData: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  data: PropTypes.func,
+  renderData: PropTypes.array,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+  exportAllData: PropTypes.bool,
+  exportMenu: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      handler: PropTypes.func
+    })
+  ),
+  searchAutoFocus: PropTypes.bool,
   classes: PropTypes.object
 };
 
-export const styles = (theme) => ({
+const styles = {
   root: {
-    paddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(2)
+    paddingRight: 1,
+    paddingLeft: 2
   },
-  highlight:
-    theme.palette.type === 'light'
+  highlight: (theme) =>
+    theme.palette.mode === 'light'
       ? {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85)
@@ -356,20 +366,19 @@ export const styles = (theme) => ({
     flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary
+    color: 'text.secondary'
   },
   title: {
     overflow: 'hidden'
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2)
+    paddingLeft: 2
   },
   formControlLabel: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    px: 1
   }
-});
+};
 
 const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   props,
@@ -378,6 +387,15 @@ const MTableToolbarRef = React.forwardRef(function MTableToolbarRef(
   return <MTableToolbar {...props} forwardedRef={ref} />;
 });
 
-export default React.memo(
-  withStyles(styles, { name: 'MTableToolbar' })(MTableToolbarRef)
-);
+function flatData(data) {
+  let extractedData = data;
+  while (Array.isArray(extractedData?.[0]?.data)) {
+    // Extract each row of the grouped data
+    extractedData = extractedData
+      .map((row) => (row.groups.length !== 0 ? row.groups : row.data))
+      .flat();
+  }
+  return extractedData;
+}
+
+export default React.memo(MTableToolbarRef);

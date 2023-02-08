@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  FormControl,
-  Select,
-  MenuItem,
-  FormHelperText
-} from '@material-ui/core';
+import { FormControl, Select, MenuItem, FormHelperText } from '@mui/material';
 
 function LookupField({ forwardedRef, ...props }) {
   return (
@@ -24,7 +19,9 @@ function LookupField({ forwardedRef, ...props }) {
           </MenuItem>
         ))}
       </Select>
-      {Boolean(props.helperText) && <FormHelperText>{props.helperText}</FormHelperText>}
+      {Boolean(props.helperText) && (
+        <FormHelperText>{props.helperText}</FormHelperText>
+      )}
     </FormControl>
   );
 }

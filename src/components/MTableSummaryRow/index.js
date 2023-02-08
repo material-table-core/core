@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { TableRow, TableCell } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { TableRow, TableCell } from '@mui/material';
 import { getStyle } from '@utils';
 import * as CommonValues from '@utils/common-values';
 import { useOptionStore } from '@store';
@@ -64,38 +63,39 @@ export function MTableSummaryRow({ columns, rowProps, renderSummaryRow }) {
   if (rowProps.isTreeData) {
     placeholderLeftColumns.push(renderPlaceholderColumn(placeholderKey++));
   }
-
   return (
     <TableRow>
       {placeholderLeftColumns}
-      {columns.map((column, index) => {
-        const summaryColumn = renderSummaryRow({
-          index,
-          column,
-          columns
-        });
-        const cellAlignment =
-          column.align !== undefined
-            ? column.align
-            : ['numeric', 'currency'].indexOf(column.type) !== -1
-            ? 'right'
-            : 'left';
+      {[...columns]
+        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+        .map((column, index) => {
+          const summaryColumn = renderSummaryRow({
+            index: column.tableData.columnOrder,
+            column,
+            columns
+          });
+          const cellAlignment =
+            column.align !== undefined
+              ? column.align
+              : ['numeric', 'currency'].indexOf(column.type) !== -1
+              ? 'right'
+              : 'left';
 
-        let value = '';
-        let style = getStyle({ columnDef: column, scrollWidth: 0 });
+          let value = '';
+          let style = getStyle({ columnDef: column, scrollWidth: 0 });
 
-        if (typeof summaryColumn === 'object' && summaryColumn !== null) {
-          value = summaryColumn.value;
-          style = summaryColumn.style;
-        } else {
-          value = summaryColumn;
-        }
-        return (
-          <TableCell key={index} style={style} align={cellAlignment}>
-            {value}
-          </TableCell>
-        );
-      })}
+          if (typeof summaryColumn === 'object' && summaryColumn !== null) {
+            value = summaryColumn.value;
+            style = summaryColumn.style;
+          } else {
+            value = summaryColumn;
+          }
+          return (
+            <TableCell key={index} style={style} align={cellAlignment}>
+              {value}
+            </TableCell>
+          );
+        })}
       {placeholderRightColumns}
     </TableRow>
   );
@@ -106,6 +106,4 @@ MTableSummaryRow.propTypes = {
   renderSummaryRow: PropTypes.func
 };
 
-export const styles = (theme) => ({});
-
-export default withStyles(styles)(MTableSummaryRow);
+export default MTableSummaryRow;

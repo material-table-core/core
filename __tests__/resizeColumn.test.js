@@ -82,9 +82,9 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', {
+      const thNotes = screen.getAllByRole('columnheader', {
         name: /Notes/i
-      });
+      })[0];
       const table = thNotes.closest('table');
 
       //screen.debug(thNotes);
@@ -124,9 +124,9 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', {
+      const thNotes = screen.getAllByRole('columnheader', {
         name: /Notes/i
-      });
+      })[0];
       const table = thNotes.closest('table');
 
       expect(table).toHaveStyle({ width: '240px' });
@@ -180,9 +180,9 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', {
+      const thNotes = screen.getAllByRole('columnheader', {
         name: /Notes/i
-      });
+      })[0];
       const table = thNotes.closest('table');
 
       expect(table).toHaveStyle({ width: '100%' });
@@ -217,9 +217,9 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', {
+      const thNotes = screen.getAllByRole('columnheader', {
         name: /Notes/i
-      });
+      })[0];
 
       expect(thNotes.style.width).toBe(`${widthNotes}px`);
 
@@ -244,7 +244,9 @@ describe('Resize Column', () => {
       // maxWidth is less than width, can't increase width
       // when reducing won't jump to maxWidth
 
-      const thNotes = screen.getByRole('columnheader', { name: /Notes/i });
+      const thNotes = screen.getAllByRole('columnheader', {
+        name: /Notes/i
+      })[0];
 
       expect(thNotes).toHaveStyle({ width: '300px' });
 
@@ -289,8 +291,12 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', { name: /Notes/i });
-      const thSurname = screen.getByRole('columnheader', { name: /Surname/i });
+      const thNotes = screen.getAllByRole('columnheader', {
+        name: /Notes/i
+      })[0];
+      const thSurname = screen.getAllByRole('columnheader', {
+        name: /Surname/i
+      })[0];
       const table = thNotes.closest('table');
 
       expect(table).toHaveStyle({ width: '100%' });
@@ -325,8 +331,12 @@ describe('Resize Column', () => {
         />
       );
 
-      const thNotes = screen.getByRole('columnheader', { name: /Notes/i });
-      const thSurname = screen.getByRole('columnheader', { name: /Surname/i });
+      const thNotes = screen.getAllByRole('columnheader', {
+        name: /notes/i
+      })[0];
+      const thSurname = screen.getAllByRole('columnheader', {
+        name: /Surname/i
+      })[0];
       const table = thNotes.closest('table');
 
       expect(table).toHaveStyle({ width: '100%' });
@@ -354,9 +364,10 @@ describe('Resize Column', () => {
           }}
         />
       );
-
-      const thName = screen.getByRole('columnheader', { name: /^Name$/i });
-      const thSurname = screen.getByRole('columnheader', { name: /Surname/i });
+      const thName = screen.getAllByRole('columnheader', { name: /^Name/i })[0];
+      const thSurname = screen.getAllByRole('columnheader', {
+        name: /Surname/i
+      })[0];
 
       resize(thName, [-10]);
       // Only move 5 because of maxWidth on surname
