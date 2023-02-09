@@ -133,7 +133,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
       this.dataManager.changeApplySort(false);
-      if (typeof props.data != 'function') {
+      if (typeof props.data !== 'function') {
         this.dataManager.setData(props.data, props.options.idSynonym);
       }
     } else {
@@ -710,7 +710,7 @@ export default class MaterialTable extends React.Component {
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query, error: this.state.errorState };
 
-    if (typeof this.props.data == 'function') {
+    if (typeof this.props.data === 'function') {
       this.setState({ isLoading: true, errorState: undefined }, () => {
         this.props
           .data(query)
