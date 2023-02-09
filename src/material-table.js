@@ -230,7 +230,7 @@ export default class MaterialTable extends React.Component {
     const columnPropsChanged = !deepEql(fixedPrevColumns, fixedPropsColumns);
     let propsChanged =
       columnPropsChanged || !deepEql(prevProps.options, this.props.options);
-    if (!this.isRemoteData()) {
+    if (typeof this.props.data !== 'function') {
       propsChanged = propsChanged || !deepEql(prevProps.data, this.props.data);
     }
 
