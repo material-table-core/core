@@ -1,3 +1,10 @@
+#### 6.1.13 (2023-02-10)
+
+##### Bug Fixes
+
+- remove console.log ([#739](https://github.com/material-table-core/core/pull/739)) ([c362612f](https://github.com/material-table-core/core/commit/c362612fdb0faccdf3bfe9852dc28d2526537811))
+- draggableId needs to be string in groupbar ([#740](https://github.com/material-table-core/core/pull/740)) ([e8c2e8af](https://github.com/material-table-core/core/commit/e8c2e8afea40e3cc125394e17571d3744a5a1982))
+
 #### 6.1.12 (2023-02-02)
 
 #### 6.1.11 (2023-02-02)
