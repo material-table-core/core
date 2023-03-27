@@ -253,7 +253,7 @@ export default class MaterialTable extends React.Component {
       ? this.state.query.pageSize
       : this.state.pageSize;
 
-    if (count <= pageSize * currentPage && currentPage !== 0) {
+    if (count <= pageSize * currentPage && currentPage !== 0 && !this.state.isLoading) {
       this.onPageChange(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }
