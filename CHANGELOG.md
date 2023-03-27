@@ -1,3 +1,9 @@
+#### 6.1.14 (2023-03-27)
+
+##### Bug Fixes
+
+- don't trigger onPageChange while loading ([#753](https://github.com/material-table-core/core/pull/753)) ([51773d10](https://github.com/material-table-core/core/commit/51773d10faf6e480131f5118ded90194d90103c7))
+
 #### 6.1.13 (2023-02-10)
 
 ##### Bug Fixes
