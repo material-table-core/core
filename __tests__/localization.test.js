@@ -19,7 +19,7 @@ const columns = [
 
 const data = [{ id: 1, enum: 1 }];
 
-describe('Localization', () => {
+describe.only('Localization', () => {
   test('Renders the pagination', () => {
     render(
       <MaterialTable
@@ -37,5 +37,6 @@ describe('Localization', () => {
     screen.getByText(/test_labeldisplayedrows/i);
     screen.getByText(/test_labelrowsperpage/i);
     screen.getByText(/5 Test_labelRows/i);
+    expect(screen.queryByText('1–5 of 1')).toEqual(null); // Hides the normal display
   });
 });
