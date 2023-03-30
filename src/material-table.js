@@ -253,7 +253,11 @@ export default class MaterialTable extends React.Component {
       ? this.state.query.pageSize
       : this.state.pageSize;
 
-    if (count <= pageSize * currentPage && currentPage !== 0 && !this.state.isLoading) {
+    if (
+      count <= pageSize * currentPage &&
+      currentPage !== 0 &&
+      !this.state.isLoading
+    ) {
       this.onPageChange(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }
@@ -908,7 +912,7 @@ export default class MaterialTable extends React.Component {
                     ? props.options.paginationAlignment
                     : 'flex-end',
                   overflowX: 'auto',
-                  '& .MuiTypography-caption': {
+                  '& .MuiTablePagination-displayedRows': {
                     display: 'none'
                   }
                 }}
