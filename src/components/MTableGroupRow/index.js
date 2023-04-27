@@ -118,6 +118,8 @@ function MTableGroupRow(props) {
   let title = column.title;
   if (typeof options.groupTitle === 'function') {
     title = options.groupTitle(props.groupData);
+  } else if (typeof column.groupTitle === 'function') {
+    title = column.groupTitle(props.groupData);
   } else if (typeof title !== 'string') {
     title = React.cloneElement(title);
   }
