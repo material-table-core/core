@@ -953,6 +953,12 @@ export default class MaterialTable extends React.Component {
                     />
                   )
                 }
+                labelDisplayedRows={({ from, to, count }) =>
+                  props.localization.pagination.labelDisplayedRows
+                    .replace('{from}',from)
+                    .replace('{to}',to)
+                    .replace('{count}',count)
+                }
                 labelRowsPerPage={
                   props.localization.pagination.labelRowsPerPage
                 }
