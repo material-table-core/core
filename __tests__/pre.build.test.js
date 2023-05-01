@@ -184,7 +184,7 @@ describe('Render Table : Pre Build', () => {
         name: /michael johnson 69/i
       });
 
-      screen.getByText(/1–5 of 6/i);
+      screen.getByText(/1-5 of 6/i);
       screen.getByText(/5 rows/i);
       screen.getByRole('button', {
         name: /next page/i
