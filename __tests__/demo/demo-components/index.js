@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { Box, Input, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
 // root of this project
 import MaterialTable, {
   MTableBodyRow,
   MTableEditRow,
-  MTableHeader
+  MTableHeader,
+  useLocalizationStore
 } from '../../../src';
 
 export { default as EditableRowDateColumnIssue } from './EditableRowDateColumnIssue';
@@ -1386,6 +1390,57 @@ export function TableMultiSorting(props) {
         draggable: true
       }}
       onOrderCollectionChange={onOrderCollectionChange}
+    />
+  );
+}
+
+function CustomToolbar({ onSearchChanged, dataManager }) {
+  const localization = useLocalizationStore().toolbar;
+
+  // Local State
+  const [searchText, setSearchText] = useState('');
+
+  // Vars
+  const searchPlaceholder = localization?.searchPlaceholder ?? 'Search';
+
+  // Events
+  const handleChange = (value) => {
+    setSearchText(value);
+    dataManager.changeSearchText(value);
+    onSearchChanged(value);
+  };
+
+  return (
+    <Box>
+      <Input
+        startAdornment={
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        }
+        fullWidth
+        disableUnderline
+        value={searchText}
+        placeholder={searchPlaceholder}
+        onChange={(e) => handleChange(e.target.value)}
+      />
+    </Box>
+  );
+}
+
+export function LocalizationWithCustomComponents() {
+  return (
+    <MaterialTable
+      data={global_data}
+      columns={global_cols}
+      localization={{
+        toolbar: {
+          searchPlaceholder: 'Name, surname, or birth place'
+        }
+      }}
+      components={{
+        Toolbar: CustomToolbar
+      }}
     />
   );
 }

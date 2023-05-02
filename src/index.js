@@ -3,7 +3,11 @@ import { defaultProps } from './defaults';
 import { propTypes } from './prop-types';
 import MaterialTable from './material-table';
 import { useTheme } from '@mui/material/styles';
-import { useMergeProps, withContext } from './store/LocalizationStore';
+import {
+  useMergeProps,
+  withContext,
+  useLocalizationStore
+} from './store/LocalizationStore';
 
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
@@ -22,6 +26,8 @@ export default withContext((props) => {
     />
   );
 });
+
+export { useLocalizationStore };
 
 export {
   MTableAction,
