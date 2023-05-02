@@ -1,3 +1,9 @@
+#### 6.1.16 (2023-05-02)
+
+##### Bug Fixes
+
+- also use column.groupTitle ([#761](https://github.com/material-table-core/core/pull/761)) ([2534c559](https://github.com/material-table-core/core/commit/2534c5590bd335c11cc47909ff6dab7e4600af4e))
+
 #### 6.1.15 (2023-03-30)
 
 #### 6.1.14 (2023-03-27)
