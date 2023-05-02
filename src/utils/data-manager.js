@@ -304,7 +304,7 @@ export default class DataManager {
     if (
       this.detailPanelType === 'single' &&
       this.lastDetailPanelRow &&
-      this.lastDetailPanelRow != rowData
+      this.lastDetailPanelRow !== rowData
     ) {
       this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
     }
