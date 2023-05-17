@@ -75,7 +75,10 @@ export const propTypes = {
         PropTypes.func
       ]),
       export: PropTypes.bool,
-      field: PropTypes.string,
+      field: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string)
+      ]),
       filtering: PropTypes.bool,
       filterCellStyle: PropTypes.object,
       filterPlaceholder: PropTypes.string,
