@@ -918,7 +918,7 @@ export default class DataManager {
 
     if (this.applyFilters) {
       this.columns
-        .filter((columnDef) => columnDef.tableData.filterValue)
+        .filter((columnDef) => columnDef.tableData.filterValue !== undefined)
         .forEach((columnDef) => {
           const { lookup, type, tableData } = columnDef;
           if (columnDef.customFilterAndSearch) {
@@ -943,6 +943,7 @@ export default class DataManager {
                 );
               });
             } else if (type === 'numeric') {
+              console.log('asdasd');
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
                 return value + '' === tableData.filterValue;
@@ -1011,8 +1012,10 @@ export default class DataManager {
             } else {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
+                console.log(value, tableData.filterValue);
                 return (
-                  value &&
+                  value !== undefined &&
+                  value !== null &&
                   value
                     .toString()
                     .toUpperCase()
