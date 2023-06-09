@@ -1,3 +1,13 @@
+#### 6.1.17 (2023-06-09)
+
+##### Bug Fixes
+
+- add string array to columns.field prop types ([#768](https://github.com/material-table-core/core/pull/768)) ([b4d8f916](https://github.com/material-table-core/core/commit/b4d8f916264f93f9bc5e0b091a03e24fc28f3697))
+
+##### Other Changes
+
+- material-table-core/core ([e670b48c](https://github.com/material-table-core/core/commit/e670b48ccb43fae937c8d85a632a4be9dbec74cd))
+
 #### 6.1.16 (2023-05-02)
 
 ##### Bug Fixes
