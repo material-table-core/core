@@ -95,6 +95,26 @@ function MTablePagination(props) {
           </IconButton>
         </span>
       </Tooltip>
+      <Typography
+        variant="caption"
+        style={{
+          flex: 1,
+          textAlign: 'center',
+          alignSelf: 'center',
+          flexBasis: 'inherit'
+        }}
+      >
+        {localization.labelDisplayedRows
+          .replace(
+            '{from}',
+            props.count === 0 ? 0 : props.page * props.rowsPerPage + 1
+          )
+          .replace(
+            '{to}',
+            Math.min((props.page + 1) * props.rowsPerPage, props.count)
+          )
+          .replace('{count}', props.count)}
+      </Typography>
       <Tooltip title={localization.nextTooltip}>
         <span>
           <IconButton
