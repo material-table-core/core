@@ -943,7 +943,6 @@ export default class DataManager {
                 );
               });
             } else if (type === 'numeric') {
-              console.log('asdasd');
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
                 return value + '' === tableData.filterValue;
@@ -1012,7 +1011,6 @@ export default class DataManager {
             } else {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
-                console.log(value, tableData.filterValue);
                 return (
                   value !== undefined &&
                   value !== null &&
