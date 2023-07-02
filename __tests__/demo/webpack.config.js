@@ -4,7 +4,7 @@ const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  entry: ['babel-polyfill', path.resolve(__dirname, './demo.js')],
+  entry: [path.resolve(__dirname, './demo.js')],
   module: {
     rules: [
       {
