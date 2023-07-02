@@ -76,7 +76,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /james brown 3/i
       });
-      screen.getByText(/1-5 of 99/i);
+      expect(screen.getAllByText(/1-5 of 99/i)).toHaveLength(2);
     });
 
     it('navigates between the pages', () => {
@@ -95,7 +95,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /james brown 3/i
       });
-      screen.getByText(/1-5 of 99/i);
+      expect(screen.getAllByText(/1-5 of 99/i)).toHaveLength(2);
 
       fireEvent.click(screen.getByTestId(/chevron_right/i));
       screen.getByRole('row', {
@@ -107,7 +107,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /michael wilson 9/i
       });
-      screen.getByText(/6-10 of 99/i);
+      expect(screen.getAllByText(/6-10 of 99/i)).toHaveLength(2);
       fireEvent.click(screen.getByTestId(/last_page/i));
       screen.getByRole('row', {
         name: /Daniel Martinez 95/i
@@ -118,7 +118,7 @@ describe('Render Table : Pre Build', () => {
       screen.getByRole('row', {
         name: /William Thomas 98/i
       });
-      screen.getByText(/96-99 of 99/i);
+      expect(screen.getAllByText(/96-99 of 99/i)).toHaveLength(2);
       screen.getByText(/5 rows/i);
       screen.getByRole('button', {
         name: /next page/i
@@ -184,7 +184,7 @@ describe('Render Table : Pre Build', () => {
         name: /michael johnson 69/i
       });
 
-      screen.getByText(/1-5 of 6/i);
+      expect(screen.getAllByText(/1-5 of 6/i)).toHaveLength(2);
       screen.getByText(/5 rows/i);
       screen.getByRole('button', {
         name: /next page/i
@@ -212,7 +212,7 @@ describe('Render Table : Pre Build', () => {
     });
   });
   // Render table with column render function
-  it('enders the render function in column', () => {
+  it('renders the render function in column', () => {
     const data = makeData();
     render(
       <MaterialTable
@@ -237,7 +237,7 @@ describe('Render Table : Pre Build', () => {
     screen.getByRole('row', {
       name: /james brown 3/i
     });
-    screen.getByText(/1-5 of 99/i);
+    expect(screen.getAllByText(/1-5 of 99/i)).toHaveLength(2);
   });
 });
 

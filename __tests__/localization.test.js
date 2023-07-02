@@ -34,7 +34,7 @@ describe.only('Localization', () => {
         }}
       />
     );
-    screen.getByText(/test_labeldisplayedrows/i);
+    expect(screen.getAllByText(/test_labeldisplayedrows/i)).toHaveLength(2);
     screen.getByText(/test_labelrowsperpage/i);
     screen.getByText(/5 Test_labelRows/i);
     expect(screen.queryByText('1–5 of 1')).toEqual(null); // Hides the normal display
