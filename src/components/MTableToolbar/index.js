@@ -230,7 +230,7 @@ export function MTableToolbar(props) {
                         searchedData: props.dataManager.searchedData,
                         filteredData: props.dataManager.filteredData,
                         groupedData: props.dataManager.groupedData,
-                        selectedData: selectedRows,
+                        selectedData: selectedRows
                       });
                       setExportButtonAnchorEl(null);
                     }}
