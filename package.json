@@ -113,7 +113,7 @@
     "@emotion/styled": "^11.10.4",
     "@hello-pangea/dnd": "^16.0.0",
     "@mui/icons-material": ">=5.10.6",
-    "@mui/material": ">=5.13.1",
+    "@mui/material": ">=5.11.12",
     "@mui/x-date-pickers": "^5.0.3",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
