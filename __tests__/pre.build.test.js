@@ -212,7 +212,7 @@ describe('Render Table : Pre Build', () => {
     });
   });
   // Render table with column render function
-  it('enders the render function in column', () => {
+  it('renders the render function in column', () => {
     const data = makeData();
     render(
       <MaterialTable

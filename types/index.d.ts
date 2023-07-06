@@ -388,6 +388,7 @@ export interface Options<RowData extends object> {
         searchedData: RowData[];
         filteredData: RowData[];
         groupedData: RowData[];
+        selectedData: RowData[];
       }
     ) => void;
   }[];

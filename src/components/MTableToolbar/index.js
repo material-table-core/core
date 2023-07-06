@@ -229,7 +229,8 @@ export function MTableToolbar(props) {
                       menuitem.exportFunc(cols, datas, {
                         searchedData: props.dataManager.searchedData,
                         filteredData: props.dataManager.filteredData,
-                        groupedData: props.dataManager.groupedData
+                        groupedData: props.dataManager.groupedData,
+                        selectedData: selectedRows
                       });
                       setExportButtonAnchorEl(null);
                     }}
