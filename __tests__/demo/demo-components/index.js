@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Box, Input, InputAdornment } from '@mui/material';
+import { Alert, Box, Input, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 // root of this project
@@ -1464,5 +1464,43 @@ export function LocalizationWithCustomComponents() {
         Toolbar: CustomToolbar
       }}
     />
+  );
+}
+
+export function LimitedSearchResults() {
+  const [maxResultsExceeded, setMaxResultsExceeded] = useState(false);
+  const data = Array(1000)
+    .fill(undefined)
+    .map((_, index) => {
+      return {
+        name: `Name ${index}`,
+        surname: `Surname ${index}`,
+        birthYear: 1950 + (index % 80),
+        birthCity: 63,
+        id: index
+      };
+    });
+
+  const maxResultsExceededWarning = maxResultsExceeded ? (
+    <Alert severity="warning">
+      Too many results. Please refine your search
+    </Alert>
+  ) : null;
+
+  return (
+    <>
+      {maxResultsExceededWarning}
+      <MaterialTable
+        data={[...data, ...global_data]}
+        columns={global_cols}
+        title="Multi Column Sort"
+        options={{
+          searchMaxResults: 10
+        }}
+        onSearchChange={(_, maxResultsExceeded) =>
+          setMaxResultsExceeded(maxResultsExceeded)
+        }
+      />
+    </>
   );
 }

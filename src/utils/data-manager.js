@@ -26,9 +26,12 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  searchMaxResults = undefined;
   bulkEditOpen = false;
   bulkEditChangedRows = {};
   clientSorting = true;
+
+  searchMaxResultsExceeded = false;
 
   data = [];
   columns = [];
@@ -183,6 +186,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setSearchMaxResults(maxResults) {
+    this.searchMaxResults = maxResults;
   }
 
   setClientSorting(clientSorting) {
@@ -906,7 +913,8 @@ export default class DataManager {
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
       groupedDataLength: this.groupedDataLength,
-      tableStyleWidth: this.tableStyleWidth
+      tableStyleWidth: this.tableStyleWidth,
+      searchMaxResultsExceeded: this.searchMaxResultsExceeded
     };
   };
 
@@ -1040,10 +1048,11 @@ export default class DataManager {
     this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.searchedData = [...this.filteredData];
+    this.searchMaxResultsExceeded = false;
 
     if (this.searchText && this.applySearch) {
       const trimmedSearchText = this.searchText.trim();
-      this.searchedData = this.searchedData.filter((row) => {
+      const searchResult = this.searchedData.filter((row) => {
         return this.columns
           .filter((columnDef) => {
             return columnDef.searchable === undefined
@@ -1069,6 +1078,14 @@ export default class DataManager {
             return false;
           });
       });
+
+      this.searchMaxResultsExceeded =
+        this.searchMaxResults === undefined
+          ? false
+          : searchResult.length > this.searchMaxResults;
+      this.searchedData = this.searchMaxResultsExceeded
+        ? searchResult.slice(0, this.searchMaxResults)
+        : searchResult;
     }
     this.searched = true;
   };

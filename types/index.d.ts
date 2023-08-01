@@ -87,7 +87,7 @@ export interface MaterialTableProps<RowData extends object> {
     toggleDetailPanel?: (panelIndex?: number) => void
   ) => void;
   onRowSelected?: (rowData: RowData) => void;
-  onSearchChange?: (searchText: string) => void;
+  onSearchChange?: (searchText: string, maxResultsExceeded: boolean) => void;
   /** An event fired when the table has finished filtering data
    * @param {Filter<RowData>[]} filters All the filters that are applied to the table
    */
@@ -451,6 +451,7 @@ export interface Options<RowData extends object> {
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   searchFieldVariant?: 'standard' | 'filled' | 'outlined';
+  searchMaxResults?: number;
   searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: CheckboxProps | ((data: RowData) => CheckboxProps);
