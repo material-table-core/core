@@ -27,6 +27,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
     getFieldValue,
     isTreeData,
     onRowSelected,
+    onRowEditStarted,
     onTreeExpandChanged,
     onToggleDetailPanel,
     onEditingCanceled,
@@ -49,16 +50,19 @@ function MTableBodyRow({ forwardedRef, ...props }) {
   const columns = propColumns.filter((columnDef) => !columnDef.hidden);
 
   const onClick = (event, callback) =>
-    callback(event, data, (panelIndex) => {
-      let panel = detailPanel;
-      if (Array.isArray(panel)) {
-        panel = panel[panelIndex || 0];
-        if (typeof panel === 'function') {
-          panel = panel(data);
+    callback(event, data, {
+      toggleDetailPanel: (panelIndex) => {
+        let panel = detailPanel;
+        if (Array.isArray(panel)) {
+          panel = panel[panelIndex || 0];
+          if (typeof panel === 'function') {
+            panel = panel(data);
+          }
+          panel = panel.render;
         }
-        panel = panel.render;
-      }
-      onToggleDetailPanel(path, panel);
+        onToggleDetailPanel(path, panel);
+      },
+      enableEditMode: () => onRowEditStarted(data)
     });
 
   const handleOnRowClick = useDoubleClick(

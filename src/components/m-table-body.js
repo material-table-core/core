@@ -123,6 +123,7 @@ function MTableBody(props) {
             cellEditable={props.cellEditable}
             onCellEditStarted={props.onCellEditStarted}
             onCellEditFinished={props.onCellEditFinished}
+            onRowEditStarted={props.onRowEditStarted}
             scrollWidth={props.scrollWidth}
           />
         );

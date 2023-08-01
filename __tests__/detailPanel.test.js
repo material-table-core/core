@@ -69,7 +69,7 @@ describe('Detailpanel render', () => {
     screen.getByRole('cell', {
       name: /one/i
     });
-    const toggleButton = screen.getByRole('button', {
+    const toggleButton = await screen.findByRole('button', {
       name: /detail panel visibility toggle/i
     });
 
