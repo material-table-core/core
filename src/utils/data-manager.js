@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { selectFromObject } from './';
 import { widthToNumber } from './common-values';
 import { ALL_COLUMNS } from './constants';
+import { filterWithMaxResults } from './filter-with-max-results';
 
 export default class DataManager {
   checkForId = false;
@@ -26,8 +27,11 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  searchMaxResults = undefined;
   bulkEditOpen = false;
   bulkEditChangedRows = {};
+
+  searchMaxResultsExceeded = false;
 
   data = [];
   columns = [];
@@ -182,6 +186,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setSearchMaxResults(maxResults) {
+    this.searchMaxResults = maxResults;
   }
 
   setMaxColumnSort(maxColumnSort) {
@@ -898,7 +906,8 @@ export default class DataManager {
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
       groupedDataLength: this.groupedDataLength,
-      tableStyleWidth: this.tableStyleWidth
+      tableStyleWidth: this.tableStyleWidth,
+      searchMaxResultsExceeded: this.searchMaxResultsExceeded
     };
   };
 
@@ -1032,17 +1041,20 @@ export default class DataManager {
     this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.searchedData = [...this.filteredData];
+    this.searchMaxResultsExceeded = false;
 
     if (this.searchText && this.applySearch) {
       const trimmedSearchText = this.searchText.trim();
-      this.searchedData = this.searchedData.filter((row) => {
-        return this.columns
-          .filter((columnDef) => {
-            return columnDef.searchable === undefined
-              ? !columnDef.hidden
-              : columnDef.searchable;
-          })
-          .some((columnDef) => {
+      const searchableColumns = this.columns.filter((columnDef) => {
+        return columnDef.searchable === undefined
+          ? !columnDef.hidden
+          : columnDef.searchable;
+      });
+
+      const searchResult = filterWithMaxResults(
+        this.searchedData,
+        (row) => {
+          return searchableColumns.some((columnDef) => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(
                 trimmedSearchText,
@@ -1060,7 +1072,11 @@ export default class DataManager {
             }
             return false;
           });
-      });
+        },
+        this.searchMaxResults
+      );
+      this.searchedData = searchResult.results;
+      this.searchMaxResultsExceeded = searchResult.maxResultsExceeded;
     }
     this.searched = true;
   };

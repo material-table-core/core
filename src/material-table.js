@@ -124,6 +124,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setColumns(props.columns, prevColumns, savedColumns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
+    this.dataManager.setSearchMaxResults(props.options.searchMaxResults);
 
     const { grouping, maxColumnSort } = props.options;
     this.dataManager.setMaxColumnSort(grouping ? 1 : maxColumnSort);
@@ -786,7 +787,11 @@ export default class MaterialTable extends React.Component {
       });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onSearchChange && this.props.onSearchChange(searchText);
+        this.props.onSearchChange &&
+          this.props.onSearchChange(
+            searchText,
+            this.state.searchMaxResultsExceeded
+          );
       });
     }
   }, this.props.options.debounceInterval);
