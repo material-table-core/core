@@ -141,24 +141,28 @@ describe('Selection tests', () => {
       { title: 'Id', field: 'id' },
       { title: 'Word', field: 'word' }
     ];
+    const data = [
+      ...rawData,
+      { id: 11, word: 'test', parentId: 0 },
+      { id: 12, word: 'test', parentId: 1 }
+    ];
     render(
       <MaterialTable
         parentChildData={(row, rows) => rows.find((a) => a.id === row.parentId)}
-        data={[
-          ...rawData,
-          { id: 11, word: 'test', parentId: 0 },
-          { id: 12, word: 'test', parentId: 1 }
-        ]}
+        data={data}
         columns={columns}
         options={{
           selection: true
         }}
       />
     );
-    expect(screen.getAllByRole('checkbox')).toHaveLength(6);
-    screen
-      .getAllByRole('checkbox')
-      .forEach((box) => expect(box).not.toBeChecked());
+
+    await waitFor(async () => {
+      const checkboxes = await screen.findAllByRole('checkbox');
+      expect(checkboxes).toHaveLength(6);
+      checkboxes.forEach((box) => expect(box).not.toBeChecked());
+    });
+
     const search = screen.getByRole('textbox', {
       name: /search/i
     });
