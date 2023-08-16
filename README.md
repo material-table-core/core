@@ -7,7 +7,6 @@
     <code>
       <a 
         target="_blank" 
-        rel="noopener noreferrer"
         href="https://material-table.com"
       >
         mbrn/material-table
