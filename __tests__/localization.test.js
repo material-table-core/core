@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  act,
-  screen,
-  render,
-  waitForElementToBeRemoved,
-  within,
-  waitFor,
-  fireEvent
-} from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import MaterialTable from '../src';
 
 const lookup = { 1: 'One', 2: 'Two' };
@@ -19,7 +11,7 @@ const columns = [
 
 const data = [{ id: 1, enum: 1 }];
 
-describe.only('Localization', () => {
+describe('Localization', () => {
   test('Renders the pagination', () => {
     render(
       <MaterialTable
