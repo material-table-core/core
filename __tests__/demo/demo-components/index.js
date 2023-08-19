@@ -290,29 +290,48 @@ export function BulkEditWithDetailPanel() {
 }
 
 export function EditableRow(props) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [canEdit, setCanEdit] = useState(true);
+  const [clickRowToEdit, setClickRowToEdit] = useState(false);
 
   return (
     <div>
-      <p>I am the parent</p>
-      <button onClick={(e) => setIsEditing(!isEditing)}>
-        {isEditing ? 'Disable' : 'Enable'} Editing
-      </button>
+      <fieldset>
+        <div>
+          <input
+            type="checkbox"
+            id="rowEditing"
+            name="rowEditing"
+            checked={clickRowToEdit}
+            onChange={(event) => setClickRowToEdit(event.target.checked)}
+          />
+          <label htmlFor="rowEditing">Click row to edit</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="canEdit"
+            name="canEdit"
+            checked={canEdit}
+            onChange={(event) => setCanEdit(event.target.checked)}
+          />
+          <label htmlFor="canEdit">Enable editing</label>
+        </div>
+      </fieldset>
+
       <MaterialTable
-        components={{
-          Row: (props) => {
-            if (isEditing) {
-              return <MTableEditRow {...props} mode={'update'} />;
-            } else {
-              return <MTableBodyRow {...props} />;
-            }
-          }
-        }}
+        key={`table_${canEdit}`}
+        onRowClick={
+          clickRowToEdit
+            ? (_event, _data, actions) => actions.enableEditMode()
+            : undefined
+        }
         editable={{
-          onRowUpdate: (newData, oldData) => {
-            console.log({ newData, oldData });
-            return new Promise((reject, resolve) => resolve());
-          }
+          onRowUpdate: canEdit
+            ? (newData, oldData) => {
+                console.log({ newData, oldData });
+                return new Promise((reject, resolve) => resolve());
+              }
+            : undefined
         }}
         data={[
           { name: 'jack', id: 1 },

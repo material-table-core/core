@@ -79,7 +79,7 @@ export interface MaterialTableProps<RowData extends object> {
   onRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
-    toggleDetailPanel?: (panelIndex?: number) => void
+    action?: RowAction
   ) => void;
   onRowDoubleClick?: (
     event?: React.MouseEvent,
@@ -115,6 +115,11 @@ export interface MaterialTableProps<RowData extends object> {
   tableRef?: React.RefObject<any> | React.MutableRefObject<undefined>;
   page?: number;
   totalCount?: number;
+}
+
+export interface RowAction {
+  toggleDetailPanel: (panelIndex?: number) => void;
+  enableEditMode: () => void;
 }
 
 export interface Filter<RowData extends object> {

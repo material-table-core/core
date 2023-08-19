@@ -259,6 +259,32 @@ describe('Edit Row Row Update', () => {
     expect(onRowUpdateCancelled.mock.calls.length).toBe(1);
   });
 
+  test('clicking a row to start the edit mode', () => {
+    const onRowUpdate = jest.fn();
+    const onRowUpdateCancelled = jest.fn();
+    render(
+      <MaterialTable
+        data={data}
+        columns={columns}
+        onRowClick={(event, data, actions) => actions.enableEditMode()}
+        editable={{
+          onRowUpdate,
+          onRowUpdateCancelled
+        }}
+      />
+    );
+    fireEvent.click(screen.getByText(data[0].id.toString()));
+
+    screen.getByTestId('check');
+    const cancelButton = screen.getByRole('button', {
+      name: /cancel/i
+    });
+    fireEvent.click(cancelButton);
+
+    expect(onRowUpdate.mock.calls.length).toBe(0);
+    expect(onRowUpdateCancelled.mock.calls.length).toBe(1);
+  });
+
   test('edit a row', async () => {
     const onRowUpdate = jest.fn(async () => {});
     render(

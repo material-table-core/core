@@ -338,11 +338,7 @@ export default class MaterialTable extends React.Component {
             calculatedProps.editable.isEditHidden &&
             calculatedProps.editable.isEditHidden(rowData),
           onClick: (e, rowData) => {
-            this.dataManager.changeRowEditing(rowData, 'update');
-            this.setState({
-              ...this.dataManager.getRenderState(),
-              showAddRow: false
-            });
+            this.onRowEditStarted(rowData);
           }
         }));
       }
@@ -1046,6 +1042,7 @@ export default class MaterialTable extends React.Component {
         cellEditable={props.cellEditable}
         onCellEditStarted={this.onCellEditStarted}
         onCellEditFinished={this.onCellEditFinished}
+        onRowEditStarted={this.onRowEditStarted}
         bulkEditOpen={this.dataManager.bulkEditOpen}
         bulkEditChangedRows={this.dataManager.bulkEditChangedRows}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
@@ -1053,6 +1050,17 @@ export default class MaterialTable extends React.Component {
       />
     </Table>
   );
+
+  onRowEditStarted = (rowData) => {
+    if (!this.props.editable?.onRowUpdate) {
+      return;
+    }
+    this.dataManager.changeRowEditing(rowData, 'update');
+    this.setState({
+      ...this.dataManager.getRenderState(),
+      showAddRow: false
+    });
+  };
 
   getColumnsWidth = (props, count) => {
     const result = [];
