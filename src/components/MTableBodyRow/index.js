@@ -48,22 +48,24 @@ function MTableBodyRow({ forwardedRef, ...props }) {
     ...rowProps
   } = props;
   const columns = propColumns.filter((columnDef) => !columnDef.hidden);
+  const toggleDetailPanel = (panelIndex) => {
+    let panel = detailPanel;
+    if (Array.isArray(panel)) {
+      panel = panel[panelIndex || 0];
+      if (typeof panel === 'function') {
+        panel = panel(data);
+      }
+      panel = panel.render;
+    }
+    onToggleDetailPanel(path, panel);
+  };
+  const enableEditMode = () => onRowEditStarted(data);
+  // Make callbackActions a function to enable back wards compatibility
+  const callbackActions = toggleDetailPanel;
+  callbackActions.toggleDetailPanel = toggleDetailPanel;
+  callbackActions.enableEditMode = enableEditMode;
 
-  const onClick = (event, callback) =>
-    callback(event, data, {
-      toggleDetailPanel: (panelIndex) => {
-        let panel = detailPanel;
-        if (Array.isArray(panel)) {
-          panel = panel[panelIndex || 0];
-          if (typeof panel === 'function') {
-            panel = panel(data);
-          }
-          panel = panel.render;
-        }
-        onToggleDetailPanel(path, panel);
-      },
-      enableEditMode: () => onRowEditStarted(data)
-    });
+  const onClick = (event, callback) => callback(event, data, callbackActions);
 
   const handleOnRowClick = useDoubleClick(
     onRowClick ? (e) => onClick(e, onRowClick) : undefined,

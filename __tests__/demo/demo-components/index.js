@@ -320,9 +320,12 @@ export function EditableRow(props) {
 
       <MaterialTable
         key={`table_${canEdit}`}
+        title="EditableRow"
         onRowClick={
           clickRowToEdit
-            ? (_event, _data, actions) => actions.enableEditMode()
+            ? (_event, _data, actions) => {
+                actions();
+              }
             : undefined
         }
         editable={{
