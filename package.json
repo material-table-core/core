@@ -53,9 +53,9 @@
   "author": "Mehmet Baran, @material-table/core contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/material-table-core/core/issues"
+    "url": "https://material-table-core.github.io/"
   },
-  "homepage": "https://material-table-core.com",
+  "homepage": "https://material-table-core.github.io/",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
