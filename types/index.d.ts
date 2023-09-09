@@ -471,6 +471,10 @@ export interface Options<RowData extends object> {
   maxColumnSort?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ALL_COLUMNS;
   showColumnSortOrder?: boolean;
   sortOrderIndicatorStyle?: React.CSSProperties;
+  /**
+   * Allow reordering rows if `true` (default). Set to `false` when original row ordering is to preserved (eg. data sorted from server).
+   **/
+  clientSorting?: boolean;
 }
 
 export interface Localization {

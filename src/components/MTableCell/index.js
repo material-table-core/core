@@ -63,6 +63,7 @@ function MTableCell(props) {
       onClick={handleClickCell}
       ref={forwardedRef}
       colSpan={props.colSpan}
+      data-testid="mtablecell"
     >
       {props.children}
       {renderValue}

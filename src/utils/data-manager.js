@@ -28,6 +28,7 @@ export default class DataManager {
   defaultExpanded = false;
   bulkEditOpen = false;
   bulkEditChangedRows = {};
+  clientSorting = true;
 
   data = [];
   columns = [];
@@ -182,6 +183,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setClientSorting(clientSorting) {
+    this.clientSorting = !!clientSorting;
   }
 
   setMaxColumnSort(maxColumnSort) {
@@ -803,6 +808,9 @@ export default class DataManager {
   }
 
   sortList(list) {
+    if (!this.clientSorting) {
+      return list;
+    }
     const collectionIds = this.orderByCollection.map(
       (collection) => collection.orderBy
     );

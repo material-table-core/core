@@ -125,7 +125,8 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
-    const { grouping, maxColumnSort } = props.options;
+    const { clientSorting, grouping, maxColumnSort } = props.options;
+    this.dataManager.setClientSorting(clientSorting);
     this.dataManager.setMaxColumnSort(grouping ? 1 : maxColumnSort);
     this.dataManager.setOrderByCollection();
 

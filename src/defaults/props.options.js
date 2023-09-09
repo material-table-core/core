@@ -44,6 +44,7 @@ export default {
   selectionProps: {},
   // sorting: true,
   maxColumnSort: 1,
+  clientSorting: true,
   groupChipProps: {},
   defaultOrderByCollection: [],
   showColumnSortOrder: false,
