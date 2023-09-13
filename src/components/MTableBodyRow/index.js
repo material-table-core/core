@@ -443,6 +443,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
         }}
         hover={!!(onRowClick || onRowDoubleClick)}
         style={getStyle(props.index, props.level)}
+        data-testid="mtablebodyrow"
       >
         {renderColumns}
       </TableRow>

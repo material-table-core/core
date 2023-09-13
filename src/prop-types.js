@@ -415,6 +415,7 @@ export const propTypes = {
     showColumnSortOrder: PropTypes.bool,
     sortOrderIndicatorStyle: PropTypes.object,
     keepSortDirectionOnColumnSwitch: PropTypes.bool,
+    clientSorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
     numberOfPagesAround: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
