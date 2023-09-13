@@ -1,3 +1,13 @@
+#### 6.2.4 (2023-09-13)
+
+##### Bug Fixes
+
+- adjust padding for selection grouping ([b786949a](https://github.com/material-table-core/core/commit/b786949aac3a6fc5b1a5545e387d00e57e448724))
+
+##### Other Changes
+
+- material-table-core/core ([4825590e](https://github.com/material-table-core/core/commit/4825590e18843bea62be250cf54a64a8dd1cb2cb))
+
 #### 6.2.3 (2023-08-19)
 
 #### 6.2.2 (2023-08-19)
