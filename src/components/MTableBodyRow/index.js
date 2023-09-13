@@ -173,15 +173,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
         props.treeDataMaxLevel
       ) || 0;
 
-    const styles =
-      size === 'medium'
-        ? {
-            marginLeft: props.level * 9 || 0
-          }
-        : {
-            padding: '4px',
-            marginLeft: 5 + props.level * 9 || 0
-          };
+    const styles = size !== 'medium' ? { padding: '4px' } : undefined;
 
     return (
       <TableCell

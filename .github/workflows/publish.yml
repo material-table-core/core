@@ -47,13 +47,12 @@ jobs:
           echo $RV
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ env.RELEASE_VERSION }}
-          release_name: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
-          generate_release_notes: true
+          generateReleaseNotes: true
