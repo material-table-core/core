@@ -566,8 +566,7 @@ export const styles = {
   header: {
     // display: 'inline-block',
     // position: 'sticky',
-    top: 0,
-    backgroundColor: 'background.paper' // Change according to theme,
+    top: 0
   },
   headerWrap: (alignRight) => ({
     display: 'flex',
