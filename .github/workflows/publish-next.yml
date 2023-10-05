@@ -13,15 +13,15 @@ name: Publish Next
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - next
 
 jobs:
   publish:
-    if: github.ref_name == 'next'
+    if: startsWith(github.event.head_commit.message, 'Release ')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set env
         run: |
           RV=$(echo $${{ github.event.head_commit.message }} | awk '{print $NF}')
@@ -53,4 +53,5 @@ jobs:
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
+          tag: ${{ env.RELEASE_VERSION }}
           generateReleaseNotes: true

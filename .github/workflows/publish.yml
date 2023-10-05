@@ -12,15 +12,17 @@ name: Publish
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
+      - master
+      - experimental
 
 jobs:
   publish:
-    if: github.ref_name == 'master' || github.ref_name == 'main'|| github.ref_name == 'experimental'
+    if: startsWith(github.event.head_commit.message, 'Release ')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -53,4 +55,5 @@ jobs:
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
+          tag: ${{ env.RELEASE_VERSION }}
           generateReleaseNotes: true
