@@ -17,7 +17,7 @@ on:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release ') && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'|| github.ref == 'refs/heads/experimental')
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'|| github.ref == 'refs/heads/experimental'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
