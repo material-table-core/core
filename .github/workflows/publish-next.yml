@@ -13,12 +13,12 @@ name: Publish Next
 
 on:
   push:
-    branches:
-      - next
+    tags:
+      - '*'
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release ')
+    if: startsWith(github.event.head_commit.message, 'Release ') && github.ref == 'refs/heads/next'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -12,14 +12,12 @@ name: Publish
 
 on:
   push:
-    branches:
-      - main
-      - master
-      - experimental
+    tags:
+      - '*'
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release ')
+    if: startsWith(github.event.head_commit.message, 'Release ') && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'|| github.ref == 'refs/heads/experimental')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
