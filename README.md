@@ -54,8 +54,8 @@
   
   Please review our [roadmap](https:/github.com/material-table-core/core/wiki/Roadmap)!
   
-💾 [Installation]( https://davidlemayian.github.io/material-table-core-website/docs/#installation) 🎉 [Usage]( https://material-table-core.github.io//docs/#basic-usage) 
-✅ [Why does this repo exist?](https://davidlemayian.github.io/material-table-core-website/docs/about) 🚧 [Documentation](https://material-table-core.github.io/docs) ⚙️ [Demos](https://material-table-core.github.io/demos/)
+💾 [Installation](https://material-table-core.github.io/docs/#installation) 🎉 [Usage](https://material-table-core.github.io//docs/#basic-usage) 
+✅ [Why does this repo exist?](https://material-table-core.github.io/docs/about) 🚧 [Documentation](https://material-table-core.github.io/docs) ⚙️ [Demos](https://material-table-core.github.io/demos/)
 </div>
 
 # Sponsoring
