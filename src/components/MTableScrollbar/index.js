@@ -1,10 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import DoubleScrollbar from 'react-double-scrollbar';
 
-const horizontalScrollContainer = {
+const doubleStyle = {
   overflowX: 'auto',
-  position: 'relative',
+  position: 'relative'
+};
+
+const singleStyle = {
+  ...doubleStyle,
   '& ::-webkit-scrollbar': {
     WebkitAppearance: 'none'
   },
@@ -12,18 +15,14 @@ const horizontalScrollContainer = {
     height: 8
   },
   '& ::-webkit-scrollbar-thumb': {
-    borderRadius: 4,
+    backgroundColor: 'rgba(0, 0, 0, .3)',
     border: '2px solid white',
-    backgroundColor: 'rgba(0, 0, 0, .3)'
+    borderRadius: 4
   }
 };
 
 const ScrollBar = ({ double, children }) => {
-  if (double) {
-    return <DoubleScrollbar>{children}</DoubleScrollbar>;
-  } else {
-    return <Box sx={horizontalScrollContainer}>{children}</Box>;
-  }
+  return <Box sx={double ? doubleStyle : singleStyle}>{children}</Box>;
 };
 
 export default ScrollBar;

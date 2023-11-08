@@ -121,7 +121,6 @@
     "deep-eql": "^4.1.1",
     "deepmerge": "^4.2.2",
     "prop-types": "^15.8.1",
-    "react-double-scrollbar": "0.0.15",
     "uuid": "^9.0.0",
     "zustand": "^4.3.0"
   },
