@@ -1080,6 +1080,7 @@ export function DetailPanelRemounting(props) {
       detailPanel={({ rowData }) => (
         <SubTable rowData={rowData} setSelection={setSelection} />
       )}
+      onDetailPanelChange={console.log}
       options={{
         selection: true
       }}

@@ -315,6 +315,7 @@ export default class DataManager {
     }
 
     this.lastDetailPanelRow = rowData;
+    return rowData;
   }
 
   changeGroupExpand(path) {

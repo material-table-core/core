@@ -96,6 +96,7 @@ export interface MaterialTableProps<RowData extends object> {
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query?: Query<RowData>) => void;
   onBulkEditOpen?: (isOpen: boolean) => void;
+  onDetailPanelChange?: (row: RowData, state: 'open' | 'closed') => void;
   renderSummaryRow?: ({
     columns,
     column,
