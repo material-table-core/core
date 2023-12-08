@@ -835,7 +835,6 @@ export default class MaterialTable extends React.Component {
   onToggleDetailPanel = (path, render) => {
     const row = this.dataManager.changeDetailPanelVisibility(path, render);
     this.setState(this.dataManager.getRenderState());
-    console.log(row, row.tableData.showDetailPanel ? 'open' : 'closed');
     this.props.onTreeExpandChange &&
       this.props.onDetailPanelChange(
         row,
