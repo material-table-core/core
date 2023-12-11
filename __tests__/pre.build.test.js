@@ -4,7 +4,8 @@ import {
   screen,
   fireEvent,
   waitForElementToBeRemoved,
-  within
+  within,
+  waitFor
 } from '@testing-library/react';
 
 import MaterialTable from '../src';
@@ -211,6 +212,35 @@ describe('Render Table : Pre Build', () => {
       ).toBeDisabled();
     });
   });
+
+  it('filters data in the search input until a maximum number of results has been reached', async () => {
+    const data = makeData().map((element) => ({
+      ...element,
+      firstName: `prefix_${element.firstName}`
+    }));
+    const onSearchChange = jest.fn();
+
+    render(
+      <MaterialTable
+        data={data}
+        columns={columns}
+        options={{ searchMaxResults: 10 }}
+        onSearchChange={onSearchChange}
+      />
+    );
+
+    fireEvent.input(
+      screen.getByRole('textbox', {
+        name: /search/i
+      }),
+      { target: { value: 'prefix' } }
+    );
+
+    await waitFor(() => {
+      expect(onSearchChange).toHaveBeenCalledWith('prefix', true);
+    });
+  });
+
   // Render table with column render function
   it('renders the render function in column', () => {
     const data = makeData();

@@ -49,7 +49,8 @@ import {
   TableWithNumberOfPagesAround,
   FixedColumnWithEdit,
   TableMultiSorting,
-  LocalizationWithCustomComponents
+  LocalizationWithCustomComponents,
+  LimitedSearchResults
 } from './demo-components';
 import { createRoot } from 'react-dom/client';
 import { I1353, I1941, I122 } from './demo-components/RemoteData';
@@ -154,7 +155,9 @@ function Demo() {
           <FixedColumnWithEdit />
           <h1>Localization with Custom Components</h1>
           <LocalizationWithCustomComponents />
-          <h1>Remote Data Related</h1>
+          <h1>Limited Search Results</h1>
+        <LimitedSearchResults />
+        <h1>Remote Data Related</h1>
           <ol>
             <li>
               <h3>
