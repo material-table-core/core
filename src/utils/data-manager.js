@@ -273,6 +273,13 @@ export default class DataManager {
     this.filtered = false;
   }
 
+  changeFilterOperator(columnId, operator) {
+    const column = this.columns.find((c) => c.tableData.id === columnId);
+
+    column.tableData.filterOperator = operator;
+    this.filtered = false;
+  }
+
   changeRowSelected(checked, path) {
     const rowData = this.findDataByPath(this.sortedData, path);
     rowData.tableData.checked = checked;
