@@ -1,3 +1,13 @@
+#### 6.3.1 (2023-12-11)
+
+##### New Features
+
+- add the option to change the filter operator ([#816](https://github.com/material-table-core/core/pull/816)) ([1a5084ae](https://github.com/material-table-core/core/commit/1a5084ae3d674350626ceb8fbfc52fda997577d7))
+
+##### Other Changes
+
+- material-table-core/core ([10a7834b](https://github.com/material-table-core/core/commit/10a7834b24c894f96a4e71d94447712e9301077b))
+
 ### 6.3.0 (2023-11-10)
 
 #### 6.2.11 (2023-10-05)
