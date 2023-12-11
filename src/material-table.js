@@ -788,8 +788,9 @@ export default class MaterialTable extends React.Component {
     }
   }, this.props.options.debounceInterval);
 
-  onFilterChange = (columnId, value) => {
+  onFilterChange = (columnId, value, operator = '=') => {
     this.dataManager.changeFilterValue(columnId, value);
+    this.dataManager.changeFilterOperator(columnId, operator);
     this.setState({}, this.onFilterChangeDebounce);
   };
 
@@ -801,7 +802,7 @@ export default class MaterialTable extends React.Component {
         .filter((a) => a.tableData.filterValue)
         .map((a) => ({
           column: a,
-          operator: '=',
+          operator: a.tableData.filterOperator,
           value: a.tableData.filterValue
         }));
 
@@ -815,7 +816,7 @@ export default class MaterialTable extends React.Component {
             .filter((a) => a.tableData.filterValue)
             .map((a) => ({
               column: a,
-              operator: '=',
+              operator: a.tableData.filterOperator,
               value: a.tableData.filterValue
             }));
           this.props.onFilterChange(appliedFilters);

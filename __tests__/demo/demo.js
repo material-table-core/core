@@ -48,6 +48,7 @@ import {
   TableWithSummary,
   TableWithNumberOfPagesAround,
   FixedColumnWithEdit,
+  FilterWithOperatorSelection,
   TableMultiSorting,
   LocalizationWithCustomComponents
 } from './demo-components';
@@ -154,6 +155,8 @@ function Demo() {
           <FixedColumnWithEdit />
           <h1>Localization with Custom Components</h1>
           <LocalizationWithCustomComponents />
+          <h1>Filter with operator selection</h1>
+          <FilterWithOperatorSelection />
           <h1>Remote Data Related</h1>
           <ol>
             <li>
