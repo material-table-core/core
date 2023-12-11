@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Box, Input, InputAdornment } from '@mui/material';
+import {
+  Box,
+  Input,
+  InputAdornment,
+  TextField,
+  Select,
+  MenuItem
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 // root of this project
@@ -1463,6 +1470,125 @@ export function LocalizationWithCustomComponents() {
       }}
       components={{
         Toolbar: CustomToolbar
+      }}
+    />
+  );
+}
+
+function CustomFilterWithOperatorSelection({ columnDef, onFilterChanged }) {
+  const [operator, setOperator] = React.useState('=');
+  const [value, setValue] = React.useState(undefined);
+  const operatorRef = React.useRef(operator);
+  const valueRef = React.useRef(value);
+
+  React.useEffect(() => {
+    if (operatorRef.current !== operator || valueRef.current !== value) {
+      onFilterChanged(columnDef.tableData.id, value, operator);
+      operatorRef.current = operator;
+      valueRef.current = value;
+    }
+  }, [operator, value]);
+
+  return (
+    <span>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        variant="standard"
+        value={operator}
+        onChange={(e) => setOperator(e.target.value)}
+      >
+        <MenuItem value={'='}>=</MenuItem>
+        <MenuItem value={'>'}>&gt;</MenuItem>
+        <MenuItem value={'<'}>&lt;</MenuItem>
+      </Select>
+      <TextField
+        variant="standard"
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </span>
+  );
+}
+
+const columns_with_custom_filter = [
+  { title: 'Name', field: 'name', filtering: true },
+  {
+    title: 'Some Number',
+    field: 'some_number',
+    filtering: true,
+    filterComponent: ({ columnDef, onFilterChanged }) => (
+      <CustomFilterWithOperatorSelection
+        columnDef={columnDef}
+        onFilterChanged={onFilterChanged}
+      />
+    )
+  }
+];
+
+const data_with_custom_filter = [
+  { name: 'Juan', some_number: 1 },
+  { name: 'John', some_number: 4 },
+  { name: 'Pedro', some_number: 8 },
+  { name: 'Mary', some_number: 12 },
+  { name: 'Oliver', some_number: 2 },
+  { name: 'Ignacio', some_number: 4 }
+];
+
+export function FilterWithOperatorSelection() {
+  return (
+    <MaterialTable
+      data={(query) =>
+        new Promise((resolve, _reject) => {
+          if (query.filters.length > 0) {
+            query.filters.forEach((filter) => {
+              if (
+                filter.value !== undefined &&
+                filter.value !== null &&
+                filter.value !== ''
+              ) {
+                switch (filter.operator) {
+                  case '=':
+                    resolve({
+                      data: data_with_custom_filter.filter(
+                        (row) => row[filter.column.field] == filter.value
+                      ),
+                      page: 1,
+                      totalCount: data_with_custom_filter.length
+                    });
+                    break;
+                  case '>':
+                    resolve({
+                      data: data_with_custom_filter.filter(
+                        (row) => row[filter.column.field] > filter.value
+                      ),
+                      page: 1,
+                      totalCount: data_with_custom_filter.length
+                    });
+                    break;
+                  case '<':
+                    resolve({
+                      data: data_with_custom_filter.filter(
+                        (row) => row[filter.column.field] < filter.value
+                      ),
+                      page: 1,
+                      totalCount: data_with_custom_filter.length
+                    });
+                    break;
+                }
+              }
+            });
+          }
+          resolve({
+            data: data_with_custom_filter,
+            page: 1,
+            totalCount: data_with_custom_filter.length
+          });
+        })
+      }
+      columns={columns_with_custom_filter}
+      options={{
+        search: false,
+        filtering: true
       }}
     />
   );
