@@ -215,7 +215,8 @@ export default class DataManager {
         return {
           orderBy: columnDef.tableData.id,
           sortOrder: undefined,
-          orderDirection: ''
+          orderDirection: '',
+          orderByField: columnDef.field
         };
       }
     });
