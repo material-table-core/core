@@ -12,6 +12,7 @@ export interface OrderByCollection {
   orderBy: number;
   orderDirection: string;
   sortOrder: number;
+  orderByField: string;
 }
 
 export interface MaterialTableProps<RowData extends object> {

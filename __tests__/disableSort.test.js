@@ -39,7 +39,8 @@ describe('Disabled Client Sorting', () => {
       {
         orderBy: 0,
         orderDirection: 'asc',
-        sortOrder: 0
+        sortOrder: 0,
+        orderByField: 'number'
       }
     ];
   });
@@ -62,7 +63,7 @@ describe('Disabled Client Sorting', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc' }
+      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
     ]);
 
     const cells = queryAllByTestId('mtablebodyrow').map((row) =>
@@ -93,7 +94,7 @@ describe('Disabled Client Sorting', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc' }
+      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
     ]);
 
     const cells = queryAllByTestId('mtablebodyrow').map((row) =>
