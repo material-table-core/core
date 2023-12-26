@@ -1,3 +1,9 @@
+#### 6.3.2 (2023-12-26)
+
+##### Other Changes
+
+- return rows of cancled edits ([f1191fb1](https://github.com/material-table-core/core/commit/f1191fb1b815b6a134e1461d5216bebdf90cdd95))
+
 #### 6.3.1 (2023-12-11)
 
 ##### New Features
