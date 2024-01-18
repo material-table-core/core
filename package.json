@@ -64,7 +64,6 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@material-table/exporters": "^1.0.12",
     "@mui/system": ">=5.10.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -106,17 +105,17 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.19.0",
-    "@date-io/core": "^2.16.0",
-    "@date-io/date-fns": "^2.16.0",
+    "@date-io/core": "^3.2.0",
+    "@date-io/date-fns": "^3.2.0",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@hello-pangea/dnd": "^16.0.0",
-    "@mui/icons-material": ">=5.10.6",
-    "@mui/material": ">=5.11.12",
-    "@mui/x-date-pickers": "^5.0.3",
+    "@mui/icons-material": ">=5.15.5",
+    "@mui/material": ">=5.15.5",
+    "@mui/x-date-pickers": "^6.19.0",
     "classnames": "^2.3.2",
-    "date-fns": "^2.29.3",
+    "date-fns": "^3.2.0",
     "debounce": "^1.2.1",
     "deep-eql": "^4.1.1",
     "deepmerge": "^4.2.2",
@@ -125,7 +124,7 @@
     "zustand": "^4.3.0"
   },
   "peerDependencies": {
-    "@mui/system": ">=5.10.7",
+    "@mui/system": ">=5.15.5",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   }
