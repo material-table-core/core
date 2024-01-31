@@ -699,6 +699,8 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     } else if (mode === 'delete') {
+      this.props.editable.onRowDeleteCancelled &&
+        this.props.editable.onRowDeleteCancelled(rowData);
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
