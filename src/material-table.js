@@ -465,9 +465,15 @@ export default class MaterialTable extends React.Component {
         (a) => a.tableData.id === orderBy
       );
       query.orderDirection = orderDirection;
-      console.warn(
-        'Properties orderBy and orderDirection had been deprecated when remote data, please start using orderByCollection instead'
-      );
+      /**
+       * THIS WILL NEED TO BE REMOVED EVENTUALLY.
+       * Warn consumer of deprecated prop.
+       */
+      if (query.orderDirection !== undefined || query.orderBy !== undefined) {
+        console.warn(
+          'Properties orderBy and orderDirection had been deprecated when remote data, please start using orderByCollection instead'
+        );
+      }
       query.orderByCollection = orderByCollection;
       this.onQueryChange(query, () => {
         this.props.onOrderChange &&
@@ -693,6 +699,8 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     } else if (mode === 'delete') {
+      this.props.editable.onRowDeleteCancelled &&
+        this.props.editable.onRowDeleteCancelled(rowData);
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
