@@ -93,11 +93,13 @@ MTableAction.defaultProps = {
 
 MTableAction.propTypes = {
   action: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
+  columns: PropTypes.array.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
+  onColumnsChanged: PropTypes.func.isRequired,
   size: PropTypes.string
 };
 

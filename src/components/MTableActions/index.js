@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 function MTableActions({
   actions,
+  columns,
   components,
   data,
+  onColumnsChanged,
   size,
   disabled,
   forwardedRef
@@ -18,8 +20,10 @@ function MTableActions({
         <components.Action
           action={action}
           key={'action-' + index}
+          columns={columns}
           data={data}
           size={size}
+          onColumnsChanged={onColumnsChanged}
           disabled={disabled}
         />
       ))}
@@ -33,6 +37,7 @@ MTableActions.defaultProps = {
 };
 
 MTableActions.propTypes = {
+  columns: PropTypes.array.isRequired,
   components: PropTypes.object.isRequired,
   actions: PropTypes.array.isRequired,
   data: PropTypes.oneOfType([
@@ -40,6 +45,7 @@ MTableActions.propTypes = {
     PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
+  onColumnsChanged: PropTypes.func.isRequired,
   size: PropTypes.string,
   forwardedRef: PropTypes.element
 };
