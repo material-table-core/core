@@ -10,6 +10,12 @@
 
 - material-table-core/core ([7fd916a0](https://github.com/material-table-core/core/commit/7fd916a09b4a0da15dcc6c16508047052e1fdfde))
 
+### 6.4.0 (2024-03-28)
+
+##### Other Changes
+
+- material-table-core/core ([7fd916a0](https://github.com/material-table-core/core/commit/7fd916a09b4a0da15dcc6c16508047052e1fdfde))
+
 #### 6.3.2 (2023-12-26)
 
 ##### Other Changes
