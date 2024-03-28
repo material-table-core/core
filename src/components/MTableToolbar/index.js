@@ -250,7 +250,7 @@ export function MTableToolbar(props) {
             }
             columns={props.columns}
             onColumnsChanged={(col, hidden) =>
-              props.onColumnsChanged(col, hidden)
+              props.onColumnsChanged && props.onColumnsChanged(col, hidden)
             }
             data={isSelectionActive ? selectedRows : undefined}
             components={props.components}
