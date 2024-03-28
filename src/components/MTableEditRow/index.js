@@ -181,7 +181,8 @@ function MTableEditRow(props) {
         style={{
           width: 42 * actions.length,
           padding: '0px 5px',
-          ...options.editCellStyle
+          ...options.editCellStyle,
+          ...options.actionsCellStyle
         }}
       >
         <props.components.Actions

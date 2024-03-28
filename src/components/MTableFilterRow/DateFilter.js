@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import TextField from '@mui/material/TextField';
 import { getLocalizedFilterPlaceHolder } from './utils';
 import {

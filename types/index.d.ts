@@ -51,6 +51,7 @@ export interface MaterialTableProps<RowData extends object> {
     editTooltip?: (rowData: RowData) => string;
     deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
+    onRowDeleteCancelled?: (rowData: RowData) => void;
     onRowUpdateCancelled?: (rowData: RowData) => void;
     isEditHidden?: (rowData: RowData) => boolean;
     isDeleteHidden?: (rowData: RowData) => boolean;
