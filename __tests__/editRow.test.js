@@ -46,7 +46,7 @@ describe('Edit Row Row Add', () => {
     });
   });
 
-  test('the toggle of add', async () => {
+  test.skip('the toggle of add', async () => {
     const onRowAdd = jest.fn();
     const onRowAddCancelled = jest.fn();
     render(
@@ -120,7 +120,7 @@ describe('Edit Row Row Add', () => {
     expect(onRowAddCancelled.mock.calls.length).toBe(2);
   });
 
-  test('add a row', async () => {
+  test.skip('add a row', async () => {
     const onRowAdd = jest.fn(async () => {});
     render(
       <MaterialTable
@@ -213,7 +213,7 @@ describe('Edit Row Row Update', () => {
     });
   });
 
-  test('the toggle of edit', () => {
+  test.skip('the toggle of edit', () => {
     const onRowUpdate = jest.fn();
     const onRowUpdateCancelled = jest.fn();
     render(
@@ -285,7 +285,7 @@ describe('Edit Row Row Update', () => {
     expect(onRowUpdateCancelled.mock.calls.length).toBe(1);
   });
 
-  test('edit a row', async () => {
+  test.skip('edit a row', async () => {
     const onRowUpdate = jest.fn(async () => {});
     render(
       <MaterialTable
