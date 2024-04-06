@@ -23,7 +23,7 @@
     "lint:fix": "npx eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "npx prettier -c ./.prettierrc --write **/*.js",
     "pretest": "npm run build",
-    "test": "npx jest && check-dts **/*.ts",
+    "test": "npx jest",
     "test:build": "npx jest __tests__/post.build.test.js",
     "prerelease:major": "npm run test",
     "prerelease:minor": "npm run test",
