@@ -248,6 +248,10 @@ export function MTableToolbar(props) {
               props.actions &&
               props.actions.filter((a) => a.position === diplayedActions)
             }
+            columns={props.columns}
+            onColumnsChanged={(col, hidden) =>
+              props.onColumnsChanged && props.onColumnsChanged(col, hidden)
+            }
             data={isSelectionActive ? selectedRows : undefined}
             components={props.components}
           />
