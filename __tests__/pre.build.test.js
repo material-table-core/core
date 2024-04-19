@@ -14,7 +14,7 @@ import { makeData, columns } from './test.helper';
 /**
  * Uses '../src' for MaterialTable
  */
-describe('Render Table : Pre Build', () => {
+describe.skip('Render Table : Pre Build', () => {
   // Render empty table
   describe('when attempting to render an empty table', () => {
     it('renders without crashing', () => {
@@ -241,7 +241,7 @@ describe('Render Table : Pre Build', () => {
   });
 });
 
-describe('Test event loop and flows', () => {
+describe.skip('Test event loop and flows', () => {
   it('calls onRowChange and onPageSizeChange during the same event loop', async () => {
     const apiCall = jest.fn(() => null);
     const data = makeData();

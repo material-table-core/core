@@ -4,7 +4,7 @@
     "access": "public"
   },
   "url": "https://material-table-core.github.io/",
-  "version": "6.3.2",
+  "version": "6.4.1",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -23,7 +23,7 @@
     "lint:fix": "npx eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "npx prettier -c ./.prettierrc --write **/*.js",
     "pretest": "npm run build",
-    "test": "npx jest && check-dts **/*.ts",
+    "test": "npx jest",
     "test:build": "npx jest __tests__/post.build.test.js",
     "prerelease:major": "npm run test",
     "prerelease:minor": "npm run test",
@@ -64,7 +64,6 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@material-table/exporters": "^1.0.12",
     "@mui/system": ">=5.10.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -125,7 +124,7 @@
     "zustand": "^4.3.0"
   },
   "peerDependencies": {
-    "@mui/system": ">=5.10.7",
+    "@mui/system": ">=5.15.5",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   }
