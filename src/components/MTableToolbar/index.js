@@ -318,7 +318,7 @@ export function MTableToolbar(props) {
   );
 }
 
-MTableToolbar.defaultProps = {
+const defaultProps = {
   actions: [],
   columns: [],
   columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)

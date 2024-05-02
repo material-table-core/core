@@ -15,23 +15,27 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, CircularProgress } from '@mui/material';
 
-function MTableEditCell(props) {
+function MTableEditCell({
+  columnDef = {},
+  localization = defaultProps.localization,
+  ...props
+}) {
   const [state, setState] = useState(() => ({
     isLoading: false,
-    value: props.rowData[props.columnDef.field]
+    value: props.rowData[columnDef.field]
   }));
 
   useEffect(() => {
     props.cellEditable
       .onCellEditApproved(
         state.value, // newValue
-        props.rowData[props.columnDef.field], // oldValue
+        props.rowData[columnDef.field], // oldValue
         props.rowData, // rowData with old value
-        props.columnDef // columnDef
+        columnDef // columnDef
       )
       .then(() => {
         setState({ ...state, isLoading: false });
-        props.onCellEditFinished(props.rowData, props.columnDef);
+        props.onCellEditFinished(props.rowData, columnDef);
       })
       .catch(() => {
         setState({ ...state, isLoading: false });
@@ -42,7 +46,7 @@ function MTableEditCell(props) {
     let cellStyle = {
       boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
       color: 'inherit',
-      width: props.columnDef.tableData.width,
+      width: columnDef.tableData.width,
       boxSizing: 'border-box',
       fontSize: 'inherit',
       fontFamily: 'inherit',
@@ -50,23 +54,19 @@ function MTableEditCell(props) {
       padding: '0 16px'
     };
 
-    if (typeof props.columnDef.cellStyle === 'function') {
+    if (typeof columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...props.columnDef.cellStyle(state.value, props.rowData)
+        ...columnDef.cellStyle(state.value, props.rowData)
       };
     } else {
-      cellStyle = { ...cellStyle, ...props.columnDef.cellStyle };
+      cellStyle = { ...cellStyle, ...columnDef.cellStyle };
     }
 
     if (typeof props.cellEditable.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...props.cellEditable.cellStyle(
-          state.value,
-          props.rowData,
-          props.columnDef
-        )
+        ...props.cellEditable.cellStyle(state.value, props.rowData, columnDef)
       };
     } else {
       cellStyle = { ...cellStyle, ...props.cellEditable.cellStyle };
@@ -88,7 +88,7 @@ function MTableEditCell(props) {
   };
 
   const onCancel = () => {
-    props.onCellEditFinished(props.rowData, props.columnDef);
+    props.onCellEditFinished(props.rowData, columnDef);
   };
 
   function renderActions() {
@@ -103,13 +103,13 @@ function MTableEditCell(props) {
     const actions = [
       {
         icon: props.icons.Check,
-        tooltip: props.localization && props.localization.saveTooltip,
+        tooltip: localization && localization.saveTooltip,
         onClick: onApprove,
         disabled: state.isLoading
       },
       {
         icon: props.icons.Clear,
-        tooltip: props.localization && props.localization.cancelTooltip,
+        tooltip: localization && localization.cancelTooltip,
         onClick: onCancel,
         disabled: state.isLoading
       }
@@ -134,7 +134,7 @@ function MTableEditCell(props) {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ flex: 1, marginRight: 4 }}>
           <props.components.EditField
-            columnDef={props.columnDef}
+            columnDef={columnDef}
             value={state.value}
             onChange={(prevState, value) => setState({ ...prevState, value })}
             onKeyDown={handleKeyDown}
@@ -149,8 +149,7 @@ function MTableEditCell(props) {
   );
 }
 
-MTableEditCell.defaultProps = {
-  columnDef: {},
+const defaultProps = {
   localization: {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel'

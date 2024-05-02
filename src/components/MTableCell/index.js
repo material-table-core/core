@@ -13,7 +13,7 @@ function MTableCell(props) {
     rowData,
     onCellEditStarted,
     cellEditable,
-    columnDef,
+    columnDef = {},
     errorState,
     ...spreadProps
   } = props;
@@ -70,11 +70,6 @@ function MTableCell(props) {
     </TableCell>
   );
 }
-
-MTableCell.defaultProps = {
-  columnDef: {},
-  value: undefined
-};
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,

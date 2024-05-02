@@ -74,7 +74,7 @@ function MTablePaginationInner(props) {
     count,
     page,
     rowsPerPage,
-    showFirstLastPageButtons,
+    showFirstLastPageButtons = true,
     numberOfPagesAround
   } = props;
 
@@ -182,9 +182,6 @@ MTablePaginationInner.propTypes = {
   ])
 };
 
-MTablePaginationInner.defaultProps = {
-  showFirstLastPageButtons: true
-};
 const MTableSteppedPaginationRef = React.forwardRef(
   function MTableSteppedPaginationRef(props, ref) {
     return <MTablePaginationInner {...props} forwardedRef={ref} />;

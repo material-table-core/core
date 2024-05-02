@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@mui/material';
 
-export default function MTableCustomIcon({ icon, iconProps }) {
+export default function MTableCustomIcon({ icon, iconProps = {} }) {
   if (!icon) {
     return;
   }
@@ -11,10 +11,6 @@ export default function MTableCustomIcon({ icon, iconProps }) {
   }
   return React.createElement(icon, { ...iconProps });
 }
-
-MTableCustomIcon.defaultProps = {
-  iconProps: {}
-};
 
 MTableCustomIcon.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.element, PropTypes.elementType])

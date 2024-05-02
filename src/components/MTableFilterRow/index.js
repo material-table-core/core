@@ -14,7 +14,11 @@ import { useOptionStore } from '@store/LocalizationStore';
  *
  * THIS MUST BE EXPORTED (on top of the 'default' export)
  */
-export function MTableFilterRow(props) {
+export function MTableFilterRow({
+  columns: propColumns = defaultProps.columns,
+  hasActions = false,
+  ...props
+}) {
   const options = useOptionStore();
   function getComponentForColumn(columnDef) {
     if (columnDef.filtering === false) {
@@ -35,7 +39,7 @@ export function MTableFilterRow(props) {
     }
   }
 
-  const columns = props.columns
+  const columns = propColumns
     .filter(
       (columnDef) => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
     )
@@ -60,7 +64,7 @@ export function MTableFilterRow(props) {
     );
   }
 
-  if (props.hasActions) {
+  if (hasActions) {
     if (options.actionsColumnIndex === -1) {
       columns.push(<TableCell key="key-action-column" />);
     } else {
@@ -94,7 +98,7 @@ export function MTableFilterRow(props) {
     );
   }
 
-  props.columns
+  columns
     .filter((columnDef) => columnDef.tableData.groupOrder > -1)
     .forEach((columnDef) => {
       columns.splice(
@@ -118,9 +122,8 @@ export function MTableFilterRow(props) {
   );
 }
 
-MTableFilterRow.defaultProps = {
+const defaultProps = {
   columns: [],
-  hasActions: false,
   localization: {
     filterTooltip: 'Filter'
   }
@@ -138,3 +141,5 @@ MTableFilterRow.propTypes = {
 export default React.forwardRef(function MTableFilterRowRef(props, ref) {
   return <MTableFilterRow {...props} forwardedRef={ref} />;
 });
+
+export { defaultProps };

@@ -13,7 +13,11 @@ import { useLocalizationStore, useIconStore, useOptionStore } from '@store';
 export function MTableHeader({
   onColumnResized,
   classes,
+  dataCount = 0,
+  selectedCount = 0,
   sx,
+  allowSorting = true,
+  orderByCollection = defaultProps.orderByCollection,
   columns,
   ...props
 }) {
@@ -249,7 +253,7 @@ export function MTableHeader({
                 >
                   {columnDef.sorting !== false &&
                   props.sorting &&
-                  props.allowSorting ? (
+                  allowSorting ? (
                     <RenderSortButton
                       columnDef={columnDef}
                       keepSortDirectionOnColumnSwitch={
@@ -258,7 +262,7 @@ export function MTableHeader({
                       icon={icons.SortArrow}
                       thirdSortClick={options.thirdSortClick}
                       onOrderChange={props.onOrderChange}
-                      orderByCollection={props.orderByCollection}
+                      orderByCollection={orderByCollection}
                       showColumnSortOrder={options.showColumnSortOrder}
                       sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
                     >
@@ -274,7 +278,7 @@ export function MTableHeader({
         } else if (
           columnDef.sorting !== false &&
           props.sorting &&
-          props.allowSorting
+          allowSorting
         ) {
           content = (
             <RenderSortButton
@@ -285,7 +289,7 @@ export function MTableHeader({
               icon={icons.SortArrow}
               thirdSortClick={options.thirdSortClick}
               onOrderChange={props.onOrderChange}
-              orderByCollection={props.orderByCollection}
+              orderByCollection={orderByCollection}
               showColumnSortOrder={options.showColumnSortOrder}
               sortOrderIndicatorStyle={options.sortOrderIndicatorStyle}
             >
@@ -354,12 +358,8 @@ export function MTableHeader({
       >
         {options.showSelectAllCheckbox && (
           <Checkbox
-            indeterminate={
-              props.selectedCount > 0 && props.selectedCount < props.dataCount
-            }
-            checked={
-              props.dataCount > 0 && props.selectedCount >= props.dataCount
-            }
+            indeterminate={selectedCount > 0 && selectedCount < dataCount}
+            checked={dataCount > 0 && selectedCount >= dataCount}
             onChange={(event, checked) =>
               props.onAllSelected && props.onAllSelected(checked)
             }
@@ -536,11 +536,8 @@ function RenderSortButton({
   );
 }
 
-MTableHeader.defaultProps = {
-  dataCount: 0,
-  selectedCount: 0,
-  orderByCollection: [],
-  allowSorting: true
+const defaultProps = {
+  orderByCollection: []
 };
 
 MTableHeader.propTypes = {

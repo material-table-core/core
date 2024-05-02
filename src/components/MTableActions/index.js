@@ -5,7 +5,7 @@ function MTableActions({
   actions,
   columns,
   components,
-  data,
+  data = {},
   onColumnsChanged,
   size,
   disabled,
@@ -30,11 +30,6 @@ function MTableActions({
     </div>
   );
 }
-
-MTableActions.defaultProps = {
-  actions: [],
-  data: {}
-};
 
 MTableActions.propTypes = {
   columns: PropTypes.array.isRequired,

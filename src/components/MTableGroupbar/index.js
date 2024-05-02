@@ -163,8 +163,6 @@ function MTableGroupbar(props) {
   );
 }
 
-MTableGroupbar.defaultProps = {};
-
 MTableGroupbar.propTypes = {
   forwardedRef: PropTypes.element,
   className: PropTypes.string,

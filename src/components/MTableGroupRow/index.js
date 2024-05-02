@@ -6,34 +6,39 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useOptionStore, useIconStore } from '@store';
 
-function MTableGroupRow(props) {
+function MTableGroupRow({
+  columns = defaultProps.columns,
+  groups = defaultProps.groups,
+  level = 0,
+  ...props
+}) {
   const options = useOptionStore();
   const icons = useIconStore();
   const rotateIconStyle = (isOpen) => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
-  let colSpan = props.columns.filter((columnDef) => !columnDef.hidden).length;
+  let colSpan = columns.filter((columnDef) => !columnDef.hidden).length;
   options.selection && colSpan++;
   props.detailPanel && colSpan++;
   props.actions && props.actions.length > 0 && colSpan++;
-  const column = props.groups[props.level];
+  const column = groups[level];
 
   let detail;
   if (props.groupData.isExpanded) {
-    if (props.groups.length > props.level + 1) {
+    if (groups.length > level + 1) {
       // Is there another group
       detail = props.groupData.groups.map((groupData, index) => (
         <props.components.GroupRow
           actions={props.actions}
           key={groupData.value || '' + index}
-          columns={props.columns}
+          columns={columns}
           components={props.components}
           detailPanel={props.detailPanel}
           getFieldValue={props.getFieldValue}
           groupData={groupData}
-          groups={props.groups}
-          level={props.level + 1}
+          groups={groups}
+          level={level + 1}
           path={[...props.path, index]}
           onGroupExpandChanged={props.onGroupExpandChanged}
           onGroupSelected={props.onGroupSelected}
@@ -57,7 +62,7 @@ function MTableGroupRow(props) {
         if (rowData.tableData.editing) {
           return (
             <props.components.EditRow
-              columns={props.columns}
+              columns={columns}
               components={props.components}
               data={rowData}
               path={[...props.path, rowData.tableData.uuid]}
@@ -78,11 +83,11 @@ function MTableGroupRow(props) {
             <props.components.Row
               actions={props.actions}
               key={index}
-              columns={props.columns}
+              columns={columns}
               components={props.components}
               data={rowData}
               detailPanel={props.detailPanel}
-              level={(props.level || 0) + 1}
+              level={level + 1}
               getFieldValue={props.getFieldValue}
               path={[...props.path, rowData.tableData.uuid]}
               onRowSelected={props.onRowSelected}
@@ -106,7 +111,7 @@ function MTableGroupRow(props) {
   }
 
   const freeCells = [];
-  for (let i = 0; i < props.level; i++) {
+  for (let i = 0; i < level; i++) {
     freeCells.push(<TableCell padding="checkbox" key={i} />);
   }
 
@@ -204,10 +209,9 @@ function MTableGroupRow(props) {
   );
 }
 
-MTableGroupRow.defaultProps = {
+const defaultProps = {
   columns: [],
-  groups: [],
-  level: 0
+  groups: []
 };
 
 MTableGroupRow.propTypes = {

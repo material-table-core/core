@@ -5,18 +5,24 @@ import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-function MTableAction(props) {
-  let action = props.action;
+function MTableAction({
+  action: propsAction = defaultProps.action,
+  data = defaultProps.data,
+  size,
+  forwardedRef,
+  disabled
+}) {
+  let action = propsAction.action;
 
   if (typeof action === 'function') {
-    action = action(props.data);
+    action = action(data);
     if (!action) {
       return null;
     }
   }
 
   if (action.action) {
-    action = action.action(props.data);
+    action = action.action(data);
     if (!action) {
       return null;
     }
@@ -26,11 +32,11 @@ function MTableAction(props) {
     return null;
   }
 
-  const disabled = action.disabled || props.disabled;
+  const isDisabled = action.disabled || disabled;
 
   const handleOnClick = (event) => {
     if (action.onClick) {
-      action.onClick(event, props.data);
+      action.onClick(event, data);
       event.stopPropagation();
     }
   };
@@ -39,7 +45,7 @@ function MTableAction(props) {
   // The event name is the key, and the value is the handler func.
   const handlers = action.handlers || {};
   const eventHandlers = Object.entries(handlers).reduce((o, [k, v]) => {
-    o[k] = (e) => v(e, props.data);
+    o[k] = (e) => v(e, data);
     return o;
   }, {});
 
@@ -60,10 +66,10 @@ function MTableAction(props) {
 
   const button = (
     <IconButton
-      ref={props.forwardedRef}
-      size={props.size}
+      ref={forwardedRef}
+      size={size}
       color="inherit"
-      disabled={disabled}
+      disabled={isDisabled}
       onClick={handleOnClick}
       {...eventHandlers}
     >
@@ -86,7 +92,7 @@ function MTableAction(props) {
   }
 }
 
-MTableAction.defaultProps = {
+const defaultProps = {
   action: {},
   data: {}
 };

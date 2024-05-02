@@ -1,7 +1,7 @@
-import { MTableFilterRow } from './';
+import { defaultProps } from './';
 
 export const getLocalizationData = (localization) => ({
-  ...MTableFilterRow.defaultProps.localization,
+  ...defaultProps.localization,
   ...localization
 });
 

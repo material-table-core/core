@@ -9,10 +9,10 @@ import {
   useLocalizationStore
 } from './store/LocalizationStore';
 
-MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
-export default withContext((props) => {
+export default withContext((userProps) => {
+  const props = { ...defaultProps, ...userProps };
   const theme = useTheme();
   const { localization, options, components } = useMergeProps(props);
   return (

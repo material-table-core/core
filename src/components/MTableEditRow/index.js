@@ -312,7 +312,7 @@ function MTableEditRow(props) {
     scrollWidth,
     forwardedRef,
     ...rowProps
-  } = props;
+  } = { ...defaultProps, ...props };
 
   return (
     <TableRow
@@ -326,7 +326,7 @@ function MTableEditRow(props) {
   );
 }
 
-MTableEditRow.defaultProps = {
+const defaultProps = {
   actions: [],
   index: 0,
   options: {},

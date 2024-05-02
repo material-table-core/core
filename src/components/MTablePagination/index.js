@@ -46,7 +46,7 @@ function MTablePagination(props) {
     );
   };
 
-  const { count, page, rowsPerPage, showFirstLastPageButtons } = props;
+  const { count, page, rowsPerPage, showFirstLastPageButtons = true } = props;
 
   const { first, last } = CommonValues.parseFirstLastPageButtons(
     showFirstLastPageButtons,
@@ -164,10 +164,6 @@ MTablePagination.propTypes = {
     PropTypes.bool
   ]),
   forwardedRef: PropTypes.func
-};
-
-MTablePagination.defaultProps = {
-  showFirstLastPageButtons: true
 };
 
 const MTableGroupRowRef = React.forwardRef(function MTablePaginationRef(
