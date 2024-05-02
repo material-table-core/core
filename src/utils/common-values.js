@@ -1,7 +1,9 @@
-export const elementSize = (props) =>
-  props.options.padding === 'normal' ? 'medium' : 'small';
+export const elementSize = ({ options = {} }) =>
+  options.padding === 'normal' ? 'medium' : 'small';
+
 export const baseIconSize = (props) =>
   elementSize(props) === 'medium' ? 48 : 32;
+
 export const rowActions = (props) =>
   props.actions
     ? props.actions.filter(
