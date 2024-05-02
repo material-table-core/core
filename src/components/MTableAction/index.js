@@ -12,7 +12,7 @@ function MTableAction({
   forwardedRef,
   disabled
 }) {
-  let action = propsAction.action;
+  let action = propsAction;
 
   if (typeof action === 'function') {
     action = action(data);
