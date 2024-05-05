@@ -293,7 +293,7 @@ MTableBody.propTypes = {
   renderData: PropTypes.array,
   renderSummaryRow: PropTypes.func,
   scrollWidth: PropTypes.number.isRequired,
-  selection: PropTypes.bool.isRequired,
+  selection: PropTypes.bool,
   showAddRow: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number
 };
