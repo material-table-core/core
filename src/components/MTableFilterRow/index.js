@@ -98,7 +98,7 @@ export function MTableFilterRow({
     );
   }
 
-  columns
+  propColumns
     .filter((columnDef) => columnDef.tableData.groupOrder > -1)
     .forEach((columnDef) => {
       columns.splice(
