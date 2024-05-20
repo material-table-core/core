@@ -137,6 +137,7 @@ export default class DataManager {
       const tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
+        filterOperator: columnDef.defaultFilterOperator || '=',
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || 'asc',
         width,

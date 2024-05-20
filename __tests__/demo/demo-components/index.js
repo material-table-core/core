@@ -1476,8 +1476,10 @@ export function LocalizationWithCustomComponents() {
 }
 
 function CustomFilterWithOperatorSelection({ columnDef, onFilterChanged }) {
-  const [operator, setOperator] = React.useState('=');
-  const [value, setValue] = React.useState(undefined);
+  const [operator, setOperator] = React.useState(
+    columnDef.tableData.filterOperator
+  );
+  const [value, setValue] = React.useState(columnDef.defaultFilter);
   const operatorRef = React.useRef(operator);
   const valueRef = React.useRef(value);
 
@@ -1504,6 +1506,7 @@ function CustomFilterWithOperatorSelection({ columnDef, onFilterChanged }) {
       </Select>
       <TextField
         variant="standard"
+        value={value}
         onChange={(e) => setValue(e.target.value)}
       />
     </span>
@@ -1525,6 +1528,23 @@ const columns_with_custom_filter = [
   }
 ];
 
+const columns_with_custom_filter_and_default_filter = [
+  { title: 'Name', field: 'name', filtering: true },
+  {
+    title: 'Some Number',
+    field: 'some_number',
+    filtering: true,
+    defaultFilter: '4',
+    defaultFilterOperator: '>',
+    filterComponent: ({ columnDef, onFilterChanged }) => (
+      <CustomFilterWithOperatorSelection
+        columnDef={columnDef}
+        onFilterChanged={onFilterChanged}
+      />
+    )
+  }
+];
+
 const data_with_custom_filter = [
   { name: 'Juan', some_number: 1 },
   { name: 'John', some_number: 4 },
@@ -1534,7 +1554,7 @@ const data_with_custom_filter = [
   { name: 'Ignacio', some_number: 4 }
 ];
 
-export function FilterWithOperatorSelection() {
+export function FilterWithOperatorSelection({ withDefaultFilter = false }) {
   return (
     <MaterialTable
       data={(query) =>
@@ -1585,7 +1605,11 @@ export function FilterWithOperatorSelection() {
           });
         })
       }
-      columns={columns_with_custom_filter}
+      columns={
+        withDefaultFilter
+          ? columns_with_custom_filter_and_default_filter
+          : columns_with_custom_filter
+      }
       options={{
         search: false,
         filtering: true

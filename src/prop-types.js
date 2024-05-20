@@ -67,6 +67,7 @@ export const propTypes = {
       customSort: PropTypes.func,
       customExport: PropTypes.func,
       defaultFilter: PropTypes.any,
+      defaultFilterOperator: PropTypes.string,
       defaultSort: PropTypes.oneOf(['asc', 'desc']),
       editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
       emptyValue: PropTypes.oneOfType([
