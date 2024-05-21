@@ -1,3 +1,9 @@
+#### 6.4.4 (2024-05-21)
+
+##### Other Changes
+
+- fix README broken parts and use md over html tags ([#848](https://github.com/material-table-core/core/pull/848)) ([2c12e400](https://github.com/material-table-core/core/commit/2c12e400e79daa157887ae6b57f257c0f99f27cb))
+
 #### 6.4.3 (2024-05-05)
 
 #### 6.4.2 (2024-05-02)
