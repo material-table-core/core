@@ -1,66 +1,31 @@
 <div align="center">
   <!-- Title -->
-  <h1>@material-table/core</h1>
+
+# @material-table/core
+
   <!-- Subtitle : a fork of mbrn/material-table -->
-  <h4>
-    a fork of 
-    <code>
-      <a 
-        target="_blank" 
-        href="https://material-table.com"
-      >
-        mbrn/material-table
-      </a>
-    </code>
-  </h4>
+
+**A fork of [`mbrn/material-table`](https://material-table.com)**
+
   <!-- * Badges * -->
-  <p>
-    <section>
-      <!-- build status -->
-      <a href="https:/github.com/material-table-core/core/actions?query=workflow%3ABuild">
-        <img 
-          title="Build" 
-          src="https:/github.com/material-table-core/core/workflows/Build/badge.svg?branch=master"
-        >
-      </a>
-      <!-- publish status -->
-      <!--
-      <a href="https:/github.com/material-table-core/core/actions?query=workflow%3APublish">
-        <img 
-          title="Publish" 
-          src="https:/github.com/material-table-core/core/workflows/Publish/badge.svg"
-        >
-      </a>
-      -->
-      <!-- npm package -->
-      <a href="https:/www.npmjs.com/package/@material-table/core">
-        <img 
-          title="npm_package" 
-          src="https:/badge.fury.io/js/%40material-table%2Fcore.svg"
-        >
-      </a>
-    </section>
-    <section>
-      <!-- discord -->
-      <a href="https:/discord.gg/uMr8pKDu8n">
-        <img 
-           alt="Discord" 
-           src="https:/img.shields.io/discord/796859493412765697?label=discord"
-         >
-      </a>    
-    </section>
-  </p> 
+
+[![build](https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master)](https://github.com/material-table-core/core/actions?query=workflow%3ABuild)
+[![publish](https://github.com/material-table-core/core/actions/workflows/publish.yml/badge.svg)](https://github.com/material-table-core/core/actions?query=workflow%3APublish)
+[![npm version](https://badge.fury.io/js/@material-table%2Fcore.svg)](https://www.npmjs.com/package/@material-table/core)
+[![discord](https://img.shields.io/discord/796859493412765697)](https://discord.gg/uMr8pKDu8n)
+
   <!-- ^^^ end badges ^^ -->
-  
-  Please review our [roadmap](https:/github.com/material-table-core/core/wiki/Roadmap)!
-  
-💾 [Installation](https://material-table-core.github.io/docs/#installation) 🎉 [Usage](https://material-table-core.github.io//docs/#basic-usage) 
+
+Please review our [roadmap](https://github.com/material-table-core/core/wiki/Roadmap)!
+
+💾 [Installation](https://material-table-core.github.io/docs/#installation) 🎉 [Usage](https://material-table-core.github.io//docs/#basic-usage)
 ✅ [Why does this repo exist?](https://material-table-core.github.io/docs/about) 🚧 [Documentation](https://material-table-core.github.io/docs) ⚙️ [Demos](https://material-table-core.github.io/demos/)
+
 </div>
 
 # Sponsoring
 
-We are now able to be sponsored via [Github Sponsors](https:/github.com/sponsors/material-table-core?o=esb) or [Open collective](https:/opencollective.com/material-table-core)!
+We are now able to be sponsored via [Github Sponsors](https://github.com/sponsors/material-table-core?o=esb) or [Open collective](https://opencollective.com/material-table-core)!
 So if you want to help us maintain this package, everything is appreciated.
 
 # Contributing
@@ -69,6 +34,6 @@ Thanks for taking interest in contributing! :rocket: In being a community based 
 
 **Urgent items include**:
 
-- Get rid of [`data-manager.js`](https:/github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https:/github.com/material-table-core/core/tree/context/src/store) via the `context` branch
-- Documentation over at [`material-table-core/website`](https:/github.com/material-table-core/website)
+- Get rid of [`data-manager.js`](https://github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https://github.com/material-table-core/core/tree/context/src/store) via the `context` branch
+- Documentation over at [`material-table-core/website`](https://github.com/material-table-core/website)
 - Implementing tests via Jest
