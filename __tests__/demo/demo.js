@@ -157,6 +157,8 @@ function Demo() {
           <LocalizationWithCustomComponents />
           <h1>Filter with operator selection</h1>
           <FilterWithOperatorSelection />
+          <h1>Filter with operator selection and default operator</h1>
+          <FilterWithOperatorSelection withDefaultFilter />
           <h1>Remote Data Related</h1>
           <ol>
             <li>

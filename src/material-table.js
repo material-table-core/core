@@ -37,7 +37,7 @@ export default class MaterialTable extends React.Component {
           .filter((a) => a.tableData.filterValue)
           .map((a) => ({
             column: a,
-            operator: '=',
+            operator: a.tableData.filterOperator,
             value: a.tableData.filterValue
           })),
         orderBy: renderState.columns.find(
