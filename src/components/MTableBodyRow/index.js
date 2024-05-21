@@ -456,7 +456,7 @@ function MTableBodyRow({ forwardedRef, ...props }) {
                 components={props.components}
                 data={data}
                 icons={icons}
-                localization={localization}
+                localization={localization.editRow}
                 getFieldValue={props.getFieldValue}
                 key={index}
                 mode={data.tableData.editing}
