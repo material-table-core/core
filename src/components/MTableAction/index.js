@@ -80,7 +80,7 @@ function MTableAction({
   if (action.tooltip) {
     // fix for issue #1049
     // https://github.com/mbrn/material-table/issues/1049
-    return disabled ? (
+    return isDisabled ? (
       <Tooltip title={action.tooltip}>
         <span>{button}</span>
       </Tooltip>
