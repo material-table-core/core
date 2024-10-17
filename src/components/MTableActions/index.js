@@ -32,7 +32,7 @@ function MTableActions({
 }
 
 MTableActions.propTypes = {
-  columns: PropTypes.array.isRequired,
+  columns: PropTypes.array,
   components: PropTypes.object.isRequired,
   actions: PropTypes.array.isRequired,
   data: PropTypes.oneOfType([
@@ -40,7 +40,7 @@ MTableActions.propTypes = {
     PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
-  onColumnsChanged: PropTypes.func.isRequired,
+  onColumnsChanged: PropTypes.func,
   size: PropTypes.string,
   forwardedRef: PropTypes.element
 };
