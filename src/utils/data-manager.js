@@ -1110,14 +1110,20 @@ export default class DataManager {
 
           if (!group) {
             const path = [...(o.path || []), value];
+            let isDefaultExpanded = false;
+            switch (typeof this.defaultExpanded) {
+              case 'boolean':
+                isDefaultExpanded = this.defaultExpanded;
+                break;
+              case 'function':
+                isDefaultExpanded = this.defaultExpanded(currentRow);
+                break;
+            }
             const oldGroup = this.findGroupByGroupPath(
               this.groupedData,
               path
             ) || {
-              isExpanded:
-                typeof this.defaultExpanded === 'boolean'
-                  ? this.defaultExpanded
-                  : false
+              isExpanded: isDefaultExpanded
             };
 
             group = {
@@ -1227,10 +1233,15 @@ export default class DataManager {
         !this.columns.some((columnDef) => columnDef.tableData.filterValue)
       ) {
         if (rowData.tableData.isTreeExpanded === undefined) {
-          const isExpanded =
-            typeof this.defaultExpanded === 'boolean'
-              ? this.defaultExpanded
-              : this.defaultExpanded(rowData);
+          let isExpanded = false;
+          switch (typeof this.defaultExpanded) {
+            case 'boolean':
+              isDefaultExpanded = this.defaultExpanded;
+              break;
+            case 'function':
+              isDefaultExpanded = this.defaultExpanded(rowData);
+              break;
+          }
           rowData.tableData.isTreeExpanded = isExpanded;
         }
       }

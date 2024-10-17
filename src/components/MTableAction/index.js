@@ -80,7 +80,7 @@ function MTableAction({
   if (action.tooltip) {
     // fix for issue #1049
     // https://github.com/mbrn/material-table/issues/1049
-    return disabled ? (
+    return isDisabled ? (
       <Tooltip title={action.tooltip}>
         <span>{button}</span>
       </Tooltip>
@@ -99,12 +99,13 @@ const defaultProps = {
 
 MTableAction.propTypes = {
   action: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
+  columns: PropTypes.array,
   data: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
-  onColumnsChanged: PropTypes.func.isRequired,
+  onColumnsChanged: PropTypes.func,
   size: PropTypes.string
 };
 
