@@ -23,6 +23,8 @@ Please review our [roadmap](https://github.com/material-table-core/core/wiki/Roa
 
 </div>
 
+# Mui V6 is currently in progress 
+
 # Sponsoring
 
 We are now able to be sponsored via [Github Sponsors](https://github.com/sponsors/material-table-core?o=esb) or [Open collective](https://opencollective.com/material-table-core)!
