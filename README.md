@@ -1,41 +1,82 @@
 <div align="center">
-  <!-- Title -->
 
 # @material-table/core
 
-  <!-- Subtitle : a fork of mbrn/material-table -->
-
-**A fork of [`mbrn/material-table`](https://material-table.com)**
-
-  <!-- * Badges * -->
+**A highly customizable table library built on Material UI, forked from [`mbrn/material-table`](https://material-table.com)**
 
 [![build](https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master)](https://github.com/material-table-core/core/actions?query=workflow%3ABuild)
 [![publish](https://github.com/material-table-core/core/actions/workflows/publish.yml/badge.svg)](https://github.com/material-table-core/core/actions?query=workflow%3APublish)
 [![npm version](https://badge.fury.io/js/@material-table%2Fcore.svg)](https://www.npmjs.com/package/@material-table/core)
 [![discord](https://img.shields.io/discord/796859493412765697)](https://discord.gg/uMr8pKDu8n)
 
-  <!-- ^^^ end badges ^^ -->
+---
 
-Please review our [roadmap](https://github.com/material-table-core/core/wiki/Roadmap)!
+Check out our [**roadmap**](https://github.com/material-table-core/core/wiki/Roadmap) for upcoming features and improvements.
 
-💾 [Installation](https://material-table-core.github.io/docs/#installation) 🎉 [Usage](https://material-table-core.github.io//docs/#basic-usage)
-✅ [Why does this repo exist?](https://material-table-core.github.io/docs/about) 🚧 [Documentation](https://material-table-core.github.io/docs) ⚙️ [Demos](https://material-table-core.github.io/demos/)
+💾 [**Installation**](https://material-table-core.github.io/docs/#installation) • 🎉 [**Basic Usage**](https://material-table-core.github.io/docs/#basic-usage)  
+✅ [**Why this repo exists?**](https://material-table-core.github.io/docs/about) • 🚧 [**Documentation**](https://material-table-core.github.io/docs) • ⚙️ [**Demos**](https://material-table-core.github.io/demos/)
 
 </div>
 
-# Mui V6 is currently in progress
+---
 
-# Sponsoring
+## 🚧 Mui V6 Support is in Progress
 
-We are now able to be sponsored via [Github Sponsors](https://github.com/sponsors/material-table-core?o=esb) or [Open collective](https://opencollective.com/material-table-core)!
-So if you want to help us maintain this package, everything is appreciated.
+The team is working on migrating the library to be fully compatible with Material UI V6. Stay tuned!
 
-# Contributing
+---
 
-Thanks for taking interest in contributing! :rocket: In being a community based repository, we wouldn't be here without you!
+## 🛠️ Installation
 
-**Urgent items include**:
+Install `@material-table/core` using npm or yarn:
 
-- Get rid of [`data-manager.js`](https://github.com/material-table-core/core/blob/master/src/utils/data-manager.js) (which is a homegrown global state manager of sorts) and integrate [React context](https://github.com/material-table-core/core/tree/context/src/store) via the `context` branch
-- Documentation over at [`material-table-core/website`](https://github.com/material-table-core/website)
-- Implementing tests via Jest
+```bash
+npm install @material-table/core
+or
+
+bash
+Code kopieren
+yarn add @material-table/core
+Refer to the installation guide for more information and advanced usage.
+
+💡 Basic Usage
+javascript
+Code kopieren
+import MaterialTable from '@material-table/core';
+
+function MyTable() {
+  return (
+    <MaterialTable
+      title="Simple Table"
+      columns={[
+        { title: 'Name', field: 'name' },
+        { title: 'Age', field: 'age', type: 'numeric' },
+      ]}
+      data={[
+        { name: 'John', age: 30 },
+        { name: 'Jane', age: 25 },
+      ]}
+      options={{
+        sorting: true,
+        filtering: true,
+      }}
+    />
+  );
+}
+```
+# Explore more features and advanced usage in our documentation.
+
+## 🙌 Sponsorship
+We appreciate contributions and sponsorships! You can support this project through:
+
+## GitHub Sponsors
+Open Collective
+Your support helps us maintain and improve the project.
+
+## 🚀 Contributing
+Thank you for considering contributing to the project! The following items are in urgent need of attention:
+
+Refactor: Replace data-manager.js with React Context.
+Documentation: Help us improve the docs.
+Tests: Implement unit tests using Jest to improve stability.
+We appreciate all contributions, big or small. Check out our contributing guide for more details.
