@@ -1176,6 +1176,7 @@ export default class MaterialTable extends React.Component {
               minHeight: props.options.minBodyHeight,
               overflowY: props.options.overflowY
             }}
+            ref={this.tableContainerDiv}
             double={props.options.doubleHorizontalScroll}
           >
             <Droppable droppableId="headers" direction="horizontal">
@@ -1183,74 +1184,72 @@ export default class MaterialTable extends React.Component {
                 const table = this.renderTable(props);
                 return (
                   <div ref={provided.innerRef}>
-                    <div ref={this.tableContainerDiv}>
-                      {this.state.width &&
-                      props.options.fixedColumns &&
-                      props.options.fixedColumns.right ? (
+                    {this.state.width &&
+                    props.options.fixedColumns &&
+                    props.options.fixedColumns.right ? (
+                      <div
+                        style={{
+                          width: this.getColumnsWidth(
+                            props,
+                            -1 * props.options.fixedColumns.right
+                          ),
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                          boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
+                          overflowX: 'clip',
+                          zIndex: 11
+                        }}
+                      >
                         <div
                           style={{
-                            width: this.getColumnsWidth(
+                            width: this.state.width,
+                            background: 'white',
+                            transform: `translateX(calc(${this.getColumnsWidth(
                               props,
                               -1 * props.options.fixedColumns.right
-                            ),
-                            position: 'absolute',
-                            top: 0,
-                            right: 0,
-                            boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
-                            overflowX: 'clip',
-                            zIndex: 11
+                            )} - 100%))`
                           }}
                         >
-                          <div
-                            style={{
-                              width: this.state.width,
-                              background: 'white',
-                              transform: `translateX(calc(${this.getColumnsWidth(
-                                props,
-                                -1 * props.options.fixedColumns.right
-                              )} - 100%))`
-                            }}
-                          >
-                            {table}
-                          </div>
+                          {table}
                         </div>
-                      ) : null}
+                      </div>
+                    ) : null}
 
-                      <div>{table}</div>
+                    <div>{table}</div>
 
-                      {this.state.width &&
-                      props.options.fixedColumns &&
-                      props.options.fixedColumns.left ? (
+                    {this.state.width &&
+                    props.options.fixedColumns &&
+                    props.options.fixedColumns.left ? (
+                      <div
+                        style={{
+                          width: this.getColumnsWidth(
+                            props,
+                            props.options.fixedColumns.left
+                          ),
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
+                          overflowX: 'clip',
+                          zIndex: 11
+                        }}
+                      >
                         <div
                           style={{
-                            width: this.getColumnsWidth(
-                              props,
-                              props.options.fixedColumns.left
-                            ),
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
-                            overflowX: 'clip',
-                            zIndex: 11
+                            width: this.state.width,
+                            background: 'white'
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Tab') {
+                              e.preventDefault();
+                            }
                           }}
                         >
-                          <div
-                            style={{
-                              width: this.state.width,
-                              background: 'white'
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Tab') {
-                                e.preventDefault();
-                              }
-                            }}
-                          >
-                            {table}
-                          </div>
+                          {table}
                         </div>
-                      ) : null}
-                    </div>
+                      </div>
+                    ) : null}
                     {provided.placeholder}
                   </div>
                 );

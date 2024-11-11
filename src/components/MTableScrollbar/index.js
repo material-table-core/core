@@ -21,9 +21,9 @@ const singleStyle = {
   }
 };
 
-const ScrollBar = ({ double, children, style }) => {
+const ScrollBar = ({ double, children, ...props }) => {
   return (
-    <Box style={style} sx={double ? doubleStyle : singleStyle}>
+    <Box sx={double ? doubleStyle : singleStyle} {...props}>
       {children}
     </Box>
   );
