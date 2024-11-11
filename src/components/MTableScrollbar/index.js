@@ -21,8 +21,12 @@ const singleStyle = {
   }
 };
 
-const ScrollBar = ({ double, children }) => {
-  return <Box sx={double ? doubleStyle : singleStyle}>{children}</Box>;
+const ScrollBar = ({ double, children, style }) => {
+  return (
+    <Box style={style} sx={double ? doubleStyle : singleStyle}>
+      {children}
+    </Box>
+  );
 };
 
 export default ScrollBar;

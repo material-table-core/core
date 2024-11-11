@@ -1170,19 +1170,20 @@ export default class MaterialTable extends React.Component {
               persistentGroupingsId={props.options.persistentGroupingsId}
             />
           )}
-          <MTableScrollbar double={props.options.doubleHorizontalScroll}>
+          <MTableScrollbar
+            style={{
+              maxHeight: props.options.maxBodyHeight,
+              minHeight: props.options.minBodyHeight,
+              overflowY: props.options.overflowY
+            }}
+            double={props.options.doubleHorizontalScroll}
+          >
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
                 return (
                   <div ref={provided.innerRef}>
-                    <div
-                      ref={this.tableContainerDiv}
-                      style={{
-                        maxHeight: props.options.maxBodyHeight,
-                        minHeight: props.options.minBodyHeight
-                      }}
-                    >
+                    <div ref={this.tableContainerDiv}>
                       {this.state.width &&
                       props.options.fixedColumns &&
                       props.options.fixedColumns.right ? (
