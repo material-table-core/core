@@ -176,8 +176,8 @@ export default class DataManager {
 
     this.tableStyleWidth =
       this.tableWidth === 'full' ||
-        undefWidthCols.length > 0 ||
-        usedWidthNotPx.length > 0
+      undefWidthCols.length > 0 ||
+      usedWidthNotPx.length > 0
         ? '100%'
         : usedWidthPx;
   }
@@ -930,7 +930,7 @@ export default class DataManager {
       this.treefied =
       this.sorted =
       this.paged =
-      false;
+        false;
 
     this.filteredData = [...this.data];
 
@@ -1112,13 +1112,12 @@ export default class DataManager {
             const path = [...(o.path || []), value];
             let isDefaultExpanded = false;
             switch (typeof this.defaultExpanded) {
-              case "boolean":
+              case 'boolean':
                 isDefaultExpanded = this.defaultExpanded;
                 break;
-              case "function":
+              case 'function':
                 isDefaultExpanded = this.defaultExpanded(currentRow);
                 break;
-
             }
             const oldGroup = this.findGroupByGroupPath(
               this.groupedData,
@@ -1236,11 +1235,11 @@ export default class DataManager {
         if (rowData.tableData.isTreeExpanded === undefined) {
           let isExpanded = false;
           switch (typeof this.defaultExpanded) {
-            case "boolean":
-              isDefaultExpanded = this.defaultExpanded;
+            case 'boolean':
+              isExpanded = this.defaultExpanded;
               break;
-            case "function":
-              isDefaultExpanded = this.defaultExpanded(rowData);
+            case 'function':
+              isExpanded = this.defaultExpanded(rowData);
               break;
           }
           rowData.tableData.isTreeExpanded = isExpanded;
@@ -1291,19 +1290,19 @@ export default class DataManager {
           return list.sort(
             columnDef.tableData.groupSort === 'desc'
               ? (a, b) =>
-                columnDef.customSort(
-                  b.value,
-                  a.value,
-                  'group',
-                  columnDef.tableData.groupSort
-                )
+                  columnDef.customSort(
+                    b.value,
+                    a.value,
+                    'group',
+                    columnDef.tableData.groupSort
+                  )
               : (a, b) =>
-                columnDef.customSort(
-                  a.value,
-                  b.value,
-                  'group',
-                  columnDef.tableData.groupSort
-                )
+                  columnDef.customSort(
+                    a.value,
+                    b.value,
+                    'group',
+                    columnDef.tableData.groupSort
+                  )
           );
         } else {
           return list.sort(
