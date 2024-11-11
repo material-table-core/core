@@ -1180,8 +1180,7 @@ export default class MaterialTable extends React.Component {
                       ref={this.tableContainerDiv}
                       style={{
                         maxHeight: props.options.maxBodyHeight,
-                        minHeight: props.options.minBodyHeight,
-                        overflowY: props.options.overflowY
+                        minHeight: props.options.minBodyHeight
                       }}
                     >
                       {this.state.width &&
