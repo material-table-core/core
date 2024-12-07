@@ -1172,12 +1172,16 @@ export default class MaterialTable extends React.Component {
           )}
           <MTableScrollbar double={props.options.doubleHorizontalScroll}>
             <Droppable droppableId="headers" direction="horizontal">
-              {(provided, snapshot) => {
+              {(provided) => {
                 const table = this.renderTable(props);
                 return (
                   <div ref={provided.innerRef}>
                     <div
-                      ref={this.tableContainerDiv}
+                      ref={(ref) => {
+                        this.tableContainerDiv.current = ref;
+                        if (props.options.scrollRef)
+                          props.options.scrollRef.current = ref;
+                      }}
                       style={{
                         maxHeight: props.options.maxBodyHeight,
                         minHeight: props.options.minBodyHeight,

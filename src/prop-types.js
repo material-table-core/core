@@ -451,6 +451,7 @@ export const propTypes = {
   onQueryChange: PropTypes.func,
   onBulkEditOpen: PropTypes.func,
   tableRef: PropTypes.any,
+  scrollRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,
   totalCount: PropTypes.number
