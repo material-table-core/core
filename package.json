@@ -78,7 +78,7 @@
     "buble": "^0.20.0",
     "check-dts": "^0.6.7",
     "core-js": "^3.31.0",
-    "esbuild": "^0.8.57",
+    "esbuild": "^0.25.0",
     "eslint": "^7.16.0",
     "eslint-config-defaults": "^9.0.0",
     "eslint-config-standard": "^16.0.2",
