@@ -1406,7 +1406,7 @@ export default class DataManager {
   }
 
   clearCriteria = () => {
-    this.changeOrder(-1, '');
+    this.changeColumnOrder(-1, '');
     this.changeSearchText('');
     for (const column of this.columns) {
       this.changeFilterValue(column.tableData.id, '');
