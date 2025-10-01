@@ -12,7 +12,8 @@ labels: "feature"
 
 - #### You may fork one of the following starter templates if you would like:
 
-  - #### [CodeSandbox](https://codesandbox.io/s/material-table-starter-template-xnfpo)
+  - #### [CodeSandbox mui v4](https://codesandbox.io/s/material-table-starter-template-forked-q85qi?file=/src/index.js)
+  - #### [CodeSandbox mui v5](https://codesandbox.io/p/sandbox/40sye2?file=%2Fsrc%2Findex.js%3A14%2C18)
   - #### [StackBlitz](https://stackblitz.com/edit/material-table-starter-template)
 
 **Is your feature request related to a problem? Please describe.**
