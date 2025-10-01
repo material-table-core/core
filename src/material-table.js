@@ -1132,6 +1132,7 @@ export default class MaterialTable extends React.Component {
         nonce={props.options.cspNonce}
       >
         <this.props.components.Container
+          id={props.id}
           style={{ position: 'relative', ...props.style }}
         >
           {props.options.paginationPosition === 'top' ||
