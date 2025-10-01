@@ -24,6 +24,9 @@ Check out our [**roadmap**](https://github.com/material-table-core/core/wiki/Roa
 
 The team is working on migrating the library to be fully compatible with Material UI V6. Stay tuned!
 
+Since we had a lack of available time over the last years, we will try to get back on track.
+Expect a few commits and merges this month to fix security vulnerabilities and new features.
+
 ---
 
 ## 🛠️ Installation
