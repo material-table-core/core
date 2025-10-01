@@ -1122,7 +1122,7 @@ export default class MaterialTable extends React.Component {
   };
 
   getRenderData = () =>
-    this.props.options.exportAllData ? this.state.data : this.state.renderData;
+    this.props.options.exportAllData ? this.dataManager.data : this.state.renderData;
 
   render() {
     const props = this.getProps();
