@@ -34,6 +34,7 @@ export interface MaterialTableProps<RowData extends object> {
   };
   columns: Column<RowData>[];
   components?: Components;
+  id?: string;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
     | (({ rowData }: { rowData: RowData }) => React.ReactNode)
