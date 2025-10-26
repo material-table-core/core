@@ -496,7 +496,7 @@ class App extends Component {
           <ThemeProvider theme={theme}>
             <div style={{ maxWidth: '100%', direction }}>
               <Grid container>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   {this.state.selectedRows && this.state.selectedRows.length}
                   <MaterialTable
                     tableRef={this.tableRef}
