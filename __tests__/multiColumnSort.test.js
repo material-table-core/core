@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import * as React from 'react';
@@ -104,15 +107,25 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      }
     ]);
 
     const titleColumn = queryAllByTestId('mtableheader-sortlabel')[1];
     fireEvent.click(titleColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' },
-      { sortOrder: 2, orderBy: 1, orderDirection: 'asc', orderByField: 'title'  }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      },
+      { sortOrder: 2, orderBy: 1, orderDirection: 'asc', orderByField: 'title' }
     ]);
   });
 
@@ -133,7 +146,12 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      }
     ]);
 
     fireEvent.click(queryAllByTestId('mtableheader-sortlabel')[1]);
@@ -141,9 +159,19 @@ describe('Multi Column Sort', () => {
     fireEvent.click(queryAllByTestId('mtableheader-sortlabel')[3]);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 1, orderDirection: 'asc', orderByField: 'title'  },
-      { sortOrder: 2, orderBy: 2, orderDirection: 'asc', orderByField: 'name'   },
-      { sortOrder: 3, orderBy: 3, orderDirection: 'asc', orderByField: 'lastName' }
+      {
+        sortOrder: 1,
+        orderBy: 1,
+        orderDirection: 'asc',
+        orderByField: 'title'
+      },
+      { sortOrder: 2, orderBy: 2, orderDirection: 'asc', orderByField: 'name' },
+      {
+        sortOrder: 3,
+        orderBy: 3,
+        orderDirection: 'asc',
+        orderByField: 'lastName'
+      }
     ]);
   });
 
@@ -165,7 +193,12 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'desc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'desc',
+        orderByField: 'number'
+      }
     ]);
   });
 
@@ -187,9 +220,24 @@ describe('Multi Column Sort', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 1, orderDirection: 'asc', orderByField: 'title'  },
-      { sortOrder: 2, orderBy: 2, orderDirection: 'desc', orderByField: 'name'   },
-      { sortOrder: 3, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 1,
+        orderDirection: 'asc',
+        orderByField: 'title'
+      },
+      {
+        sortOrder: 2,
+        orderBy: 2,
+        orderDirection: 'desc',
+        orderByField: 'name'
+      },
+      {
+        sortOrder: 3,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      }
     ]);
   });
 });

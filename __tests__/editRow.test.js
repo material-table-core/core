@@ -1,6 +1,8 @@
-import * as React from 'react';
+/**
+ * @jest-environment jsdom
+ */
+import React, { act } from 'react';
 import {
-  act,
   screen,
   render,
   waitForElementToBeRemoved,

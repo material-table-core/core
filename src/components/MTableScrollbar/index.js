@@ -21,8 +21,15 @@ const singleStyle = {
   }
 };
 
-const ScrollBar = ({ double, children }) => {
-  return <Box sx={double ? doubleStyle : singleStyle}>{children}</Box>;
-};
+const ScrollBar = React.forwardRef(function ScrollBar(
+  { double, children, ...props },
+  ref
+) {
+  return (
+    <Box sx={double ? doubleStyle : singleStyle} {...props} ref={ref}>
+      {children}
+    </Box>
+  );
+});
 
 export default ScrollBar;

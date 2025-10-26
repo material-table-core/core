@@ -1236,10 +1236,10 @@ export default class DataManager {
           let isExpanded = false;
           switch (typeof this.defaultExpanded) {
             case 'boolean':
-              isDefaultExpanded = this.defaultExpanded;
+              isExpanded = this.defaultExpanded;
               break;
             case 'function':
-              isDefaultExpanded = this.defaultExpanded(rowData);
+              isExpanded = this.defaultExpanded(rowData);
               break;
           }
           rowData.tableData.isTreeExpanded = isExpanded;

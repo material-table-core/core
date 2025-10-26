@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import * as React from 'react';
 import {
   screen,
@@ -173,6 +176,7 @@ describe('Selection tests', () => {
     );
     const [all] = screen.getAllByRole('checkbox');
     fireEvent.click(all);
+
     screen
       .getAllByRole('checkbox')
       .forEach((box, i) => (i !== 1 ? expect(box).toBeChecked() : null));

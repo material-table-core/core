@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import * as React from 'react';
@@ -63,7 +66,12 @@ describe('Disabled Client Sorting', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      }
     ]);
 
     const cells = queryAllByTestId('mtablebodyrow').map((row) =>
@@ -94,7 +102,12 @@ describe('Disabled Client Sorting', () => {
     fireEvent.click(numberColumn);
 
     expect(onOrderCollectionChangeSpy).toHaveBeenCalledWith([
-      { sortOrder: 1, orderBy: 0, orderDirection: 'asc', orderByField: 'number' }
+      {
+        sortOrder: 1,
+        orderBy: 0,
+        orderDirection: 'asc',
+        orderByField: 'number'
+      }
     ]);
 
     const cells = queryAllByTestId('mtablebodyrow').map((row) =>

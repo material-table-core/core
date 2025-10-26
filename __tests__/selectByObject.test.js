@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { selectFromObject, setObjectByKey } from '../src/utils/';
 
 describe('selectFromObject', () => {

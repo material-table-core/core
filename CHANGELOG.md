@@ -1,3 +1,34 @@
+#### 6.5.1 (2025-10-26)
+
+### 6.5.0 (2025-10-26)
+
+##### Chores
+
+- update dependencies and fix imports for MUI date pickers ([7dded636](https://github.com/material-table-core/core/commit/7dded636eb1026e01281574412ec54f9c26c970d))
+
+##### Refactors
+
+- update imports in test files to include React ([5282ed00](https://github.com/material-table-core/core/commit/5282ed00ec8a68acc761a962af7361428b35ba2f))
+- update Grid component and theme variable usage in MTableToolbar ([cb8b09b2](https://github.com/material-table-core/core/commit/cb8b09b25ced723a6290de18e446c36043791d8c))
+
+### 6.5.0 (2025-10-26)
+
+##### Chores
+
+- update dependencies and fix imports for MUI date pickers ([7dded636](https://github.com/material-table-core/core/commit/7dded636eb1026e01281574412ec54f9c26c970d))
+
+##### Refactors
+
+- update Grid component and theme variable usage in MTableToolbar ([cb8b09b2](https://github.com/material-table-core/core/commit/cb8b09b25ced723a6290de18e446c36043791d8c))
+
+#### 6.4.7 (2024-11-11)
+
+#### 6.4.7 (2024-11-11)
+
+#### 6.4.6 (2024-11-11)
+
+#### 6.4.5 (2024-11-11)
+
 #### 6.4.4 (2024-05-21)
 
 ##### Other Changes

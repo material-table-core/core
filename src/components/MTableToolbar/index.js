@@ -357,8 +357,20 @@ const styles = {
     paddingRight: 1,
     paddingLeft: 2
   },
-  highlight: (theme) =>
-    theme.palette.mode === 'light'
+  highlight: (theme) => {
+    if (!theme) return {};
+    if (theme.vars?.palette) {
+      return theme.vars.palette.mode === 'light'
+        ? {
+            color: theme.vars.palette.secondary.main,
+            backgroundColor: lighten(theme.vars.palette.secondary.light, 0.85)
+          }
+        : {
+            color: theme.vars.palette.text.primary,
+            backgroundColor: theme.vars.palette.secondary.dark
+          };
+    }
+    return theme.palette.mode === 'light'
       ? {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85)
@@ -366,7 +378,8 @@ const styles = {
       : {
           color: theme.palette.text.primary,
           backgroundColor: theme.palette.secondary.dark
-        },
+        };
+  },
   spacer: {
     flex: '1 1 10%'
   },
