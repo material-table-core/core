@@ -1,4 +1,4 @@
-import { act } from 'react';
+import React, { act } from 'react';
 import {
   screen,
   render,

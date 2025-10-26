@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
-
 export const columns = [
   { field: 'firstName', title: 'First Name' },
   { field: 'lastName', title: 'Last Name' },
