@@ -1,11 +1,5 @@
-import * as React from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react';
+import { act } from 'react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useDoubleClick } from '../src/utils/hooks/useDoubleClick';
 
 jest.useFakeTimers();

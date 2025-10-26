@@ -173,6 +173,7 @@ describe('Selection tests', () => {
     );
     const [all] = screen.getAllByRole('checkbox');
     fireEvent.click(all);
+    screen.logTestingPlaygroundURL();
     screen
       .getAllByRole('checkbox')
       .forEach((box, i) => (i !== 1 ? expect(box).toBeChecked() : null));
