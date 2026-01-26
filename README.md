@@ -46,8 +46,8 @@ yarn add @material-table/core
 Refer to the installation guide for more information and advanced usage.
 
 💡 Basic Usage
-javascript
-Code kopieren
+
+```javascript
 import MaterialTable from '@material-table/core';
 
 function MyTable() {
