@@ -35,11 +35,14 @@ Install `@material-table/core` using npm or yarn:
 
 ```bash
 npm install @material-table/core
+```
+
 or
 
-bash
-Code kopieren
+```bash
 yarn add @material-table/core
+```
+
 Refer to the installation guide for more information and advanced usage.
 
 💡 Basic Usage
