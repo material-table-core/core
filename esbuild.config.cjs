@@ -12,7 +12,7 @@ const { log, error } = console;
  *
  * !! NO TRAILING SLASH !!
  */
-const BUILD_DIR = './dist';
+const BUILD_DIR = './dist/esm';
 
 log(`-Cleaning build artifacts from : '${BUILD_DIR}' `);
 
@@ -31,7 +31,7 @@ rimraf(path.resolve(BUILD_DIR), async (err) => {
     bundle: false,
     outdir: `${BUILD_DIR}`,
     target: 'es6',
-    // format: 'cjs',
+    format: 'esm',
     loader: {
       '.js': 'jsx'
     }

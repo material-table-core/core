@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "@material-table/core",
   "publishConfig": {
     "access": "public"
@@ -7,6 +8,13 @@
   "version": "6.5.2",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "types": "types/index.d.ts",
   "files": [
     "dist",
@@ -14,8 +22,8 @@
   ],
   "scripts": {
     "start": "npx webpack serve --config ./__tests__/demo/webpack.config.js --mode development --progress",
-    "build:esbuild": "ts-node esbuild.config.js",
-    "build:babel": "npx babel src -d dist",
+    "build:esbuild": "ts-node esbuild.config.cjs",
+    "build:babel": "npx babel src -d dist --config-file ./babel.config.cjs",
     "build": "npm run build:babel",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "npx eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore",
@@ -23,8 +31,8 @@
     "lint:fix": "npx eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore --fix",
     "prettify": "npx prettier -c ./.prettierrc --write **/*.js",
     "pretest": "npm run build",
-    "test": "npx jest",
-    "test:build": "npx jest __tests__/post.build.test.js",
+    "test": "npx jest --config=jest.config.cjs",
+    "test:build": "npx jest __tests__/post.build.test.js --config=jest.config.cjs",
     "prerelease:major": "npm run test",
     "prerelease:minor": "npm run test",
     "prerelease:patch": "npm run test",
@@ -74,6 +82,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-import": "^1.13.3",
     "babel-plugin-module-resolver": "^5.0.0",
+    "baseline-browser-mapping": "^2.10.19",
     "buble": "^0.20.0",
     "check-dts": "^0.6.7",
     "core-js": "^3.31.0",
