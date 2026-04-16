@@ -19,7 +19,7 @@ on:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release ')
+    if: startsWith(github.event.head_commit.message, 'OldRelease ')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
