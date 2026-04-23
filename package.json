@@ -127,7 +127,7 @@
     "debounce": "^1.2.1",
     "deep-eql": "^4.1.1",
     "deepmerge": "^4.2.2",
-    "uuid": "^9.0.0",
+    "uuid": "^14.0.0",
     "zustand": "^5.0.8"
   },
   "peerDependencies": {
