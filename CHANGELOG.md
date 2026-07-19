@@ -1,3 +1,25 @@
+## 8.0.0 (2026-07-19)
+
+##### Breaking Changes
+
+- upgraded to MUI v9 (`@mui/material`, `@mui/icons-material` ^9.2.0, `@mui/x-date-pickers` ^9.10.0); legacy `InputProps`/`inputProps`/`SelectProps`/`renderInput` usages migrated to `slotProps`
+- peer dependency raised to React 19 (`react`/`react-dom` >=19)
+- package is now ESM-only (`exports` map with a single ESM entry, `sideEffects: false`); CommonJS consumers need Node's `require(esm)` support (Node >=20.19)
+- dropped `@date-io/*` in favor of `AdapterDateFns` from `@mui/x-date-pickers` (date-fns v4)
+
+##### New Features
+
+- build system migrated from Babel/webpack to Vite 8 (rolldown) library mode with per-module output preserved for tree-shaking; build time ~30ms
+- test runner migrated from Jest 26 to Vitest 4 (jsdom 29, Testing Library)
+- demo dev server migrated from webpack-dev-server to Vite (`npm start`)
+- ESLint 9 flat config (`eslint.config.js`) replaces legacy `.eslintrc`; Prettier 3; TypeScript 7 type-checks `types/index.d.ts`
+
+##### Chores
+
+- updated all runtime dependencies to latest (date-fns 4, uuid 14, debounce 3, deep-eql 5, zustand 5, @hello-pangea/dnd 18)
+- removed unused/dead dependencies (`@emotion/core`, `classnames`, `@date-io/*`, `@babel/runtime`, `core-js`, `buble`, `husky` 1.x, `pretty-quick`) and dead source files (`MTableEditRow/m-table-edit-row.js`, `demo.original.js`)
+- JSX sources renamed to `.jsx`; `prop-types` declared as a direct dependency
+
 ## 7.0.0 (2026-04-16)
 
 #### 6.5.2 (2025-10-26)

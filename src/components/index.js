@@ -2,8 +2,8 @@
  * Misc
  -------------- */
 
-export { default as OverlayLoading } from './Overlay/OverlayLoading.js';
-export { default as OverlayError } from './Overlay/OverlayError.js';
+export { default as OverlayLoading } from './Overlay/OverlayLoading.jsx';
+export { default as OverlayError } from './Overlay/OverlayError.jsx';
 export { default as Container } from './Container';
 export { default as MTableScrollbar } from './MTableScrollbar';
 
