@@ -55,7 +55,7 @@ export function getRenderValue(props, icons, type) {
   }
   if (
     props.rowData === undefined &&
-    props.value &&
+    props.value != null &&
     props.columnDef.groupRender
   ) {
     return props.columnDef.groupRender(props.value);
