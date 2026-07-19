@@ -5,7 +5,7 @@
 **A highly customizable datatable for React, built on Material UI — forked from [`mbrn/material-table`](https://material-table.com)**
 
 [![build](https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master)](https://github.com/material-table-core/core/actions?query=workflow%3ABuild)
-[![publish](https://github.com/material-table-core/core/actions/workflows/publish.yml/badge.svg)](https://github.com/material-table-core/core/actions?query=workflow%3APublish)
+[![publish](https://github.com/material-table-core/core/actions/workflows/publish.yml/badge.svg)](https://github.com/material-table-core/core/actions?query=workflow%3APublish%20Package)
 [![npm version](https://badge.fury.io/js/@material-table%2Fcore.svg)](https://www.npmjs.com/package/@material-table/core)
 [![npm downloads](https://img.shields.io/npm/dm/@material-table/core)](https://www.npmjs.com/package/@material-table/core)
 [![license](https://img.shields.io/npm/l/@material-table/core)](LICENSE)
