@@ -11,7 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Clear,
-  DeleteOutline,
+  DeleteOutlined,
   Edit,
   FilterList,
   FirstPage,
@@ -34,7 +34,7 @@ export default {
     <Clear {...props} ref={ref} data-testid="clear" />
   )),
   Delete: forwardRef((props, ref) => (
-    <DeleteOutline {...props} ref={ref} data-testid="delete_outline" />
+    <DeleteOutlined {...props} ref={ref} data-testid="delete_outline" />
   )),
   DetailPanel: forwardRef((props, ref) => (
     <ChevronRight {...props} ref={ref} data-testid="chevron_right" />
